@@ -142,4 +142,42 @@
     { d: "2030", t: "Commonwealth Games", s: "Gujarat hosts. Every partnership we build now compounds.", k: "ext" }
   ];
   $("#extEvents").innerHTML = EVENTS.map(e => `<div class="ev ev-${e.k}"><span class="ev-d">${e.d}</span><b>${e.t}</b><p>${e.s}</p></div>`).join("");
+
+  /* ---------- state films: muted by default, the presenter turns sound on ---------- */
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const films = $$(".sm-video");
+  const setBtn = (btn, on) => { btn.setAttribute("aria-pressed", on); $("span", btn).textContent = on ? "Sound on" : "Sound off"; };
+  const muteEverything = except => {
+    films.forEach(f => { const v = $("video", f); if (v !== except) { v.muted = true; setBtn($(".snd-btn", f), false); } });
+    $$(".reel-phone").forEach(r => { const v = $("video", r); if (v && v !== except) { v.muted = true; r.dataset.sound = "off"; const t = $(".snd", r); if (t) t.textContent = "Sound off"; } });
+    $$(".phone video, .spot video").forEach(v => { if (v !== except) v.muted = true; });
+  };
+  const filmObs = new IntersectionObserver(entries => entries.forEach(en => {
+    const v = en.target;
+    if (en.isIntersecting) {
+      if (!v.src) v.src = v.dataset.src;
+      if (!reduced || v.dataset.user) v.play().catch(() => {});
+    } else v.pause();
+  }), { threshold: 0.3 });
+  films.forEach(f => {
+    const v = $("video", f), btn = $(".snd-btn", f);
+    v.muted = true;
+    filmObs.observe(v);
+    btn.addEventListener("click", () => {
+      const on = btn.getAttribute("aria-pressed") !== "true";
+      if (on) {
+        muteEverything(v);
+        if (!v.src) v.src = v.dataset.src;
+        v.dataset.user = "1";
+        v.muted = false;
+        v.play().catch(() => {});
+      } else v.muted = true;
+      setBtn(btn, on);
+    });
+  });
+  // a reel turned up elsewhere silences the state films
+  document.addEventListener("click", e => {
+    const reel = e.target.closest(".reel-phone");
+    if (reel) films.forEach(f => { $("video", f).muted = true; setBtn($(".snd-btn", f), false); });
+  });
 })();
