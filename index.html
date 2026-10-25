@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=20261025b">
+<link rel="stylesheet" href="assets/css/site.css?v=20261025d">
 </head>
 <body>
 
@@ -310,6 +310,20 @@
         </div>
         <div class="stores" id="puneStoreShare"></div>
       </article>
+      <article class="panel panel-full st-rank">
+        <div class="panel-head row">
+          <div>
+            <h3>Compare the stores</h3>
+            <p id="rankNote">Turnover each store must add beyond its ambition in Q4 (Cr).</p>
+          </div>
+          <div class="seg" role="group" aria-label="Sort stores by" id="rankSeg">
+            <button type="button" data-k="overAmbition" aria-pressed="true">Over ambition</button>
+            <button type="button" data-k="growth" aria-pressed="false">Growth</button>
+            <button type="button" data-k="budgetTotal" aria-pressed="false">Q4 budget</button>
+          </div>
+        </div>
+        <div class="st-groups" id="storeRank"></div>
+      </article>
       <article class="panel panel-full">
         <div class="panel-head">
           <h3>What people play in Q4</h3>
@@ -409,6 +423,37 @@
       <div class="budget-detail" id="budgetDetail"></div>
     </div>
 
+    <div class="recap">
+      <div class="toolkit-head">
+        <h3 class="display-s"><span class="lt">What worked in 2026,</span> and what comes next</h3>
+        <p>Two community plays we ran this year, carried into Q4 and 2027.</p>
+      </div>
+
+      <article class="rc">
+        <div class="rc-media rc-media-1"><img src="assets/img/school-motera.jpg" alt="A school group in red uniforms with Decathlon teammates outside the Motera store" loading="lazy"></div>
+        <div class="rc-body">
+          <h4>Back to school</h4>
+          <div class="rc-cols">
+            <div><span class="rc-tag">2026 recap</span><p>School visits at Motera: classes came to the store playground to play and meet our teammates.</p></div>
+            <div class="rc-now"><span class="rc-tag">Q4 2026 plan</span><p><b>14 November, Children's Day.</b> Back-to-school activation in Gujarat, Pune and MP. Schools get Decathlon colouring books; kids bring the finished page to a store and get a reward. Every submission is a family walk-in.</p><p>Surat adds school sports-day kit desks in December and January (8 schools).</p></div>
+            <div><span class="rc-tag">2027 plan</span><p>Pune runs school activations through the year: teen sport in January, girls' schools in February, summer camps in April and May, a Christmas sports carnival in December. School activation brings families and kids, with bigger baskets when parents shop.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="rc">
+        <div class="rc-media rc-media-2"><img src="assets/img/yoga-motera-stage.jpg" alt="Antyodaya Yog Kumbh on 21 June on the Decathlon Motera stage" loading="lazy"><img src="assets/img/yoga-motera-playground.jpg" alt="Hundreds of people doing yoga on the Decathlon store playground" loading="lazy"></div>
+        <div class="rc-body">
+          <h4>Yoga Day</h4>
+          <div class="rc-cols">
+            <div><span class="rc-tag">2026 recap</span><p>Antyodaya Yog Kumbh at Decathlon Motera on 21 June, with hundreds of people on mats across the store playground and a partner stage.</p></div>
+            <div class="rc-now"><span class="rc-tag">Q4 2026 plan</span><p>Keep the community warm: sunrise yoga with the Tapi Sunrise Run at the Surat opening on 20 December.</p></div>
+            <div><span class="rc-tag">2027 plan</span><p>Yoga Day runs 1–21 June with a national footfall goal of 10,000. Pune adds yoga academy partners at Wagholi and SGS, and every state can repeat the Motera playground format.</p></div>
+          </div>
+        </div>
+      </article>
+    </div>
+
 
     <div class="love">
       <p class="love-quote">“Decathlon is loved by Gujaratis, Punekars and MP people. We look out for the people first and take care of the community.”</p>
@@ -482,25 +527,8 @@
   <div class="wrap">
     <header class="sec-head">
       <h2 class="display">Store <span class="lt">by</span> store</h2>
-      <p class="sec-lede">13 stores carry the 178.77 Cr challenge. Pick a store in the list to see what it runs, where it plays and how it reaches people.</p>
+      <p class="sec-lede">13 stores carry the 178.77 Cr challenge. Pick a store in the Scoreboard's store comparison, or below, to see what it runs, where it plays and how it reaches people.</p>
     </header>
-
-    <div class="st-top">
-      <div class="st-rank">
-        <div class="panel-head row">
-          <div>
-            <h3>Compare the stores</h3>
-            <p id="rankNote">Turnover each store must add beyond its ambition in Q4 (Cr).</p>
-          </div>
-          <div class="seg" role="group" aria-label="Sort stores by" id="rankSeg">
-            <button type="button" data-k="overAmbition" aria-pressed="true">Over ambition</button>
-            <button type="button" data-k="growth" aria-pressed="false">Growth</button>
-            <button type="button" data-k="budgetTotal" aria-pressed="false">Q4 budget</button>
-          </div>
-        </div>
-        <div class="st-list" id="storeRank"></div>
-      </div>
-    </div>
 
     <article class="st-detail" id="storeDetail" aria-live="polite"></article>
 
@@ -694,10 +722,10 @@
 <div class="tip" id="tip" role="tooltip" hidden></div>
 <div class="hud" id="hud" hidden></div>
 
-<script src="assets/js/data.js?v=20261025b"></script>
-<script src="assets/js/app.js?v=20261025b"></script>
-<script src="assets/js/stores.js?v=20261025b"></script>
-<script src="assets/js/surat.js?v=20261025b"></script>
-<script src="assets/js/people.js?v=20261025b"></script>
+<script src="assets/js/data.js?v=20261025d"></script>
+<script src="assets/js/app.js?v=20261025d"></script>
+<script src="assets/js/stores.js?v=20261025d"></script>
+<script src="assets/js/surat.js?v=20261025d"></script>
+<script src="assets/js/people.js?v=20261025d"></script>
 </body>
 </html>

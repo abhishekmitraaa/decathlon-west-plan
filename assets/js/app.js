@@ -437,6 +437,22 @@
   /* ---------- playbook switchboard ---------- */
   const monthsWith = (key, test) => PD[key].map((v, i) => [i, v]).filter(([, v]) => v && (!test || test(v)));
   const monthCards = (key, test, limit = 12) => `<div class="sp-months">${monthsWith(key, test).slice(0, limit).map(([i, v]) => `<div><b>${PL.months[i]}</b>${esc(v)}</div>`).join("")}</div>`;
+  // AOP numbers: per-store mix from the AOPs 2027 slide, Q4 status from the communication plan
+  const aopPlan = () => {
+    const CM = window.CITY_MEDIUMS, ST = D.stores, NAME = { Pune: "Pune", Gujarat: "Gujarat", MP: "Madhya Pradesh" };
+    const tot = s => Object.values(CM[s.city].aop).reduce((x, y) => x + y, 0);
+    const head = `<div class="aop-q"><div><span>Q4 2026</span><b>15+</b><p>premium facilities onboarded so far. Team sports, racket and swimming are the busiest practice places.</p></div>
+      <div><span>Q1 2027</span><b>3–5</b><p>QR kit-wall pilots per city in Pune, Ahmedabad and Indore, measured on scans, conversion and margin.</p></div>
+      <div><span>2027</span><b>${ST.reduce((a, s) => a + tot(s), 0)}</b><p>tie-ups across 13 stores at the per-store mix below: 5 a store in Pune and MP, 10 in Gujarat.</p></div></div>`;
+    const rows = ["Pune", "Gujarat", "MP"].map(st => {
+      const list = ST.filter(s => s.state === st);
+      const sum = k => list.reduce((a, s) => a + CM[s.city].aop[k], 0);
+      return `<tr class="aop-st"><th colspan="6">${NAME[st]}</th></tr>` + list.map(s => { const x = CM[s.city].aop; return `<tr><td>${esc(s.name)}</td><td>${x.travel}</td><td>${x.gym}</td><td>${x.yoga}</td><td>${x.racket}</td><td><b>${tot(s)}</b></td></tr>`; }).join("") +
+        `<tr class="aop-sub"><td>${NAME[st]} total</td><td>${sum("travel")}</td><td>${sum("gym")}</td><td>${sum("yoga")}</td><td>${sum("racket")}</td><td><b>${["travel", "gym", "yoga", "racket"].reduce((x, k) => x + sum(k), 0)}</b></td></tr>`;
+    }).join("");
+    return head + `<div class="aop-table-wrap"><table class="aop-table"><thead><tr><th>Store, 2027</th><th>Travel agencies</th><th>Gyms and fitness</th><th>Yoga studios</th><th>Racket academies</th><th>Total</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <p class="foot">The AOP slide's headline says 20 tie-ups in total; its per-store numbers add up to the total above.</p>`;
+  };
   const CHANNELS = [
     { name: "Hoardings and OOH", tag: "35%", media: ["hoarding-wagholi.jpg", "hoarding-night.jpg"],
       title: "Own the road during sale weeks",
@@ -444,15 +460,14 @@
       cities: [["5", "Pune"], ["4", "Baroda"], ["3", "Surat"], ["2", "Ahmedabad"], ["1", "Rajkot"], ["1", "Bhopal"]],
       stats: [["16", "hoardings in Q4"], ["24 L", "Q4 OOH and HIPOP spend"], ["+15%", "bills growth OKR"], ["35%", "of the 2027 budget"]],
       planTitle: "Pune OOH plan, 2027", plan: () => monthCards("ooh") },
-    { name: "Practice-place hoardings (AOP)", tag: "25%", media: ["aop-wall.mp4", "swim-kit-aop.jpg"],
+    { name: "Practice-place hoardings (AOP)", tag: "25%", media: ["aop-wall.mp4"], wideMedia: true,
       title: "Sport is everywhere",
       copy: "We turn the places people already play into small Decathlon stores. A kit wall with prices and QR codes goes up at swimming academies, sports academies, gyms, yoga studios, metro stations in Pune and Ahmedabad, parks, societies and corporate campuses.",
       flow: ["See the display", "Scan the QR code", "Explore or complete a kit", "Shop online", "Home delivery or Click & Collect"],
-      stats: [["20", "AOP partners across 3 markets"], ["3–5", "pilot locations per city in Q1"], ["15+", "premium facilities onboarded"], ["25%", "of the 2027 budget"]],
-      planTitle: "Rollout", plan: () => `<ul><li>Q1 (Jan–Mar): pilot in Pune, Ahmedabad and Indore. Measure scans, conversion and gross profit.</li><li>Q2 (Apr–Jun): scale to more locations within 5 to 30 km of each store.</li><li>Partners get in-store branding, joint events and exclusive member offers.</li><li>Barter with practice places and event partners is funded from the 13 L free products line.</li></ul>
-        <h4 style="margin-top:18px">Pune academy partners by month</h4>${monthCards("academy")}` },
+      stats: [["90", "tie-ups planned across 13 stores in 2027"], ["3–5", "pilot locations per city in Q1"], ["15+", "premium facilities onboarded"], ["25%", "of the 2027 budget"]],
+      planTitle: "Tie-ups by store, sport and quarter", plan: aopPlan },
     { name: "WhatsApp channels, PN and RCS", tag: "5%", media: ["whatsapp.jpg", "push-notification.jpg"], contain: true,
-      title: "Bring them back, cheaply",
+      title: "Bring them back",
       copy: "Existing customers hear about sales, new arrivals and local events on channels they already check: WhatsApp, push notifications in the app and RCS messages. Targeted campaigns carry both commercial and brand messages.",
       stats: [["5 L", "customers reached in Q1"], ["1.95", "purchase frequency target, YTD"], ["+15%", "returning customers in Q1"], ["5%", "of the 2027 budget"]],
       planTitle: "Months where WhatsApp and CRM lead in Pune", plan: () => monthCards("channels", v => /WhatsApp|CRM/i.test(v)) },
@@ -496,7 +511,7 @@
       panel.setAttribute("aria-labelledby", "tab" + i);
       panel.innerHTML = `
         <div class="sp-hero">
-          <div class="sp-media ${c.contain ? "contain" : ""}">${c.media.map(m => m.endsWith(".mp4") ? `<div class="sm-video"><video autoplay muted loop playsinline poster="assets/posters/${m.replace(".mp4", ".jpg")}" src="assets/videos/${m}"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play video with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>` : `<img src="assets/img/${m}" alt="" loading="lazy">`).join("")}</div>
+          <div class="sp-media ${c.contain ? "contain" : ""} ${c.wideMedia ? "wide" : ""}">${c.media.map(m => m.endsWith(".mp4") ? `<div class="sm-video"><video autoplay muted loop playsinline poster="assets/posters/${m.replace(".mp4", ".jpg")}" src="assets/videos/${m}"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play video with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>` : `<img src="assets/img/${m}" alt="" loading="lazy">`).join("")}</div>
           <div class="sp-copy">
             <h3>${esc(c.title)}</h3>
             <p>${esc(c.copy)}</p>

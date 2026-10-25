@@ -162,7 +162,7 @@ window.RUNWAY = {
       { t: "Kids festival", s: "2026-10-31", e: "2026-11-02", k: "local" },
       { t: "Sports Utsav Jr: skating workshop", s: "2026-10-31", e: "2026-10-31", k: "local" },
       { t: "Diwali: Gift a Sport", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
-      { t: "Children's Day", s: "2026-11-14", e: "2026-11-14", k: "local" },
+      { t: "Children's Day: back-to-school colouring books", s: "2026-11-14", e: "2026-11-14", k: "local", star: true },
       { t: "Decathlon CSR initiatives", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
       { t: "Christmas: Gift a Sport", s: "2026-12-01", e: "2026-12-31", k: "local", approx: true },
       { t: "Adajan, Surat: opening weekend", s: "2026-12-18", e: "2026-12-20", k: "open", star: true },

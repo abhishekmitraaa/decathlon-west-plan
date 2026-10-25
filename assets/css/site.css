@@ -511,7 +511,7 @@ ul, ol { padding: 0; }
 
 /* ---------- stores ---------- */
 .st-top { display: grid; grid-template-columns: 1fr; gap: 20px; }
-.st-top .st-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
+
 .st-map, .st-rank { background: #fff; border: 1.5px solid var(--line); border-radius: var(--r-md); padding: 20px; min-width: 0; }
 .st-map { display: flex; align-items: center; }
 .st-map svg { display: block; width: 100%; height: auto; }
@@ -955,6 +955,50 @@ ul, ol { padding: 0; }
   .q4s-m { grid-column: 1 / -1; }
   .mix-detail { margin-left: 0; grid-template-columns: 1fr; }
   .st-top .st-list { grid-template-columns: 1fr; }
+}
+
+/* store comparison in the scoreboard, grouped by state */
+.st-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.st-group h4 { font-size: 16px; font-weight: 700; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; padding-bottom: 8px; margin-bottom: 6px; border-bottom: 3px solid var(--c); }
+.st-group h4 small { font-size: 12px; font-weight: 600; color: var(--text-3); }
+.st-group .st-row { width: 100%; grid-template-columns: 84px 1fr 72px; }
+/* AOP playbook: film in full, numbers by store */
+.sp-media.wide { display: block; min-height: 0; background: #000; }
+.sp-hero:has(.sp-media.wide) { grid-template-columns: 1fr; }
+.sp-media.wide .sm-video { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 0; }
+.sp-media.wide video { object-fit: contain; }
+.aop-q { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+.aop-q div { background: var(--mist); border-radius: var(--r-sm); padding: 12px 14px; }
+.aop-q span { font-size: 12px; font-weight: 750; color: var(--blue); }
+.aop-q b { display: block; font-size: 28px; font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; }
+.aop-q p { font-size: 12.5px; color: var(--text-2); }
+.aop-table-wrap { overflow-x: auto; }
+.aop-table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 520px; }
+.aop-table th, .aop-table td { padding: 7px 10px; text-align: right; border-bottom: 1px solid var(--line); }
+.aop-table th:first-child, .aop-table td:first-child { text-align: left; }
+.aop-table thead th { font-size: 12px; color: var(--text-3); font-weight: 700; }
+.aop-st th { text-align: left !important; background: var(--ink); color: #fff; font-size: 13px; }
+.aop-sub td { background: var(--mist); font-weight: 700; }
+/* 2026 recap -> Q4 -> 2027 */
+.recap { margin-top: clamp(48px, 6vw, 72px); }
+.recap .display-s { color: var(--ink); }
+.rc { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 22px; border: 1.5px solid var(--line); border-radius: var(--r-md); padding: 18px; margin-top: 14px; align-items: start; }
+.rc-media { display: grid; gap: 8px; }
+.rc-media-2 { grid-template-columns: 1fr 1fr; }
+.rc-media img { width: 100%; border-radius: var(--r-sm); object-fit: cover; }
+.rc-media-1 img { aspect-ratio: 4 / 3; }
+.rc-media-2 img { aspect-ratio: 9 / 16; }
+.rc-body h4 { font-size: 22px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px; }
+.rc-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.rc-cols > div { background: var(--mist); border-radius: var(--r-sm); padding: 14px; display: grid; gap: 8px; align-content: start; }
+.rc-cols p { font-size: 13.5px; }
+.rc-tag { font-size: 12px; font-weight: 750; color: var(--text-3); }
+.rc-now { background: var(--hatch), var(--bv) !important; color: #fff; }
+.rc-now .rc-tag { color: #fff; }
+@media (max-width: 1100px) { .st-groups { grid-template-columns: 1fr; } }
+@media (max-width: 860px) {
+  .rc, .rc-cols, .aop-q { grid-template-columns: 1fr; }
+  .rc-media-2 img { aspect-ratio: 3 / 4; }
 }
 
 /* ---------- responsive ---------- */

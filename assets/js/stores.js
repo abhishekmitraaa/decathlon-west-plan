@@ -41,22 +41,27 @@
     budgetTotal: "Store marketing budget for October to December 2026 (L)."
   };
   function drawRank() {
-    const list = [...stores].sort((a, b) => b[sortKey] - a[sortKey]);
-    const vals = list.map(s => s[sortKey]);
+    const vals = stores.map(s => s[sortKey]);
     const max = Math.max(...vals, 0), min = Math.min(...vals, 0), span = max - min || 1;
     const zero = (-min / span) * 100;
     const unit = sortKey === "growth" ? "%" : sortKey === "budgetTotal" ? " L" : " Cr";
-    $("#storeRank").innerHTML = list.map(s => {
-      const v = s[sortKey], w = Math.abs(v) / span * 100, left = v >= 0 ? zero : zero - w;
-      return `<button type="button" class="st-row" data-id="${s.id}" aria-pressed="${s.id === current}">
-        <b>${esc(s.name)}</b>
-        <span class="trk">${min < 0 ? `<span class="zero" style="left:${zero}%"></span>` : ""}<i style="left:${left}%;width:${Math.max(w, 0.8)}%;background:${v < 0 ? "#C03F9C" : STATE_COL[s.state]}"></i></span>
-        <em>${sortKey === "growth" ? (v >= 0 ? "+" : "") + fmt(v, 1) + "%" : sign(v) + unit}</em></button>`;
-    }).join("") ;
-    $("#rankNote").textContent = NOTES[sortKey];
+    const fmtV = v => sortKey === "growth" ? (v >= 0 ? "+" : "") + fmt(v, 1) + "%" : sign(v) + unit;
+    $("#storeRank").innerHTML = ["Pune", "Gujarat", "MP"].map(st => {
+      const list = stores.filter(s => s.state === st).sort((a, b) => b[sortKey] - a[sortKey]);
+      const total = list.reduce((a, s) => a + s[sortKey], 0);
+      const sub = sortKey === "growth" ? `${list.length} stores` : `${fmtV(total)} across ${list.length} stores`;
+      return `<div class="st-group"><h4 style="--c:${STATE_COL[st]}">${STATE_NAME[st]}<small>${sub}</small></h4>` + list.map(s => {
+        const v = s[sortKey], w = Math.abs(v) / span * 100, left = v >= 0 ? zero : zero - w;
+        return `<button type="button" class="st-row" data-id="${s.id}" aria-pressed="${s.id === current}">
+          <b>${esc(s.name)}</b>
+          <span class="trk">${min < 0 ? `<span class="zero" style="left:${zero}%"></span>` : ""}<i style="left:${left}%;width:${Math.max(w, 0.8)}%;background:${v < 0 ? "#C03F9C" : STATE_COL[s.state]}"></i></span>
+          <em>${fmtV(v)}</em></button>`;
+      }).join("") + `</div>`;
+    }).join("");
+    $("#rankNote").textContent = NOTES[sortKey] + " Click a store to open its plan.";
     $$("#storeRank .st-row").forEach(b => b.addEventListener("click", () => select(b.dataset.id, true)));
     if (!$(".st-legend")) {
-      $(".st-rank").insertAdjacentHTML("beforeend", `<div class="st-legend">${Object.entries(STATE_COL).map(([k, c]) => `<span><i style="background:${c}"></i>${STATE_NAME[k]}</span>`).join("")}<span><i style="background:#C03F9C"></i>Challenge below ambition</span></div>`);
+      $(".st-rank").insertAdjacentHTML("beforeend", `<div class="st-legend"><span><i style="background:#C03F9C"></i>Challenge below ambition</span></div>`);
     }
   }
   $$("#rankSeg button").forEach(b => b.addEventListener("click", () => {
