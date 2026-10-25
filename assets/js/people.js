@@ -19,9 +19,9 @@
     { n: "25.8–27.4", l: "median age, in years", s: "MP 25.8, Pune 26.3, Gujarat 27.4" },
     { n: "+11%", l: "women's business growth", s: "Twice the men's +5%, from a 30% share" },
     { n: "+296%", l: "wholesale challenge growth", s: "2.08 Cr to 8.25 Cr. Digital adds +22.5%" },
-    { n: "0.90%", l: "of challenge turnover goes to marketing", s: "1.60 Cr Q4 plan for 178.77 Cr" }
+    { n: "87.22 · 59.20 · 32.35", l: "Q4 challenge in Cr: Pune, Gujarat, MP", s: "Pune +22.3%, Gujarat +21.2%, MP +35.9%", wide: true }
   ];
-  $("#goldGrid").innerHTML = GOLD.map((g, i) => `<div class="gold ${i === 0 ? "gold-hero" : ""}"><b>${g.n}</b><span>${g.l}</span><small>${g.s}</small></div>`).join("");
+  $("#goldGrid").innerHTML = GOLD.map((g, i) => `<div class="gold ${i === 0 ? "gold-hero" : ""} ${g.wide ? "gold-wide" : ""}"><b>${g.n}</b><span>${g.l}</span><small>${g.s}</small></div>`).join("");
 
   const per = Object.keys(POP).map(k => ({ k, v: POP[k] / STORES[k] }));
   const maxPer = Math.max(...per.map(p => p.v));
