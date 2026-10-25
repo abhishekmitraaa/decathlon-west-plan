@@ -152,28 +152,42 @@
     $$(".reel-phone").forEach(r => { const v = $("video", r); if (v && v !== except) { v.muted = true; r.dataset.sound = "off"; const t = $(".snd", r); if (t) t.textContent = "Sound off"; } });
     $$(".phone video, .spot video").forEach(v => { if (v !== except) v.muted = true; });
   };
+  // If the browser refuses to play with sound, fall back to muted so the button never lies.
+  const playOrFallback = (v, btn) => v.play().catch(() => {
+    v.muted = true;
+    setBtn(btn, false);
+    v.play().catch(() => {});
+  });
   const filmObs = new IntersectionObserver(entries => entries.forEach(en => {
-    const v = en.target;
+    const v = en.target, btn = $(".snd-btn", v.parentElement);
     if (en.isIntersecting) {
       if (!v.src) v.src = v.dataset.src;
-      if (!reduced || v.dataset.user) v.play().catch(() => {});
+      if (!reduced || v.dataset.user) playOrFallback(v, btn);
     } else v.pause();
-  }), { threshold: 0.3 });
+  }), { threshold: 0.15 });
   films.forEach(f => {
     const v = $("video", f), btn = $(".snd-btn", f);
     v.muted = true;
     filmObs.observe(v);
-    btn.addEventListener("click", () => {
+    const toggle = () => {
       const on = btn.getAttribute("aria-pressed") !== "true";
       if (on) {
         muteEverything(v);
-        if (!v.src) v.src = v.dataset.src;
+        if (!v.src) { v.src = v.dataset.src; v.load(); }
         v.dataset.user = "1";
         v.muted = false;
-        v.play().catch(() => {});
-      } else v.muted = true;
-      setBtn(btn, on);
-    });
+        v.volume = 1;
+        try { v.currentTime = 0; } catch (err) { /* not seekable yet, plays from where it is */ }
+        setBtn(btn, true);
+        playOrFallback(v, btn);
+      } else {
+        v.muted = true;
+        setBtn(btn, false);
+      }
+    };
+    // the button and the whole film tile both toggle sound
+    btn.addEventListener("click", e => { e.stopPropagation(); toggle(); });
+    f.addEventListener("click", toggle);
   });
   // a reel turned up elsewhere silences the state films
   document.addEventListener("click", e => {
