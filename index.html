@@ -66,7 +66,7 @@
   <div class="wrap">
     <header class="sec-head">
       <h2 class="display"><span class="lt">Who we</span> sell to</h2>
-      <p class="sec-lede">Three states with very different stories, and the people who walk into our stores. Below the states, two stores map their shoppers: Nexus in Ahmedabad (six personas from a 400-person walk-in survey) and Kothrud in Pune (five).</p>
+      <p class="sec-lede">Three states with very different stories, and the people who walk into our stores. Below the states, two shopper boards: Ahmedabad (six personas from a 400-person walk-in survey) and Pune (five).</p>
     </header>
     <div class="states">
       <article class="state state-pune">
@@ -101,7 +101,6 @@
           <div class="sm-main sm-video"><video muted loop playsinline preload="none" poster="assets/posters/gujarat-state-2.jpg" data-src="assets/videos/gujarat-state-2.mp4" aria-label="Gujarat montage video"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play Gujarat montage video with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>
           <div class="sm-a sm-video"><video muted loop playsinline preload="none" poster="assets/posters/gujarat-state-1.jpg" data-src="assets/videos/gujarat-state-1.mp4" aria-label="Kutch sunset and coast video"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play Kutch sunset and coast video with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>
           <img class="sm-b" src="assets/img/gujarat-embroidery.jpg" alt="A woman in traditional dress doing hand embroidery on bright fabric" loading="lazy">
-          <img class="sm-c" src="assets/img/gujarat-coast.jpg" alt="Crowds on a seafront promenade and park along the Gujarat coast" loading="lazy">
         </div>
         <div class="state-body">
           <p class="state-kicker">Gujarat · 5 stores</p>
@@ -129,7 +128,8 @@
         <div class="state-media">
           <div class="sm-main sm-video"><video muted loop playsinline preload="none" poster="assets/posters/mp-state.jpg" data-src="assets/videos/mp-state.mp4" aria-label="Madhya Pradesh film"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play Madhya Pradesh film with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>
           <img class="sm-a" src="assets/img/mp-gwalior-fort.jpg" alt="Man Singh Palace at Gwalior Fort with blue tile work" loading="lazy">
-          <img class="sm-c" src="assets/img/city-mp.jpg" alt="Palace in Madhya Pradesh at sunset" loading="lazy">
+          <img class="sm-c" src="assets/img/mp-rajwada.jpg" alt="Rajwada Palace, Indore, seen from below" loading="lazy">
+          <img class="sm-d" src="assets/img/mp-sanchi.jpg" alt="Sanchi Stupa behind a 200 rupee note that pictures it" loading="lazy">
           <img class="sm-b" src="assets/img/mp-tansen.jpg" alt="Amar Chitra Katha comic cover of Tansen playing the tanpura" loading="lazy">
         </div>
         <div class="state-body">
@@ -139,8 +139,8 @@
           <ul class="state-bits">
             <li>Gwalior is the city of the Scindias, watched over by Gwalior Fort and its 15th-century Man Singh Palace.</li>
             <li>Tansen, the legendary musician of Akbar's court, came from Gwalior. The city still hosts a Tansen music festival every year and is a UNESCO City of Music.</li>
-            <li>Indore has been named India's cleanest city again and again.</li>
-            <li>Bhopal is the City of Lakes.</li>
+            <li>Indore's Rajwada palace was built by the Holkars, and Indore has been named India's cleanest city again and again.</li>
+            <li>Sanchi Stupa, near Bhopal, is a UNESCO World Heritage Site and is printed on the ₹200 note. Bhopal itself is the City of Lakes.</li>
           </ul>
           <h4>Who lives here</h4>
           <ul class="chips"><li>Students and first-job professionals</li><li>Government employees</li><li>Young families</li><li>A fast-growing middle class</li></ul>
@@ -156,8 +156,8 @@
 
     <h3 class="display-s persona-title"><span class="lt">Inside our stores:</span> the shopper personas</h3>
     <div class="seg persona-seg" role="group" aria-label="Choose persona board" id="personaSeg">
-      <button type="button" data-b="nexus" aria-pressed="true">Nexus, Ahmedabad One</button>
-      <button type="button" data-b="kothrud" aria-pressed="false">Kothrud, Pune</button>
+      <button type="button" data-b="nexus" aria-pressed="true">Ahmedabad</button>
+      <button type="button" data-b="kothrud" aria-pressed="false">Pune</button>
     </div>
     <div class="persona-intro" id="personaIntro"></div>
     <div class="persona-grid" id="personaGrid"></div>
@@ -165,13 +165,31 @@
 </section>
 
 <!-- WHY THE WEST -->
-<section class="sec sec-paper why" id="why" data-step>
+<section class="sec sec-mist why" id="why" data-step>
   <div class="wrap">
     <header class="sec-head">
       <h2 class="display"><span class="lt">Why the West is a</span> hidden goldmine</h2>
-      <p class="sec-lede">166.6 million people, 13 stores, and a cluster growing faster than the plan around it. The case in seven numbers.</p>
+      <p class="sec-lede">166.6 million people, only 13 stores, and a sports market that is growing: more people playing, more events, and new sports taking off.</p>
     </header>
     <div class="gold-grid" id="goldGrid"></div>
+
+    <div class="pulse">
+      <div class="pulse-card">
+        <h3 class="display-s"><span class="lt">Who</span> plays sport</h3>
+        <p>Share of people who play regularly, by market.</p>
+        <div id="pulsePlay"></div>
+      </div>
+      <div class="pulse-card">
+        <h3 class="display-s"><span class="lt">What Pune</span> plays in 2027</h3>
+        <p>Pune's top sports plan for 2027, 26.6 Cr across five groups.</p>
+        <div id="pulseMix"></div>
+      </div>
+      <div class="pulse-card">
+        <h3 class="display-s"><span class="lt">Events</span> pulling people out</h3>
+        <p>Community events and races already on the cluster's calendar.</p>
+        <ul class="pulse-events" id="pulseEvents"></ul>
+      </div>
+    </div>
 
     <div class="gold-split">
       <figure class="gold-map">
@@ -185,16 +203,6 @@
       </div>
     </div>
 
-    <div class="history">
-      <div class="history-head">
-        <div>
-          <h3 class="display-s"><span class="lt">50 years of sport,</span> a quick history</h3>
-          <p>From one store near Lille to a 178.77 Cr quarter in the West.</p>
-        </div>
-        <img src="assets/img/blue-voice.jpg" alt="The Blue Voice, October 2026: Decathlon 50 years" loading="lazy">
-      </div>
-      <ol class="timeline" id="historyLine"></ol>
-    </div>
   </div>
 </section>
 

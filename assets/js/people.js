@@ -1,6 +1,6 @@
 /* Why the West, personas and the competitive field.
-   Sources: regional context slide, ultimate data sheet, strategy sheet, Nexus Ahmedabad One persona board,
-   Kothrud persona slide, Pune Marcom calendar (competitor rows), Q4 campaign calendar. */
+   Sources: regional context slide, ultimate data sheet, strategy sheet, Ahmedabad and Pune persona boards,
+   Pune Marcom calendar (competitor rows), Q4 campaign calendar. */
 (() => {
   "use strict";
   const D = window.DATA, PD = window.PLAN_DETAIL;
@@ -13,15 +13,36 @@
   const STORES = { Pune: 5, Gujarat: 5, MP: 3 };
   const people = POP.Pune + POP.Gujarat + POP.MP;
   const GOLD = [
-    { n: `${people.toFixed(1)}M`, l: "people across the three markets", s: `13 stores: one for every ${(people / 13).toFixed(1)}M people` },
-    { n: "+24.15%", l: "Q4 challenge growth", s: "143.99 Cr in Q4 2025 to 178.77 Cr" },
-    { n: "+42.2%", l: "MP stores' Q4 challenge", s: "Bhopal alone is +84.2%" },
-    { n: "25.8–27.4", l: "median age, in years", s: "MP 25.8, Pune 26.3, Gujarat 27.4" },
-    { n: "+11%", l: "women's business growth", s: "Twice the men's +5%, from a 30% share" },
-    { n: "+296%", l: "wholesale challenge growth", s: "2.08 Cr to 8.25 Cr. Digital adds +22.5%" },
-    { n: "87.22 · 59.20 · 32.35", l: "Q4 challenge in Cr: Pune, Gujarat, MP", s: "Pune +22.3%, Gujarat +21.2%, MP +35.9%", wide: true }
+    { n: `${people.toFixed(1)}M`, l: "people across the three markets", s: `Only 13 stores: one for every ${(people / 13).toFixed(1)}M people` },
+    { n: "8–16%", l: "of people play sport regularly", s: "Pune 12–16%, Gujarat 10–14%, MP 8–12%" },
+    { n: "59%", l: "of Pune's 2027 sport plan is trekking and fitness", s: "Trekking 8.39 Cr and fitness 7.28 Cr of 26.6 Cr" },
+    { n: "3.2 lakh", l: "people at Decathlon Play events in 2027", s: "National goal. Sports Utsav alone aims for 2 lakh" },
+    { n: "2,700", l: "runners at our Kiprun launch and Santa Run", s: "7 clubs, 11 community runs, 4 marathons" },
+    { n: "+11%", l: "growth in women's business", s: "Against +5% for men, from a 30% share" },
+    { n: "11% → 22%", l: "progressive players in Ahmedabad's shopper mix", s: "Badminton, tennis, football, pickleball, running" }
   ];
-  $("#goldGrid").innerHTML = GOLD.map((g, i) => `<div class="gold ${i === 0 ? "gold-hero" : ""} ${g.wide ? "gold-wide" : ""}"><b>${g.n}</b><span>${g.l}</span><small>${g.s}</small></div>`).join("");
+  $("#goldGrid").innerHTML = GOLD.map((g, i) => `<div class="gold ${i === 0 ? "gold-hero" : ""}"><b>${g.n}</b><span>${g.l}</span><small>${g.s}</small></div>`).join("");
+
+  // sports market pulse
+  const PLAY = [["Pune", 12, 16, "var(--blue)"], ["Gujarat", 10, 14, "var(--guj)"], ["Madhya Pradesh", 8, 12, "var(--mp)"]];
+  $("#pulsePlay").innerHTML = PLAY.map(([n, a, b, c]) => `<div class="pp-row"><span>${n}</span>
+    <div class="pp-track"><i style="left:${a / 20 * 100}%;width:${(b - a) / 20 * 100}%;background:${c}"></i></div><b>${a}–${b}%</b></div>`).join("") +
+    `<div class="pp-axis"><span>0%</span><span>10%</span><span>20%</span></div>`;
+  const MIXCOL = ["var(--blue)", "#8A92E0", "var(--teal)", "var(--guj)", "var(--mp)"];
+  const mixTot = D.puneSports.reduce((a, x) => a + x.total, 0);
+  $("#pulseMix").innerHTML = `<div class="pm-bar">${D.puneSports.map((x, i) => `<i style="flex:${x.total} 1 0;background:${MIXCOL[i]}" data-tip="<b>${esc(x.sport)}</b><br>${x.total} Cr, ${Math.round(x.total / mixTot * 100)}%"></i>`).join("")}</div>
+    <ul class="pm-list">${D.puneSports.map((x, i) => `<li><i style="background:${MIXCOL[i]}"></i><span>${esc(x.sport)}</span><b>${Math.round(x.total / mixTot * 100)}%</b></li>`).join("")}</ul>`;
+  const PULSE_EVENTS = [
+    ["18 Oct", "Kiprun community run", "Running clubs across the cluster"],
+    ["31 Oct", "Sports Utsav Junior", "Kids' skating workshop"],
+    ["27–29 Nov", "HYROX", "The fitness race format, same weekend as Black Friday"],
+    ["29 Nov", "Adani Marathon", "Ahmedabad's marathon"],
+    ["Q1 2027", "Move Your Way", "3,500 registrations, fit sessions and in-store challenges"],
+    ["Q1 2027", "Beach Fest, Surat", "5,000 participants"],
+    ["Q1 2027", "Bib collection at stores", "20,000 walk-ins"],
+    ["14 Mar – 30 May", "IPL 2027", "Cricket season across the cluster"]
+  ];
+  $("#pulseEvents").innerHTML = PULSE_EVENTS.map(([d, t, x]) => `<li><span>${d}</span><b>${t}</b><small>${x}</small></li>`).join("");
 
   const per = Object.keys(POP).map(k => ({ k, v: POP[k] / STORES[k] }));
   const maxPer = Math.max(...per.map(p => p.v));
@@ -30,17 +51,6 @@
   $("#perStore").innerHTML = per.map(p => `<div class="ps-row"><span>${NAME[p.k]}<small>${STORES[p.k]} stores</small></span>
     <i style="--w:${p.v / maxPer * 100}%;background:${COL[p.k]}"></i><b>${p.v.toFixed(1)}M</b></div>`).join("");
 
-  const HISTORY = [
-    { y: "1976", t: "Decathlon opens its first store, in Englos near Lille, France." },
-    { y: "2009", t: "Decathlon comes to India." },
-    { y: "2024", t: "A new brand identity: Decathlon blue and the orbit logo." },
-    { y: "Q4 2025", t: "The West cluster turns over 143.99 Cr in a quarter." },
-    { y: "Oct 2026", t: "Decathlon turns 50, celebrated in The Blue Voice." },
-    { y: "Q4 2026", t: "The 178.77 Cr challenge: +24.15% on last year." },
-    { y: "20 Dec 2026", t: "A new store opens at Adajan, Surat." },
-    { y: "2030", t: "The Commonwealth Games come to Gujarat." }
-  ];
-  $("#historyLine").innerHTML = HISTORY.map((h, i) => `<li class="${i >= 3 ? "west" : ""}"><b>${h.y}</b><span>${h.t}</span></li>`).join("");
 
   /* ---------- personas ---------- */
   const NEXUS = [
@@ -91,7 +101,7 @@
     if (b === "nexus") {
       const max = 32;
       $("#personaIntro").innerHTML = `
-        <div class="pi-text"><h3 class="display-s"><span class="lt">Nexus, Ahmedabad One:</span> where the mix is heading</h3>
+        <div class="pi-text"><h3 class="display-s"><span class="lt">Ahmedabad:</span> where the mix is heading</h3>
           <p>Built from a 400-person walk-in survey (35%), catchment demographics (25%), footfall analytics (15%), category performance (15%) and the Ahmedabad sports ecosystem (10%). The plan grows progressive players from 11% to 22% of customers and young discoverers from 9% to 14%. The Patron, a business-owner buyer, is not in the mix yet.</p></div>
         <div class="pi-chart">${NEXUS.filter(p => p.now !== null).map(p => `<div class="mix2"><span>${esc(p.n)}</span>
           <div class="mix2-bars"><i class="now" style="--w:${p.now / max * 100}%" data-tip="<b>${esc(p.n)}</b><br>Share now ${p.now}%"></i><i class="tgt" style="--w:${p.target / max * 100}%" data-tip="<b>${esc(p.n)}</b><br>Target ${p.tLabel || p.target + "%"}"></i></div>
@@ -104,8 +114,8 @@
           <dl class="pc-wide">${kv("Lives in", p.lives)}${kv("Plays", p.sports)}${kv("Buys when", p.trigger)}${kv("Pain point", p.pain)}${kv("Needs", p.need)}</dl></div></article>`).join("");
     } else {
       $("#personaIntro").innerHTML = `
-        <div class="pi-text"><h3 class="display-s"><span class="lt">Kothrud, Pune:</span> five personas, one destination</h3>
-          <p>“Decathlon Kothrud is the multi-sport smart city partner, dedicated to its urban customers by bringing their sports closer to people.” Shares are the team's estimates.</p></div>`;
+        <div class="pi-text"><h3 class="display-s"><span class="lt">Pune:</span> five personas, one destination</h3>
+          <p>The team's purpose: be Pune's multi-sport smart city partner, bringing sport closer to people. Shares are the team's estimates.</p></div>`;
       $("#personaGrid").innerHTML = KOTHRUD.map(p => `<article class="pc">
         <div class="pc-img">${ph(p.img, p.n)}<span class="pc-share">${p.share}</span></div>
         <div class="pc-body"><h4>${esc(p.n)}</h4><p>${esc(p.d)}</p>
