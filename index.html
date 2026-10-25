@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Play As One · West Plan</title>
+<meta name="description" content="Decathlon Pune, Gujarat and Madhya Pradesh marketing plan for Q4 2026 and Q1 2027.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233643BA'/%3E%3Cpath d='M9 24 15 8h8l-6 16z' fill='%237AFFA6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,500..900;1,62..125,500..900&family=Inter:wght@400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<a class="skip" href="#scoreboard">Skip to the numbers</a>
+
+<header class="topbar" id="topbar">
+  <a class="wordmark" href="#top" aria-label="Back to top">DECATHLON <span>West</span></a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#scoreboard">Scoreboard</a>
+    <a href="#runway">Q4 runway</a>
+    <a href="#planner">2027 planner</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#playbook">Playbook</a>
+    <a href="#reels">Reels</a>
+    <a href="#q1">Q1 2027</a>
+  </nav>
+  <button class="present-btn" id="presentBtn" type="button" aria-pressed="false" title="Arrow keys move section by section">Present</button>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="hero-kicker">Pune, Gujarat and Madhya Pradesh · Q4 2026 + Q1 2027</p>
+      <h1 class="hero-title" aria-label="Play as one.">
+        <span class="ht-line">Play</span>
+        <span class="ht-line">as one.</span>
+      </h1>
+      <p class="hero-lede">Three markets, one challenge. This is how marketing gets the West cluster to 178 Cr this quarter and keeps the momentum going into 2027.</p>
+      <dl class="hero-stats">
+        <div><dt>Q4 challenge</dt><dd><b data-count="178">178</b> Cr</dd></div>
+        <div><dt>Growth vs last year</dt><dd><b data-count="24.15" data-dec="2">24.15</b>%</dd></div>
+        <div><dt>Q4 marketing spend</dt><dd><b data-count="1.58" data-dec="2">1.58</b> Cr</dd></div>
+        <div><dt>Share of turnover</dt><dd><b data-count="1.09" data-dec="2">1.09</b>%</dd></div>
+      </dl>
+    </div>
+    <div class="hero-phones" id="heroPhones" aria-label="Social reels we take inspiration from">
+      <!-- filled by app.js -->
+    </div>
+  </div>
+  <img class="skyline" src="assets/img/skyline-band.jpg" alt="Illustrated skyline of Pune, Gujarat and Madhya Pradesh landmarks">
+  <div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+</section>
+
+<!-- SCOREBOARD -->
+<section class="sec sec-paper" id="scoreboard" data-step>
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 class="display">The scoreboard</h2>
+      <p class="sec-lede">Where we stand and what we are chasing. Every chart is built from the Q4 plan and the 2027 Marcom calendar.</p>
+    </header>
+
+    <div class="board">
+      <article class="panel panel-xl">
+        <div class="panel-head">
+          <h3>Q4 challenge by channel</h3>
+          <p>Last year (Y1) against this year's challenge, in crore. Each channel is drawn on its own scale so wholesale stays readable.</p>
+        </div>
+        <div class="chart" id="chChannels"></div>
+        <div class="ramp" id="ramp"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h3>Commercial weekends</h3>
+          <p>Turnover per sale weekend, 2025 actual vs 2026 target (Cr).</p>
+        </div>
+        <div class="chart" id="chWeekends"></div>
+      </article>
+
+
+      <article class="panel panel-xl">
+        <div class="panel-head row">
+          <div>
+            <h3>Advertising spend, month by month</h3>
+            <p>2026 realised against the final 2027 plan, in lakh.</p>
+          </div>
+          <div class="seg" role="group" aria-label="Choose market" id="regionSeg">
+            <button type="button" data-r="All" aria-pressed="true">All</button>
+            <button type="button" data-r="Pune" aria-pressed="false">Pune</button>
+            <button type="button" data-r="Gujarat" aria-pressed="false">Gujarat</button>
+            <button type="button" data-r="MP" aria-pressed="false">MP</button>
+          </div>
+        </div>
+        <div class="chart chart-tall" id="chSpend"></div>
+        <div class="spend-notes" id="spendNotes"></div>
+      </article>
+      <article class="panel panel-tall">
+        <div class="panel-head">
+          <h3>Where the Q4 1.58 Cr goes</h3>
+          <p>Spend by funnel stage, in lakh.</p>
+        </div>
+        <div class="funnel" id="funnel"></div>
+        <div class="panel-head" style="margin-top:8px">
+          <h3>City spend by line</h3>
+          <p>Lakh, with the OKR each line answers to.</p>
+        </div>
+        <div class="lines" id="spendLines"></div>
+        <p class="foot">City spend 93 L (0.65% of TO) + MarCom 65 L (0.45%). Realised ambition TO: 244 Cr, to be rechecked.</p>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h3>Online is the fastest lane</h3>
+          <p>Omni turnover per month in 2026 (Cr), with outstore growth on top.</p>
+        </div>
+        <div class="chart" id="chOmni"></div>
+        <p class="foot">Outstore turnover grew 185% in October and 86% in December.</p>
+      </article>
+
+
+
+      <article class="panel">
+        <div class="panel-head">
+          <h3>Digital acceleration to 2030</h3>
+          <p>From 2026 to the 2030 ambition.</p>
+        </div>
+        <div class="digi" id="digital"></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head">
+          <h3>Pune stores</h3>
+          <p>Share of city turnover and 2027 store marketing budget (L).</p>
+        </div>
+        <div class="stores" id="stores"></div>
+      </article>
+      <article class="panel panel-xl">
+        <div class="panel-head">
+          <h3>Pune 2027: what people will play</h3>
+          <p>Planned sport turnover per month (Cr). Trekking and fitness make up 59% of the year.</p>
+        </div>
+        <div class="chart chart-tall" id="chSports"></div>
+        <div class="legend" id="sportsLegend"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Q4 RUNWAY -->
+<section class="sec sec-ink" id="runway" data-step>
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 class="display">The Q4 runway</h2>
+      <p class="sec-lede">August to March in one view. The highlighted band is the Q4 focus window. Stars mark the moments we are betting on.</p>
+    </header>
+    <div class="runway-scroll"><div class="runway" id="runwayChart"></div></div>
+    <div class="runway-key" id="runwayKey"></div>
+
+    <div class="spotlights">
+      <article class="spot spot-kiprun">
+        <div class="spot-media"><video muted loop playsinline preload="none" poster="assets/posters/kiprun.jpg" data-src="assets/videos/kiprun.mp4"></video></div>
+        <div class="spot-body">
+          <h3 class="display-s">Kiprun launch</h3>
+          <p>Our running brand goes to the runners first: clubs, marathons, bib pick-ups and a Santa Run, before a single ad.</p>
+          <ul class="kpis" id="kiprunKpis"></ul>
+        </div>
+      </article>
+
+      <article class="spot spot-winter">
+        <div class="spot-media"><img src="assets/img/winter-sky.jpg" alt="Clouds over a hill trail, winter campaign visual" loading="lazy"></div>
+        <div class="spot-body">
+          <h3 class="display-s">Winter + Travel</h3>
+          <p><b class="big">48%</b> of winter turnover lands in Q4. Five moves to win it:</p>
+          <ol class="steps">
+            <li><b>Influencers.</b> 20 trek videos with route names and demos (1.5 Mn views), 10 footwear UGC videos (1 Mn), creators showing lowest-price best-value offers. 40 influencers, 5 Mn views target.</li>
+            <li><b>In-store merch.</b> A winter window with signage in every store, with a winning-points checklist.</li>
+            <li><b>In-store challenge.</b> NH500 models to lift ABV.</li>
+            <li><b>Affiliation.</b> 50 travel agencies onboarded as affiliates.</li>
+            <li><b>Travel meetups.</b> Store meetups once 300 members are onboarded. Stores open an hour early to catch early footfall.</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="spot spot-gift">
+        <div class="gift-wall">
+          <img src="assets/img/gift-a-sport.jpg" alt="Gift a Sport campaign creative" loading="lazy">
+          <img src="assets/img/gifts-1999.jpg" alt="Gifts under 1,999 rupees banner" loading="lazy">
+          <img src="assets/img/gifts-footballers.jpg" alt="Gift ideas for footballers banner" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3 class="display-s">Gift a Sport</h3>
+          <p>Festive gifting runs from Dussehra to Christmas with ready-made edits: gifts under ₹999, gifts under ₹1,999, Decathlon's Choice, gifts for footballers and gifts for runners.</p>
+        </div>
+      </article>
+
+      <article class="spot spot-surat">
+        <div class="surat-wall">
+          <img src="assets/img/surat-grand-opening.jpg" alt="Grand opening Adajan Surat poster, 20 December 2026" loading="lazy">
+          <img src="assets/img/surat-offer.jpg" alt="Adajan Surat opening offer: free cooler bag, backpack and shopping bag" loading="lazy">
+          <img src="assets/img/surat-decarunners.jpg" alt="Deca Runners free running class schedule at Adajan Surat" loading="lazy">
+        </div>
+        <div class="spot-body">
+          <h3 class="display-s">Adajan, Surat opens 20 Dec</h3>
+          <p>A large-format store for Surat city and the towns around it: Dumas, Vesu, Adajan, Piplod and Vapi. Free gifts with purchase on opening days, Deca Runners classes every week to Jan 16, and twice the usual marketing spend in Q1 to build the habit.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 2027 PLANNER -->
+<section class="sec sec-mist" id="planner" data-step>
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 class="display">2027, month by month</h2>
+      <p class="sec-lede">The full Marcom calendar for Pune. Pick a month to see what competitors will do, how we answer, and what goes live on the ground.</p>
+    </header>
+    <div class="planner-scroll"><div class="planner" id="plannerGrid"></div></div>
+    <div class="month-detail" id="monthDetail" aria-live="polite"></div>
+
+    <div class="ip">
+      <h3 class="display-s">Decathlon Play event IPs, 2027 footfall goals</h3>
+      <div class="ip-bars" id="ipBars"></div>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGY -->
+<section class="sec sec-paper" id="strategy" data-step>
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 class="display">The strategy</h2>
+      <p class="sec-lede">Spend where sport already happens. Win the people who play, and the shoppers follow.</p>
+    </header>
+
+    <div class="budget">
+      <div class="budget-top">
+        <h3>2027 communication budget: <b>56 L</b></h3>
+        <p>Five channels, each with one job.</p>
+      </div>
+      <div class="budget-bar" id="budgetBar" role="tablist" aria-label="Budget channels"></div>
+      <div class="budget-detail" id="budgetDetail"></div>
+    </div>
+
+    <div class="markets">
+      <article class="market">
+        <img src="assets/img/heritage-run.jpg" alt="Heritage run, walk and story community in Gujarat, Pune and MP" loading="lazy">
+        <div>
+          <h3 class="display-s">Pune</h3>
+          <p class="market-tag">Metro, young, active</p>
+          <dl>
+            <div><dt>Population</dt><dd>10.4M</dd></div>
+            <div><dt>Median age</dt><dd>26.3 yrs</dd></div>
+            <div><dt>Urban</dt><dd>36%</dd></div>
+            <div><dt>Plays sport</dt><dd>12–16%</dd></div>
+          </dl>
+          <p>Fitness culture, premium sports, young professionals. Five stores: Wakad, NIBM, SGS Mall, Amanora, Wagholi.</p>
+        </div>
+      </article>
+      <article class="market">
+        <img src="assets/img/gujarat-map.jpg" alt="Map of Gujarat stores: Motera, Nexus, Rajkot, Vadodara, Surat" loading="lazy">
+        <div>
+          <h3 class="display-s">Gujarat</h3>
+          <p class="market-tag">Affluent, entrepreneurial, sports growth</p>
+          <dl>
+            <div><dt>Population</dt><dd>70.4M</dd></div>
+            <div><dt>Median age</dt><dd>27.4 yrs</dd></div>
+            <div><dt>Urban</dt><dd>42.6%</dd></div>
+            <div><dt>Share of India GDP</dt><dd>8%</dd></div>
+          </dl>
+          <p>High urbanisation and a strong economy. Ahmedabad, Surat, Vadodara and Rajkot lead, and the state hosts the 2030 Commonwealth Games.</p>
+        </div>
+      </article>
+      <article class="market">
+        <img src="assets/img/local-love.jpg" alt="Two cyclists in traditional dress at a local event" loading="lazy">
+        <div>
+          <h3 class="display-s">Madhya Pradesh</h3>
+          <p class="market-tag">Emerging, young, high potential</p>
+          <dl>
+            <div><dt>Stores</dt><dd>Bhopal, Indore, Gwalior</dd></div>
+            <div><dt>2027 spend</dt><dd>1.0 Cr</dd></div>
+          </dl>
+          <p>Emerging cities, rising incomes and fast-growing youth participation. Spend goes up 65% in 2027 to build the habit early.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="love">
+      <p class="love-quote">“Decathlon is loved by Gujaratis, Punekars and MP people. We look out for the people first and take care of the community.”</p>
+      <p class="love-note">Local adaptation principle from the plan.</p>
+    </div>
+
+    <div class="audiences">
+      <h3 class="display-s">Every channel has one job</h3>
+      <div class="aud-grid">
+        <div class="aud">
+          <h4>Bring in new customers</h4>
+          <ul class="chips"><li>Outdoor and hoardings</li><li>Influencers</li><li>Meta ads</li><li>Organic social</li><li>Google My Business</li><li>TV</li><li>Practice-place tie-ups</li></ul>
+        </div>
+        <div class="aud">
+          <h4>Bring existing customers back</h4>
+          <ul class="chips"><li>WhatsApp</li><li>Push notifications</li><li>RCS</li><li>In-app</li><li>Membership points</li><li>Community meetups</li></ul>
+        </div>
+        <div class="aud">
+          <h4>Close the sale in store</h4>
+          <ul class="chips"><li>Facade</li><li>Flyers</li><li>TG headers</li><li>Standees</li><li>A4 and stop rayons</li><li>In-mall media</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="aops">
+      <div class="aops-copy">
+        <h3 class="display-s">Area of practice tie-ups</h3>
+        <p>20 AOP partnerships across 3 markets: travel agencies, gyms and fitness studios, yoga studios and racket academies. Each partner gets in-store branding, joint events and exclusive member offers. We get footfall from people who already play.</p>
+      </div>
+      <div class="aop-cols">
+        <div><b>5</b><span>tie-ups per store in Pune</span></div>
+        <div><b>15</b><span>across Gujarat stores</span></div>
+        <div><b>11</b><span>across MP stores</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAYBOOK -->
+<section class="sec sec-blue" id="playbook" data-step>
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 class="display">The playbook</h2>
+      <p class="sec-lede">How each strategy shows up in the street, on the phone and in the store. Pick a channel.</p>
+    </header>
+    <div class="switch">
+      <div class="switch-list" role="tablist" aria-label="Channels" id="switchList"></div>
+      <div class="switch-panel" id="switchPanel" role="tabpanel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- REELS -->
+<section class="sec sec-ink" id="reels" data-step>
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 class="display">Reels for our local pages</h2>
+      <p class="sec-lede">Seven reels that set the tone for Decathlon Pune, Gujarat and MP on social. Tap one to play it with sound.</p>
+    </header>
+  </div>
+  <div class="reel-row" id="reelRow"></div>
+  <div class="wrap">
+    <div class="content-plan" id="contentPlan"></div>
+  </div>
+</section>
+
+<!-- Q1 2027 -->
+<section class="sec sec-paper" id="q1" data-step>
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 class="display">Q1 2027: keep the run going</h2>
+      <p class="sec-lede">Priority sports: trekking, fitness and running. Clearance is the commercial campaign. Republic Day, new arrivals, footwear and Women's Day carry the brand.</p>
+    </header>
+
+    <dl class="q1-kpis">
+      <div><dt>Turnover growth</dt><dd>12.1%</dd></div>
+      <div><dt>Incremental turnover</dt><dd>8.3 Cr</dd></div>
+      <div><dt>Bills</dt><dd>3.7 L <small>+10%</small></dd></div>
+      <div><dt>Conversion</dt><dd>33%</dd></div>
+    </dl>
+
+    <div class="levers">
+      <article class="lever">
+        <h3>Traffic</h3>
+        <p class="lever-goal">Customers +10%</p>
+        <ul>
+          <li>50 influencer videos on new arrivals and sale, 5M views</li>
+          <li>Move Your Way: 3.5k registrations, fit sessions and in-store challenges</li>
+          <li>Bib collection at store: 30 races, 20k walk-ins</li>
+          <li>Apartment and corporate events: 10k engagements</li>
+          <li>Beach Fest in Surat with 5k participants</li>
+          <li>2x marketing spend for the new Surat store</li>
+        </ul>
+      </article>
+      <article class="lever">
+        <h3>Retention</h3>
+        <p class="lever-goal">Returning customers +15%</p>
+        <ul>
+          <li>Membership, RCS and WhatsApp: 5 lakh customers told about sale and new arrivals</li>
+          <li>Workshop Mela in 10 apartments: 250 bikes serviced, 25 buybacks</li>
+          <li>Membership points earned through sport</li>
+          <li>Community meetup with 500 runners inside stores</li>
+        </ul>
+      </article>
+      <article class="lever">
+        <h3>Conversion</h3>
+        <p class="lever-goal">Bills +10%</p>
+        <ul>
+          <li>Sale implant at 3 touchpoints in every store</li>
+          <li>New arrivals running in parallel with the sale</li>
+          <li>Winter Off up to 50%, 1–23 January</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="q1-spend">
+      <h3 class="display-s">Q1 advertising, 2026 vs 2027 plan</h3>
+      <div class="chart" id="chQ1"></div>
+    </div>
+
+    <div class="holidays">
+      <h3 class="display-s">Holidays and moments, January to March</h3>
+      <div class="hol-chart" id="holidays"></div>
+    </div>
+  </div>
+</section>
+
+<!-- HORIZON -->
+<section class="horizon" id="horizon" data-step>
+  <div class="wrap">
+    <p class="horizon-kicker">On the horizon</p>
+    <h2 class="horizon-title">Commonwealth Games 2030. Gujarat.</h2>
+    <p class="horizon-lede">Every tie-up, run club and society league we build in 2027 is groundwork for the biggest sporting moment the West has seen.</p>
+  </div>
+  <footer class="foot-bar">
+    <span>Decathlon Pune, Gujarat and MP · Marketing plan Q4 2026 and Q1 2027</span>
+    <span>Confidential. For shareholder review.</span>
+  </footer>
+</section>
+
+<div class="tip" id="tip" role="tooltip" hidden></div>
+<div class="hud" id="hud" hidden></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
