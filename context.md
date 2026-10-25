@@ -170,6 +170,7 @@ Hero → People ("Who we sell to": Pune, Gujarat, MP state stories with films) �
 
 - 2026-10-25: Built site from deck + Marcom calendar; Vercel + private GitHub repo; data audit; store-by-store from ultimate sheet; Blue Voice restyle; why West, personas, field; state stories with films and sound; Surat opening plan; chapter structure; AOP video; Kantar; content calendar with Piyush Pandey rules, hero films, photos, reels folded in; Gujarat "land of Garba" heading; context.md + CLAUDE.md + Stop hook created.
 - 2026-10-25: Reels heading → "Reels to take inspiration from", note label "Steal it for" → "Where we'll use it". Playbook renamed "Marketing playbook" (nav + heading) and given an "On the road" hoarding wall: Pune, Surat, Bhopal, Ahmedabad + Baroda (deck p9) and the practice-place kit wall, with counts and a footnote on 15 vs 16 boards. New images `hoarding-surat.jpg`, `hoarding-bhopal.jpg`. Assets ?v=20261025l.
+- 2026-10-25: No new data. Local preview server (port 8765) stopped; restart with `python -m http.server 8765 --bind 127.0.0.1` when needed.
 
 ---
 
