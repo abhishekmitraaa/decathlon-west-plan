@@ -22,6 +22,7 @@
     <a href="#runway">Q4 runway</a>
     <a href="#planner">2027 planner</a>
     <a href="#strategy">Strategy</a>
+    <a href="#stores">Stores</a>
     <a href="#playbook">Playbook</a>
     <a href="#reels">Reels</a>
     <a href="#q1">Q1 2027</a>
@@ -41,10 +42,10 @@
       </h1>
       <p class="hero-lede">Three markets, one challenge. This is how marketing gets the West cluster to 178 Cr this quarter and keeps the momentum going into 2027.</p>
       <dl class="hero-stats">
-        <div><dt>Q4 challenge</dt><dd><b data-count="178">178</b> Cr</dd></div>
+        <div><dt>Q4 challenge</dt><dd><b data-count="178.77" data-dec="2">178.77</b> Cr</dd></div>
         <div><dt>Growth vs last year</dt><dd><b data-count="24.15" data-dec="2">24.15</b>%</dd></div>
-        <div><dt>Q4 marketing spend</dt><dd><b data-count="1.58" data-dec="2">1.58</b> Cr</dd></div>
-        <div><dt>Share of turnover</dt><dd><b data-count="1.09" data-dec="2">1.09</b>%</dd></div>
+        <div><dt>Q4 marketing plan</dt><dd><b data-count="1.6" data-dec="2">1.60</b> Cr</dd></div>
+        <div><dt>Of challenge turnover</dt><dd><b data-count="0.9" data-dec="2">0.90</b>%</dd></div>
       </dl>
     </div>
     <div class="hero-phones" id="heroPhones" aria-label="Social reels we take inspiration from">
@@ -67,7 +68,7 @@
       <article class="panel panel-xl">
         <div class="panel-head">
           <h3>Q4 challenge by channel</h3>
-          <p>Last year (Y1) against this year's challenge, in crore. Each channel is drawn on its own scale so wholesale stays readable.</p>
+          <p>Q4 2025 against this year's challenge, in crore, from the store-level challenge sheet. Each channel is drawn on its own scale so wholesale stays readable.</p>
         </div>
         <div class="chart" id="chChannels"></div>
         <div class="ramp" id="ramp"></div>
@@ -86,7 +87,7 @@
         <div class="panel-head row">
           <div>
             <h3>Advertising spend, month by month</h3>
-            <p>2026 realised against the final 2027 plan, in lakh.</p>
+            <p>2026 actual to September, then the Q4 plan, against the 2027 plan. In lakh.</p>
           </div>
           <div class="seg" role="group" aria-label="Choose market" id="regionSeg">
             <button type="button" data-r="All" aria-pressed="true">All</button>
@@ -100,7 +101,7 @@
       </article>
       <article class="panel panel-tall">
         <div class="panel-head">
-          <h3>Where the Q4 1.58 Cr goes</h3>
+          <h3>Q4 mix by funnel stage</h3>
           <p>Spend by funnel stage, in lakh.</p>
         </div>
         <div class="funnel" id="funnel"></div>
@@ -128,7 +129,7 @@
           <h3>Pune stores</h3>
           <p>Each store's share of Pune city turnover.</p>
         </div>
-        <div class="stores" id="stores"></div>
+        <div class="stores" id="puneStoreShare"></div>
       </article>
       <article class="panel panel-full">
         <div class="panel-head">
@@ -274,9 +275,9 @@
           <p class="market-tag">Emerging, young, high potential</p>
           <dl>
             <div><dt>Stores</dt><dd>Bhopal, Indore, Gwalior</dd></div>
-            <div><dt>2027 spend</dt><dd>1.0 Cr</dd></div>
+            <div><dt>2027 spend plan</dt><dd>0.62 Cr</dd></div>
           </dl>
-          <p>Emerging cities, rising incomes and fast-growing youth participation. Spend goes up 65% in 2027 to build the habit early.</p>
+          <p>Emerging cities, rising incomes and fast-growing youth participation. MP is the only state where the 2027 plan spends more than 2026, up 17%.</p>
         </div>
       </article>
     </div>
@@ -284,6 +285,23 @@
     <div class="love">
       <p class="love-quote">“Decathlon is loved by Gujaratis, Punekars and MP people. We look out for the people first and take care of the community.”</p>
       <p class="love-note">Local adaptation principle from the plan.</p>
+    </div>
+
+    <div class="shoppers">
+      <div class="shop-bar" role="img" aria-label="Men are about 70% of the business and growing 5%; women are about 30% and growing 11%">
+        <div class="shop-men" style="--w:70%"><b>70%</b><span>Men, growing about 5%</span></div>
+        <div class="shop-women" style="--w:30%"><b>30%</b><span>Women, growing about 11%</span></div>
+      </div>
+      <p>Women are a third of the business but growing twice as fast. Women-centric events also bring family and friends, so the basket is bigger. That is why every store plan below includes them.</p>
+    </div>
+
+    <div class="toolkit">
+      <div class="toolkit-head">
+        <h3 class="display-s">The strategy toolkit</h3>
+        <p>26 tactics and what each one gives us. Filter by the benefit you need. Tactics marked MarCom are run centrally.</p>
+      </div>
+      <div class="seg seg-wrap" role="group" aria-label="Filter tactics by benefit" id="toolkitFilter"></div>
+      <div class="toolkit-grid" id="toolkitGrid"></div>
     </div>
 
     <div class="audiences">
@@ -314,6 +332,44 @@
         <div><b>15</b><span>tie-ups per store in Gujarat</span></div>
         <div><b>11</b><span>tie-ups per store in MP</span></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORES -->
+<section class="sec sec-mist" id="stores" data-step>
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 class="display">Store by store</h2>
+      <p class="sec-lede">13 stores carry the 178.77 Cr challenge. Pick a store on the map or in the list to see what it runs, where it plays and how it reaches people.</p>
+    </header>
+
+    <div class="st-top">
+      <div class="st-map" id="storeMap" aria-label="Map of the 13 stores"></div>
+      <div class="st-rank">
+        <div class="panel-head row">
+          <div>
+            <h3>Compare the stores</h3>
+            <p id="rankNote">Turnover each store must add beyond its ambition in Q4 (Cr).</p>
+          </div>
+          <div class="seg" role="group" aria-label="Sort stores by" id="rankSeg">
+            <button type="button" data-k="overAmbition" aria-pressed="true">Over ambition</button>
+            <button type="button" data-k="growth" aria-pressed="false">Growth</button>
+            <button type="button" data-k="budgetTotal" aria-pressed="false">Q4 budget</button>
+          </div>
+        </div>
+        <div class="st-list" id="storeRank"></div>
+      </div>
+    </div>
+
+    <article class="st-detail" id="storeDetail" aria-live="polite"></article>
+
+    <div class="st-mix">
+      <div class="toolkit-head">
+        <h3 class="display-s">Where each state's Q4 money goes</h3>
+        <p>October to December 2026 plan by line item, in lakh.</p>
+      </div>
+      <div id="stateMix"></div>
     </div>
   </div>
 </section>
@@ -425,5 +481,6 @@
 
 <script src="assets/js/data.js"></script>
 <script src="assets/js/app.js"></script>
+<script src="assets/js/stores.js"></script>
 </body>
 </html>

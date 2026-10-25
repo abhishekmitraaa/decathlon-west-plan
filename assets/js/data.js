@@ -4,11 +4,11 @@
 
 window.DATA = {
   q4: {
-    target: 178, growth: 24.15, base: 144,
+    target: 178.77, growth: 24.15, base: 144.0,
     channels: [
-      { name: "In-store", y1: 129, challenge: 154, growth: 17 },
-      { name: "Digital outstore (decathlon.in)", y1: 9.99, challenge: 12, growth: 22.53 },
-      { name: "Wholesale", y1: 2.08, challenge: 8.25, growth: 691 }
+      { name: "Stores (13)", y1: 129.04, challenge: 154.75, growth: 19.9 },
+      { name: "Digital", y1: 12.87, challenge: 15.77, growth: 22.5 },
+      { name: "Wholesale", y1: 2.08, challenge: 8.25, growth: 296.0 }
     ],
     months: [
       { m: "October", growth: 13.9 },
@@ -43,12 +43,13 @@ window.DATA = {
   ],
   spendTotals: { city: 93, marcom: 65, total: 158, share: 1.09, cityShare: 0.65, marcomShare: 0.45 },
 
-  // Advertising spend by month, lakh. 2026 = realised, 2027 = final plan ("AFTER" table)
+  // Advertising spend by month, lakh (ultimate data sheet rows 125-134).
+  // 2026: Jan-Sep realised, Oct-Dec = Q4 plan from the state line tables. 2027 = plan.
   spend: {
-    months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
-    Pune:    { y26: [24.07,8.74,22.75,26.57,25.18,30.26,23.42,22.47,19.70,31.39,36.52,38.11], y27: [23.95,18.90,24.14,26.84,31.29,28.15,30.36,24.81,18.45,19.03,28.41,30.12] },
-    Gujarat: { y26: [20.24,14.73,28.75,33.33,30.87,24.42,24.73,12.98,23.82,24.38,27.32,31.49], y27: [18.78,13.05,17.78,20.37,23.99,20.09,19.28,18.35,10.66,14.07,19.61,21.11] },
-    MP:      { y26: [2.87,2.22,0.54,2.81,2.86,2.38,2.48,1.92,7.10,10.90,12.30,12.29],         y27: [10.43,6.20,7.37,8.33,9.63,8.68,9.00,8.24,3.32,4.22,11.69,12.89] }
+    months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    Pune: { y26: [24.07, 8.74, 22.75, 26.57, 25.18, 30.26, 23.42, 22.47, 19.7, 16.5, 27.0, 10.75], y27: [13.1, 12.05, 18.31, 17.45, 22.73, 19.93, 17.31, 13.82, 13.49, 16.7, 22.64, 20.95] },
+    Gujarat: { y26: [20.24, 14.73, 28.75, 33.33, 30.87, 24.42, 24.73, 12.98, 23.82, 19.95, 26.83, 31.65], y27: [11.24, 11.46, 11.69, 14.01, 17.18, 12.85, 10.9, 10.65, 10.84, 10.81, 15.65, 16.68] },
+    MP: { y26: [2.87, 2.22, 0.54, 2.81, 2.86, 2.38, 2.48, 1.92, 7.1, 6.8, 9.87, 11.09], y27: [3.84, 4.07, 3.47, 4.08, 5.22, 4.04, 3.69, 3.62, 3.89, 6.62, 9.25, 10.08] }
   },
 
   // Omni turnover by month, 2026, Cr (Master Data sheet)
@@ -132,33 +133,46 @@ window.RUNWAY = {
     { name: "National campaigns", items: [
       { t: "Sale", s: "2026-08-03", e: "2026-08-28", k: "sale", approx: true },
       { t: "New arrivals", s: "2026-09-02", e: "2026-09-28", k: "nat", approx: true },
+      { t: "Winter Travel campaign", s: "2026-10-15", e: "2027-01-30", k: "nat", star: true },
+      { t: "Travel", s: "2026-10-15", e: "2026-12-31", k: "nat" },
       { t: "Footwear phase 4", s: "2026-10-01", e: "2027-01-25", k: "nat", approx: true },
-      { t: "Winter + Travel + Trek", s: "2026-10-01", e: "2027-01-25", k: "nat", star: true, approx: true },
-      { t: "Kiprun launch", s: "2026-10-18", e: "2026-11-28", k: "nat", approx: true },
+      { t: "Kiprun launch India", s: "2026-10-01", e: "2026-11-30", k: "nat", approx: true },
+      { t: "MH500 backpack", s: "2026-11-01", e: "2026-11-30", k: "nat", approx: true },
       { t: "Fitness: Movement for All", s: "2027-01-01", e: "2027-01-31", k: "nat", approx: true },
       { t: "New arrivals", s: "2027-02-01", e: "2027-03-31", k: "nat", approx: true },
       { t: "Footwear", s: "2027-02-01", e: "2027-03-31", k: "nat", approx: true }
+    ]},
+    { name: "Sport of the month", items: [
+      { t: "Running", s: "2026-10-01", e: "2026-10-31", k: "sport" },
+      { t: "Climbing, trekking", s: "2026-11-01", e: "2026-11-30", k: "sport" },
+      { t: "Trekking", s: "2026-12-01", e: "2026-12-31", k: "sport" }
     ]},
     { name: "Commercial weekends and sales", items: [
       { t: "Dussehra", s: "2026-10-16", e: "2026-10-20", k: "sale", note: "7.5 Cr" },
       { t: "Diwali sale", s: "2026-10-31", e: "2026-11-01", k: "sale", note: "5.5 Cr" },
       { t: "Black Friday", s: "2026-11-27", e: "2026-11-30", k: "sale", star: true, note: "12 Cr" },
-      { t: "EOY festive sale", s: "2026-12-18", e: "2026-12-25", k: "sale", note: "20 Cr" },
+      { t: "Christmas sale", s: "2026-12-19", e: "2026-12-31", k: "sale" },
       { t: "Republic Day sale", s: "2027-01-20", e: "2027-01-26", k: "sale" },
       { t: "Sale campaign", s: "2027-02-01", e: "2027-02-28", k: "sale", approx: true },
       { t: "Women's Day", s: "2027-03-01", e: "2027-03-08", k: "sale" }
     ]},
-    { name: "Local adaptations and events", items: [
-      { t: "Kiprun 5K run", s: "2026-10-01", e: "2026-10-31", k: "local", approx: true },
-      { t: "Festive gifting: Gift a Sport", s: "2026-10-03", e: "2026-12-25", k: "local", star: true, approx: true },
-      { t: "Local events at store", s: "2026-10-06", e: "2026-12-24", k: "local", approx: true },
-      { t: "Kids festival", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
+    { name: "Gifting and community", items: [
+      { t: "Navratri, Dussehra", s: "2026-10-11", e: "2026-10-20", k: "local", approx: true },
+      { t: "Kiprun community run", s: "2026-10-18", e: "2026-10-18", k: "local", star: true },
+      { t: "Kids festival", s: "2026-10-31", e: "2026-11-02", k: "local" },
+      { t: "Diwali: Gift a Sport", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
+      { t: "Children's Day", s: "2026-11-14", e: "2026-11-14", k: "local" },
+      { t: "Decathlon CSR initiatives", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
+      { t: "Christmas: Gift a Sport", s: "2026-12-01", e: "2026-12-31", k: "local", approx: true },
       { t: "Store opening: Adajan, Surat", s: "2026-12-20", e: "2027-01-25", k: "open", star: true, approx: true },
       { t: "Local activations", s: "2027-01-01", e: "2027-01-31", k: "local", approx: true },
-      { t: "Fitness events", s: "2027-01-03", e: "2027-01-30", k: "local", approx: true },
       { t: "Uttarayan", s: "2027-01-14", e: "2027-01-15", k: "local" },
       { t: "Summer launch", s: "2027-03-01", e: "2027-03-31", k: "local", approx: true },
       { t: "Holi", s: "2027-03-15", e: "2027-03-22", k: "local" }
+    ]},
+    { name: "External events", items: [
+      { t: "HYROX", s: "2026-11-27", e: "2026-11-29", k: "ext" },
+      { t: "Adani Marathon", s: "2026-11-29", e: "2026-11-29", k: "ext" }
     ]},
     { name: "Hoardings and influencers", items: [
       { t: "16 hoardings: 5 Pune, 4 Baroda, 3 Surat, 2 Ahmedabad, 1 Rajkot, 1 Bhopal", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
@@ -166,6 +180,61 @@ window.RUNWAY = {
       { t: "50 influencer videos, 5M views", s: "2027-01-01", e: "2027-03-31", k: "ooh", approx: true }
     ]}
   ]
+};
+
+/* Strategy toolkit: what each tactic gives (team's strategy sheet). marcom = run centrally by MarCom. */
+window.TOOLKIT = [
+  { s: "Society activations", gives: "New user growth, indirect walk-ins with a bait", word: "Growth", benefit: "Walk-ins" },
+  { s: "Running / cycling events bib collection", gives: "Good awareness, connects with youth (18–28)", word: "Youth", benefit: "Awareness" },
+  { s: "School activation", gives: "Family and kids growth, direct turnover with moms, higher ABV", word: "Families", benefit: "Turnover" },
+  { s: "Women-centric events", gives: "Women bring family and friends, so bigger basket", word: "Basket value", benefit: "Turnover" },
+  { s: "Influencers", gives: "Fast reach, credibility, new audience trials", word: "Reach", benefit: "Awareness + walk-ins" },
+  { s: "Cleanup drives and NGO events", gives: "Local goodwill, trust, PR and content value", word: "Goodwill", benefit: "Reputation" },
+  { s: "Playground events at stores", gives: "Direct footfall", word: "Footfall", benefit: "Walk-ins" },
+  { s: "Playground occupancy increase", gives: "Repeat visits, longer dwell time, family purchases", word: "Habit", benefit: "Retention" },
+  { s: "Hoardings", gives: "Visibility near the store, hard to measure", word: "Visibility", benefit: "Awareness" },
+  { s: "Metro wrap", gives: "Daily commuter reach, city-level presence", word: "Presence", benefit: "Awareness" },
+  { s: "Social media content of teammates", gives: "Authentic, trusted, humanises the store, low cost", word: "Trust", benefit: "Engagement" },
+  { s: "Brand content (content of us)", gives: "Awareness, storytelling, product education, fuels ads and influencers", word: "Awareness", benefit: "Awareness + community" },
+  { s: "Meta ads", gives: "Targeted reach by area and age, trackable leads", word: "Targeting", benefit: "Direct revenue", marcom: true },
+  { s: "AOP hoarding at a sports partner academy", gives: "Sporty audience, players and parents, high relevance", word: "Relevance", benefit: "Awareness" },
+  { s: "In-store events", gives: "Direct footfall and conversion, community building", word: "Conversion", benefit: "Engagement" },
+  { s: "WhatsApp / CRM broadcasts to existing customers", gives: "Repeat purchase, cheapest way to bring people back", word: "Retention", benefit: "Retention", marcom: true },
+  { s: "Google Business Profile and local search ads", gives: "Catches people already searching “sports store near me”", word: "Intent", benefit: "Direct revenue", marcom: true },
+  { s: "Corporate and office tie-ups", gives: "Employee wellness events, bulk and B2B orders", word: "Walk-ins", benefit: "Turnover" },
+  { s: "College and campus activations", gives: "Young buyers, sports clubs, event footfall", word: "Awareness", benefit: "Young users" },
+  { s: "Gym, yoga studio and sports club tie-ups", gives: "Active audience, referral walk-ins", word: "Referrals", benefit: "Walk-ins" },
+  { s: "Free workshops and coaching", gives: "Bike repair, fitness and beginner sports: skills, trust, repeat visits", word: "Community", benefit: "Engagement" },
+  { s: "Local tournaments and leagues at the store", gives: "Footfall, team bulk buying, content", word: "Teams", benefit: "Engagement + walk-ins" },
+  { s: "Referral and loyalty offers", gives: "Word of mouth, new users through existing ones", word: "Advocacy", benefit: "Acquisition" },
+  { s: "Mall pop-ups", gives: "Reach in high-footfall spots outside the store", word: "Exposure", benefit: "Awareness + walk-ins" },
+  { s: "Local athlete or coach as ambassador", gives: "Credibility in the city, strong content", word: "Credibility", benefit: "Awareness" },
+  { s: "In-store visual merchandising", gives: "Conversion", word: "Festive", benefit: "Conversion" }
+];
+
+/* Who buys: team's strategy sheet. */
+window.SHOPPERS = { men: { share: 70, growth: 5 }, women: { share: 30, growth: 11 } };
+
+/* Per-city mediums that are confirmed in the deck or sheets. */
+window.CITY_MEDIUMS = {
+  Pune: { hoardings: 5, metro: true, influencers: "Pune (Adi)", aop: { travel: 1, gym: 1, yoga: 1, racket: 2 } },
+  Ahmedabad: { hoardings: 2, metro: true, influencers: "Gujarat pool of 40", aop: { travel: 5, gym: 3, yoga: 4, racket: 3 } },
+  Vadodara: { hoardings: 4, metro: false, influencers: "Gujarat pool of 40", aop: { travel: 5, gym: 3, yoga: 4, racket: 3 } },
+  Surat: { hoardings: 3, metro: false, influencers: "Gujarat pool of 40", aop: { travel: 5, gym: 3, yoga: 4, racket: 3 } },
+  Rajkot: { hoardings: 1, metro: false, influencers: "Gujarat pool of 40", aop: { travel: 5, gym: 3, yoga: 4, racket: 3 } },
+  Indore: { hoardings: 0, metro: false, influencers: "MP pool of 40", aop: { travel: 5, gym: 3, yoga: 1, racket: 2 } },
+  Bhopal: { hoardings: 1, metro: false, influencers: "MP pool of 40", aop: { travel: 5, gym: 3, yoga: 1, racket: 2 } },
+  Gwalior: { hoardings: 0, metro: false, influencers: "MP pool of 40", aop: { travel: 5, gym: 3, yoga: 1, racket: 2 } }
+};
+
+/* Store or city specific moments that the sheets and deck confirm. */
+window.STORE_MOMENTS = {
+  Gujarat: ["Navratri and Dussehra in October", "Uttarayan, 14–15 Jan", "IPL starts 14 Mar"],
+  Ahmedabad: ["Adani Marathon, 29 Nov", "Metro stations are on the Sport is Everywhere QR-wall list"],
+  Surat: ["New store at Adajan opens 20 Dec", "Beach Fest with 5k participants in Q1", "2x marketing spend in Q1"],
+  Pune: ["Metro stations are on the Sport is Everywhere QR-wall list", "Shivaji Maharaj Jayanti long weekend, 19 Feb"],
+  MP: ["Sant Ravidas Jayanti, 20 Feb"],
+  Bhopal: ["Bhopal hoardings run Nov to Jan (2026 update)"]
 };
 
 /* 2027 year planner lanes. Months are 0 = Jan … 11 = Dec, items span [a, b]. */
@@ -502,34 +571,8 @@ window.PLAN_DETAIL = {
   "Society member value offers - all 5",
   "Christmas family sport day - all 5"
  ],
- "sportsEvent": [
-  "Running - Wakad/SGS + family sport - Amanora/Wagholi/NIBM",
-  "Women’s fitness - all 5 catchments",
-  "Wakad: Football Wagholi: Cricket Amanora: Pickleball NIBM: Badminton SGS: Running",
-  "Summer sports day - Amanora/Wagholi",
-  "Family multi-sport - Amanora/NIBM/Wagholi",
-  "Football - Wakad/SGS",
-  "Indoor fitness - NIBM/Amanora/SGS",
-  "All 5: National Sports Day",
-  "Running/cycling/product trials - Wakad/SGS",
-  "Festive sport carnival - Amanora/Wagholi/NIBM",
-  "Conversion events - Wakad/SGS + local events in other stores",
-  "All 5: Gift a Sport"
- ],
- "influencers": [
-  "Fitness/running creators mapped to each store catchment",
-  "Women creators + athletes",
-  "Cricket/football/pickleball creators",
-  "Family + kids creators",
-  "Parenting + family creators",
-  "Football + running athletes",
-  "Fitness + monsoon creators",
-  "Local athletes from all 5 catchments",
-  "Technical product reviewers",
-  "Pune lifestyle + family creators",
-  "Value/deal creators",
-  "Gifting + lifestyle creators"
- ],
+ "sportsEvent": ["Running - Wakad/SGS + family sport - Amanora/Wagholi/NIBM", "Women’s fitness - all 5 catchments", "Wakad: Football\nWagholi: Cricket\nAmanora: Pickleball\nNIBM: Badminton\nSGS: Running", "Summer sports day - Amanora/Wagholi", "Family multi-sport - Amanora/NIBM/Wagholi", "Football - Wakad/SGS", "Indoor fitness - NIBM/Amanora/SGS", "All 5: National Sports Day", "Running/cycling/product trials - Wakad/SGS", "Festive sport carnival - Amanora/Wagholi/NIBM", "Conversion events - Wakad/SGS + local events in other stores", "All 5: Gift a Sport"],
+ "influencers": ["Fitness/running creators mapped to each store catchment", "Women creators + athletes", "Cricket/football/pickleball creators", "Family + kids creators", "Parenting + family creators", "Football + running athletes", "Fitness + monsoon creators", "Local athletes from all 5 catchments", "Technical product reviewers", "Pune lifestyle + family creators", "Value/deal creators", "Gifting + lifestyle creators"],
  "ooh": [
   "Wakad: BIG OOH\nSGS: Central visibility\nWagholi: Nagar Road entry\nAmanora: Mall media\nNIBM: Hyperlocal only",
   "Amanora: Mall + women-led media\nSGS: Central Pune\nOthers: digital/local",
@@ -544,20 +587,7 @@ window.PLAN_DETAIL = {
   "Wakad + SGS: Black Friday conversion OOH\nOthers: hyperlocal",
   "Amanora + Wakad: Christmas/New Year\nWagholi/SGS: local"
  ],
- "storeActivation": [
-  "All 5: New Year, New Sport",
-  "All 5: Women Who Play",
-  "Wakad/SGS: Cricket/Pickleball; Wagholi: Cricket; Amanora: Family; NIBM: Badminton",
-  "Amanora/Wagholi: Summer Sport Hub; other stores local sport",
-  "Amanora: Sports Utsav + family; Wagholi/NIBM: camps",
-  "Wakad: Football; other 4: local football activations",
-  "All 5: Monsoon Sport Zone",
-  "All 5: National Sports Day",
-  "All 5: New Arrival / Product Demo",
-  "Amanora: Gift a Sport; all: festive sport",
-  "All 5: Black Friday conversion",
-  "All 5: Christmas + New Year"
- ],
+ "storeActivation": ["All 5: New Year, New Sport", "All 5: Women Who Play", "Wakad/SGS: Cricket/Pickleball; Wagholi: Cricket; Amanora: Family; NIBM: Badminton", "Amanora/Wagholi: Summer Sport Hub; other stores local sport", "Amanora: Sports Utsav + family; Wagholi/NIBM: camps", "Wakad: Football; other 4: local football activations", "All 5: Monsoon Sport Zone", "All 5: National Sports Day", "All 5: New Arrival / Product Demo", "Amanora: Gift a Sport; all: festive sport", "All 5: Black Friday conversion", "All 5: Christmas + New Year"],
  "flyers": [
   "Wakad: Gyms/societies\nWagholi: Societies\nAmanora: Mall/family\nNIBM: Societies\nSGS: Colleges",
   "Women gyms + societies around all stores",
@@ -572,32 +602,613 @@ window.PLAN_DETAIL = {
   "High-intent catchments around all stores",
   "Schools + societies around all stores"
  ],
- "freeProducts": [
-  "Teen trial kits + community T-shirts",
-  "Women community kits",
-  "Tournament prizes across 5 stores",
-  "Kids camp kits",
-  "Family challenge products",
-  "Football prizes + trials",
-  "Indoor fitness trials",
-  "National Sports Day kits across all 5",
-  "New product trial units",
-  "Festive event kits",
-  "Only conversion-linked",
-  "Gifting/community kits"
- ],
- "partnerships": [
-  "Running + gym partnerships across stores",
-  "Women fitness partnerships",
-  "Cricket/football/pickleball partnerships",
-  "Summer camp + school partnerships",
-  "Family/society partnerships",
-  "Football partnerships",
-  "Indoor sports venues",
-  "Large-scale Pune sports partnership",
-  "Product launch + creators",
-  "Festive mall/community partnerships",
-  "Performance + CRM",
-  "New Year + gifting"
- ]
+ "freeProducts": ["Teen trial kits + community T-shirts", "Women community kits", "Tournament prizes across 5 stores", "Kids camp kits", "Family challenge products", "Football prizes + trials", "Indoor fitness trials", "National Sports Day kits across all 5", "New product trial units", "Festive event kits", "Only conversion-linked", "Gifting/community kits"],
+ "partnerships": ["Running + gym partnerships across stores", "Women fitness partnerships", "Cricket/football/pickleball partnerships", "Summer camp + school partnerships", "Family/society partnerships", "Football partnerships", "Indoor sports venues", "Large-scale Pune sports partnership", "Product launch + creators", "Festive mall/community partnerships", "Performance + CRM", "New Year + gifting"]
 };
+
+/* Store-level Q4 2026 data, generated from ultimate_data_sheet.xlsx (Sheet1).
+   Turnover in Cr, budgets in lakh. Rows 92-117 turnover challenge, rows 3-16 store budgets,
+   rows 19-74 spend by line. */
+Object.assign(window.DATA, {
+ "stores": [
+  {
+   "id": "wakad",
+   "name": "Wakad",
+   "state": "Pune",
+   "city": "Pune",
+   "area": "Wakad, Hinjewadi and Punawale",
+   "mall": false,
+   "lat": 18.598,
+   "lon": 73.763,
+   "q425": 27.29,
+   "ambition": 26.34,
+   "challenge": 30.4,
+   "growth": 11.4,
+   "overAmbition": 4.06,
+   "budget": [
+    5.48,
+    7.69,
+    7.5
+   ]
+  },
+  {
+   "id": "wagholi",
+   "name": "Wagholi",
+   "state": "Pune",
+   "city": "Pune",
+   "area": "Wagholi, Kharadi and the Nagar Road entry",
+   "mall": false,
+   "lat": 18.58,
+   "lon": 73.986,
+   "q425": 11.67,
+   "ambition": 12.63,
+   "challenge": 14.4,
+   "growth": 23.4,
+   "overAmbition": 1.77,
+   "budget": [
+    2.28,
+    3.24,
+    3.19
+   ]
+  },
+  {
+   "id": "sgs",
+   "name": "SGS Mall",
+   "state": "Pune",
+   "city": "Pune",
+   "area": "Central Pune",
+   "mall": true,
+   "lat": 18.518,
+   "lon": 73.877,
+   "q425": 12.42,
+   "ambition": 13.17,
+   "challenge": 14.32,
+   "growth": 15.3,
+   "overAmbition": 1.15,
+   "budget": [
+    2.41,
+    3.27,
+    3.76
+   ]
+  },
+  {
+   "id": "amanora",
+   "name": "Amanora",
+   "state": "Pune",
+   "city": "Pune",
+   "area": "Amanora, Magarpatta and Hadapsar",
+   "mall": true,
+   "lat": 18.519,
+   "lon": 73.934,
+   "q425": 9.27,
+   "ambition": 10.08,
+   "challenge": 10.61,
+   "growth": 14.4,
+   "overAmbition": 0.53,
+   "budget": [
+    1.87,
+    2.57,
+    2.8
+   ]
+  },
+  {
+   "id": "nibm",
+   "name": "NIBM",
+   "state": "Pune",
+   "city": "Pune",
+   "area": "NIBM and Undri",
+   "mall": false,
+   "lat": 18.475,
+   "lon": 73.902,
+   "q425": 4.59,
+   "ambition": 6.37,
+   "challenge": 5.8,
+   "growth": 26.4,
+   "overAmbition": -0.57,
+   "budget": [
+    1.17,
+    1.22,
+    1.28
+   ]
+  },
+  {
+   "id": "motera",
+   "name": "Motera",
+   "state": "Gujarat",
+   "city": "Ahmedabad",
+   "area": "Motera, north Ahmedabad",
+   "mall": false,
+   "lat": 23.1,
+   "lon": 72.597,
+   "q425": 12.68,
+   "ambition": 12.82,
+   "challenge": 14.5,
+   "growth": 14.4,
+   "overAmbition": 1.67,
+   "budget": [
+    3.65,
+    4.88,
+    6.03
+   ]
+  },
+  {
+   "id": "nexus",
+   "name": "Nexus",
+   "state": "Gujarat",
+   "city": "Ahmedabad",
+   "area": "Nexus, west Ahmedabad",
+   "mall": true,
+   "lat": 23.04,
+   "lon": 72.531,
+   "q425": 11.3,
+   "ambition": 12.73,
+   "challenge": 13.19,
+   "growth": 16.8,
+   "overAmbition": 0.46,
+   "budget": [
+    3.28,
+    5.18,
+    5.75
+   ]
+  },
+  {
+   "id": "baroda",
+   "name": "Baroda",
+   "state": "Gujarat",
+   "city": "Vadodara",
+   "area": "Alkapuri, Vadodara",
+   "mall": false,
+   "lat": 22.311,
+   "lon": 73.17,
+   "q425": 8.95,
+   "ambition": 10.07,
+   "challenge": 10.45,
+   "growth": 16.7,
+   "overAmbition": 0.38,
+   "budget": [
+    2.78,
+    3.93,
+    4.17
+   ]
+  },
+  {
+   "id": "surat",
+   "name": "Surat",
+   "state": "Gujarat",
+   "city": "Surat",
+   "area": "Dumas Road, Surat",
+   "mall": false,
+   "lat": 21.145,
+   "lon": 72.758,
+   "q425": 8.97,
+   "ambition": 10.45,
+   "challenge": 10.66,
+   "growth": 18.9,
+   "overAmbition": 0.21,
+   "budget": [
+    3.31,
+    3.52,
+    4.33
+   ]
+  },
+  {
+   "id": "rajkot",
+   "name": "Rajkot",
+   "state": "Gujarat",
+   "city": "Rajkot",
+   "area": "Rajkot",
+   "mall": false,
+   "lat": 22.303,
+   "lon": 70.802,
+   "q425": 2.4,
+   "ambition": 2.28,
+   "challenge": 2.69,
+   "growth": 12.2,
+   "overAmbition": 0.41,
+   "budget": [
+    0.58,
+    0.78,
+    1.11
+   ]
+  },
+  {
+   "id": "indore",
+   "name": "Indore",
+   "state": "MP",
+   "city": "Indore",
+   "area": "Indore",
+   "mall": false,
+   "lat": 22.72,
+   "lon": 75.858,
+   "q425": 9.77,
+   "ambition": 10.44,
+   "challenge": 11.92,
+   "growth": 22.1,
+   "overAmbition": 1.48,
+   "budget": [
+    2.91,
+    4.09,
+    4.58
+   ]
+  },
+  {
+   "id": "bhopal",
+   "name": "Bhopal",
+   "state": "MP",
+   "city": "Bhopal",
+   "area": "Bhopal",
+   "mall": false,
+   "lat": 23.26,
+   "lon": 77.413,
+   "q425": 6.63,
+   "ambition": 8.36,
+   "challenge": 12.21,
+   "growth": 84.2,
+   "overAmbition": 3.85,
+   "budget": [
+    2.94,
+    3.97,
+    4.99
+   ]
+  },
+  {
+   "id": "gwalior",
+   "name": "Gwalior",
+   "state": "MP",
+   "city": "Gwalior",
+   "area": "Gwalior",
+   "mall": false,
+   "lat": 26.218,
+   "lon": 78.183,
+   "q425": 3.11,
+   "ambition": 3.83,
+   "challenge": 3.6,
+   "growth": 15.7,
+   "overAmbition": -0.23,
+   "budget": [
+    0.78,
+    1.14,
+    1.3
+   ]
+  }
+ ],
+ "stateTO": {
+  "Pune Digital": {
+   "q425": 4.45,
+   "amb": 5.54,
+   "ch": 5.8,
+   "g": 30.2,
+   "inc": 0.26
+  },
+  "Pune Wholesale": {
+   "q425": 1.64,
+   "amb": 5.19,
+   "ch": 5.89,
+   "g": 259.2,
+   "inc": 0.7
+  },
+  "PUNE TOTAL": {
+   "q425": 71.34,
+   "amb": 79.31,
+   "ch": 87.22,
+   "g": 22.3,
+   "inc": 7.91
+  },
+  "Ahmedabad Digital": {
+   "q425": 1.23,
+   "amb": 1.6,
+   "ch": 1.6,
+   "g": 29.9,
+   "inc": 0.0
+  },
+  "Gujarat Digital": {
+   "q425": 2.89,
+   "amb": 4.18,
+   "ch": 3.75,
+   "g": 29.9,
+   "inc": -0.43
+  },
+  "Gujarat Wholesale": {
+   "q425": 0.44,
+   "amb": 1.72,
+   "ch": 2.36,
+   "g": 431.9,
+   "inc": 0.64
+  },
+  "GJ TOTAL": {
+   "q425": 48.86,
+   "amb": 55.85,
+   "ch": 59.2,
+   "g": 21.2,
+   "inc": 3.35
+  },
+  "MP Digital": {
+   "q425": 4.3,
+   "amb": 4.81,
+   "ch": 4.62,
+   "g": 7.4,
+   "inc": -0.19
+  },
+  "MP TOTAL": {
+   "q425": 23.8,
+   "amb": 27.44,
+   "ch": 32.35,
+   "g": 35.9,
+   "inc": 4.91
+  },
+  "Pune Stores": {
+   "q425": 65.24,
+   "amb": 68.58,
+   "ch": 75.53,
+   "g": 15.8,
+   "inc": 6.95
+  },
+  "GJ Stores": {
+   "q425": 44.29,
+   "amb": 48.35,
+   "ch": 51.49,
+   "g": 16.2,
+   "inc": 3.14
+  },
+  "MP Stores": {
+   "q425": 19.5,
+   "amb": 22.63,
+   "ch": 27.73,
+   "g": 42.2,
+   "inc": 5.1
+  }
+ },
+ "stateLines": {
+  "Pune": {
+   "total": [
+    16.5,
+    27.0,
+    10.75
+   ],
+   "lines": [
+    {
+     "line": "Internal consumption (Non Marketing)",
+     "v": [
+      3.5,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "line": "In Mall Communication",
+     "v": [
+      2.25,
+      4.5,
+      2.25
+     ]
+    },
+    {
+     "line": "Hoarding,OOH and Hipop / AOP",
+     "v": [
+      5.75,
+      4.5,
+      4.5
+     ]
+    },
+    {
+     "line": "Instore communication (Campaign & Merch)",
+     "v": [
+      1.5,
+      5.5,
+      1.5
+     ]
+    },
+    {
+     "line": "Store Event",
+     "v": [
+      1.0,
+      6.0,
+      0.0
+     ]
+    },
+    {
+     "line": "Flyers",
+     "v": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "line": "Influencer Marketing Fees",
+     "v": [
+      1.5,
+      5.0,
+      1.5
+     ]
+    },
+    {
+     "line": "Free products and IC (Marketing)",
+     "v": [
+      0.0,
+      0.5,
+      0.0
+     ]
+    }
+   ]
+  },
+  "Gujarat": {
+   "total": [
+    19.95,
+    26.83,
+    31.65
+   ],
+   "lines": [
+    {
+     "line": "Paid Internal Fees Advertising (Digital Paid to Marcom)",
+     "v": [
+      5.44,
+      7.32,
+      8.56
+     ]
+    },
+    {
+     "line": "Regional Marketing - In Mall",
+     "v": [
+      3.7,
+      3.7,
+      3.7
+     ]
+    },
+    {
+     "line": "Regional Marketing Hoarding / HIPOP",
+     "v": [
+      3.31,
+      6.29,
+      6.2
+     ]
+    },
+    {
+     "line": "Regional Marketing Influencer & Affiliation",
+     "v": [
+      2.21,
+      3.23,
+      3.96
+     ]
+    },
+    {
+     "line": "Press Advertising PR Pages",
+     "v": [
+      0.33,
+      0.48,
+      0.59
+     ]
+    },
+    {
+     "line": "Free Products & IC",
+     "v": [
+      2.13,
+      1.94,
+      2.37
+     ]
+    },
+    {
+     "line": "Regional Marketing Store Event x collab",
+     "v": [
+      1.66,
+      2.42,
+      2.97
+     ]
+    },
+    {
+     "line": "Other Online Channels",
+     "v": [
+      1.21,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "line": "Instore Communication",
+     "v": [
+      0.99,
+      1.45,
+      1.78
+     ]
+    },
+    {
+     "line": "Community / Sports Partnerships",
+     "v": [
+      0.99,
+      1.45,
+      1.78
+     ]
+    }
+   ]
+  },
+  "MP": {
+   "total": [
+    6.8,
+    9.87,
+    11.09
+   ],
+   "lines": [
+    {
+     "line": "Paid Internal Fees Advertising (Digital Paid to Marcom)",
+     "v": [
+      2.72,
+      3.95,
+      4.44
+     ]
+    },
+    {
+     "line": "Regional Marketing - In Mall",
+     "v": [
+      0.45,
+      0.35,
+      0.35
+     ]
+    },
+    {
+     "line": "Regional Marketing Hoarding / HIPOP",
+     "v": [
+      0.85,
+      2.6,
+      2.4
+     ]
+    },
+    {
+     "line": "Regional Marketing Influencer & Affiliation",
+     "v": [
+      1.29,
+      1.87,
+      2.1
+     ]
+    },
+    {
+     "line": "Press Advertising PR Pages",
+     "v": [
+      0.11,
+      0.16,
+      0.18
+     ]
+    },
+    {
+     "line": "Free Products & IC",
+     "v": [
+      0.86,
+      0.78,
+      0.88
+     ]
+    },
+    {
+     "line": "Regional Marketing Store Event x collab",
+     "v": [
+      0.64,
+      0.93,
+      1.05
+     ]
+    },
+    {
+     "line": "Instore Communication",
+     "v": [
+      0.48,
+      0.7,
+      0.79
+     ]
+    },
+    {
+     "line": "Community / Sports Partnerships",
+     "v": [
+      0.48,
+      0.7,
+      0.79
+     ]
+    },
+    {
+     "line": "Old - General Advertising",
+     "v": [
+      0.05,
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  }
+ }
+});

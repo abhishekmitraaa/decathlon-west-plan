@@ -103,7 +103,7 @@
   if (innerWidth < 520) $$(".phone", hp).forEach((p, i) => { if (i === 0 || i === 3) p.style.display = "none"; });
 
   const tickerItems = [
-    "Q4 challenge 178 Cr", "+24.15% vs last year", "Black Friday 27–30 Nov: 12 Cr", "EOY festive sale 18–25 Dec: 20 Cr",
+    "Q4 challenge 178.77 Cr", "+24.15% vs last year", "Winter Travel: 15 Oct – 30 Jan", "Black Friday 27–30 Nov: 12 Cr", "Christmas sale 19–31 Dec", "Wakad: 30.4 Cr, the biggest store challenge",
     "Adajan, Surat opens 20 Dec", "16 hoardings across the cluster", "80+ local influencers", "Kiprun launch: 700 runners, 7 clubs",
     "Q1 2027: +12.1% turnover", "Commonwealth Games 2030, Gujarat"
   ];
@@ -211,9 +211,9 @@
     s("path", { d: path(ser.y26), fill: "none", stroke: "#9AA2C8", "stroke-width": 2, "stroke-dasharray": "5 5" }, g);
     s("path", { d: path(ser.y27), fill: "none", stroke: col, "stroke-width": 3, "stroke-linejoin": "round" }, g);
     ser.y27.forEach((v, i) => s("circle", { cx: x(i), cy: y(v), r: 5, fill: "#fff", stroke: col, "stroke-width": 2.5,
-      "data-tip": `<b>${D.spend.months[i]} · ${region}</b><br>2027 plan: ${fmt(v)} L<br>2026 actual: ${fmt(ser.y26[i])} L` }, g));
+      "data-tip": `<b>${D.spend.months[i]} · ${region}</b><br>2027 plan: ${fmt(v)} L<br>2026 ${i >= 9 ? "Q4 plan" : "actual"}: ${fmt(ser.y26[i])} L` }, g));
     text(g, x(11) + 10, y(ser.y27[11]) + 4, "2027 plan", { "font-size": 12, "font-weight": 800, fill: col });
-    text(g, x(11) + 10, y(ser.y26[11]) + (Math.abs(y(ser.y26[11]) - y(ser.y27[11])) < 16 ? 18 : 4), "2026 actual", { "font-size": 12, "font-weight": 700, fill: "#8A92BC" });
+    text(g, x(11) + 10, y(ser.y26[11]) + (Math.abs(y(ser.y26[11]) - y(ser.y27[11])) < 16 ? 18 : 4), "2026", { "font-size": 12, "font-weight": 700, fill: "#8A92BC" });
   });
   const spendNotes = () => {
     const sum = a => a.reduce((x, y) => x + y, 0);
@@ -277,7 +277,7 @@
   // stores
   (() => {
     const maxS = Math.max(...D.puneStores.map(s => s.share));
-    $("#stores").innerHTML = D.puneStores.map(st => `<div class="store-row"><b>${st.store}</b><div class="store-bars">
+    $("#puneStoreShare").innerHTML = D.puneStores.map(st => `<div class="store-row"><b>${st.store}</b><div class="store-bars">
       <i style="--w:${st.share / maxS * 100}%" data-tip="<b>${st.store}</b><br>${st.share}% of Pune turnover"></i></div>
       <small>${st.share}% of Pune city turnover</small></div>`).join("");
   })();
@@ -331,7 +331,7 @@
   (() => {
     $("#runwayKey").innerHTML = [
       ["#fff", "National campaign"], [css("--red"), "Sale or commercial weekend"], ["rgba(255,255,255,.2)", "Local adaptation or event"],
-      [css("--mint"), "Store opening"], [css("--sun"), "Today, 25 Oct"]
+      [css("--mint"), "Store opening"], ["rgba(122,255,166,.3)", "Sport of the month"], [css("--sun"), "External event, or today (25 Oct)"]
     ].map(([c, l]) => `<span><i style="background:${c}"></i>${l}</span>`).join("") + `<span>★ Key event</span>`;
   })();
 
