@@ -136,3 +136,162 @@ window.CONTENT = {
       ] }
   ]
 };
+
+/* How we write: three rules borrowed from Piyush Pandey's work (Fevicol, Cadbury, Asian Paints). */
+window.CONTENT.rules = [
+  { n: "Prove it. Never explain it.",
+    lift: "Fevicol never said 'strong glue'. It showed an egg a hammer couldn't break.",
+    us: "We never say 'durable' or 'great value'. We show a tent going up in two seconds while a baraat dances past, or a shoe still running after a year of Pune potholes. Stage the impossible; let the benefit become obvious." },
+  { n: "Never manufacture emotion. Borrow the occasion.",
+    lift: "Cadbury rode the cricket win India was already crazy about. Asian Paints rode Diwali homecomings.",
+    us: "Our feelings are already on the calendar: Diwali homecoming, Uttarayan terraces, Shivaji Maharaj Jayanti treks, IPL in every gully, Holi, a kid's first race. We plug the story into a feeling people already have." },
+  { n: "The brand resolves the story. It doesn't narrate it.",
+    lift: "In Asian Paints ads the family is the hero. Fevicol shows up in the last five seconds.",
+    us: "The kid, the mother, the gully team are the protagonists. Decathlon arrives at the end as the thing that made it possible: a bib, a ball, a store door opening. Never a product monologue." }
+];
+
+/* One hero film per month, written to the three rules. */
+window.CONTENT.heroes = {
+  October: { name: "The quietest Diwali holiday", occasion: "Diwali holidays and the Kids Festival",
+    story: "A grandmother complains that the grandkids have been glued to phones all Diwali break.",
+    proof: "The whole society's Wi-Fi goes down on Saturday. Not one kid notices: they're all at the Kids Festival on skates, scooters and a football pitch.",
+    resolve: "Last five seconds: the Decathlon playground at dusk. “No screens this weekend. Only play.”" },
+  November: { name: "Pehli cycle", occasion: "Diwali homecoming",
+    story: "A father in Ahmedabad still keeps the rusty cycle his own father gave him, polished every Diwali. His son comes home with a long box.",
+    proof: "Three generations, one bell. The old cycle still rings.",
+    resolve: "The box opens to a new Rockrider with a bow, for the grandson. Card: “Gift a Sport.”" },
+  December: { name: "Surat nu jaman, Adajan ni ramat", occasion: "Surat's love of food, and a new store",
+    story: "A Surti family plans a whole Sunday around food: locho at 9, undhiyu at 1, ghari for dessert.",
+    proof: "By evening nobody can stand up. Grandpa, 72, challenges all of them to the Tapi Sunrise Run, and beats them.",
+    resolve: "Final shot: the Adajan store doors opening. “Surat is famous for its food. Now Adajan for its play.”" },
+  January: { name: "The terrace war", occasion: "Uttarayan",
+    story: "Two neighbouring terraces, a decade-long kite rivalry, and one aunty who has never lost.",
+    proof: "Wind, sun and a 9-hour sky battle: her cap never flies off, her shades never slip, her chair never wobbles.",
+    resolve: "She cuts the last kite and calmly opens her cooler bag. Five-second end card: the Kai Po Che! terrace kit." },
+  February: { name: "She ran for the bus", occasion: "Women's Sport Month",
+    story: "Every morning a Pune mother sprints to catch her daughter's school bus with the tiffin.",
+    proof: "The neighbourhood starts timing her. She's faster every week.",
+    resolve: "The daughter hands her a race bib. Last frame: both at the start line, “Move together.”" },
+  March: { name: "Sharma aunty's window", occasion: "IPL season",
+    story: "One gully team has broken the same window for ten years. Sharma aunty has a drawer full of confiscated balls.",
+    proof: "This season the ball is smashed so far it clears the whole building. For once, the window survives.",
+    resolve: "Aunty walks out with a bat and asks to bat first. End card: “Gully ready? Kit up.”" }
+};
+
+/* Creative Commons photo credits (Wikimedia Commons and Flickr via Openverse). */
+window.CONTENT.credits = {
+ "holi": {
+  "title": "Holi - The festival of Colours",
+  "creator": "Sundarhum",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Holi_-_The_festival_of_Colours.jpg"
+ },
+ "diwali": {
+  "title": "Diwali Diya 4",
+  "creator": "Slyronit",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Diwali_Diya_4.jpg"
+ },
+ "kids": {
+  "title": "Football in India",
+  "creator": "Qirille",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Football_in_India.jpg"
+ },
+ "kite": {
+  "title": "Kite Festival Uttarayan in Gujarat",
+  "creator": "Gopalkhetani",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Kite_Festival_Uttarayan_in_Gujarat.jpg"
+ },
+ "marathon": {
+  "title": "2008 Pune Marathon runners",
+  "creator": "Kushal Das from Pune, India",
+  "license": "CC BY 2.0",
+  "link": "https://commons.wikimedia.org/wiki/File:2008_Pune_Marathon_runners.jpg"
+ },
+ "newyear": {
+  "title": "2025 New Year Fireworks in Tamsui, New Taipei (54238509582)",
+  "creator": "Artemas Liu",
+  "license": "CC BY-SA 2.0",
+  "link": "https://commons.wikimedia.org/wiki/File:2025_New_Year_Fireworks_in_Tamsui,_New_Taipei_(54238509582).jpg"
+ },
+ "pickleball": {
+  "title": "Pickleball Paddle 2025",
+  "creator": "Fakhar Saeed",
+  "license": "CC0",
+  "link": "https://commons.wikimedia.org/wiki/File:Pickleball_Paddle_2025.jpg"
+ },
+ "fitness": {
+  "title": "92nd Military Police Company Crossfit Competition (8770089)",
+  "creator": "U.S. Army photo by Spc. Samuel Signor",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:92nd_Military_Police_Company_Crossfit_Competition_(8770089).jpg"
+ },
+ "cycling": {
+  "title": "CH.ZH.Affoltern-am-Albis 2024-03-30 road-bike-racing",
+  "creator": "Roy Egloff",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:CH.ZH.Affoltern-am-Albis_2024-03-30_road-bike-racing.jpg"
+ },
+ "christmas": {
+  "title": "Oxford Street Christmas Lights - geograph.org.uk - 1661010",
+  "creator": "Christine Matthews",
+  "license": "CC BY-SA 2.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Oxford_Street_Christmas_Lights_-_geograph.org.uk_-_1661010.jpg"
+ },
+ "beach": {
+  "title": "USMC-111007-M-UV915-234",
+  "creator": "Unknown",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:USMC-111007-M-UV915-234.jpg"
+ },
+ "badminton": {
+  "title": "UKM BADMINTON UM",
+  "creator": "UNIVERSITAS MULIA",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:UKM_BADMINTON_UM.jpg"
+ },
+ "flag": {
+  "title": "The waving Indian flag",
+  "creator": "Sisheer Philip",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:The_waving_Indian_flag.jpg"
+ },
+ "cricket": {
+  "title": "Sachin in action",
+  "creator": "Privatemusings",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Sachin_in_action.jpg"
+ },
+ "trek-snow": {
+  "title": "SarPass...",
+  "creator": "Chandramohan Burly V",
+  "license": "CC BY-SA 2.0",
+  "link": "https://www.flickr.com/photos/66001271@N00/3856252950"
+ },
+ "trek-green": {
+  "title": "Kudremukh, Shola Grasslands.",
+  "creator": "wildxplorer",
+  "license": "CC BY 2.0",
+  "link": "https://www.flickr.com/photos/21932201@N04/2635903608"
+ },
+ "shoes": {
+  "title": "Shoes for sale",
+  "creator": "kewl",
+  "license": "CC BY 2.0",
+  "link": "https://www.flickr.com/photos/58411470@N00/13902057323"
+ },
+ "camping": {
+  "title": "Stars Over Everest 2",
+  "creator": "SamHawleywood",
+  "license": "CC BY 2.0",
+  "link": "https://www.flickr.com/photos/73216620@N08/6615779401"
+ },
+ "football": {
+  "title": "Kids Playing 1",
+  "creator": "LabyrinthX-2",
+  "license": "CC BY-SA 2.0",
+  "link": "https://www.flickr.com/photos/58317401@N04/8044813365"
+ }
+};

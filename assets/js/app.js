@@ -537,13 +537,27 @@
 
   /* ---------- reels ---------- */
   const REELS = [
-    { n: "circuit-games", t: "Mall circuit games", p: "A fitness circuit on a Decathlon court in the middle of a mall, shot fast and close. The crowd, the sweat and the brand are all in frame.", u: "Use for: New Year, New Moves and Move Your Way in malls" },
-    { n: "winter-gear", t: "Winter gear on a budget", p: "A family shops a toddler's full winter kit, says what it cost, then packs it for a trip. Value told as a real story, not a price tag.", u: "Use for: Winter + Travel and gifts under ₹999" },
-    { n: "kiprun", t: "Kiprun run club", p: "Runners, bibs and the Kiprun bag, ending in a big group photo. Community first, product in every shot.", u: "Use for: Kiprun launch, 5K and the 500-runner meetups" },
-    { n: "process-vs", t: "Process vs product", p: "A creator shows the messy setup of an event, then cuts to the finished day full of people. Behind the scenes makes the event feel earned.", u: "Use for: store openings and Beach Fest, Surat" },
-    { n: "yoga-day", t: "Yoga Day from above", p: "A drone over a store playground full of yoga mats, with one line of type. Scale you can see in a second.", u: "Use for: Yoga Day and Sports Utsav" },
-    { n: "motera", t: "Decathlon Motera", p: "Our own Ahmedabad team hosting a sunrise yoga session. Staff on the mic and local faces make it ours.", u: "Use for: Gujarat local pages and Uttarayan" },
-    { n: "run-like-a-girl", t: "Proud to run like a girl", p: "A women's night run with lights, music and one caption. Short enough to watch twice.", u: "Use for: Women Who Play (Feb) and Women's Day (Mar)" }
+    { n: "circuit-games", t: "Mall circuit games", h: "Forty strangers sweating in the middle of a mall.",
+      w: "Nobody explains the workout. The crowd is the proof. Fast cuts, real breath, the court does the selling.",
+      u: "January's Movement for All, shot at SGS, Amanora and Nexus." },
+    { n: "winter-gear", t: "Winter gear on a budget", h: "A parent says the total out loud.",
+      w: "Value is never claimed, it's shown: one receipt, one toddler, one full winter kit. The price is the punchline.",
+      u: "Gift a Sport under ₹999 and the Winter Travel edit." },
+    { n: "kiprun", t: "Kiprun run club", h: "Sweaty faces, bibs, a group photo.",
+      w: "The runners are the hero; Kiprun is in every frame but never the subject. Community tells the story, the brand just shows up in it.",
+      u: "The Kiprun Challenger launch in March." },
+    { n: "process-vs", t: "Process vs product", h: "The mess first. The magic after.",
+      w: "Showing the set-up earns the finale. People trust what they saw being built.",
+      u: "The Surat countdown, 8 to 17 December." },
+    { n: "yoga-day", t: "Yoga Day from above", h: "One drone shot. A playground of mats.",
+      w: "Scale proven in one second, no voice-over needed. The bigger the crowd, the smaller the logo can be.",
+      u: "Yoga Day 2027 and Sports Utsav." },
+    { n: "motera", t: "Decathlon Motera", h: "Our own teammate on the mic at sunrise.",
+      w: "Local faces beat any creator for trust. The store becomes a person, not a building.",
+      u: "Gujarat pages, Uttarayan week and store-event recaps." },
+    { n: "run-like-a-girl", t: "Proud to run like a girl", h: "One caption. Fourteen seconds.",
+      w: "It borrows a feeling women already carry and simply turns up the volume. Short enough to watch twice, which the algorithm loves.",
+      u: "Women's Sport Month in February and Women's Day." }
   ];
   (() => {
     const row = $("#reelRow");
@@ -552,7 +566,8 @@
         <video muted loop playsinline preload="none" poster="assets/posters/${r.n}.jpg" data-src="assets/videos/${r.n}.mp4"></video>
         <span class="snd">Sound off</span>
       </button>
-      <h3>${esc(r.t)}</h3><p>${esc(r.p)}</p><p class="use">${esc(r.u)}</p></article>`).join("");
+      <h3>${esc(r.t)}</h3>
+      <dl class="reel-notes"><div><dt>The hook</dt><dd>${esc(r.h)}</dd></div><div><dt>Why it works</dt><dd>${esc(r.w)}</dd></div><div><dt>Steal it for</dt><dd>${esc(r.u)}</dd></div></dl></article>`).join("");
     $$(".reel-phone", row).forEach(btn => {
       const v = $("video", btn);
       v.muted = true;
