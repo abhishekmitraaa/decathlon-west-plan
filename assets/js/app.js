@@ -104,7 +104,7 @@
 
   const tickerItems = [
     "Q4 challenge 178.77 Cr", "+24.15% vs last year", "Winter Travel: 15 Oct – 30 Jan", "Black Friday 27–30 Nov: 12 Cr", "Christmas sale 19–31 Dec", "Wakad: 30.4 Cr, the biggest store challenge",
-    "Adajan, Surat opens 20 Dec", "16 hoardings across the cluster", "80+ local influencers", "Kiprun launch: 700 runners, 7 clubs",
+    "Adajan, Surat: opening weekend 18–20 Dec", "16 hoardings across the cluster", "80+ local influencers", "Kiprun launch: 700 runners, 7 clubs",
     "Q1 2027: +12.1% turnover", "Commonwealth Games 2030, Gujarat"
   ];
   const tk = $("#ticker");
@@ -453,7 +453,7 @@
       cities: [["5", "Pune"], ["4", "Baroda"], ["3", "Surat"], ["2", "Ahmedabad"], ["1", "Rajkot"], ["1", "Bhopal"]],
       stats: [["16", "hoardings in Q4"], ["24 L", "Q4 OOH and HIPOP spend"], ["+15%", "bills growth OKR"], ["35%", "of the 2027 budget"]],
       planTitle: "Pune OOH plan, 2027", plan: () => monthCards("ooh") },
-    { name: "Practice-place hoardings (AOP)", tag: "25%", media: ["swim-kit-aop.jpg", "gym.jpg"],
+    { name: "Practice-place hoardings (AOP)", tag: "25%", media: ["aop-wall.mp4", "swim-kit-aop.jpg"],
       title: "Sport is everywhere",
       copy: "We turn the places people already play into small Decathlon stores. A kit wall with prices and QR codes goes up at swimming academies, sports academies, gyms, yoga studios, metro stations in Pune and Ahmedabad, parks, societies and corporate campuses.",
       flow: ["See the display", "Scan the QR code", "Explore or complete a kit", "Shop online", "Home delivery or Click & Collect"],
@@ -486,8 +486,8 @@
       stats: [["8 L", "store events, Q4"], ["500", "runners at in-store meetups"], ["10", "apartments for the Workshop Mela"], ["1.38", "purchase frequency OKR"]],
       planTitle: "Residential society plan, Pune", plan: () => monthCards("society") },
     { name: "Store openings", tag: "Dec", media: ["surat-grand-opening.jpg", "surat-map.jpg", "surat-offer.jpg"],
-      title: "Adajan, Surat: 20 December",
-      copy: "Launch comms are ready: a grand-opening campaign, a map post, free gifts with purchase on opening days and 7 free Deca Runners classes from 20 Dec to 16 Jan. Surat gets twice the usual marketing spend in Q1 to build the habit.",
+      title: "Adajan, Surat: 18–20 December",
+      copy: "Chalo Ramiye, Adajan! The opening weekend runs Fri 18 to Sun 20 Dec with an ₹85 L target, then 30 days to ₹2.5 Cr. Gifts on bigger bills instead of discounts, Deca Runners classes, and twice the usual marketing spend in Q1. The full plan is in the Surat section.",
       stats: [["720+", "sports items in store"], ["2x", "Q1 marketing spend"], ["5k", "Beach Fest participants"], ["10:30–10", "open daily"]],
       planTitle: "Surat new-store timeline, indicative (from the AOP 2027 slide)", plan: () => `<ul><li>Oct–Dec 2026: site finalisation and approvals</li><li>Jan 2027: local partnerships and community build</li><li>Feb 2027: pre-opening campaigns</li><li>Mar 2027: soft launch and preview events</li><li>Apr 2027: grand opening</li><li>Pre-opening activations: city run and fitness events, yoga by the river, racket tournaments, travel and outdoor experiences</li></ul>` },
     { name: "Quick commerce and delivery", tag: "2 hr", media: ["quick-commerce.jpg", "two-hour-delivery.jpg", "app-order.jpg"],
@@ -505,7 +505,7 @@
       panel.setAttribute("aria-labelledby", "tab" + i);
       panel.innerHTML = `
         <div class="sp-hero">
-          <div class="sp-media ${c.contain ? "contain" : ""}">${c.media.map(m => `<img src="assets/img/${m}" alt="" loading="lazy">`).join("")}</div>
+          <div class="sp-media ${c.contain ? "contain" : ""}">${c.media.map(m => m.endsWith(".mp4") ? `<div class="sm-video"><video autoplay muted loop playsinline poster="assets/posters/${m.replace(".mp4", ".jpg")}" src="assets/videos/${m}"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play video with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>` : `<img src="assets/img/${m}" alt="" loading="lazy">`).join("")}</div>
           <div class="sp-copy">
             <h3>${esc(c.title)}</h3>
             <p>${esc(c.copy)}</p>

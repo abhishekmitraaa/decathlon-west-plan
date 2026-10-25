@@ -42,6 +42,28 @@
     ["Q1 2027", "Bib collection at stores", "20,000 walk-ins"],
     ["14 Mar – 30 May", "IPL 2027", "Cricket season across the cluster"]
   ];
+  // market size and the fastest-growing sport (Ahmedabad catchment master, Surat opening plan)
+  const MARKETS = [["Ahmedabad", 1801, 2698, "2023 → 2027", "10.6% a year"], ["Surat", 1591, 2451, "2025 → 2030", "9.0% a year"]];
+  const mMax = Math.max(...MARKETS.map(m => m[2]));
+  $("#pulseMarkets").innerHTML = MARKETS.map(m => `<div class="mk-row"><span>${m[0]}<small>${m[3]}</small></span>
+    <div class="mk-bars"><i class="from" style="--w:${m[1] / mMax * 100}%"></i><i class="to" style="--w:${m[2] / mMax * 100}%"></i></div>
+    <b>₹${m[1].toLocaleString("en-IN")} → ₹${m[2].toLocaleString("en-IN")} Cr<small>${m[4]}</small></b></div>`).join("");
+  const PICKLE = [["Rajkot", 900], ["Motera", 175], ["Dumas Road, Surat", 115], ["Baroda", 74], ["Nexus", 71]];
+  const pMax = Math.log10(PICKLE[0][1] + 10);
+  $("#pulsePickle").innerHTML = PICKLE.map(p => `<div class="pk-row"><span>${p[0]}</span><i style="--w:${Math.log10(p[1] + 10) / pMax * 100}%"></i><b>+${p[1]}%</b></div>`).join("") +
+    `<p class="pk-note">Rajkot grew from a very small base. Bar lengths use a log scale so every store stays readable.</p>`;
+
+  // Kantar 2024: campaign exposure and how Gujarat over- or under-indexes by channel
+  const kx = document.getElementById("kantarExposure");
+  if (kx) {
+    const EXPO = [["Mumbai", 83], ["National", 72], ["Gujarat", 53], ["Pune", 49]];
+    kx.innerHTML = `<h4>Saw a recent Decathlon campaign</h4>` + EXPO.map(e => `<div class="kx-row ${e[0] === "Gujarat" || e[0] === "Pune" ? "ours" : ""}"><span>${e[0]}</span><i style="--w:${e[1]}%"></i><b>${e[1]}%</b></div>`).join("");
+    const IDX = [["Radio", 127], ["Cinema", 119], ["Newspaper and print", 111], ["Streaming", 107], ["TV", 106], ["At an event", 104], ["Search", 103],
+                 ["Friends and family", 100], ["In a shop", 100], ["Online video", 97], ["Social and messaging", 94], ["Outdoor", 94]];
+    document.getElementById("kantarIndex").innerHTML = `<h4>Gujarat vs national, by channel (100 = same as India)</h4>` +
+      IDX.map(i => { const d = i[1] - 100; return `<div class="ki-row"><span>${i[0]}</span><div class="ki-track"><i class="${d >= 0 ? "up" : "down"}" style="${d >= 0 ? `left:50%;width:${d / 30 * 50}%` : `right:50%;width:${-d / 30 * 50}%`}"></i><em></em></div><b>${i[1]}</b></div>`; }).join("");
+  }
+
   $("#pulseEvents").innerHTML = PULSE_EVENTS.map(([d, t, x]) => `<li><span>${d}</span><b>${t}</b><small>${x}</small></li>`).join("");
 
   const per = Object.keys(POP).map(k => ({ k, v: POP[k] / STORES[k] }));
@@ -153,12 +175,12 @@
   ];
   $("#extEvents").innerHTML = EVENTS.map(e => `<div class="ev ev-${e.k}"><span class="ev-d">${e.d}</span><b>${e.t}</b><p>${e.s}</p></div>`).join("");
 
-  /* ---------- state films: muted by default, the presenter turns sound on ---------- */
+  /* ---------- films: muted by default, the presenter turns sound on ----------
+     Works for every .sm-video on the page, including ones the playbook adds later. */
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const films = $$(".sm-video");
-  const setBtn = (btn, on) => { btn.setAttribute("aria-pressed", on); $("span", btn).textContent = on ? "Sound on" : "Sound off"; };
+  const setBtn = (btn, on) => { if (!btn) return; btn.setAttribute("aria-pressed", on); $("span", btn).textContent = on ? "Sound on" : "Sound off"; };
   const muteEverything = except => {
-    films.forEach(f => { const v = $("video", f); if (v !== except) { v.muted = true; setBtn($(".snd-btn", f), false); } });
+    $$(".sm-video").forEach(f => { const v = $("video", f); if (v !== except) { v.muted = true; setBtn($(".snd-btn", f), false); } });
     $$(".reel-phone").forEach(r => { const v = $("video", r); if (v && v !== except) { v.muted = true; r.dataset.sound = "off"; const t = $(".snd", r); if (t) t.textContent = "Sound off"; } });
     $$(".phone video, .spot video").forEach(v => { if (v !== except) v.muted = true; });
   };
@@ -171,19 +193,20 @@
   const filmObs = new IntersectionObserver(entries => entries.forEach(en => {
     const v = en.target, btn = $(".snd-btn", v.parentElement);
     if (en.isIntersecting) {
-      if (!v.src) v.src = v.dataset.src;
+      if (!v.src && v.dataset.src) v.src = v.dataset.src;
       if (!reduced || v.dataset.user) playOrFallback(v, btn);
     } else v.pause();
   }), { threshold: 0.15 });
-  films.forEach(f => {
-    const v = $("video", f), btn = $(".snd-btn", f);
-    v.muted = true;
-    filmObs.observe(v);
-    const toggle = () => {
-      const on = btn.getAttribute("aria-pressed") !== "true";
+  $$(".sm-video video").forEach(v => { v.muted = true; filmObs.observe(v); });
+
+  document.addEventListener("click", e => {
+    const tile = e.target.closest(".sm-video");
+    if (tile) {
+      const v = $("video", tile), btn = $(".snd-btn", tile);
+      const on = !btn || btn.getAttribute("aria-pressed") !== "true";
       if (on) {
         muteEverything(v);
-        if (!v.src) { v.src = v.dataset.src; v.load(); }
+        if (!v.src && v.dataset.src) { v.src = v.dataset.src; v.load(); }
         v.dataset.user = "1";
         v.muted = false;
         v.volume = 1;
@@ -194,14 +217,9 @@
         v.muted = true;
         setBtn(btn, false);
       }
-    };
-    // the button and the whole film tile both toggle sound
-    btn.addEventListener("click", e => { e.stopPropagation(); toggle(); });
-    f.addEventListener("click", toggle);
-  });
-  // a reel turned up elsewhere silences the state films
-  document.addEventListener("click", e => {
-    const reel = e.target.closest(".reel-phone");
-    if (reel) films.forEach(f => { $("video", f).muted = true; setBtn($(".snd-btn", f), false); });
+      return;
+    }
+    // a reel turned up elsewhere silences the films
+    if (e.target.closest(".reel-phone")) $$(".sm-video").forEach(f => { $("video", f).muted = true; setBtn($(".snd-btn", f), false); });
   });
 })();

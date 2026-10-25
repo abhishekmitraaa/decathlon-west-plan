@@ -165,7 +165,8 @@ window.RUNWAY = {
       { t: "Children's Day", s: "2026-11-14", e: "2026-11-14", k: "local" },
       { t: "Decathlon CSR initiatives", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
       { t: "Christmas: Gift a Sport", s: "2026-12-01", e: "2026-12-31", k: "local", approx: true },
-      { t: "Store opening: Adajan, Surat", s: "2026-12-20", e: "2027-01-25", k: "open", star: true, approx: true },
+      { t: "Adajan, Surat: opening weekend", s: "2026-12-18", e: "2026-12-20", k: "open", star: true },
+      { t: "Adajan: Ramat Chalu Rahe", s: "2026-12-21", e: "2027-01-16", k: "local" },
       { t: "Local activations", s: "2027-01-01", e: "2027-01-31", k: "local", approx: true },
       { t: "Uttarayan", s: "2027-01-14", e: "2027-01-15", k: "local" },
       { t: "Summer launch", s: "2027-03-01", e: "2027-03-31", k: "local", approx: true },
@@ -232,7 +233,7 @@ window.CITY_MEDIUMS = {
 window.STORE_MOMENTS = {
   Gujarat: ["Navratri and Dussehra in October", "Uttarayan, 14–15 Jan", "IPL starts 14 Mar"],
   Ahmedabad: ["Adani Marathon, 29 Nov", "Metro stations are on the Sport is Everywhere QR-wall list"],
-  Surat: ["New store at Adajan opens 20 Dec", "Beach Fest with 5k participants in Q1", "2x marketing spend in Q1"],
+  Surat: ["New store at Adajan: opening weekend 18–20 Dec", "Beach Fest with 5k participants in Q1", "2x marketing spend in Q1"],
   Pune: ["Metro stations are on the Sport is Everywhere QR-wall list", "Shivaji Maharaj Jayanti long weekend, 19 Feb"],
   MP: ["Sant Ravidas Jayanti, 20 Feb"],
   Bhopal: ["Bhopal hoardings run Nov to Jan (2026 update)"]
