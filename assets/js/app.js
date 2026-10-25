@@ -249,7 +249,7 @@
   });
 
   // Pune sports stacked
-  const sportCols = ["#3643BA", "#8A92E0", "#7AFFA6", "#13A86B", "#FF8A3D"];
+  const sportCols = ["#3643BA", "#8A92E0", "#2BFF88", "#00A99D", "#7B3FC4"];
   $("#sportsLegend").innerHTML = D.puneSports.map((sp, i) => `<span><i style="background:${sportCols[i]}"></i>${sp.sport} · ${sp.total} Cr</span>`).join("");
   addChart($("#chSports"), (el, W) => {
     const H = 300, m = { t: 12, b: 40, l: 34, r: 4 }, months = D.spend.months;
@@ -278,7 +278,7 @@
   (() => {
     const maxS = Math.max(...D.puneStores.map(s => s.share));
     $("#puneStoreShare").innerHTML = D.puneStores.map(st => `<div class="store-row"><b>${st.store}</b><div class="store-bars">
-      <i style="--w:${st.share / maxS * 100}%" data-tip="<b>${st.store}</b><br>${st.share}% of Pune turnover"></i></div>
+      <i style="--w:${st.share / maxS * 100}%;background:var(--blue)" data-tip="<b>${st.store}</b><br>${st.share}% of Pune turnover"></i></div>
       <small>${st.share}% of Pune city turnover</small></div>`).join("");
   })();
 
@@ -331,7 +331,7 @@
   (() => {
     $("#runwayKey").innerHTML = [
       ["#fff", "National campaign"], [css("--red"), "Sale or commercial weekend"], ["rgba(255,255,255,.2)", "Local adaptation or event"],
-      [css("--mint"), "Store opening"], ["rgba(122,255,166,.3)", "Sport of the month"], [css("--sun"), "External event, or today (25 Oct)"]
+      [css("--mint"), "Store opening"], ["rgba(43,255,136,.3)", "Sport of the month"], [css("--sun"), "External event, or today (25 Oct)"]
     ].map(([c, l]) => `<span><i style="background:${c}"></i>${l}</span>`).join("") + `<span>★ Key event</span>`;
   })();
 

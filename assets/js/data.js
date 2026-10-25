@@ -160,6 +160,7 @@ window.RUNWAY = {
       { t: "Navratri, Dussehra", s: "2026-10-11", e: "2026-10-20", k: "local", approx: true },
       { t: "Kiprun community run", s: "2026-10-18", e: "2026-10-18", k: "local", star: true },
       { t: "Kids festival", s: "2026-10-31", e: "2026-11-02", k: "local" },
+      { t: "Sports Utsav Jr: skating workshop", s: "2026-10-31", e: "2026-10-31", k: "local" },
       { t: "Diwali: Gift a Sport", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
       { t: "Children's Day", s: "2026-11-14", e: "2026-11-14", k: "local" },
       { t: "Decathlon CSR initiatives", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
@@ -215,16 +216,16 @@ window.TOOLKIT = [
 /* Who buys: team's strategy sheet. */
 window.SHOPPERS = { men: { share: 70, growth: 5 }, women: { share: 30, growth: 11 } };
 
-/* Per-city mediums that are confirmed in the deck or sheets. */
+/* Per-city mediums that are confirmed in the deck or sheets. AOP mix per store from the AOPs 2027 slide (Pune 5, Gujarat 10, MP 5). */
 window.CITY_MEDIUMS = {
   Pune: { hoardings: 5, metro: true, influencers: "Pune (Adi)", aop: { travel: 1, gym: 1, yoga: 1, racket: 2 } },
-  Ahmedabad: { hoardings: 2, metro: true, influencers: "Gujarat pool of 40", aop: { travel: 5, gym: 3, yoga: 4, racket: 3 } },
-  Vadodara: { hoardings: 4, metro: false, influencers: "Gujarat pool of 40", aop: { travel: 5, gym: 3, yoga: 4, racket: 3 } },
-  Surat: { hoardings: 3, metro: false, influencers: "Gujarat pool of 40", aop: { travel: 5, gym: 3, yoga: 4, racket: 3 } },
-  Rajkot: { hoardings: 1, metro: false, influencers: "Gujarat pool of 40", aop: { travel: 5, gym: 3, yoga: 4, racket: 3 } },
-  Indore: { hoardings: 0, metro: false, influencers: "MP pool of 40", aop: { travel: 5, gym: 3, yoga: 1, racket: 2 } },
-  Bhopal: { hoardings: 1, metro: false, influencers: "MP pool of 40", aop: { travel: 5, gym: 3, yoga: 1, racket: 2 } },
-  Gwalior: { hoardings: 0, metro: false, influencers: "MP pool of 40", aop: { travel: 5, gym: 3, yoga: 1, racket: 2 } }
+  Ahmedabad: { hoardings: 2, metro: true, influencers: "Gujarat pool of 40", aop: { travel: 2, gym: 3, yoga: 2, racket: 3 } },
+  Vadodara: { hoardings: 4, metro: false, influencers: "Gujarat pool of 40", aop: { travel: 2, gym: 3, yoga: 2, racket: 3 } },
+  Surat: { hoardings: 3, metro: false, influencers: "Gujarat pool of 40", aop: { travel: 2, gym: 3, yoga: 2, racket: 3 } },
+  Rajkot: { hoardings: 1, metro: false, influencers: "Gujarat pool of 40", aop: { travel: 2, gym: 3, yoga: 2, racket: 3 } },
+  Indore: { hoardings: 0, metro: false, influencers: "MP pool of 40", aop: { travel: 1, gym: 1, yoga: 1, racket: 2 } },
+  Bhopal: { hoardings: 1, metro: false, influencers: "MP pool of 40", aop: { travel: 1, gym: 1, yoga: 1, racket: 2 } },
+  Gwalior: { hoardings: 0, metro: false, influencers: "MP pool of 40", aop: { travel: 1, gym: 1, yoga: 1, racket: 2 } }
 };
 
 /* Store or city specific moments that the sheets and deck confirm. */

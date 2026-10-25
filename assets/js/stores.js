@@ -10,7 +10,7 @@
   const fmt = (n, d = 2) => Number(n).toLocaleString("en-IN", { maximumFractionDigits: d, minimumFractionDigits: 0 });
   const sign = n => (n > 0 ? "+" : n < 0 ? "−" : "") + fmt(Math.abs(n));
   const SVGNS = "http://www.w3.org/2000/svg";
-  const STATE_COL = { Pune: "#3643BA", Gujarat: "#13A86B", MP: "#FF8A3D" };
+  const STATE_COL = { Pune: "#3643BA", Gujarat: "#00A99D", MP: "#7B3FC4" };
   const STATE_NAME = { Pune: "Pune", Gujarat: "Gujarat", MP: "Madhya Pradesh" };
 
   const stores = D.stores.map(s => ({ ...s, budgetTotal: +(s.budget.reduce((a, b) => a + b, 0)).toFixed(2) }));
@@ -49,7 +49,7 @@
     // faint graticule
     for (let lon = 70; lon <= 79; lon += 1) add("line", { x1: X(lon), x2: X(lon), y1: 0, y2: H, stroke: "#EEF0FA" });
     for (let lat = 18; lat <= 26; lat += 1) add("line", { x1: 0, x2: W, y1: Y(lat), y2: Y(lat), stroke: "#EEF0FA" });
-    const regionLabel = (lon, lat, t) => txt(X(lon), Y(lat), t, { "font-size": Math.max(16, W / 22), "font-weight": 900, "font-style": "italic", fill: "#E3E6F6", "font-family": "Archivo", "font-stretch": "62%" });
+    const regionLabel = (lon, lat, t) => txt(X(lon), Y(lat), t, { "font-size": Math.max(16, W / 22), "font-weight": 900, "font-style": "italic", fill: "#E3E6F6", "font-family": "Inter" });
     regionLabel(70.2, 24.6, "Gujarat");
     regionLabel(75.6, 25.6, "Madhya Pradesh");
     regionLabel(73.2, 21.2, "Maharashtra");
@@ -113,13 +113,13 @@
       const v = s[sortKey], w = Math.abs(v) / span * 100, left = v >= 0 ? zero : zero - w;
       return `<button type="button" class="st-row" data-id="${s.id}" aria-pressed="${s.id === current}">
         <b>${esc(s.name)}</b>
-        <span class="trk">${min < 0 ? `<span class="zero" style="left:${zero}%"></span>` : ""}<i style="left:${left}%;width:${Math.max(w, 0.8)}%;background:${v < 0 ? "#E8412C" : STATE_COL[s.state]}"></i></span>
+        <span class="trk">${min < 0 ? `<span class="zero" style="left:${zero}%"></span>` : ""}<i style="left:${left}%;width:${Math.max(w, 0.8)}%;background:${v < 0 ? "#C03F9C" : STATE_COL[s.state]}"></i></span>
         <em>${sortKey === "growth" ? (v >= 0 ? "+" : "") + fmt(v, 1) + "%" : sign(v) + unit}</em></button>`;
     }).join("") ;
     $("#rankNote").textContent = NOTES[sortKey];
     $$("#storeRank .st-row").forEach(b => b.addEventListener("click", () => select(b.dataset.id, true)));
     if (!$(".st-legend")) {
-      $(".st-rank").insertAdjacentHTML("beforeend", `<div class="st-legend">${Object.entries(STATE_COL).map(([k, c]) => `<span><i style="background:${c}"></i>${STATE_NAME[k]}</span>`).join("")}<span><i style="background:#E8412C"></i>Challenge below ambition</span></div>`);
+      $(".st-rank").insertAdjacentHTML("beforeend", `<div class="st-legend">${Object.entries(STATE_COL).map(([k, c]) => `<span><i style="background:${c}"></i>${STATE_NAME[k]}</span>`).join("")}<span><i style="background:#C03F9C"></i>Challenge below ambition</span></div>`);
     }
   }
   $$("#rankSeg button").forEach(b => b.addEventListener("click", () => {
@@ -264,11 +264,11 @@
     ["Digital (MarCom)", "#141A5C", /digital paid/i],
     ["Hoardings, OOH, HIPOP", "#3643BA", /hoarding/i],
     ["In-mall", "#8A92E0", /in mall/i],
-    ["Influencers", "#7AFFA6", /influencer/i],
-    ["Store events", "#13A86B", /store event/i],
-    ["In-store comms and flyers", "#FFC23D", /instore comm|flyers/i],
-    ["Partnerships and free products", "#FF8A3D", /community|free product/i],
-    ["PR", "#E8412C", /press/i],
+    ["Influencers", "#2BFF88", /influencer/i],
+    ["Store events", "#00A99D", /store event/i],
+    ["In-store comms and flyers", "#00C4E1", /instore comm|flyers/i],
+    ["Partnerships and free products", "#7B3FC4", /community|free product/i],
+    ["PR", "#C03F9C", /press/i],
     ["Other", "#C9CEF0", /./]
   ];
   const catOf = line => CAT.findIndex(c => c[2].test(line));
@@ -287,7 +287,7 @@
       const sums = stateCats(st), tot = sums.reduce((a, b) => a + b, 0);
       const sheetTot = D.stateLines[st].total.reduce((a, b) => a + b, 0);
       return `<div class="mix-row"><b>${STATE_NAME[st]}<small>${fmt(sheetTot, 1)} L Q4 plan</small></b><div class="mix-bar">${sums.map((v, i) => v > 0
-        ? `<i style="flex:${v} 1 0;background:${CAT[i][1]};color:${["#141A5C", "#3643BA", "#E8412C", "#13A86B"].includes(CAT[i][1]) ? "#fff" : "#141A5C"}" data-tip="<b>${STATE_NAME[st]} · ${CAT[i][0]}</b><br>${fmt(v, 1)} L, ${fmt(v / tot * 100, 0)}% of the lines">${v / tot > 0.07 ? fmt(v / tot * 100, 0) + "%" : ""}</i>` : "").join("")}</div></div>`;
+        ? `<i style="flex:${v} 1 0;background:${CAT[i][1]};color:${["#141A5C", "#3643BA", "#C03F9C", "#00A99D"].includes(CAT[i][1]) ? "#fff" : "#141A5C"}" data-tip="<b>${STATE_NAME[st]} · ${CAT[i][0]}</b><br>${fmt(v, 1)} L, ${fmt(v / tot * 100, 0)}% of the lines">${v / tot > 0.07 ? fmt(v / tot * 100, 0) + "%" : ""}</i>` : "").join("")}</div></div>`;
     }).join("");
     $("#stateMix").innerHTML = rows +
       `<div class="mix-legend">${CAT.map(c => `<span><i style="background:${c[1]}"></i>${c[0]}</span>`).join("")}</div>
