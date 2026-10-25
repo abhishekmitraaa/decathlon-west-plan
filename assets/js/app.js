@@ -248,31 +248,22 @@
     text(g, 82, 11, "■ outstore", { "font-size": 11, "font-weight": 700, fill: css("--mint-ink") });
   });
 
-  // Pune sports stacked
+  // What people play in Q4 (Oct-Dec): Pune city top-sports plan, months 10-12
   const sportCols = ["#3643BA", "#8A92E0", "#2BFF88", "#00A99D", "#7B3FC4"];
-  $("#sportsLegend").innerHTML = D.puneSports.map((sp, i) => `<span><i style="background:${sportCols[i]}"></i>${sp.sport} · ${sp.total} Cr</span>`).join("");
-  addChart($("#chSports"), (el, W) => {
-    const H = 300, m = { t: 12, b: 40, l: 34, r: 4 }, months = D.spend.months;
-    const g = svg(el, W, H), iw = W - m.l - m.r, ih = H - m.t - m.b, band = iw / 12, bw = Math.max(10, band * 0.66);
-    const totals = months.map((_, i) => D.puneSports.reduce((a, sp) => a + sp.v[i], 0));
-    const max = 3, y = v => m.t + ih - v / max * ih;
-    for (let i = 0; i <= 3; i++) {
-      s("line", { x1: m.l, x2: W - m.r, y1: y(i), y2: y(i), stroke: css("--line"), "stroke-dasharray": i ? "2 4" : "" }, g);
-      text(g, m.l - 8, y(i) + 4, i, { "text-anchor": "end", "font-size": 11 });
-    }
-    months.forEach((mo, i) => {
-      let acc = 0;
-      const x = m.l + band * i + (band - bw) / 2;
-      D.puneSports.forEach((sp, k) => {
-        const v = sp.v[i];
-        s("rect", { x, y: y(acc + v), width: bw, height: y(acc) - y(acc + v) - 1, fill: sportCols[k],
-          "data-tip": `<b>${mo} · ${esc(sp.sport)}</b><br>${fmt(v, 2)} Cr of ${fmt(totals[i], 2)} Cr` }, g);
-        acc += v;
-      });
-      text(g, x + bw / 2, H - 22, mo, { "text-anchor": "middle", "font-size": 11, "font-weight": 700, fill: css("--text") });
-      if (band > 54) text(g, x + bw / 2, H - 6, D.puneSportOfMonth[i].split(" ")[0], { "text-anchor": "middle", "font-size": 10, fill: css("--blue") });
-    });
-  });
+  const darkSeg = [true, false, false, true, true];
+  (() => {
+    const Q = [9, 10, 11], QM = ["October", "November", "December"], SOM = ["Running", "Climbing and trekking", "Trekking"];
+    const mTot = Q.map(i => D.puneSports.reduce((a, sp) => a + sp.v[i], 0));
+    const sTot = D.puneSports.map(sp => Q.reduce((a, i) => a + sp.v[i], 0));
+    const qTot = mTot.reduce((a, b) => a + b, 0), maxM = Math.max(...mTot);
+    const lead = sTot.indexOf(Math.max(...sTot));
+    $("#sportsNote").textContent = `Pune city top sports, October to December (Cr). ${fmt(qTot, 2)} Cr in the quarter; ${D.puneSports[lead].sport.toLowerCase()} leads with ${Math.round(sTot[lead] / qTot * 100)}%.`;
+    $("#chSports").innerHTML = Q.map((i, k) => `<div class="q4s-row">
+        <div class="q4s-m"><b>${QM[k]}</b><span>Sport of the month: ${SOM[k]}</span></div>
+        <div class="q4s-bar" style="width:${mTot[k] / maxM * 100}%">${D.puneSports.map((sp, j) => `<i style="flex:${sp.v[i]} 1 0;background:${sportCols[j]};color:${darkSeg[j] ? "#fff" : "#10135A"}" data-tip="<b>${QM[k]} · ${esc(sp.sport)}</b><br>${fmt(sp.v[i], 2)} Cr">${fmt(sp.v[i], 2)}</i>`).join("")}</div>
+        <em>${fmt(mTot[k], 2)} Cr</em></div>`).join("");
+    $("#sportsLegend").innerHTML = D.puneSports.map((sp, j) => `<span><i style="background:${sportCols[j]}"></i>${sp.sport} · ${fmt(sTot[j], 2)} Cr (${Math.round(sTot[j] / qTot * 100)}%)</span>`).join("");
+  })();
 
   // stores
   (() => {

@@ -33,69 +33,6 @@
     show("All");
   })();
 
-  /* ---------- map ---------- */
-  function drawMap() {
-    const el = $("#storeMap");
-    const W = Math.max(320, el.clientWidth - 40), H = Math.round(W * 0.92);
-    const lon0 = 69.9, lon1 = 79.2, lat0 = 17.7, lat1 = 26.9;
-    const k = Math.min(W / (lon1 - lon0), H / (lat1 - lat0));
-    const X = lon => (lon - lon0) * k, Y = lat => (lat1 - lat) * k;
-    const svg = document.createElementNS(SVGNS, "svg");
-    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-    svg.setAttribute("role", "group");
-    const add = (tag, attrs, parent = svg) => { const n = document.createElementNS(SVGNS, tag); for (const [a, v] of Object.entries(attrs)) n.setAttribute(a, v); parent.appendChild(n); return n; };
-    const txt = (x, y, t, attrs = {}, parent = svg) => { const n = add("text", { x, y, "font-size": 12, fill: "#4A5378", ...attrs }, parent); n.textContent = t; return n; };
-
-    // faint graticule
-    for (let lon = 70; lon <= 79; lon += 1) add("line", { x1: X(lon), x2: X(lon), y1: 0, y2: H, stroke: "#EEF0FA" });
-    for (let lat = 18; lat <= 26; lat += 1) add("line", { x1: 0, x2: W, y1: Y(lat), y2: Y(lat), stroke: "#EEF0FA" });
-    const regionLabel = (lon, lat, t) => txt(X(lon), Y(lat), t, { "font-size": Math.max(16, W / 22), "font-weight": 900, "font-style": "italic", fill: "#E3E6F6", "font-family": "Inter" });
-    regionLabel(70.2, 24.6, "Gujarat");
-    regionLabel(75.6, 25.6, "Madhya Pradesh");
-    regionLabel(73.2, 21.2, "Maharashtra");
-
-    const r = s => 4 + Math.sqrt(s.challenge) * (W / 330);
-    // Ahmedabad's two stores sit 7 km apart; nudge them so both dots read
-    const nudge = { motera: [0.05, 0.22], nexus: [-0.2, -0.08] };
-    const labelSide = { motera: "r", nexus: "l", baroda: "r", surat: "r", rajkot: "r", indore: "r", bhopal: "r", gwalior: "l" };
-
-    const dot = (s, cx, cy, rad, label, side) => {
-      const g = add("g", { class: `dot${s.id === current ? " on" : ""}`, tabindex: 0, role: "button", "aria-label": `${s.name}, ${s.city}`, "data-id": s.id,
-        "data-tip": `<b>${esc(s.name)}</b><br>Challenge ${fmt(s.challenge)} Cr, ${s.growth >= 0 ? "+" : ""}${s.growth}%<br>Q4 budget ${fmt(s.budgetTotal)} L` });
-      add("circle", { cx, cy, r: rad + 6, fill: STATE_COL[s.state], opacity: 0.15 }, g);
-      add("circle", { class: "core", cx, cy, r: rad, fill: STATE_COL[s.state], stroke: "#fff", "stroke-width": 2 }, g);
-      if (label) txt(side === "l" ? cx - rad - 6 : cx + rad + 6, cy + 4, label, { "text-anchor": side === "l" ? "end" : "start", "font-weight": 750, fill: "#0F1640" }, g);
-      return g;
-    };
-    stores.filter(s => s.state !== "Pune").forEach(s => {
-      const [dl, dt] = nudge[s.id] || [0, 0];
-      dot(s, X(s.lon + dl), Y(s.lat + dt), r(s), s.name, labelSide[s.id]);
-    });
-
-    // Pune: one marker on the map, stores in a zoomed inset
-    const pune = stores.filter(s => s.state === "Pune");
-    const pLat = 18.53, pLon = 73.88, px = X(pLon), py = Y(pLat);
-    const R = W * 0.2, icx = W - R - 58, icy = H - R - 26;
-    add("line", { x1: px, y1: py, x2: icx - R * 0.95, y2: icy - R * 0.3, stroke: "#3643BA", "stroke-dasharray": "4 4", "stroke-width": 1.5 });
-    add("circle", { cx: px, cy: py, r: 7, fill: "#3643BA", stroke: "#fff", "stroke-width": 2 });
-    txt(px - 10, py + 4, "Pune", { "text-anchor": "end", "font-weight": 750, fill: "#0F1640" });
-    add("circle", { cx: icx, cy: icy, r: R, fill: "#F5F6FD", stroke: "#3643BA", "stroke-width": 1.5 });
-    txt(icx, icy - R + 20, "Pune city", { "text-anchor": "middle", "font-size": 11, "font-weight": 800, fill: "#3643BA" });
-    const kz = (R * 1.45) / 0.3;
-    pune.forEach(s => {
-      const cx = icx + (s.lon - pLon) * kz, cy = icy - (s.lat - pLat) * kz;
-      dot(s, cx, cy, Math.max(5, r(s) * 0.75), s.name, { wakad: "l", sgs: "l", wagholi: "r", amanora: "r", nibm: "r" }[s.id]);
-    });
-    txt(4, H - 6, "Positions are approximate. Dot size shows the Q4 challenge.", { "font-size": 11, fill: "#7A82A6" });
-
-    el.innerHTML = "";
-    el.appendChild(svg);
-    $$(".dot", svg).forEach(g => {
-      g.addEventListener("click", () => select(g.dataset.id, true));
-      g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(g.dataset.id, true); } });
-    });
-  }
-
   /* ---------- ranking ---------- */
   let sortKey = "overAmbition";
   const NOTES = {
@@ -283,21 +220,24 @@
       .map(([n, v]) => `${n}: ${fmt(v, 1)} L (${fmt(v / tot * 100, 0)}%)`);
   }
   function drawMix() {
+    const light = ["#8A92E0", "#2BFF88", "#C9CEF0"];
     const rows = ["Pune", "Gujarat", "MP"].map(st => {
       const sums = stateCats(st), tot = sums.reduce((a, b) => a + b, 0);
       const sheetTot = D.stateLines[st].total.reduce((a, b) => a + b, 0);
-      return `<div class="mix-row"><b>${STATE_NAME[st]}<small>${fmt(sheetTot, 1)} L Q4 plan</small></b><div class="mix-bar">${sums.map((v, i) => v > 0
-        ? `<i style="flex:${v} 1 0;background:${CAT[i][1]};color:${["#141A5C", "#3643BA", "#C03F9C", "#00A99D"].includes(CAT[i][1]) ? "#fff" : "#141A5C"}" data-tip="<b>${STATE_NAME[st]} · ${CAT[i][0]}</b><br>${fmt(v, 1)} L, ${fmt(v / tot * 100, 0)}% of the lines">${v / tot > 0.07 ? fmt(v / tot * 100, 0) + "%" : ""}</i>` : "").join("")}</div></div>`;
+      const parts = sums.map((v, i) => ({ v, i })).filter(x => x.v > 0).sort((a, b) => b.v - a.v);
+      return `<div class="mix-state">
+        <div class="mix-row"><b>${STATE_NAME[st]}<small>${fmt(sheetTot, 1)} L Q4 plan</small></b>
+          <div class="mix-bar">${parts.map(({ v, i }) => `<i style="flex:${v} 1 0;background:${CAT[i][1]};color:${light.includes(CAT[i][1]) ? "#10135A" : "#fff"}">${v / tot > 0.06 ? Math.round(v / tot * 100) + "%" : ""}</i>`).join("")}</div></div>
+        <ul class="mix-detail">${parts.map(({ v, i }) => `<li><i style="background:${CAT[i][1]}"></i><span>${CAT[i][0]}</span><b>${fmt(v, 1)} L</b><em>${Math.round(v / tot * 100)}%</em></li>`).join("")}</ul>
+      </div>`;
     }).join("");
     $("#stateMix").innerHTML = rows +
-      `<div class="mix-legend">${CAT.map(c => `<span><i style="background:${c[1]}"></i>${c[0]}</span>`).join("")}</div>
-       <p class="mix-note">Pune's line plan has no digital line because Pune's paid digital sits with MarCom. Pune's months follow its campaigns: October is Dussehra and festive, November is Winter Travel, December is the end-of-year sale. Shares are worked out from the line items in the sheet.</p>`;
+      `<p class="mix-note">Pune's line plan has no digital line because Pune's paid digital sits with MarCom. Pune's months follow its campaigns: October is Dussehra and festive, November is Winter Travel, December is the end-of-year sale. Lakh figures are October to December added up from the sheet's line items; Gujarat's and MP's line items add up to more than their stated totals.</p>`;
   }
 
   /* ---------- wiring ---------- */
   function select(id, scroll) {
     current = id;
-    $$("#storeMap .dot").forEach(g => g.classList.toggle("on", g.dataset.id === id));
     $$("#storeRank .st-row").forEach(b => b.setAttribute("aria-pressed", b.dataset.id === id));
     render();
     if (scroll) {
@@ -305,11 +245,8 @@
       if (top > innerHeight * 0.75 || top < 0) d.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
     }
   }
-  if (!$("#storeMap")) return;
-  drawMap();
+  if (!$("#storeRank")) return;
   drawRank();
   drawMix();
   render();
-  let t;
-  addEventListener("resize", () => { clearTimeout(t); t = setTimeout(drawMap, 150); });
 })();
