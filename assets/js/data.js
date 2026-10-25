@@ -46,9 +46,9 @@ window.DATA = {
   // Advertising spend by month, lakh. 2026 = realised, 2027 = final plan ("AFTER" table)
   spend: {
     months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
-    Pune:    { y26: [24.1,8.7,22.8,26.6,25.2,30.3,23.4,22.5,19.7,31.4,36.5,38.1], y27: [24.0,18.9,24.1,26.8,31.3,28.1,30.4,24.8,18.4,19.0,28.4,30.1] },
-    Gujarat: { y26: [20.2,14.7,28.8,33.3,30.9,24.4,24.7,13.0,23.8,24.4,27.3,31.5], y27: [18.8,13.1,17.8,20.4,24.0,20.1,19.3,18.3,10.7,14.1,19.6,21.1] },
-    MP:      { y26: [2.9,2.2,0.5,2.8,2.9,2.4,2.5,1.9,7.1,10.9,12.3,12.3],        y27: [10.4,6.2,7.4,8.3,9.6,8.7,9.0,8.2,3.3,4.2,11.7,12.9] }
+    Pune:    { y26: [24.07,8.74,22.75,26.57,25.18,30.26,23.42,22.47,19.70,31.39,36.52,38.11], y27: [23.95,18.90,24.14,26.84,31.29,28.15,30.36,24.81,18.45,19.03,28.41,30.12] },
+    Gujarat: { y26: [20.24,14.73,28.75,33.33,30.87,24.42,24.73,12.98,23.82,24.38,27.32,31.49], y27: [18.78,13.05,17.78,20.37,23.99,20.09,19.28,18.35,10.66,14.07,19.61,21.11] },
+    MP:      { y26: [2.87,2.22,0.54,2.81,2.86,2.38,2.48,1.92,7.10,10.90,12.30,12.29],         y27: [10.43,6.20,7.37,8.33,9.63,8.68,9.00,8.24,3.32,4.22,11.69,12.89] }
   },
 
   // Omni turnover by month, 2026, Cr (Master Data sheet)
@@ -59,29 +59,24 @@ window.DATA = {
     outGrowth: [-9.2,25.3,-21.9,27.2,24.7,29.2,55.8,35.3,63.8,185.3,67.4,85.5]
   },
 
-  // Pune 2027 sport plan, Cr per month
+  // Pune city top sports, 2027 plan, Cr per month (Pune COMM Calendar rows 98-102)
   puneSports: [
     { sport: "Hiking & trekking", v: [0.76,0.53,0.55,0.48,0.52,0.67,0.86,0.80,0.59,0.92,0.71,0.99], total: 8.39 },
-    { sport: "Fitness", v: [0.88,0.59,0.62,0.56,0.61,0.57,0.49,0.50,0.49,0.70,0.60,0.69], total: 7.28 },
-    { sport: "Supporting + urban", v: [0.22,0.23,0.35,0.46,0.68,0.36,0.25,0.24,0.27,0.56,0.46,0.50], total: 4.57 },
+    { sport: "Fitness", v: [0.88,0.58,0.61,0.56,0.61,0.57,0.49,0.50,0.49,0.70,0.60,0.69], total: 7.28 },
+    { sport: "Supporting + urban", v: [0.22,0.23,0.35,0.46,0.68,0.36,0.25,0.24,0.27,0.56,0.46,0.49], total: 4.57 },
     { sport: "Running", v: [0.37,0.29,0.29,0.26,0.28,0.27,0.25,0.26,0.25,0.34,0.28,0.30], total: 3.43 },
-    { sport: "Racket", v: [0.22,0.31,0.25,0.24,0.26,0.23,0.21,0.20,0.20,0.28,0.25,0.28], total: 2.92 }
+    { sport: "Racket", v: [0.22,0.31,0.25,0.24,0.26,0.23,0.20,0.20,0.20,0.28,0.25,0.28], total: 2.92 }
   ],
   puneSportOfMonth: ["Fitness","Camping","Pickleball","Cricket + roller","Swimming","Football","Cycling","Badminton","Water sports","Running","Trekking","Trekking"],
 
+  // Share of Pune city turnover. The sheet's per-store 2027 budget totals repeat channel-line
+  // values (Wakad = in-mall, SGS = flyers, Wagholi = free products), so they are left out.
   puneStores: [
-    { store: "Wakad", share: 40.9, budget: 18.27 },
-    { store: "SGS Mall", share: 18.8, budget: 7.31 },
-    { store: "Wagholi", share: 17.5, budget: 10.96 },
-    { store: "Amanora", share: 14.4, budget: 33.08 },
-    { store: "NIBM", share: 8.5, budget: 18.27 }
-  ],
-
-  digital: [
-    { name: "E-commerce turnover", from: "4.7 Cr", to: "10.5 Cr", note: "Conversion 0.5% → 1.2%", a: 4.7, b: 10.5 },
-    { name: "Ship-from-store lead time", from: "56%", to: "80%", note: "PPV lead time and L2L", a: 56, b: 80 },
-    { name: "Express delivery", from: "0.1 Cr", to: "0.7 Cr", note: "Digital share 2% → 7%", a: 0.1, b: 0.7 },
-    { name: "Sell-at-store (SAS)", from: "1.2 Cr", to: "6.6 Cr", note: "Turnover share 1.6% → 4%", a: 1.2, b: 6.6 }
+    { store: "Wakad", share: 40.9 },
+    { store: "SGS Mall", share: 18.8 },
+    { store: "Wagholi", share: 17.5 },
+    { store: "Amanora", share: 14.4 },
+    { store: "NIBM", share: 8.5 }
   ],
 
   budget2027: {
@@ -135,42 +130,40 @@ window.RUNWAY = {
   start: "2026-08-01", end: "2027-03-31", focusStart: "2026-10-01", focusEnd: "2026-12-31",
   lanes: [
     { name: "National campaigns", items: [
-      { t: "Sale", s: "2026-08-03", e: "2026-08-28", k: "sale" },
-      { t: "New arrivals", s: "2026-09-02", e: "2026-09-28", k: "nat" },
-      { t: "Footwear phase 4", s: "2026-10-01", e: "2027-01-10", k: "nat" },
-      { t: "Winter + Travel + Trek", s: "2026-10-01", e: "2027-01-10", k: "nat", star: true },
-      { t: "Kiprun launch", s: "2026-10-18", e: "2026-11-28", k: "nat" },
-      { t: "Republic Day, Made in India", s: "2027-01-20", e: "2027-01-26", k: "nat" },
-      { t: "Winter Off, up to 50%", s: "2027-01-01", e: "2027-01-23", k: "sale" },
-      { t: "New arrivals", s: "2027-02-01", e: "2027-02-27", k: "nat" },
-      { t: "Footwear", s: "2027-02-10", e: "2027-03-31", k: "nat" },
-      { t: "Women's Day", s: "2027-03-01", e: "2027-03-08", k: "nat" },
-      { t: "Clearance sale", s: "2027-03-12", e: "2027-03-31", k: "sale" }
+      { t: "Sale", s: "2026-08-03", e: "2026-08-28", k: "sale", approx: true },
+      { t: "New arrivals", s: "2026-09-02", e: "2026-09-28", k: "nat", approx: true },
+      { t: "Footwear phase 4", s: "2026-10-01", e: "2027-01-25", k: "nat", approx: true },
+      { t: "Winter + Travel + Trek", s: "2026-10-01", e: "2027-01-25", k: "nat", star: true, approx: true },
+      { t: "Kiprun launch", s: "2026-10-18", e: "2026-11-28", k: "nat", approx: true },
+      { t: "Fitness: Movement for All", s: "2027-01-01", e: "2027-01-31", k: "nat", approx: true },
+      { t: "New arrivals", s: "2027-02-01", e: "2027-03-31", k: "nat", approx: true },
+      { t: "Footwear", s: "2027-02-01", e: "2027-03-31", k: "nat", approx: true }
     ]},
-    { name: "Commercial weekends", items: [
+    { name: "Commercial weekends and sales", items: [
       { t: "Dussehra", s: "2026-10-16", e: "2026-10-20", k: "sale", note: "7.5 Cr" },
       { t: "Diwali sale", s: "2026-10-31", e: "2026-11-01", k: "sale", note: "5.5 Cr" },
       { t: "Black Friday", s: "2026-11-27", e: "2026-11-30", k: "sale", star: true, note: "12 Cr" },
-      { t: "EOY festive sale", s: "2026-12-18", e: "2026-12-25", k: "sale", note: "20 Cr" }
+      { t: "EOY festive sale", s: "2026-12-18", e: "2026-12-25", k: "sale", note: "20 Cr" },
+      { t: "Republic Day sale", s: "2027-01-20", e: "2027-01-26", k: "sale" },
+      { t: "Sale campaign", s: "2027-02-01", e: "2027-02-28", k: "sale", approx: true },
+      { t: "Women's Day", s: "2027-03-01", e: "2027-03-08", k: "sale" }
     ]},
     { name: "Local adaptations and events", items: [
-      { t: "Kiprun 5K run", s: "2026-10-02", e: "2026-10-14", k: "local" },
-      { t: "Festive gifting: Gift a Sport", s: "2026-10-01", e: "2026-12-15", k: "local", star: true },
-      { t: "Local events at store", s: "2026-10-05", e: "2026-11-30", k: "local" },
-      { t: "Kids festival", s: "2026-11-01", e: "2026-11-14", k: "local" },
-      { t: "Store opening: Adajan, Surat", s: "2026-12-20", e: "2027-01-31", k: "open", star: true },
-      { t: "Santa Run", s: "2026-12-19", e: "2026-12-25", k: "local" },
+      { t: "Kiprun 5K run", s: "2026-10-01", e: "2026-10-31", k: "local", approx: true },
+      { t: "Festive gifting: Gift a Sport", s: "2026-10-03", e: "2026-12-25", k: "local", star: true, approx: true },
+      { t: "Local events at store", s: "2026-10-06", e: "2026-12-24", k: "local", approx: true },
+      { t: "Kids festival", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
+      { t: "Store opening: Adajan, Surat", s: "2026-12-20", e: "2027-01-25", k: "open", star: true, approx: true },
+      { t: "Local activations", s: "2027-01-01", e: "2027-01-31", k: "local", approx: true },
+      { t: "Fitness events", s: "2027-01-03", e: "2027-01-30", k: "local", approx: true },
       { t: "Uttarayan", s: "2027-01-14", e: "2027-01-15", k: "local" },
-      { t: "New Year, New Moves", s: "2027-01-02", e: "2027-01-31", k: "local" },
-      { t: "Fitness events", s: "2027-01-05", e: "2027-01-31", k: "local" },
-      { t: "Beach Fest, Surat", s: "2027-02-06", e: "2027-02-21", k: "local" },
-      { t: "Move Your Way", s: "2027-02-15", e: "2027-03-20", k: "local" },
+      { t: "Summer launch", s: "2027-03-01", e: "2027-03-31", k: "local", approx: true },
       { t: "Holi", s: "2027-03-15", e: "2027-03-22", k: "local" }
     ]},
     { name: "Hoardings and influencers", items: [
-      { t: "16 hoardings: 5 Pune, 4 Baroda, 3 Surat, 2 Ahmedabad, 1 Rajkot, 1 Bhopal", s: "2026-10-01", e: "2027-01-31", k: "ooh" },
-      { t: "Influencers: Pune (Adi), Gujarat 40, MP 40", s: "2026-10-01", e: "2027-01-31", k: "ooh" },
-      { t: "50 influencer videos, 5M views", s: "2027-01-01", e: "2027-03-31", k: "ooh" }
+      { t: "16 hoardings: 5 Pune, 4 Baroda, 3 Surat, 2 Ahmedabad, 1 Rajkot, 1 Bhopal", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
+      { t: "Influencers: Pune (Adi), Gujarat 40, MP 40", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
+      { t: "50 influencer videos, 5M views", s: "2027-01-01", e: "2027-03-31", k: "ooh", approx: true }
     ]}
   ]
 };
@@ -180,12 +173,12 @@ window.PLANNER = {
   months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
   lanes: [
     { name: "Season", items: [
-      { t: "Winter", a: 0, b: 1, k: "season" }, { t: "Summer + summer camp", a: 2, b: 4, k: "season" },
+      { t: "Winter", a: 0, b: 0, k: "season" }, { t: "Summer + summer camp", a: 2, b: 4, k: "season" },
       { t: "Monsoon & back to school", a: 5, b: 8, k: "season" }, { t: "Winter & travel", a: 9, b: 11, k: "season" } ] },
     { name: "Country campaigns", items: [
       { t: "Republic Day, MII", a: 0, b: 0, k: "nat" }, { t: "New arrivals: shoes 1", a: 1, b: 2, k: "nat" },
       { t: "Valentine's Day", a: 1, b: 1, k: "nat" }, { t: "Holi", a: 2, b: 2, k: "nat" },
-      { t: "Ugadi, Gudi Padwa", a: 3, b: 3, k: "nat" }, { t: "Shoes phase 2", a: 3, b: 4, k: "nat" },
+      { t: "Ugadi, Gudi Padwa", a: 3, b: 3, k: "nat" }, { t: "Shoes phase 2", a: 3, b: 3, k: "nat" },
       { t: "Shoes phase 3", a: 6, b: 6, k: "nat" }, { t: "Independence Day, MII", a: 7, b: 7, k: "nat" },
       { t: "National Sports Day", a: 7, b: 7, k: "nat" }, { t: "New arrivals", a: 8, b: 8, k: "nat" },
       { t: "Shoes phase 4", a: 9, b: 9, k: "nat" }, { t: "Dussehra: Gift a Sport", a: 9, b: 9, k: "nat" } ] },

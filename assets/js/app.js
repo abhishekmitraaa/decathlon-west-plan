@@ -244,8 +244,8 @@
       if (i === 9 || i === 11 || (i === 6 && band > 40)) text(g, x + bw / 2, y(t) - 6, `+${fmt(o.outGrowth[i], 0)}%`, { "text-anchor": "middle", "font-size": 10.5, "font-weight": 800, fill: css("--mint-ink") });
       text(g, x + bw / 2, H - 6, months[i][0], { "text-anchor": "middle", "font-size": 11, "font-weight": 600 });
     });
-    text(g, 4, 11, "■ in-store and other", { "font-size": 11, "font-weight": 700, fill: "#8D95D8" });
-    text(g, 130, 11, "■ outstore", { "font-size": 11, "font-weight": 700, fill: css("--mint-ink") });
+    text(g, 4, 11, "■ in-store", { "font-size": 11, "font-weight": 700, fill: "#8D95D8" });
+    text(g, 82, 11, "■ outstore", { "font-size": 11, "font-weight": 700, fill: css("--mint-ink") });
   });
 
   // Pune sports stacked
@@ -276,16 +276,12 @@
 
   // stores
   (() => {
-    const maxS = Math.max(...D.puneStores.map(s => s.share)), maxB = Math.max(...D.puneStores.map(s => s.budget));
+    const maxS = Math.max(...D.puneStores.map(s => s.share));
     $("#stores").innerHTML = D.puneStores.map(st => `<div class="store-row"><b>${st.store}</b><div class="store-bars">
-      <i style="--w:${st.share / maxS * 100}%" data-tip="<b>${st.store}</b><br>${st.share}% of Pune turnover"></i>
-      <i style="--w:${st.budget / maxB * 100}%" data-tip="<b>${st.store}</b><br>${st.budget} L store budget in 2027"></i></div>
-      <small>${st.share}% of turnover · ${st.budget} L budget</small></div>`).join("") +
-      `<div class="legend"><span><i style="background:var(--blue)"></i>Turnover share</span><span><i style="background:var(--mint)"></i>2027 store budget</span></div>`;
+      <i style="--w:${st.share / maxS * 100}%" data-tip="<b>${st.store}</b><br>${st.share}% of Pune turnover"></i></div>
+      <small>${st.share}% of Pune city turnover</small></div>`).join("");
   })();
 
-  // digital
-  $("#digital").innerHTML = D.digital.map(d => `<div class="digi-row"><h4>${d.name}</h4><div class="digi-track"><b>${d.from}</b><i></i><b>${d.to}</b></div><small>${d.note}</small></div>`).join("");
 
   /* ---------- runway ---------- */
   const measure = (() => {
@@ -320,7 +316,11 @@
         <div class="rw-today ${li ? "quiet" : ""}" style="left:${pos("2026-10-25")}%"></div>
         ${placed.map(p => {
           const lab = `${p.it.star ? '<span class="star" aria-label="key event">★</span>' : ""}${esc(p.it.t)}${p.it.note ? ` <em>${p.it.note}</em>` : ""}`;
-          const tipTxt = `<b>${esc(p.it.t)}</b><br>${new Date(p.it.s).toLocaleDateString("en-IN", { day: "numeric", month: "short" })} – ${new Date(p.it.e).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}${p.it.note ? "<br>Target " + p.it.note : ""}`;
+          const fd = (d, o) => new Date(d).toLocaleDateString("en-IN", o);
+          const when = p.it.approx
+            ? `${fd(p.it.s, { month: "short", year: "numeric" })}${fd(p.it.s, { month: "short" }) !== fd(p.it.e, { month: "short" }) ? " – " + fd(p.it.e, { month: "short", year: "numeric" }) : ""}<br>Approximate, read from the Q4 timeline slide`
+            : `${fd(p.it.s, { day: "numeric", month: "short" })} – ${fd(p.it.e, { day: "numeric", month: "short", year: "numeric" })}`;
+          const tipTxt = `<b>${esc(p.it.t)}</b><br>${when}${p.it.note ? "<br>Target " + p.it.note : ""}`;
           return `<div class="rw-item ${p.it.k}" style="left:${p.a}%;width:${p.b - p.a}%;top:${10 + p.r * rowH}px" data-tip="${esc(tipTxt)}">${lab}</div>`;
         }).join("")}
       </div></div>`;
@@ -343,7 +343,7 @@
   const pune27 = D.spend.Pune.y27, maxP = Math.max(...pune27);
   const plannerEl = $("#plannerGrid");
   function buildPlanner() {
-    let html = `<div class="pl-corner">Pune spend bar shows the month's share of the 2027 budget</div>`;
+    let html = `<div class="pl-corner">Bar under each month: Pune ad spend, relative to the biggest month</div>`;
     html += PL.months.map((m, i) => `<button type="button" class="pl-month ${i < 3 ? "q1" : ""}" data-m="${i}" aria-pressed="${i === month}">
         <b>${m}</b><small>${PD.seasonality[i].toLowerCase().replace(/^./, c => c.toUpperCase())}<br>${PD.weather[i]}</small><i class="pl-spend" style="--w:${pune27[i] / maxP * 100}%" data-tip="<b>${m} 2027</b><br>Pune ad spend ${fmt(pune27[i])} L"></i></button>`).join("");
     PL.lanes.forEach(lane => {
@@ -462,7 +462,7 @@
         <h4 style="margin-top:18px">Pune academy partners by month</h4>${monthCards("academy")}` },
     { name: "WhatsApp channels, PN and RCS", tag: "5%", media: ["whatsapp.jpg", "push-notification.jpg"], contain: true,
       title: "Bring them back, cheaply",
-      copy: "Existing customers hear about every sale, new arrival and local event on the channel they already check: a city WhatsApp channel, push notifications in the app and RCS messages. Each send is targeted by store catchment and sport.",
+      copy: "Existing customers hear about sales, new arrivals and local events on channels they already check: WhatsApp, push notifications in the app and RCS messages. Targeted campaigns carry both commercial and brand messages.",
       stats: [["5 L", "customers reached in Q1"], ["1.95", "purchase frequency target, YTD"], ["+15%", "returning customers in Q1"], ["5%", "of the 2027 budget"]],
       planTitle: "Months where WhatsApp and CRM lead in Pune", plan: () => monthCards("channels", v => /WhatsApp|CRM/i.test(v)) },
     { name: "Influencers", tag: "25%", media: ["../posters/process-vs.jpg", "../posters/winter-gear.jpg", "../posters/kiprun.jpg"],
@@ -472,7 +472,7 @@
       planTitle: "Pune creator list by month", plan: () => monthCards("influencers") },
     { name: "Meta, app and landing pages", tag: "65 L", media: ["meta-reel.jpg", "landing-page.jpg"],
       title: "Paid social that lands on a local page",
-      copy: "Meta reels and stories carry each campaign, and every ad lands on a localised page in the app or on decathlon.in. Festive pages speak the local language, like नव-ऊर्जा, नव-खेल for new arrivals from ₹199.",
+      copy: "Meta reels and stories carry each campaign, and ads land on campaign pages in the app and on decathlon.in. Festive pages can speak the local language, like नव-ऊर्जा, नव-खेल for new arrivals from ₹199.",
       stats: [["65 L", "MarCom spend in Q4"], ["0.45%", "of turnover"], ["20%", "bounce-rate target"], ["50 L", "turnover from omni campaigns"]],
       planTitle: "Pune website banners, 2027", plan: () => monthCards("banner").replace(/([a-z])([A-Z])/g, "$1: $2") },
     { name: "In-mall and in-store kit", tag: "16 L", media: ["winter-off.jpg", "two-hour-delivery.jpg"],
@@ -487,12 +487,12 @@
       planTitle: "Residential society plan, Pune", plan: () => monthCards("society") },
     { name: "Store openings", tag: "Dec", media: ["surat-grand-opening.jpg", "surat-map.jpg", "surat-offer.jpg"],
       title: "Adajan, Surat: 20 December",
-      copy: "Launch comms are ready: a grand-opening campaign, a map post, free gifts with purchase on opening days and Deca Runners classes twice a week until 16 January. Surat gets twice the usual marketing spend in Q1 to build the habit.",
+      copy: "Launch comms are ready: a grand-opening campaign, a map post, free gifts with purchase on opening days and 7 free Deca Runners classes from 20 Dec to 16 Jan. Surat gets twice the usual marketing spend in Q1 to build the habit.",
       stats: [["720+", "sports items in store"], ["2x", "Q1 marketing spend"], ["5k", "Beach Fest participants"], ["10:30–10", "open daily"]],
-      planTitle: "Surat new-store path (from the plan)", plan: () => `<ul><li>Oct–Dec 2026: site finalisation and approvals</li><li>Jan 2027: local partnerships and community build</li><li>Feb 2027: pre-opening campaigns</li><li>Mar 2027: soft launch and preview events</li><li>Apr 2027: grand opening</li><li>Pre-opening activations: city run and fitness events, yoga by the river, racket tournaments, travel and outdoor experiences</li></ul>` },
+      planTitle: "Surat new-store timeline, indicative (from the AOP 2027 slide)", plan: () => `<ul><li>Oct–Dec 2026: site finalisation and approvals</li><li>Jan 2027: local partnerships and community build</li><li>Feb 2027: pre-opening campaigns</li><li>Mar 2027: soft launch and preview events</li><li>Apr 2027: grand opening</li><li>Pre-opening activations: city run and fitness events, yoga by the river, racket tournaments, travel and outdoor experiences</li></ul>` },
     { name: "Quick commerce and delivery", tag: "2 hr", media: ["quick-commerce.jpg", "two-hour-delivery.jpg", "app-order.jpg"],
       title: "Sport, delivered fast",
-      copy: "Digital turnover grows by 27% when traffic, conversion, orders and basket all move together. Express delivery covers more pin codes, and every store sells the full online range through the app.",
+      copy: "The 12 Cr digital challenge splits three ways: home delivery and pick-from-store, sell-at-store in our shops, and express delivery with affiliation. Digital turnover grows 27% when traffic, conversion, orders and basket all move together.",
       equation: true,
       stats: [["8 Cr", "home delivery and pick-up, 66% share"], ["3.3 Cr", "sell-at-store, 27.5% share"], ["80 L", "express and affiliation"], ["30", "express orders a day"]],
       planTitle: "Growth levers", plan: () => `<ul><li>Ship-from-store for Pune cuts lead time by 2 days in 4 districts</li><li>Highlight 20 R3 and exclusive models in store: 40% OOR share</li><li>Cycling and equipment boosted with EMI, Dussehra and no-carton strategy</li><li>Affiliation through 50+ travel agencies, 50 academies and coaches, runners and cyclists: 40 L, +130%</li><li>Pick and pack in 30 minutes, 99% of the time</li></ul>` }
