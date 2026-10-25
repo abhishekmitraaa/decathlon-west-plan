@@ -567,7 +567,7 @@
         <span class="snd">Sound off</span>
       </button>
       <h3>${esc(r.t)}</h3>
-      <dl class="reel-notes"><div><dt>The hook</dt><dd>${esc(r.h)}</dd></div><div><dt>Why it works</dt><dd>${esc(r.w)}</dd></div><div><dt>Steal it for</dt><dd>${esc(r.u)}</dd></div></dl></article>`).join("");
+      <dl class="reel-notes"><div><dt>The hook</dt><dd>${esc(r.h)}</dd></div><div><dt>Why it works</dt><dd>${esc(r.w)}</dd></div><div><dt>Where we'll use it</dt><dd>${esc(r.u)}</dd></div></dl></article>`).join("");
     $$(".reel-phone", row).forEach(btn => {
       const v = $("video", btn);
       v.muted = true;

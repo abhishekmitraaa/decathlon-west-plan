@@ -1146,6 +1146,20 @@ ul, ol { padding: 0; }
   .cc-collage { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* marketing playbook: hoarding wall */
+.hoard { margin-bottom: clamp(40px, 6vw, 72px); }
+.hoard .display-s { color: #fff; margin-bottom: 18px; }
+.hoard-wall { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.hoard-wall figure { margin: 0; display: flex; flex-direction: column; background: rgba(10,14,61,.45); border-radius: var(--r-md); overflow: hidden; min-width: 0; }
+.hoard-wall img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.hoard-wall .hw-lead { grid-column: span 2; grid-row: span 2; }
+.hoard-wall .hw-lead img { flex: 1; min-height: 0; aspect-ratio: auto; object-position: center 20%; }
+.hoard-wall figcaption { padding: 14px 16px 16px; display: grid; gap: 2px; }
+.hoard-wall figcaption b { font-family: var(--display); font-weight: 700; font-size: 21px; line-height: 1.05; letter-spacing: -0.025em; }
+.hoard-wall figcaption span { font-size: 13px; font-weight: 700; color: var(--mint); }
+.hoard-wall figcaption p { font-size: 13.5px; color: rgba(255,255,255,.8); margin-top: 4px; }
+.hoard-foot { margin-top: 14px; font-size: 12.5px; color: rgba(255,255,255,.65); }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1201,4 +1215,11 @@ ul, ol { padding: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
+}
+@media (max-width: 900px) {
+  .hoard-wall { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .hoard-wall .hw-lead { grid-row: auto; }
+  .hoard-wall .hw-lead img { aspect-ratio: 16 / 10; }
+  .hoard-wall figcaption { padding: 10px 12px 12px; }
+  .hoard-wall figcaption b { font-size: 17px; }
 }

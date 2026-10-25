@@ -29,7 +29,7 @@ Last updated: 2026-10-25
 - `.vercelignore` keeps context.md, CLAUDE.md and `.claude/` off the public site.
 
 ### Page order (current)
-Hero → People ("Who we sell to": Pune, Gujarat, MP state stories with films) → Why the West (goldmine tiles, sports pulse, map, people per store) → Shoppers (personas: Ahmedabad, Pune) → **Chapter 01 Q4 2026 campaigns** band → Scoreboard (incl. Compare the stores by state, What people play in Q4) → Q4 runway + spotlights → **Chapter 02 Strategies** → Strategy (budget, 2026 recap→Q4→2027 for schools and Yoga Day, shoppers 70/30, toolkit, channel audiences, Kantar, AOP with video) → Stores (store detail + state money mix) → The field → Playbook → Content calendar (rules, pillars, months, reels band, influencers, credits) → **Chapter 03 Surat opening plan** → Surat → **Chapter 04 Q1 2027 and the year ahead** → Q1 2027 → 2027 planner → Horizon (CWG 2030).
+Hero → People ("Who we sell to": Pune, Gujarat, MP state stories with films) → Why the West (goldmine tiles, sports pulse, map, people per store) → Shoppers (personas: Ahmedabad, Pune) → **Chapter 01 Q4 2026 campaigns** band → Scoreboard (incl. Compare the stores by state, What people play in Q4) → Q4 runway + spotlights → **Chapter 02 Strategies** → Strategy (budget, 2026 recap→Q4→2027 for schools and Yoga Day, shoppers 70/30, toolkit, channel audiences, Kantar, AOP with video) → Stores (store detail + state money mix) → The field → Marketing playbook ("On the road" hoarding wall, then channel switchboard) → Content calendar (rules, pillars, months, reels band, influencers, credits) → **Chapter 03 Surat opening plan** → Surat → **Chapter 04 Q1 2027 and the year ahead** → Q1 2027 → 2027 planner → Horizon (CWG 2030).
 
 ---
 
@@ -44,6 +44,8 @@ Hero → People ("Who we sell to": Pune, Gujarat, MP state stories with films) �
 - **Story order:** Q4 campaigns → strategies around them → Surat opening plan → Q1 & 2027. Strategies should show 2026 recap → Q4 plan → 2027 plan.
 - **Copy voice:** marketer voice; follow Piyush Pandey's three rules: (1) prove the claim, never explain it, stage the impossible; (2) never manufacture emotion, borrow an occasion people already feel; (3) the brand resolves the story, it doesn't narrate it. Don't use the word "cheaply" for WhatsApp.
 - Gujarat heading must mix lines: "The land of Garba, of traders and makers, the textile heart of India".
+- Reels band is framed as inspiration, never "stealing": heading "Reels to take inspiration from", note label "Where we'll use it" (2026-10-25).
+- The playbook section is called **Marketing playbook** (nav and heading), and shows every hoarding photo up front, visible without clicking (2026-10-25).
 - Keep numbers exact and sourced; flag discrepancies instead of silently fixing source data.
 - Check desktop (1440) and phone (390) after changes; no horizontal scroll; no console errors.
 
@@ -54,6 +56,7 @@ Hero → People ("Who we sell to": Pune, Gujarat, MP state stories with films) �
 | File (uploads folder) | What it is |
 |---|---|
 | `Q4_plan_2026_-_MP___GUJ___PUNE.pdf` (42 pages) | The Q4 plan deck. Fonts used: Inter (main), Poppins, Roboto, Plus Jakarta Sans. Text colours: #3643BA blue, #7AFFA6 mint. Many pages are images. Some slides are copied from other cities (Lucknow p3, Delhi NCR p18, Tamil Nadu/Coimbatore p29–32). |
+| Deck p9 "Hoardings" (4 photos, extracted) | Pune 4 hoardings Q4 + Q1 → `hoarding-wagholi.jpg` (GPS stamp: Wagholi, Pune, 10 Oct 2026 18:49); Surat 3 hoardings Nov–Jan → `hoarding-surat.jpg` (vendor site photo, Shah Publicity: "Pal Umra Flyover Bridge towards SVNIT, 40 x 20", codes PUFOFP/PUFOP2, dated 15 Jul 2026, currently showing an Indriya jewellery ad); Bhopal 2 hoardings Nov–Jan → `hoarding-bhopal.jpg` (elliptical ₹32,999 creative, dated 11/08/2026); Ahmedabad 2 + Baroda 4 → `hoarding-night.jpg` (backlit elliptical board). Slide's "2026 update" panel: hoardings in top 3 PIN codes 226010/226016/226001, 2 FOC at Hazratganj, footfall 5–7 lakh per hoarding (Google data), which is Lucknow text. Deck p25 AOP "Sport is everywhere" kit wall → `swim-kit-aop.jpg`. |
 | `MARCOM_CALANDER.xlsx` | Sheets: "Pune COMM Calendar 2027" (2027 month-by-month planner: seasons, campaigns, sport of month, competitors, Pune response, channels, banners, academies, gyms, schools, corporates, societies, OOH, store activation, flyers, free products), "Copy of Marketing Budget" (2026 realised, 2027 by store leaders, 2027 AFTER), "Copy of Master Data" (omni / outstore turnover 2026). Also on Drive as Google Sheet "MARCOM CALENDAR". |
 | `ultimate_data_sheet.xlsx` (Sheet1) | Store Q4 budgets (Gujarat in lakh, MP and Pune in rupees), Gujarat / MP spend by line Oct–Dec, Pune month-wise lines Oct–Dec + campaign split, store turnover challenge table (rows 92–117), 2026 realised spend Jan–Sep and 2027 plan per state. |
 | `SOCIAL_MEDIA_TRACKER-compressed.xlsx` | Another brand's (Skate Supply India) social tracker, used only as a format reference: Brand Bible, monthly calendar layout, hook library, influencer tiers, themes + emotions. |
@@ -152,6 +155,7 @@ Hero → People ("Who we sell to": Pune, Gujarat, MP state stories with films) �
 - Surat opening date: workbook 18 Dec; posters 20 Dec; expansion retroplan 27 Dec; new-store slide says Q1/April 2027. Site uses the 18–20 Dec weekend.
 - Surat budget ₹24.9 L planned vs ₹18 L; gift cost 2.01 L vs 1.71 L on two tabs; 5 tills planned vs up to 11 needed.
 - Hoardings 16 (timeline) vs 15 (update slide, no Rajkot).
+- Deck p9 hoarding photos are partly not from this cluster: the "Bhopal" photo shows UP32 number plates, Drishti IAS and a Lucknow blood bank sign, and the board reads "Visit Decathlon Vibhuti Khand & Lulu Mall" (Lucknow stores); the "Ahmedabad + Baroda" night board appears to be the same Lucknow creative. The Surat photo is the booked site still carrying another brand's ad. The "2026 update" text (PIN codes 2260xx, Hazratganj) is Lucknow's. Site captions describe the creative and site without claiming the photo location; ask the user for real Bhopal / Ahmedabad / Baroda photos.
 - AOP "20 total" vs per-store numbers adding to 90.
 - Regional slide "~86M people" vs 166.6M sum. Nexus persona targets sum to 112%.
 - Gujarat and MP line items add to more than their stated monthly totals (Oct Gujarat 21.97 vs 19.95 L; MP 7.93 vs 6.80 L). Pune campaign split table doesn't match its own totals.
@@ -165,6 +169,7 @@ Hero → People ("Who we sell to": Pune, Gujarat, MP state stories with films) �
 ## 6. Change log (newest last)
 
 - 2026-10-25: Built site from deck + Marcom calendar; Vercel + private GitHub repo; data audit; store-by-store from ultimate sheet; Blue Voice restyle; why West, personas, field; state stories with films and sound; Surat opening plan; chapter structure; AOP video; Kantar; content calendar with Piyush Pandey rules, hero films, photos, reels folded in; Gujarat "land of Garba" heading; context.md + CLAUDE.md + Stop hook created.
+- 2026-10-25: Reels heading → "Reels to take inspiration from", note label "Steal it for" → "Where we'll use it". Playbook renamed "Marketing playbook" (nav + heading) and given an "On the road" hoarding wall: Pune, Surat, Bhopal, Ahmedabad + Baroda (deck p9) and the practice-place kit wall, with counts and a footnote on 15 vs 16 boards. New images `hoarding-surat.jpg`, `hoarding-bhopal.jpg`. Assets ?v=20261025l.
 
 ---
 
