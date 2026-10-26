@@ -34,8 +34,8 @@
   --display: "Inter", system-ui, sans-serif;
   --body: "Inter", system-ui, sans-serif;
 
-  --wrap: 1240px;
-  --gutter: clamp(16px, 4vw, 48px);
+  --wrap: 1440px;
+  --gutter: clamp(16px, 2.6vw, 36px);
   --r-sm: 6px;
   --r-md: 14px;
   --r-pill: 999px;
@@ -74,7 +74,7 @@ ul, ol { padding: 0; }
   letter-spacing: -0.045em;
   line-height: 0.98;
 }
-.display { font-size: clamp(40px, 5.8vw, 84px); }
+.display { font-size: clamp(38px, 5vw, 74px); }
 .display-s { font-size: clamp(24px, 2.6vw, 34px); line-height: 1.08; letter-spacing: -0.03em; }
 .lt { font-weight: 300; }
 .mo { font-style: italic; font-weight: 700; padding-right: .04em; }
@@ -152,16 +152,16 @@ ul, ol { padding: 0; }
 @keyframes deal { from { opacity: 0; transform: translate(-50%, -30%) rotate(0deg); } }
 
 /* ---------- sections ---------- */
-.sec { padding: clamp(72px, 10vw, 128px) 0; position: relative; }
+.sec { padding: clamp(48px, 6vw, 84px) 0; position: relative; }
 .sec-paper { background: var(--paper); }
 .sec-mist { background: var(--mist); }
 .sec-paper + .sec-paper { border-top: 1.5px solid var(--line); }
 .sec-ink { background: radial-gradient(1200px 500px at 100% 0%, rgba(108,61,177,.35), transparent 60%), radial-gradient(900px 500px at 0% 100%, rgba(0,196,225,.16), transparent 60%), var(--ink); color: #fff; }
 .sec-blue { background: var(--hatch), linear-gradient(120deg, #2E4CC8 0%, var(--cobalt) 35%, var(--indigo) 70%, var(--purple) 100%); color: #fff; }
-.sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 16px 48px; align-items: end; margin-bottom: clamp(36px, 5vw, 56px); }
+.sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 10px 40px; align-items: end; margin-bottom: clamp(22px, 3vw, 34px); }
 .sec-paper .display, .sec-mist .display { color: var(--blue); }
 .sec-ink .display, .sec-blue .display { color: #fff; }
-.sec-lede { font-size: 17px; color: var(--text-2); max-width: 46ch; }
+.sec-lede { font-size: 16.5px; color: var(--text-2); max-width: 52ch; }
 .sec-ink .sec-lede, .sec-blue .sec-lede { color: rgba(255,255,255,.78); }
 
 /* ---------- scoreboard ---------- */
@@ -786,7 +786,7 @@ ul, ol { padding: 0; }
 .state-mp .sm-main { grid-column: 1 / -1; grid-row: auto; }
 
 /* ---------- chapter bands ---------- */
-.chapter { background: var(--hatch), var(--bv); color: #fff; padding: clamp(40px, 6vw, 72px) 0; }
+.chapter { background: var(--hatch), var(--bv); color: #fff; padding: clamp(28px, 4vw, 52px) 0; }
 .chapter .wrap { display: flex; align-items: center; gap: clamp(18px, 3vw, 40px); }
 .ch-num { font-size: clamp(56px, 8vw, 112px); font-weight: 200; letter-spacing: -0.06em; line-height: .8; opacity: .9; }
 .ch-title { font-size: clamp(30px, 4.2vw, 60px); font-weight: 650; letter-spacing: -0.045em; line-height: 1; }
@@ -819,11 +819,9 @@ ul, ol { padding: 0; }
 .ki-track i.down { background: var(--magenta); }
 
 /* ---------- Why the West: extra pulse cards ---------- */
-.pulse-card:nth-child(1) { grid-column: 1; grid-row: 1; }
-.pulse-card:nth-child(2) { grid-column: 1; grid-row: 2; }
-.pulse-card:nth-child(3) { grid-column: 1; grid-row: 3; }
-.pulse-card:nth-child(4) { grid-column: 2; grid-row: 1; }
-.pulse-card:nth-child(5) { grid-column: 2; grid-row: 2 / span 2; }
+/* two cards side by side: who plays, big events */
+.pulse { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: start; }
+@media (max-width: 900px) { .pulse { grid-template-columns: 1fr; } }
 .mk-row { display: grid; grid-template-columns: 96px 1fr; gap: 6px 12px; align-items: center; margin-bottom: 14px; }
 .mk-row span { font-weight: 700; font-size: 14px; line-height: 1.2; }
 .mk-row span small, .mk-row b small { display: block; font-weight: 500; color: var(--text-3); font-size: 12px; }
@@ -1339,6 +1337,11 @@ ul, ol { padding: 0; }
 .oct-ig-item .instagram-media { margin: 0 !important; min-width: 0 !important; width: 100% !important; }
 .oct-ig-item blockquote.instagram-media { background: var(--mist); border-radius: var(--r-sm); padding: 40px 20px; text-align: center; }
 @media (max-width: 700px) { .oct-ig-item { flex-basis: 280px; } }
+
+/* October recap: instagram embeds cropped above the likes bar */
+.oct-ig-item, .oct-ig { overflow: hidden; border-radius: var(--r-sm); }
+.oct { gap: 14px; }
+.oct-row { padding: 20px; gap: 24px; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {

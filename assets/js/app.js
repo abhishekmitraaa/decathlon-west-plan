@@ -129,6 +129,19 @@
   const renderers = [];
   const addChart = (el, fn) => { if (!el) return; renderers.push(() => fn(el, el.clientWidth)); };
 
+  // October recap: crop each Instagram embed above its likes and comment bar (about 152px)
+  (() => {
+    const box = $("#october");
+    if (!box) return;
+    const CUT = 152;
+    const fit = f => { const h = f.offsetHeight; if (h > 320) f.parentElement.style.height = (h - CUT) + "px"; };
+    const ro = new ResizeObserver(es => es.forEach(e => fit(e.target)));
+    const seen = new WeakSet();
+    const scan = () => $$("iframe.instagram-media", box).forEach(f => { if (!seen.has(f)) { seen.add(f); ro.observe(f); fit(f); } });
+    new MutationObserver(scan).observe(box, { childList: true, subtree: true });
+    scan();
+  })();
+
   // Q4 topline: challenge, by state, by channel, by month (store-level challenge sheet)
   if ($("#sbTop")) (() => {
     const T = D.stateTO, q = D.q4;
