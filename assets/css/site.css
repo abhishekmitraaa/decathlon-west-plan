@@ -1377,11 +1377,15 @@ ul, ol { padding: 0; }
 .hoard-foot { font-size: 12.5px; color: var(--text-2); display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
 .hoard-foot a { font-weight: 700; color: var(--blue); }
 .hk { display: inline-block; width: 12px; height: 12px; }
-.hk-store { border-radius: 50%; background: var(--blue); }
+.hk-store { width: 16px; height: 16px; border-radius: 4px; background: url(../img/deca-pin.png) center / cover; }
 .hk-board { border-radius: 2px; background: var(--mint); border: 2px solid var(--ink); }
 .map-board i { display: block; width: 18px; height: 18px; border-radius: 3px; background: var(--mint); border: 2.5px solid var(--ink); box-shadow: 0 1px 4px rgba(0,0,0,.4); }
 .leaflet-tooltip.map-tip { font: 700 12px/1.2 var(--body); color: var(--ink); border-radius: 6px; padding: 3px 7px; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
 .leaflet-tooltip.map-tip-board { background: var(--ink); color: var(--mint); border-color: var(--ink); }
+.map-store { border-radius: 7px; box-shadow: 0 0 0 2px #fff, 0 2px 6px rgba(0,0,0,.35); }
+.leaflet-tooltip.map-tip-store { background: var(--blue); color: #fff; border-color: var(--blue); font-size: 12.5px; }
+.leaflet-tooltip-right.map-tip-store::before { border-right-color: var(--blue); }
+.leaflet-tooltip-left.map-tip-store::before { border-left-color: var(--blue); }
 .leaflet-tooltip.map-tip-board::before { border-left-color: var(--ink); }
 @media (max-width: 900px) {
   .hoard-map-grid { grid-template-columns: 1fr; }

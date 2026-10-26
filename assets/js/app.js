@@ -149,15 +149,17 @@
     const map = L.map(el, { scrollWheelZoom: false, zoomControl: true, attributionControl: true });
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
     const pts = [];
+    const storeIcon = L.icon({ iconUrl: "assets/img/deca-pin.png", iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -14], className: "map-store" });
     D.stores.filter(s => s.state === "Pune").forEach(s => {
-      const m = L.circleMarker([s.lat, s.lon], { radius: 8, color: "#fff", weight: 2, fillColor: css("--blue"), fillOpacity: 1 }).addTo(map);
+      const m = L.marker([s.lat, s.lon], { icon: storeIcon, title: `Decathlon ${s.name}` }).addTo(map);
       const left = s.name === "SGS Mall";
-      m.bindTooltip(`Decathlon ${s.name}`, { permanent: true, direction: left ? "left" : "right", offset: [left ? -8 : 8, 0], className: "map-tip" });
+      m.bindTooltip(`Decathlon ${s.name}`, { permanent: true, direction: left ? "left" : "right", offset: [left ? -16 : 16, 0], className: "map-tip map-tip-store" });
+      m.bindPopup(`<b>Decathlon ${esc(s.name)}</b><br>${esc(s.area)}`);
       pts.push([s.lat, s.lon]);
     });
     (window.HOARDINGS || []).filter(h => h.city === "Pune" && h.lat).forEach((h, i) => {
-      const icon = L.divIcon({ className: "map-board", html: `<i>${i + 1}</i>`, iconSize: [20, 20], iconAnchor: [10, 10] });
-      const m = L.marker([h.lat, h.lon], { icon }).addTo(map);
+      const icon = L.divIcon({ className: "map-board", html: `<i>${i + 1}</i>`, iconSize: [20, 20], iconAnchor: [24, 24], popupAnchor: [-14, -24] }); // drawn up-left of the point so store logos stay visible
+      const m = L.marker([h.lat, h.lon], { icon, zIndexOffset: 1000 }).addTo(map);
       m.bindPopup(`<img src="assets/img/${h.img}" alt="" style="width:220px;border-radius:6px;display:block;margin-bottom:6px"><b>${i + 1}. ${esc(h.loc)}</b><br>${esc(h.size)}, ₹${(h.cost / 1e5).toFixed(2)} L a month${h.exact ? "" : "<br><small>Pin is approximate</small>"}`);
       pts.push([h.lat, h.lon]);
     });

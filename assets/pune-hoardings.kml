@@ -2,7 +2,7 @@
 <kml xmlns="http://www.opengis.net/kml/2.2">
 <Document>
   <name>Decathlon Pune: stores and hoardings</name>
-  <Style id="store"><IconStyle><color>ffba4336</color><Icon><href>https://maps.google.com/mapfiles/kml/paddle/blu-circle.png</href></Icon></IconStyle></Style>
+  <Style id="store"><IconStyle><scale>1.2</scale><Icon><href>https://decathlon-west-plan.vercel.app/assets/img/deca-pin.png</href></Icon></IconStyle></Style>
   <Style id="board"><IconStyle><color>ff88ff2b</color><Icon><href>https://maps.google.com/mapfiles/kml/paddle/grn-square.png</href></Icon></IconStyle></Style>
   <Folder><name>Decathlon stores (approximate)</name>
     <Placemark><name>Decathlon Wakad</name><description>Wakad, Hinjewadi and Punawale</description><styleUrl>#store</styleUrl><Point><coordinates>73.763,18.598,0</coordinates></Point></Placemark>
