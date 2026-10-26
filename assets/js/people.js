@@ -39,11 +39,12 @@
         <i class="m25" style="width:${r.mk / penMax * 100}%"></i><i class="us" style="width:${Math.max(r.to / penMax * 100, 0.6)}%"></i>
       </div>
       <b class="pen-share">${sh.toFixed(1)}%</b>
-      <small class="pen-note">${cr(r.to)} of ${cr(r.mk)}, ${lakh(r.cu)} customers</small></div>`; }).join("");
+      <span class="pen-n">${cr(r.to)}</span><span class="pen-n">${cr(r.mk)}</span><span class="pen-n">${lakh(r.cu)}</span></div>`; }).join("");
   $("#goldGrid").innerHTML = `<div class="gold gold-hero"><b>${people.toFixed(1)}M</b><span>people across the three markets</span><small>Only 13 stores: one for every ${(people / 13).toFixed(1)}M people.</small></div>
     <div class="gold gold-pen"><div class="pen-head"><span>Our share of each city's sports market, 2026 so far</span>
       <small>${cr(toAll)} in-store turnover from 1 January to 25 October across our 8 store cities, against a ${cr(mkAll)} market for the same days: ${(toAll / mkAll * 100).toFixed(1)}%. ${lakh(cuAll)} customers, ${Math.round(retAll / cuAll * 100)}% of them returning.</small></div>
       <div class="pen-key"><span><i class="us"></i>Our in-store turnover</span><span><i class="m25"></i>Sports market, same days</span></div>
+      <div class="pen-row pen-hd"><span>City</span><span>2026 so far: 1 Jan to 25 Oct</span><span>Our share</span><span class="pen-n">Our sales, YTD</span><span class="pen-n">City market, YTD</span><span class="pen-n">Customers, YTD</span></div>
       ${penRows}
       <p class="pen-foot">Turnover and customers: store data, 1 Jan to 25 Oct 2026. Market: India City Ranking 2025's 2026 projection, pro-rated to those 298 days. Every city's market grows about 10.7% a year to 2030.</p></div>`;
 
