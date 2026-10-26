@@ -29,12 +29,12 @@
   const penMax = Math.max(...PEN.map(r => r[4]));
   const mk25 = PEN.reduce((a, r) => a + r[3], 0), to25 = PEN.reduce((a, r) => a + r[5], 0);
   const penRows = PEN.map(([city, st, n, m25, m30, to, sh, un]) => `<div class="pen-row" style="--c:${ST_COL[st]}">
-      <span class="pen-city">${city}<em>${n} store${n > 1 ? "s" : ""}</em></span>
+      <span class="pen-city">${city} <em>${n} store${n > 1 ? "s" : ""}</em></span>
       <div class="pen-track" data-tip="<b>${city}</b><br>Sports market 2025: ${cr(m25)}<br>Our turnover 2025: ${cr(to)} (${sh}%)<br>Market 2030: ${cr(m30)}">
         <i class="m30" style="width:${m30 / penMax * 100}%"></i><i class="m25" style="width:${m25 / penMax * 100}%"></i><i class="us" style="width:${Math.max(to / penMax * 100, 0.6)}%"></i>
       </div>
       <b class="pen-share">${(Math.round(sh * 10 + 1e-9) / 10).toFixed(1)}%</b>
-      <small class="pen-note">${cr(to)} of ${cr(m25)}; ${cr(m30)} by 2030</small></div>`).join("");
+      <small class="pen-note">${cr(to)} of ${cr(m25)}</small></div>`).join("");
   $("#goldGrid").innerHTML = `<div class="gold gold-hero"><b>${people.toFixed(1)}M</b><span>people across the three markets</span><small>Only 13 stores: one for every ${(people / 13).toFixed(1)}M people.</small></div>
     <div class="gold gold-pen"><div class="pen-head"><span>Our share of each city's sports market, 2025</span>
       <small>${cr(to25)} of a ${cr(mk25)} market across our 8 store cities: ${(to25 / mk25 * 100).toFixed(1)}%. Every city's market grows about 10.7% a year to 2030.</small></div>
@@ -183,14 +183,12 @@
     } else {
       $("#personaIntro").innerHTML = `
         <div class="pi-text"><h3 class="display-s"><span class="lt">Pune:</span> five personas, one destination</h3>
-          <p>The team's purpose: be Pune's multi-sport smart city partner, bringing sport closer to people. Shares, spend and year-one turnover are the team's estimates against a ₹26 Cr target.</p></div>
+          <p>The team's purpose: be Pune's multi-sport smart city partner, bringing sport closer to people. Shares are the team's estimates of Pune's customers.</p></div>
         <div class="pi-chart">${KOTHRUD.map(p => { const [lo, hi] = p.share.replace("%", "").split(/[--]/).map(Number); return `<div class="mix2"><span>${esc(p.n)}</span>
-          <div class="pp-track pune-range"><i style="left:${lo / 40 * 100}%;width:${(hi - lo) / 40 * 100}%" data-tip="<b>${esc(p.n)}</b><br>${lo}-${hi}% of customers"></i></div><b>${lo}-${hi}%</b></div>`; }).join("")}
-          <div class="pp-axis"><span>0%</span><span>20%</span><span>40%</span></div></div>`;
+          <div class="pune-bar" data-tip="<b>${esc(p.n)}</b><br>${lo}-${hi}% of customers"><i class="lo" style="width:${lo / 35 * 100}%"></i><i class="hi" style="width:${(hi - lo) / 35 * 100}%"></i></div><b>${lo}-${hi}%</b></div>`; }).join("")}</div>`;
       $("#personaGrid").innerHTML = KOTHRUD.map(p => `<article class="pc">
         <div class="pc-img">${ph(p.img, p.n, p.pos)}<span class="pc-share">${p.share} of customers</span></div>
         <div class="pc-body"><h4>${esc(p.n)}</h4><p>${esc(p.d)}</p>
-          <p class="pc-y1"><b>${esc(p.y1)}</b> year-one turnover</p>
           <dl>${kv("Age", p.age)}${kv("Household", p.hh)}${kv("Income", p.inc)}${kv("Basket", p.basket)}${kv("Visits", p.freq)}${kv("Conversion", p.conv)}</dl>
           <dl class="pc-wide">${kv("Occupation", p.occ)}${kv("Plays", p.plays)}${kv("Lives in (pincodes)", p.pins)}${kv("Decides on", p.driver)}${kv("Online", p.digital)}${kv("Pain point", p.pain)}${kv("Expects in store", p.store)}${kv("Community", p.community)}${kv("Growth opportunity", p.grow)}</dl></div></article>`).join("");
     }
@@ -212,7 +210,7 @@
     g += `<div class="bg-brand">${b}</div>${M.map((_, i) => `<div class="bg-c">${esc(cell(b, i))}</div>`).join("")}`;
   });
   g += `<div class="bg-brand ours">Our answer in Pune</div>${M.map((_, i) => `<div class="bg-ours">${esc(PD.response[i] || "")}</div>`).join("")}`;
-  $("#brandGrid").innerHTML = g;
+  if ($("#brandGrid")) $("#brandGrid").innerHTML = g;
 
   const EVENTS = [
     { d: "31 Oct", t: "Sports Utsav Junior", s: "Our kids' skating workshop, 11 AM - 2 PM.", k: "ours" },
@@ -223,7 +221,7 @@
     { d: "14 Mar - 30 May", t: "IPL 2027", s: "Cricket fever across the cluster. Pune runs pickleball in March and cricket in April.", k: "ext" },
     { d: "2030", t: "Commonwealth Games", s: "Gujarat hosts. Every partnership we build now compounds.", k: "ext" }
   ];
-  $("#extEvents").innerHTML = EVENTS.map(e => `<div class="ev ev-${e.k}"><span class="ev-d">${e.d}</span><b>${e.t}</b><p>${e.s}</p></div>`).join("");
+  if ($("#extEvents")) $("#extEvents").innerHTML = EVENTS.map(e => `<div class="ev ev-${e.k}"><span class="ev-d">${e.d}</span><b>${e.t}</b><p>${e.s}</p></div>`).join("");
 
   /* ---------- films: muted by default, the presenter turns sound on ----------
      Works for every .sm-video on the page, including ones the playbook adds later. */

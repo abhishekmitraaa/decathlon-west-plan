@@ -129,6 +129,24 @@
   const renderers = [];
   const addChart = (el, fn) => { if (!el) return; renderers.push(() => fn(el, el.clientWidth)); };
 
+  // Q4 topline: challenge, by state, by channel, by month (store-level challenge sheet)
+  if ($("#sbTop")) (() => {
+    const T = D.stateTO, q = D.q4;
+    const states = [["Pune", T["PUNE TOTAL"], "var(--blue)"], ["Gujarat", T["GJ TOTAL"], "var(--guj)"], ["Madhya Pradesh", T["MP TOTAL"], "var(--mp)"]];
+    const base = states.reduce((a, x) => a + x[1].q425, 0);
+    const row = (name, y1, y2, g, col) => `<div class="tl-row"><span>${name}</span>
+      <div class="tl-bars"><i class="y1" style="width:${y1 / y2 * 100}%" data-tip="<b>${name}</b><br>Q4 2025: ${fmt(y1, 2)} Cr"></i><i class="y2" style="background:${col}" data-tip="<b>${name}</b><br>Q4 2026 challenge: ${fmt(y2, 2)} Cr"></i></div>
+      <b>${fmt(y2, 2)} Cr<em>+${fmt(g, 1)}%</em></b></div>`;
+    const maxM = Math.max(...q.months.map(m => m.growth));
+    $("#sbTop").innerHTML = `<div class="tl-hero"><span>Q4 2026 turnover challenge</span><b>${fmt(q.target, 2)} Cr</b>
+        <p><strong>+${fmt(q.growth, 2)}%</strong> on Q4 2025's ${fmt(base, 2)} Cr. MP grows fastest, Pune carries the most, and wholesale nearly quadruples.</p>
+        <div class="tl-months">${q.months.map(m => `<div><i style="height:${m.growth / maxM * 100}%"></i><b>+${fmt(m.growth, 1)}%</b><span>${m.m.slice(0, 3)}</span></div>`).join("")}</div>
+        <small>Challenge growth by month: each month asks for more than the last.</small></div>
+      <div class="tl-col"><h4>By state</h4>${states.map(([n, t, c]) => row(n, t.q425, t.ch, t.g, c)).join("")}</div>
+      <div class="tl-col"><h4>By channel</h4>${q.channels.map(c => row(c.name, c.y1, c.challenge, c.growth, "var(--ink)")).join("")}</div>
+      <p class="tl-key"><span><i class="y1"></i>Q4 2025</span><span><i class="y2"></i>Q4 2026 challenge</span> Each bar is drawn to its own challenge, so the pale part shows how much is new.</p>`;
+  })();
+
   // Q4 challenge by channel: per-channel scale so wholesale stays readable
   addChart($("#chChannels"), (el, W) => {
     const rows = D.q4.channels, rowH = 66, H = rows.length * rowH + 8;

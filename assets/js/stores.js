@@ -256,8 +256,8 @@
       if (top > innerHeight * 0.75 || top < 0) d.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
     }
   }
-  if (!$("#storeDetail")) return;
   if ($("#sbStores") || $("#sbLines")) drawBoard();
+  if (!$("#storeDetail")) return;
   drawMix();
   render();
 })();
