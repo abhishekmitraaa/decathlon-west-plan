@@ -12,16 +12,24 @@
   const POP = { Pune: 10.4, Gujarat: 70.4, MP: 85.8 };
   const STORES = { Pune: 5, Gujarat: 5, MP: 3 };
   const people = POP.Pune + POP.Gujarat + POP.MP;
-  const GOLD = [
-    { n: `${people.toFixed(1)}M`, l: "people across the three markets", s: `Only 13 stores: one for every ${(people / 13).toFixed(1)}M people` },
-    { n: "8–16%", l: "of people play sport regularly", s: "Pune 12–16%, Gujarat 10–14%, MP 8–12%" },
-    { n: "59%", l: "of Pune's 2027 sport plan is trekking and fitness", s: "Trekking 8.39 Cr and fitness 7.28 Cr of 26.6 Cr" },
-    { n: "3.2 lakh", l: "people at Decathlon Play events in 2027", s: "National goal. Sports Utsav alone aims for 2 lakh" },
-    { n: "2,700", l: "runners at our Kiprun launch and Santa Run", s: "7 clubs, 11 community runs, 4 marathons" },
-    { n: "+11%", l: "growth in women's business", s: "Against +5% for men, from a 30% share" },
-    { n: "11% → 22%", l: "progressive players in Ahmedabad's shopper mix", s: "Badminton, tennis, football, pickleball, running" }
-  ];
-  $("#goldGrid").innerHTML = GOLD.map((g, i) => `<div class="gold ${i === 0 ? "gold-hero" : ""}"><b>${g.n}</b><span>${g.l}</span><small>${g.s}</small></div>`).join("");
+  // Store cities: Q4 turnover growth from the store sheet; sports market from the Ahmedabad
+  // catchment master (city snapshot) and the Surat opening plan (TAM sheet).
+  const CITY_ORDER = [["Pune", "Pune"], ["Ahmedabad", "Gujarat"], ["Vadodara", "Gujarat"], ["Surat", "Gujarat"], ["Rajkot", "Gujarat"], ["Indore", "MP"], ["Bhopal", "MP"], ["Gwalior", "MP"]];
+  const CITY_MARKET = {
+    Ahmedabad: "Sports market ₹1,801 Cr (2023) → ₹2,698 Cr (2027), +10.6% a year. Our share 3.3% → 3.7%.",
+    Surat: "Sports market ₹1,591 Cr (2025) → ₹2,451 Cr (2030), +9.0% a year. Adajan, the second store, opens 18 Dec."
+  };
+  const ST_COL = { Pune: "var(--blue)", Gujarat: "var(--guj)", MP: "var(--mp)" };
+  const f2 = n => n.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const cityTiles = CITY_ORDER.map(([city, st]) => {
+    const list = D.stores.filter(x => x.city === city);
+    const q = list.reduce((x, y) => x + y.q425, 0), c = list.reduce((x, y) => x + y.challenge, 0);
+    return `<div class="gold gold-city" style="--c:${ST_COL[st]}"><span class="gc-name">${city}<em>${list.length} store${list.length > 1 ? "s" : ""}</em></span>
+      <b>+${(list.length === 1 ? list[0].growth : (c - q) / q * 100).toFixed(1)}%</b><span>Q4 turnover ${f2(q)} → ${f2(c)} Cr</span>
+      ${CITY_MARKET[city] ? `<small>${CITY_MARKET[city]}</small>` : ""}</div>`;
+  }).join("");
+  $("#goldGrid").innerHTML = `<div class="gold gold-hero"><b>${people.toFixed(1)}M</b><span>people across the three markets</span><small>Only 13 stores: one for every ${(people / 13).toFixed(1)}M people. Every store city is set to grow in Q4.</small></div>` + cityTiles +
+    `<div class="gold gold-note"><span>How to read this</span><small>Big number: growth of our Q4 turnover challenge over Q4 2025 in that city. Sports-market size is from the Ahmedabad and Surat catchment studies; the other cities don't have a market study in our files yet.</small></div>`;
 
   // sports market pulse
   const PLAY = [["Pune", 12, 16, "var(--blue)"], ["Gujarat", 10, 14, "var(--guj)"], ["Madhya Pradesh", 8, 12, "var(--mp)"]];
@@ -30,7 +38,7 @@
     `<div class="pp-axis"><span>0%</span><span>10%</span><span>20%</span></div>`;
   const MIXCOL = ["var(--blue)", "#8A92E0", "var(--teal)", "var(--guj)", "var(--mp)"];
   const mixTot = D.puneSports.reduce((a, x) => a + x.total, 0);
-  $("#pulseMix").innerHTML = `<div class="pm-bar">${D.puneSports.map((x, i) => `<i style="flex:${x.total} 1 0;background:${MIXCOL[i]}" data-tip="<b>${esc(x.sport)}</b><br>${x.total} Cr, ${Math.round(x.total / mixTot * 100)}%"></i>`).join("")}</div>
+  if ($("#pulseMix")) $("#pulseMix").innerHTML = `<div class="pm-bar">${D.puneSports.map((x, i) => `<i style="flex:${x.total} 1 0;background:${MIXCOL[i]}" data-tip="<b>${esc(x.sport)}</b><br>${x.total} Cr, ${Math.round(x.total / mixTot * 100)}%"></i>`).join("")}</div>
     <ul class="pm-list">${D.puneSports.map((x, i) => `<li><i style="background:${MIXCOL[i]}"></i><span>${esc(x.sport)}</span><b>${Math.round(x.total / mixTot * 100)}%</b></li>`).join("")}</ul>`;
   // Big outside events (not Decathlon's), checked against news reports on 26 Oct 2026; see context.md
   const PULSE_EVENTS = [
@@ -47,7 +55,7 @@
   // market size and the fastest-growing sport (Ahmedabad catchment master, Surat opening plan)
   const MARKETS = [["Ahmedabad", 1801, 2698, "2023 → 2027", "10.6% a year"], ["Surat", 1591, 2451, "2025 → 2030", "9.0% a year"]];
   const mMax = Math.max(...MARKETS.map(m => m[2]));
-  $("#pulseMarkets").innerHTML = MARKETS.map(m => `<div class="mk-row"><span>${m[0]}<small>${m[3]}</small></span>
+  if ($("#pulseMarkets")) $("#pulseMarkets").innerHTML = MARKETS.map(m => `<div class="mk-row"><span>${m[0]}<small>${m[3]}</small></span>
     <div class="mk-bars"><i class="from" style="--w:${m[1] / mMax * 100}%"></i><i class="to" style="--w:${m[2] / mMax * 100}%"></i></div>
     <b>₹${m[1].toLocaleString("en-IN")} → ₹${m[2].toLocaleString("en-IN")} Cr<small>${m[4]}</small></b></div>`).join("");
   const PICKLE = [["Rajkot", 900], ["Motera", 175], ["Dumas Road, Surat", 115], ["Baroda", 74], ["Nexus", 71]];

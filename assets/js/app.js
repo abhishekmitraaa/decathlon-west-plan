@@ -254,7 +254,7 @@
   // What people play in Q4 (Oct-Dec): Pune city top-sports plan, months 10-12
   const sportCols = ["#3643BA", "#8A92E0", "#2BFF88", "#00A99D", "#7B3FC4"];
   const darkSeg = [true, false, false, true, true];
-  (() => {
+  if ($("#chSports")) (() => {
     const Q = [9, 10, 11], QM = ["October", "November", "December"], SOM = ["Running", "Climbing and trekking", "Trekking"];
     const mTot = Q.map(i => D.puneSports.reduce((a, sp) => a + sp.v[i], 0));
     const sTot = D.puneSports.map(sp => Q.reduce((a, i) => a + sp.v[i], 0));
@@ -282,6 +282,10 @@
     const ctx = document.createElement("canvas").getContext("2d");
     return (str, font = "700 12px Inter") => { ctx.font = font; return ctx.measureText(str).width; };
   })();
+  // today's marker follows the real date, kept inside the runway's range
+  const now = new Date(), nowISO = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  const todayISO = nowISO < RW.start ? RW.start : nowISO > RW.end ? RW.end : nowISO;
+  const todayLabel = new Date(todayISO + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short" });
   const drawRunway = () => {
     const el = $("#runwayChart");
     const t0 = new Date(RW.start), t1 = new Date(RW.end), span = (t1 - t0) / 864e5 + 1;
@@ -307,7 +311,7 @@
       });
       html += `<div class="rw-lane"><h4>${lane.name}</h4><div class="rw-track" style="height:${rows.length * rowH + 16}px">
         <div class="rw-band" style="left:${pos(RW.focusStart)}%;width:${pos(RW.focusEnd) - pos(RW.focusStart) + 100 / span}%"></div>
-        <div class="rw-today ${li ? "quiet" : ""}" style="left:${pos("2026-10-25")}%"></div>
+        <div class="rw-today ${li ? "quiet" : ""}" style="left:${pos(todayISO)}%"></div>
         ${placed.map(p => {
           const lab = `${p.it.star ? '<span class="star" aria-label="key event">★</span>' : ""}${esc(p.it.t)}${p.it.note ? ` <em>${p.it.note}</em>` : ""}`;
           const fd = (d, o) => new Date(d).toLocaleDateString("en-IN", o);
@@ -325,7 +329,7 @@
   (() => {
     $("#runwayKey").innerHTML = [
       ["#fff", "National campaign"], [css("--red"), "Sale or commercial weekend"], ["rgba(255,255,255,.2)", "Local adaptation or event"],
-      [css("--mint"), "Store opening"], ["rgba(43,255,136,.3)", "Sport of the month"], [css("--sun"), "External event, or today (25 Oct)"]
+      [css("--mint"), "Store opening"], ["rgba(43,255,136,.3)", "Sport of the month"], [css("--sun"), `External event, or today (${todayLabel})`]
     ].map(([c, l]) => `<span><i style="background:${c}"></i>${l}</span>`).join("") + `<span>★ Key event</span>`;
   })();
 

@@ -168,19 +168,24 @@ window.RUNWAY = {
       { t: "Decathlon CSR initiatives", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
       { t: "Christmas: Gift a Sport", s: "2026-12-01", e: "2026-12-31", k: "local", approx: true },
       { t: "Adajan, Surat: opening weekend", s: "2026-12-18", e: "2026-12-20", k: "open", star: true },
-      { t: "Adajan: Ramat Chalu Rahe", s: "2026-12-21", e: "2027-01-16", k: "local" },
-      { t: "Local activations", s: "2027-01-01", e: "2027-01-31", k: "local", approx: true },
       { t: "Uttarayan", s: "2027-01-14", e: "2027-01-15", k: "local" },
       { t: "Summer launch", s: "2027-03-01", e: "2027-03-31", k: "local", approx: true },
       { t: "Holi", s: "2027-03-15", e: "2027-03-22", k: "local" }
     ]},
-    { name: "External events", items: [
+    { name: "External sports events", items: [
+      { t: "Khel Mahakumbh, Gujarat: 76 lakh players", s: "2026-10-09", e: "2026-12-31", k: "ext", approx: true },
       { t: "HYROX", s: "2026-11-27", e: "2026-11-29", k: "ext" },
-      { t: "Adani Marathon", s: "2026-11-29", e: "2026-11-29", k: "ext" }
+      { t: "Adani Ahmedabad Marathon", s: "2026-11-29", e: "2026-11-29", k: "ext", star: true },
+      { t: "Pune International Marathon", s: "2026-12-06", e: "2026-12-06", k: "ext", approx: true },
+      { t: "Bajaj Pune Marathon", s: "2026-12-13", e: "2026-12-13", k: "ext", approx: true },
+      { t: "Khelo MP Youth Games", s: "2027-01-10", e: "2027-01-31", k: "ext", approx: true },
+      { t: "Bajaj Pune Grand Tour (UCI cycling)", s: "2027-01-26", e: "2027-01-31", k: "ext", star: true },
+      { t: "Vadodara Marathon: 1.1 lakh", s: "2027-01-31", e: "2027-01-31", k: "ext" },
+      { t: "Indore Marathon", s: "2027-02-07", e: "2027-02-07", k: "ext", approx: true }
     ]},
     { name: "Hoardings and influencers", items: [
       { t: "16 hoardings: 5 Pune, 4 Baroda, 3 Surat, 2 Ahmedabad, 1 Rajkot, 1 Bhopal", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
-      { t: "Influencers: Pune (Adi), Gujarat 40, MP 40", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
+      { t: "Influencers: Pune 70, Gujarat 40, MP 40", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
       { t: "50 influencer videos, 5M views", s: "2027-01-01", e: "2027-03-31", k: "ooh", approx: true }
     ]}
   ]
@@ -221,7 +226,7 @@ window.SHOPPERS = { men: { share: 70, growth: 5 }, women: { share: 30, growth: 1
 
 /* Per-city mediums that are confirmed in the deck or sheets. AOP mix per store from the AOPs 2027 slide (Pune 5, Gujarat 10, MP 5). */
 window.CITY_MEDIUMS = {
-  Pune: { hoardings: 5, metro: true, influencers: "Pune (Adi)", aop: { travel: 1, gym: 1, yoga: 1, racket: 2 } },
+  Pune: { hoardings: 5, metro: true, influencers: "Pune pool of 70", aop: { travel: 1, gym: 1, yoga: 1, racket: 2 } },
   Ahmedabad: { hoardings: 2, metro: true, influencers: "Gujarat pool of 40", aop: { travel: 2, gym: 3, yoga: 2, racket: 3 } },
   Vadodara: { hoardings: 4, metro: false, influencers: "Gujarat pool of 40", aop: { travel: 2, gym: 3, yoga: 2, racket: 3 } },
   Surat: { hoardings: 3, metro: false, influencers: "Gujarat pool of 40", aop: { travel: 2, gym: 3, yoga: 2, racket: 3 } },

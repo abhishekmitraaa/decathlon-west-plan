@@ -611,7 +611,7 @@ ul, ol { padding: 0; }
 .gold b { font-size: clamp(28px, 2.4vw, 36px); font-weight: 700; letter-spacing: -0.04em; line-height: 1.05; color: var(--ink); white-space: nowrap; }
 .gold span { font-weight: 650; font-size: 14.5px; line-height: 1.35; color: var(--text); }
 .gold small { color: var(--text-2); font-size: 13px; line-height: 1.4; margin-top: auto; }
-.gold-hero { background: var(--hatch), var(--bv); color: #fff; grid-row: span 2; justify-content: flex-end; border: 0; padding: 26px; }
+.gold-hero { background: var(--hatch), var(--bv); color: #fff; grid-row: span 3; justify-content: flex-end; border: 0; padding: 26px; }
 .gold-hero b { color: #fff; font-size: clamp(48px, 5vw, 76px); }
 .gold-hero span { color: #fff; font-size: 16px; }
 .gold-hero small { color: rgba(255,255,255,.88); margin-top: 0; font-size: 14px; }
@@ -734,7 +734,7 @@ ul, ol { padding: 0; }
 }
 @media (max-width: 860px) {
   .gold-split, .history-head, .persona-intro, .borrow, .ip { grid-template-columns: 1fr; }
-  .gold-hero { grid-row: auto; }
+  .gold-hero { grid-row: auto; grid-column: 1 / -1; }
   .timeline { grid-template-columns: 1fr 1fr; }
   .mix2 { grid-template-columns: 1fr 80px; }
   .mix2-bars { grid-column: 1 / -1; grid-row: 2; }
@@ -1194,6 +1194,15 @@ ul, ol { padding: 0; }
 .split27-bar i { display: grid; place-items: center; font-style: normal; font-size: 12px; font-weight: 800; min-width: 0; }
 .split27 ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 4px 18px; font-size: 13px; }
 .split27 li b { display: inline-block; min-width: 38px; color: var(--blue); }
+
+/* goldmine: one tile per store city */
+.gold-city { border-top: 4px solid var(--c); }
+.gold-city .gc-name { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; font-family: var(--display); font-size: 19px; font-weight: 700; letter-spacing: -0.025em; color: var(--c); }
+.gold-city .gc-name em { font-style: normal; font-family: var(--body); font-size: 12px; font-weight: 650; color: var(--text-2); letter-spacing: 0; }
+.gold-city b { color: var(--ink); }
+.gold-city small { margin-top: 4px; }
+.gold-note { background: transparent; border-style: dashed; }
+.gold-note span { font-size: 13px; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
