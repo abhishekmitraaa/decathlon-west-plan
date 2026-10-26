@@ -1517,6 +1517,20 @@ ul, ol { padding: 0; }
 .pl-month.q2 { box-shadow: inset 0 3px 0 #00C4E1; }
 .pl-month.q4 { box-shadow: inset 0 3px 0 #C03F9C; }
 
+/* toolkit dropdown */
+.tk-drop > summary { list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; padding: 16px 52px 16px 18px; border: 1.5px solid var(--line); border-radius: var(--r-md); position: relative; background: var(--mist); }
+.tk-drop > summary::-webkit-details-marker { display: none; }
+.tk-drop > summary::after { content: "+"; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-size: 26px; font-weight: 700; color: var(--blue); line-height: 1; }
+.tk-drop[open] > summary::after { content: "–"; }
+.tk-drop > summary .display-s { color: var(--ink); }
+.tk-sum { font-size: 14px; color: var(--text-2); }
+.tk-drop[open] > summary { margin-bottom: 14px; }
+.tk-note { font-size: 13px; color: var(--text-2); margin-bottom: 10px; }
+/* Navratri landing page card */
+.oct-nav .oct-media img { max-height: none; object-fit: contain; background: var(--mist); }
+
+.ak-lead { font-size: 14px; color: var(--text-2); margin-bottom: 8px; }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }

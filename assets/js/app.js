@@ -212,10 +212,10 @@
     });
   })();
 
-  // AOPs (areas of practice) in Q4: November and December from the store plan
-  (() => {
-    const box = $("#aopKpis"), A = window.AOP_PLAN;
-    if (!box || !A) return;
+  // AOPs (areas of practice) in Q4: November and December from the store plan (shown in the AOP tab)
+  const aopQ4 = () => {
+    const A = window.AOP_PLAN;
+    if (!A) return "";
     const COL = { Pune: "var(--blue)", Gujarat: "var(--guj)", MP: "var(--mp)" }, NAME = { Pune: "Pune", Gujarat: "Gujarat", MP: "Madhya Pradesh" };
     const L$ = n => "₹" + (n / 1e5).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " L";
     const sum = (list, f) => list.reduce((a, x) => a + f(x), 0);
@@ -229,18 +229,11 @@
       const list = A.filter(x => x.state === st);
       return `<tr class="ak-st" style="--c:${COL[st]}"><th colspan="7" scope="rowgroup">${NAME[st]}<small>${sum(list, q4)} new AOPs, ${L$(sum(list, x => q4(x) * x.cost))}</small></th></tr>` + list.map(row).join("");
     }).join("");
-    box.innerHTML = `<div class="toolkit-head"><h3 class="display-s"><span class="lt">Areas of practice (AOP)</span> in Q4</h3>
-        <p>Kit walls with QR codes where people already play: gyms, pools, academies and studios. What each store opens in November and December, and what it costs.</p></div>
-      <div class="ak-stats">
-        <div><b>${total}</b><span>new AOPs in Q4 across 13 stores</span></div>
-        <div><b>${nov} + ${dec}</b><span>opening in November and December</span></div>
-        <div><b>${L$(cost)}</b><span>Q4 cost</span></div>
-        <div><b>${live}</b><span>live now in Pune: Wakad ${A.find(x => x.store === "Wakad").live}, Amanora ${A.find(x => x.store === "Amanora").live}, Wagholi ${A.find(x => x.store === "Wagholi").live}, SGS ${A.find(x => x.store === "SGS Mall").live}</span></div>
-      </div>
+    return `<p class="ak-lead">${nov} open in November and ${dec} in December. Live counts so far: Wakad ${A.find(x => x.store === "Wakad").live}, Amanora ${A.find(x => x.store === "Amanora").live}, Wagholi ${A.find(x => x.store === "Wagholi").live}, SGS ${A.find(x => x.store === "SGS Mall").live}.</p>
       <div class="sb-wrap"><table class="sb-table ak-table"><thead><tr><th scope="col">Store</th><th scope="col">Live now</th><th scope="col">Nov</th><th scope="col">Dec</th><th scope="col">Q4 new</th><th scope="col">Cost per AOP</th><th scope="col">Q4 cost</th></tr></thead>
         <tbody>${body}<tr class="sb-total"><th scope="row">13 stores</th><td>${live}</td><td>${nov}</td><td>${dec}</td><td>${total}</td><td></td><td>${L$(cost)}</td></tr></tbody></table></div>
       <p class="foot">Live counts were shared for four Pune stores. Rajkot and Gwalior run lighter AOPs at ₹7,000 each.</p>`;
-  })();
+  };
 
   // Q4 topline: challenge, by state, by channel, by month (store-level challenge sheet)
   if ($("#sbTop")) (() => {
@@ -576,22 +569,6 @@
   /* ---------- playbook switchboard ---------- */
   const monthsWith = (key, test) => PD[key].map((v, i) => [i, v]).filter(([, v]) => v && (!test || test(v)));
   const monthCards = (key, test, limit = 12) => `<div class="sp-months">${monthsWith(key, test).slice(0, limit).map(([i, v]) => `<div><b>${PL.months[i]}</b>${esc(v)}</div>`).join("")}</div>`;
-  // AOP numbers: per-store mix from the AOPs 2027 slide, Q4 status from the communication plan
-  const aopPlan = () => {
-    const CM = window.CITY_MEDIUMS, ST = D.stores, NAME = { Pune: "Pune", Gujarat: "Gujarat", MP: "Madhya Pradesh" };
-    const tot = s => Object.values(CM[s.city].aop).reduce((x, y) => x + y, 0);
-    const head = `<div class="aop-q"><div><span>Q4 2026</span><b>15+</b><p>premium facilities onboarded so far. Team sports, racket and swimming are the busiest practice places.</p></div>
-      <div><span>Q1 2027</span><b>3-5</b><p>QR kit-wall pilots per city in Pune, Ahmedabad and Indore, measured on scans, conversion and margin.</p></div>
-      <div><span>2027</span><b>${ST.reduce((a, s) => a + tot(s), 0)}</b><p>tie-ups across 13 stores at the per-store mix below: 5 a store in Pune and MP, 10 in Gujarat.</p></div></div>`;
-    const rows = ["Pune", "Gujarat", "MP"].map(st => {
-      const list = ST.filter(s => s.state === st);
-      const sum = k => list.reduce((a, s) => a + CM[s.city].aop[k], 0);
-      return `<tr class="aop-st"><th colspan="6">${NAME[st]}</th></tr>` + list.map(s => { const x = CM[s.city].aop; return `<tr><td>${esc(s.name)}</td><td>${x.travel}</td><td>${x.gym}</td><td>${x.yoga}</td><td>${x.racket}</td><td><b>${tot(s)}</b></td></tr>`; }).join("") +
-        `<tr class="aop-sub"><td>${NAME[st]} total</td><td>${sum("travel")}</td><td>${sum("gym")}</td><td>${sum("yoga")}</td><td>${sum("racket")}</td><td><b>${["travel", "gym", "yoga", "racket"].reduce((x, k) => x + sum(k), 0)}</b></td></tr>`;
-    }).join("");
-    return head + `<div class="aop-table-wrap"><table class="aop-table"><thead><tr><th>Store, 2027</th><th>Travel agencies</th><th>Gyms and fitness</th><th>Yoga studios</th><th>Racket academies</th><th>Total</th></tr></thead><tbody>${rows}</tbody></table></div>
-      <p class="foot">The AOP slide's headline says 20 tie-ups in total; its per-store numbers add up to the total above.</p>`;
-  };
   const CHANNELS = [
     { name: "Hoardings and OOH", tag: "35%", media: ["hpgm/pune-baner.jpg", "hpgm/pune-bhumkar.jpg"],
       title: "Own the road during sale weeks",
@@ -604,11 +581,12 @@
       copy: "We turn the places people already play into small Decathlon stores. A kit wall with prices and QR codes goes up at swimming academies, sports academies, gyms, yoga studios, metro stations in Pune and Ahmedabad, parks, societies and corporate campuses.",
       flow: ["See the display", "Scan the QR code", "Explore or complete a kit", "Shop online", "Home delivery or Click & Collect"],
       stats: [["114", "new AOPs in Q4"], ["₹25.04 L", "Q4 cost"], ["101", "live now in Pune"], ["3-5", "pilot locations per city in Q1"]],
-      planTitle: "Tie-ups by store, sport and quarter", plan: aopPlan },
+      planTitle: "AOPs in Q4, store by store: what opens in November and December, and what it costs", plan: aopQ4 },
     { name: "WhatsApp channels, PN and RCS", tag: "5%", media: ["whatsapp.jpg", "push-notification.jpg"], contain: true,
       title: "Bring them back",
-      copy: "Existing customers hear about sales, new arrivals and local events on channels they already check: WhatsApp, push notifications in the app and RCS messages. Targeted campaigns carry both commercial and brand messages.",
-      stats: [["5 L", "customers reached in Q1"], ["1.95", "purchase frequency target, YTD"], ["+15%", "returning customers in Q1"], ["5%", "of the 2027 budget"]],
+      copy: "Existing customers hear about sales, new arrivals and local events on channels they already check: WhatsApp, push notifications in the app and RCS messages. The WhatsApp channel also carries express delivery: customers in pin codes a store can reach in 2 hours get a message when express is live for them, so the nearest store becomes the fastest one.",
+      flow: ["Store sets its express pin codes", "WhatsApp alert to customers in those pin codes", "Order in the app", "Delivered from the nearest store in 2 hours"],
+      stats: [["5 L", "customers reached in Q1"], ["2 hr", "express delivery, pin-code targeted"], ["30", "express orders a day, target"], ["+15%", "returning customers in Q1"]],
       planTitle: "Months where WhatsApp and CRM lead in Pune", plan: () => monthCards("channels", v => /WhatsApp|CRM/i.test(v)) },
     { name: "Influencers", tag: "25%", media: ["../posters/process-vs.jpg", "../posters/winter-gear.jpg", "../posters/kiprun.jpg"],
       title: "Local voices, buying intent",
