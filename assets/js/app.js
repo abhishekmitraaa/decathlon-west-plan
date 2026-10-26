@@ -104,7 +104,7 @@
 
   const tickerItems = [
     "Q4 challenge 178.77 Cr", "+24.15% vs last year", "Winter Travel: 15 Oct - 30 Jan", "Black Friday 27-30 Nov: 12 Cr", "Christmas sale 19-31 Dec", "Wakad: 30.4 Cr, the biggest store challenge",
-    "Adajan, Surat: opening weekend 18-20 Dec", "16 hoardings across the cluster", "80+ local influencers", "Kiprun launch: 700 runners, 7 clubs",
+    "Adajan, Surat: opening weekend 18-20 Dec", "16 hoardings: 7 live in Pune", "80+ local influencers", "Kiprun launch: 700 runners, 7 clubs",
     "Q1 2027: +12.1% turnover", "Commonwealth Games 2030, Gujarat"
   ];
   const tk = $("#ticker");
@@ -155,15 +155,32 @@
       m.bindTooltip(`Decathlon ${s.name}`, { permanent: true, direction: left ? "left" : "right", offset: [left ? -8 : 8, 0], className: "map-tip" });
       pts.push([s.lat, s.lon]);
     });
-    const HOARDINGS = [{ name: "Hoarding: Wagholi, Nagar Road", lat: 18.571295, lon: 73.954203, img: "assets/img/hoarding-wagholi.jpg", note: "Festive cycle board, up since 10 Oct" }];
-    HOARDINGS.forEach(h => {
-      const icon = L.divIcon({ className: "map-board", html: "<i></i>", iconSize: [18, 18], iconAnchor: [9, 9] });
+    (window.HOARDINGS || []).filter(h => h.city === "Pune" && h.lat).forEach((h, i) => {
+      const icon = L.divIcon({ className: "map-board", html: `<i>${i + 1}</i>`, iconSize: [20, 20], iconAnchor: [10, 10] });
       const m = L.marker([h.lat, h.lon], { icon }).addTo(map);
-      m.bindTooltip(h.name, { permanent: true, direction: "left", offset: [-10, 0], className: "map-tip map-tip-board" });
-      m.bindPopup(`<img src="${h.img}" alt="" style="width:200px;border-radius:6px;display:block"><b>${esc(h.name)}</b><br>${esc(h.note)}`);
+      m.bindPopup(`<img src="assets/img/${h.img}" alt="" style="width:220px;border-radius:6px;display:block;margin-bottom:6px"><b>${i + 1}. ${esc(h.loc)}</b><br>${esc(h.size)}, ₹${(h.cost / 1e5).toFixed(2)} L a month${h.exact ? "" : "<br><small>Pin is approximate</small>"}`);
       pts.push([h.lat, h.lon]);
     });
     map.fitBounds(pts, { padding: [40, 40] });
+  })();
+
+  // Winter hoarding programme: Pune photo grid (October recap) and the full wall (Marketing playbook)
+  (() => {
+    const HG = window.HOARDINGS || [];
+    const L$ = n => "₹" + (n / 1e5).toLocaleString("en-IN", { maximumFractionDigits: 2 }) + " L";
+    const pp = $("#punePhotos");
+    if (pp) pp.innerHTML = HG.filter(h => h.city === "Pune").map((h, i) => `<figure><img src="assets/img/${h.img}" alt="Hoarding at ${esc(h.loc)}" loading="lazy"><figcaption><b>${i + 1}. ${esc(h.loc.split(",")[0])}</b><span>${esc(h.size)}, ${L$(h.cost)} a month</span></figcaption></figure>`).join("");
+    const box = $("#hoardProgram");
+    if (!box) return;
+    const cities = ["Pune", "Baroda", "Rajkot", "Surat", "Bhopal"];
+    const month = HG.reduce((a, h) => a + h.cost, 0);
+    const q4 = HG.reduce((a, h) => a + h.cost * 2, 0);
+    box.innerHTML = `<div class="hp-head"><h3 class="display-s"><span class="lt">On the road:</span> winter hoarding programme</h3>
+        <div class="hp-stats"><div><b>${HG.length}</b><span>sites in 5 cities</span></div><div><b>${L$(month)}</b><span>a month, all sites</span></div><div><b>${L$(q4)}</b><span>for November and December</span></div><div><b>7 live</b><span>in Pune; Gujarat and Bhopal go live in November</span></div></div></div>
+      <div class="hp-cities">${cities.map(c => { const list = HG.filter(h => h.city === c); return `<span><b>${c}</b>${list.length} site${list.length > 1 ? "s" : ""}, ${L$(list.reduce((a, h) => a + h.cost, 0))} a month</span>`; }).join("")}</div>
+      <div class="hp-grid">${HG.map(h => `<article class="hp-card"><div class="hp-img"><img src="assets/img/${h.img}" alt="Hoarding site: ${esc(h.loc)}" loading="lazy"><span class="hp-st ${h.status}">${h.status === "live" ? "Live" : "Live from Nov"}</span><span class="hp-city-tag">${h.city}</span></div>
+        <div class="hp-body"><b>${esc(h.loc)}</b><span class="hp-meta">${esc(h.size)}, ${esc(h.dur)}, <strong>${L$(h.cost)} a month</strong></span><p>${esc(h.why)}</p></div></article>`).join("")}</div>
+      <p class="hoard-foot">Ahmedabad: sites near Motera and Nexus still to be confirmed. Gujarat and Bhopal photos show the booked sites before our creative goes up. The Surat board runs a full year, to October 2027 (${L$(190000 * 12)}).</p>`;
   })();
 
   // Q4 topline: challenge, by state, by channel, by month (store-level challenge sheet)
@@ -516,11 +533,11 @@
       <p class="foot">The AOP slide's headline says 20 tie-ups in total; its per-store numbers add up to the total above.</p>`;
   };
   const CHANNELS = [
-    { name: "Hoardings and OOH", tag: "35%", media: ["hoarding-wagholi.jpg", "hoarding-night.jpg"],
+    { name: "Hoardings and OOH", tag: "35%", media: ["hpgm/pune-baner.jpg", "hpgm/pune-bhumkar.jpg"],
       title: "Own the road during sale weeks",
       copy: "Hoardings run only for commercial campaigns and change with the season, so the road sees the sale before the phone does.",
-      cities: [["5", "Pune"], ["4", "Baroda"], ["3", "Surat"], ["2", "Ahmedabad"], ["1", "Rajkot"], ["1", "Bhopal"]],
-      stats: [["16", "hoardings in Q4"], ["24 L", "Q4 OOH and HIPOP spend"], ["+15%", "bills growth OKR"], ["35%", "of the 2027 budget"]],
+      cities: [["7", "Pune"], ["4", "Baroda"], ["2", "Rajkot"], ["2", "Bhopal"], ["1", "Surat"]],
+      stats: [["16", "hoardings this winter"], ["₹17.25 L", "a month, all sites"], ["+15%", "bills growth OKR"], ["35%", "of the 2027 budget"]],
       planTitle: "Pune OOH plan, 2027", plan: () => monthCards("ooh") },
     { name: "Practice-place hoardings (AOP)", tag: "25%", media: ["aop-wall.mp4"], wideMedia: true,
       title: "Sport is everywhere",

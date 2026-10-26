@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-<link rel="stylesheet" href="assets/css/site.css?v=20261026s">
+<link rel="stylesheet" href="assets/css/site.css?v=20261026v">
 </head>
 <body>
 
@@ -332,17 +332,12 @@
         </div>
       </article>
       <article class="oct-row oct-social oct-hoard">
-        <div class="oct-text"><span class="oct-when">From 10 October, Pune</span><h3>Hoardings up in Pune</h3><p>Four hoardings for Q4 and Q1, mapped against our five Pune stores. The festive cycle board went up at Wagholi on 10 October, on the Nagar Road entry to the city.</p></div>
+        <div class="oct-text"><span class="oct-when">From 10 October, Pune</span><h3>Hoardings up in Pune</h3><p>Seven boards live since mid-October, ₹9.35 L a month, each one placed on a road into one of our five stores. Tap a pin for the photo.</p></div>
         <div class="hoard-map-grid">
-          <div class="hoard-map" id="puneHoardMap" role="img" aria-label="Map of Pune showing the five Decathlon stores and the Wagholi hoarding"></div>
-          <div class="hoard-photos">
-            <figure><img src="assets/img/hoarding-wagholi.jpg" alt="Decathlon hoarding at Wagholi, Pune, at night: your festive upgrade is here" loading="lazy"><figcaption><b>Wagholi, Nagar Road</b><span>Up since 10 Oct</span></figcaption></figure>
-            <figure class="hp-slot"><span>Hoarding 2</span><small>Photo and location to come</small></figure>
-            <figure class="hp-slot"><span>Hoarding 3</span><small>Photo and location to come</small></figure>
-            <figure class="hp-slot"><span>Hoarding 4</span><small>Photo and location to come</small></figure>
-          </div>
+          <div class="hoard-map" id="puneHoardMap" role="img" aria-label="Map of Pune showing the five Decathlon stores and seven hoardings"></div>
+          <div class="hoard-photos" id="punePhotos"></div>
         </div>
-        <p class="hoard-foot"><span class="hk hk-store"></span>Decathlon store <span class="hk hk-board"></span>Hoarding. Store pins are approximate; the Wagholi pin is the photo's GPS stamp. <a href="assets/pune-hoardings.kml" download>Download this map for Google My Maps</a></p>
+        <p class="hoard-foot"><span class="hk hk-store"></span>Decathlon store <span class="hk hk-board"></span>Hoarding. Wagholi and Kesnand pins come from the photos' GPS stamps; the other pins are approximate. <a href="assets/pune-hoardings.kml" download>Download this map for Google My Maps</a></p>
       </article>
       <article class="oct-row oct-social">
         <div class="oct-text"><span class="oct-when">Around Dussehra, Pune</span><h3>Influencer shoot: 15 Pune creators</h3><p>One offer, fifteen voices: every creator took the Rockrider ST100 festive deal, ₹11,999 instead of ₹18,999, to their own followers. Scroll sideways to see all fifteen.</p></div>
@@ -506,22 +501,7 @@
       <h2 class="display"><span class="lt">Marketing</span> playbook</h2>
       <p class="sec-lede">Every hoarding on the road this winter, then how each strategy shows up in the street, on the phone and in the store. Pick a channel.</p>
     </header>
-    <div class="hoard">
-      <h3 class="display-s"><span class="lt">On the</span> road</h3>
-      <div class="hoard-wall">
-        <figure class="hw-lead"><img src="assets/img/hoarding-wagholi.jpg" alt="Lit Decathlon hoarding at night: Your festive upgrade is here, with a cycle on a podium" loading="lazy">
-          <figcaption><b>Pune</b><span>4 hoardings, Q4 and Q1</span><p>Your festive upgrade is here: one cycle on a podium, lit for the commute home.</p></figcaption></figure>
-        <figure><img src="assets/img/hoarding-surat.jpg" alt="Hoarding site on the Pal Umra flyover in Surat, before the Decathlon creative goes up" loading="lazy">
-          <figcaption><b>Surat</b><span>3 hoardings, Nov to Jan</span><p>Booked site on the Pal Umra flyover towards SVNIT, 40 × 20 ft, ahead of the Adajan opening.</p></figcaption></figure>
-        <figure><img src="assets/img/hoarding-bhopal.jpg" alt="Decathlon hoarding over a busy junction: self-powered elliptical at ₹32,999" loading="lazy">
-          <figcaption><b>Bhopal</b><span>2 hoardings, Nov to Jan</span><p>One product, one price: the self-powered elliptical at ₹32,999 above the traffic.</p></figcaption></figure>
-        <figure><img src="assets/img/hoarding-night.jpg" alt="Backlit Decathlon hoarding at night with the elliptical creative" loading="lazy">
-          <figcaption><b>Ahmedabad and Baroda</b><span>2 + 4 hoardings</span><p>The same board, backlit for the evening rush.</p></figcaption></figure>
-        <figure><img src="assets/img/swim-kit-aop.jpg" alt="Complete your swim kit: a Decathlon kit wall with prices and QR codes at a swimming pool" loading="lazy">
-          <figcaption><b>Practice places</b><span>Kit walls with QR codes, Q1 pilot</span><p>Swimming and sports academies, gyms and metro stations in Pune, Ahmedabad and Indore.</p></figcaption></figure>
-      </div>
-      <p class="hoard-foot">Photos and counts from the hoardings slide of the Q4 plan (15 boards). The Q4 timeline lists 16, with a fifth in Pune and one in Rajkot.</p>
-    </div>
+    <div class="hoard" id="hoardProgram"></div>
     <div class="switch">
       <div class="switch-list" role="tablist" aria-label="Channels" id="switchList"></div>
       <div class="switch-panel" id="switchPanel" role="tabpanel"></div>
@@ -698,13 +678,13 @@
 <div class="tip" id="tip" role="tooltip" hidden></div>
 <div class="hud" id="hud" hidden></div>
 
-<script src="assets/js/data.js?v=20261026s"></script>
+<script src="assets/js/data.js?v=20261026v"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="assets/js/app.js?v=20261026s"></script>
-<script src="assets/js/stores.js?v=20261026s"></script>
-<script src="assets/js/surat.js?v=20261026s"></script>
-<script src="assets/js/people.js?v=20261026s"></script>
-<script src="assets/js/content.js?v=20261026s"></script>
-<script src="assets/js/calendar.js?v=20261026s"></script>
+<script src="assets/js/app.js?v=20261026v"></script>
+<script src="assets/js/stores.js?v=20261026v"></script>
+<script src="assets/js/surat.js?v=20261026v"></script>
+<script src="assets/js/people.js?v=20261026v"></script>
+<script src="assets/js/content.js?v=20261026v"></script>
+<script src="assets/js/calendar.js?v=20261026v"></script>
 </body>
 </html>

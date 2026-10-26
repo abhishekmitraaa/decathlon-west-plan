@@ -184,7 +184,8 @@ window.RUNWAY = {
       { t: "Indore Marathon", s: "2027-02-07", e: "2027-02-07", k: "ext", approx: true }
     ]},
     { name: "Hoardings, influencers and AOPs", items: [
-      { t: "16 hoardings: 5 Pune, 4 Baroda, 3 Surat, 2 Ahmedabad, 1 Rajkot, 1 Bhopal", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
+      { t: "Pune: 7 hoardings live", s: "2026-10-10", e: "2026-12-31", k: "ooh", star: true },
+      { t: "Gujarat and Bhopal: 9 hoardings live", s: "2026-11-01", e: "2026-12-31", k: "ooh" },
       { t: "Influencers: Pune 70, Gujarat 40, MP 40", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
       { t: "50 influencer videos, 5M views", s: "2027-01-01", e: "2027-03-31", k: "ooh", approx: true },
       { t: "AOP practice-place hoardings, Gujarat: 5", s: "2026-11-01", e: "2026-11-30", k: "ooh" },
@@ -1232,3 +1233,190 @@ Object.assign(window.DATA, {
   }
  }
 });
+
+/* Winter hoarding programme 2026 (2026_WINTER_HOARDING_PGM.xlsx, 26 Oct 2026). cost = rupees per month.
+   status live = Pune boards up from 10-13 Oct (photo stamps); nov = Gujarat and Bhopal go live in November.
+   lat/lon: exact = photo GPS stamp, otherwise an approximate area pin. why = our rationale for the site. */
+window.HOARDINGS = [
+ {
+  "city": "Pune",
+  "loc": "Hyundai Service Centre, facing Pune, towards Wagholi",
+  "size": "40 x 30 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 130000,
+  "status": "live",
+  "why": "Catches Nagar Road traffic just before our Wagholi store, on the city's eastern entry.",
+  "img": "hpgm/pune-wagholi.jpg",
+  "lat": 18.571295,
+  "lon": 73.954203,
+  "exact": true
+ },
+ {
+  "city": "Pune",
+  "loc": "Kesnand Phata, facing Nagar, towards Pune",
+  "size": "30 x 20 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 110000,
+  "status": "live",
+  "why": "The first board on the way in from Nagar and the new Wagholi and Kesnand townships.",
+  "img": "hpgm/pune-kesnand.jpg",
+  "lat": 18.581396,
+  "lon": 73.98654,
+  "exact": true
+ },
+ {
+  "city": "Pune",
+  "loc": "EuroKids, Wakad",
+  "size": "45 x 30 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 140000,
+  "status": "live",
+  "why": "Beside a preschool on the school run: parents and families, a few minutes from Decathlon Wakad.",
+  "img": "hpgm/pune-wakad-eurokids.jpg",
+  "lat": 18.5995,
+  "lon": 73.7625,
+  "exact": false
+ },
+ {
+  "city": "Pune",
+  "loc": "Bhumkar Bridge, Wakad",
+  "size": "40 x 30 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 125000,
+  "status": "live",
+  "why": "Where Hinjewadi IT traffic leaves the highway for Wakad: our time-poor professionals pass it twice a day.",
+  "img": "hpgm/pune-bhumkar.jpg",
+  "lat": 18.604,
+  "lon": 73.752,
+  "exact": false
+ },
+ {
+  "city": "Pune",
+  "loc": "Baner",
+  "size": "45 x 30 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 140000,
+  "status": "live",
+  "why": "A young, high-income belt near the Balewadi sports complex with no store of its own; the board pulls it to Wakad and SGS.",
+  "img": "hpgm/pune-baner.jpg",
+  "lat": 18.56,
+  "lon": 73.787,
+  "exact": false
+ },
+ {
+  "city": "Pune",
+  "loc": "Sanvidhan Chowk, NIBM",
+  "size": "30 x 30 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 150000,
+  "status": "live",
+  "why": "The main junction of the NIBM and Undri belt, our NIBM store's catchment of young families and new housing.",
+  "img": "hpgm/pune-nibm.jpg",
+  "lat": 18.474,
+  "lon": 73.899,
+  "exact": false
+ },
+ {
+  "city": "Pune",
+  "loc": "Amanora Road",
+  "size": "40 x 20 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 140000,
+  "status": "live",
+  "why": "On the road into Amanora and Magarpatta: offices by day, mall shoppers by evening, all heading past Decathlon Amanora.",
+  "img": "hpgm/pune-amanora.jpg",
+  "lat": 18.5185,
+  "lon": 73.9375,
+  "exact": false
+ },
+ {
+  "city": "Baroda",
+  "loc": "Akota, DMart parking terrace",
+  "size": "20 x 20 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 40000,
+  "status": "nov",
+  "why": "Above a DMart car park: families doing their weekly shop, already in a planned-purchase mood.",
+  "img": "hpgm/baroda-akota.jpg"
+ },
+ {
+  "city": "Baroda",
+  "loc": "Fatehgunj, Bull Circle",
+  "size": "20 x 20 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 35000,
+  "status": "nov",
+  "why": "One of the city's busiest circles, close to MS University: students and first-job buyers.",
+  "img": "hpgm/baroda-fatehgunj.jpg"
+ },
+ {
+  "city": "Baroda",
+  "loc": "Gotri Bridge, towards Natubhai Circle",
+  "size": "20 x 20 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 50000,
+  "status": "nov",
+  "why": "West Vadodara's growing residential belt, with heavy evening traffic towards Natubhai Circle.",
+  "img": "hpgm/baroda-gotri.jpg"
+ },
+ {
+  "city": "Baroda",
+  "loc": "Subhanpura, facing Ellorapark, towards Gorwa",
+  "size": "25 x 15 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 40000,
+  "status": "nov",
+  "why": "Settled residential neighbourhoods with schools and coaching classes around: parents and teenagers.",
+  "img": "hpgm/baroda-subhanpura.jpg"
+ },
+ {
+  "city": "Rajkot",
+  "loc": "Bhaktinagar Circle",
+  "size": "40 x 20 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 150000,
+  "status": "nov",
+  "why": "A main circle in a one-store city: one big board reaches most of Rajkot's daily traffic.",
+  "img": "hpgm/rajkot-bhaktinagar.jpg"
+ },
+ {
+  "city": "Rajkot",
+  "loc": "Kishanpara Circle, facing Mahila College",
+  "size": "40 x 20 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 130000,
+  "status": "nov",
+  "why": "Faces a women's college: young women and families in the city where padel and pickleball grew fastest.",
+  "img": "hpgm/rajkot-kishanpara.jpg"
+ },
+ {
+  "city": "Surat",
+  "loc": "Pal Umra Bridge, towards SVNIT",
+  "size": "40 x 20 ft",
+  "dur": "Nov 2026 - Oct 2027",
+  "cost": 190000,
+  "status": "nov",
+  "why": "Between Adajan, Piplod and Vesu: a year-long anchor for the new Adajan store, booked through to October 2027.",
+  "img": "hpgm/surat-palumra.jpg"
+ },
+ {
+  "city": "Bhopal",
+  "loc": "Vyapam Square, Link Road No. 1",
+  "size": "20 x 10 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 75000,
+  "status": "nov",
+  "why": "A busy square on Link Road No. 1, one of the main roads across the new city.",
+  "img": "hpgm/bhopal-vyapam.jpg"
+ },
+ {
+  "city": "Bhopal",
+  "loc": "Kamla Park",
+  "size": "20 x 10 ft",
+  "dur": "Nov-Dec 2026",
+  "cost": 80000,
+  "status": "nov",
+  "why": "Near the Upper Lake, on the road between the old city and the new: steady all-day traffic.",
+  "img": "hpgm/bhopal-kamlapark.jpg"
+ }
+];

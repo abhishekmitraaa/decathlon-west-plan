@@ -11,8 +11,14 @@
     <Placemark><name>Decathlon Amanora</name><description>Amanora, Magarpatta and Hadapsar</description><styleUrl>#store</styleUrl><Point><coordinates>73.934,18.519,0</coordinates></Point></Placemark>
     <Placemark><name>Decathlon NIBM</name><description>NIBM and Undri</description><styleUrl>#store</styleUrl><Point><coordinates>73.902,18.475,0</coordinates></Point></Placemark>
   </Folder>
-  <Folder><name>Hoardings</name>
-    <Placemark><name>Hoarding: Wagholi, Nagar Road</name><description>Festive cycle board, up since 10 Oct 2026 (GPS stamp of the photo)</description><styleUrl>#board</styleUrl><Point><coordinates>73.954203,18.571295,0</coordinates></Point></Placemark>
+  <Folder><name>Hoardings (7 live)</name>
+    <Placemark><name>1. Hyundai Service Centre, facing Pune, towards Wagholi</name><description>40 x 30 ft, Rs 130,000 a month, Nov-Dec 2026. GPS from photo. Catches Nagar Road traffic just before our Wagholi store, on the city's eastern entry.</description><styleUrl>#board</styleUrl><Point><coordinates>73.954203,18.571295,0</coordinates></Point></Placemark>
+    <Placemark><name>2. Kesnand Phata, facing Nagar, towards Pune</name><description>30 x 20 ft, Rs 110,000 a month, Nov-Dec 2026. GPS from photo. The first board on the way in from Nagar and the new Wagholi and Kesnand townships.</description><styleUrl>#board</styleUrl><Point><coordinates>73.98654,18.581396,0</coordinates></Point></Placemark>
+    <Placemark><name>3. EuroKids, Wakad</name><description>45 x 30 ft, Rs 140,000 a month, Nov-Dec 2026. Approximate location. Beside a preschool on the school run: parents and families, a few minutes from Decathlon Wakad.</description><styleUrl>#board</styleUrl><Point><coordinates>73.7625,18.5995,0</coordinates></Point></Placemark>
+    <Placemark><name>4. Bhumkar Bridge, Wakad</name><description>40 x 30 ft, Rs 125,000 a month, Nov-Dec 2026. Approximate location. Where Hinjewadi IT traffic leaves the highway for Wakad: our time-poor professionals pass it twice a day.</description><styleUrl>#board</styleUrl><Point><coordinates>73.752,18.604,0</coordinates></Point></Placemark>
+    <Placemark><name>5. Baner</name><description>45 x 30 ft, Rs 140,000 a month, Nov-Dec 2026. Approximate location. A young, high-income belt near the Balewadi sports complex with no store of its own; the board pulls it to Wakad and SGS.</description><styleUrl>#board</styleUrl><Point><coordinates>73.787,18.56,0</coordinates></Point></Placemark>
+    <Placemark><name>6. Sanvidhan Chowk, NIBM</name><description>30 x 30 ft, Rs 150,000 a month, Nov-Dec 2026. Approximate location. The main junction of the NIBM and Undri belt, our NIBM store's catchment of young families and new housing.</description><styleUrl>#board</styleUrl><Point><coordinates>73.899,18.474,0</coordinates></Point></Placemark>
+    <Placemark><name>7. Amanora Road</name><description>40 x 20 ft, Rs 140,000 a month, Nov-Dec 2026. Approximate location. On the road into Amanora and Magarpatta: offices by day, mall shoppers by evening, all heading past Decathlon Amanora.</description><styleUrl>#board</styleUrl><Point><coordinates>73.9375,18.5185,0</coordinates></Point></Placemark>
   </Folder>
 </Document>
 </kml>
