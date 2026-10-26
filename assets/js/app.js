@@ -142,6 +142,30 @@
     scan();
   })();
 
+  // Pune hoardings map: our five stores and the hoardings we have locations for
+  (() => {
+    const el = $("#puneHoardMap");
+    if (!el || !window.L) return;
+    const map = L.map(el, { scrollWheelZoom: false, zoomControl: true, attributionControl: true });
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
+    const pts = [];
+    D.stores.filter(s => s.state === "Pune").forEach(s => {
+      const m = L.circleMarker([s.lat, s.lon], { radius: 8, color: "#fff", weight: 2, fillColor: css("--blue"), fillOpacity: 1 }).addTo(map);
+      const left = s.name === "SGS Mall";
+      m.bindTooltip(`Decathlon ${s.name}`, { permanent: true, direction: left ? "left" : "right", offset: [left ? -8 : 8, 0], className: "map-tip" });
+      pts.push([s.lat, s.lon]);
+    });
+    const HOARDINGS = [{ name: "Hoarding: Wagholi, Nagar Road", lat: 18.571295, lon: 73.954203, img: "assets/img/hoarding-wagholi.jpg", note: "Festive cycle board, up since 10 Oct" }];
+    HOARDINGS.forEach(h => {
+      const icon = L.divIcon({ className: "map-board", html: "<i></i>", iconSize: [18, 18], iconAnchor: [9, 9] });
+      const m = L.marker([h.lat, h.lon], { icon }).addTo(map);
+      m.bindTooltip(h.name, { permanent: true, direction: "left", offset: [-10, 0], className: "map-tip map-tip-board" });
+      m.bindPopup(`<img src="${h.img}" alt="" style="width:200px;border-radius:6px;display:block"><b>${esc(h.name)}</b><br>${esc(h.note)}`);
+      pts.push([h.lat, h.lon]);
+    });
+    map.fitBounds(pts, { padding: [40, 40] });
+  })();
+
   // Q4 topline: challenge, by state, by channel, by month (store-level challenge sheet)
   if ($("#sbTop")) (() => {
     const T = D.stateTO, q = D.q4;

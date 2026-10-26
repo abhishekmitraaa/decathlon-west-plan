@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+  <name>Decathlon Pune: stores and hoardings</name>
+  <Style id="store"><IconStyle><color>ffba4336</color><Icon><href>https://maps.google.com/mapfiles/kml/paddle/blu-circle.png</href></Icon></IconStyle></Style>
+  <Style id="board"><IconStyle><color>ff88ff2b</color><Icon><href>https://maps.google.com/mapfiles/kml/paddle/grn-square.png</href></Icon></IconStyle></Style>
+  <Folder><name>Decathlon stores (approximate)</name>
+    <Placemark><name>Decathlon Wakad</name><description>Wakad, Hinjewadi and Punawale</description><styleUrl>#store</styleUrl><Point><coordinates>73.763,18.598,0</coordinates></Point></Placemark>
+    <Placemark><name>Decathlon Wagholi</name><description>Wagholi, Kharadi and the Nagar Road entry</description><styleUrl>#store</styleUrl><Point><coordinates>73.986,18.58,0</coordinates></Point></Placemark>
+    <Placemark><name>Decathlon SGS Mall</name><description>Central Pune</description><styleUrl>#store</styleUrl><Point><coordinates>73.877,18.518,0</coordinates></Point></Placemark>
+    <Placemark><name>Decathlon Amanora</name><description>Amanora, Magarpatta and Hadapsar</description><styleUrl>#store</styleUrl><Point><coordinates>73.934,18.519,0</coordinates></Point></Placemark>
+    <Placemark><name>Decathlon NIBM</name><description>NIBM and Undri</description><styleUrl>#store</styleUrl><Point><coordinates>73.902,18.475,0</coordinates></Point></Placemark>
+  </Folder>
+  <Folder><name>Hoardings</name>
+    <Placemark><name>Hoarding: Wagholi, Nagar Road</name><description>Festive cycle board, up since 10 Oct 2026 (GPS stamp of the photo)</description><styleUrl>#board</styleUrl><Point><coordinates>73.954203,18.571295,0</coordinates></Point></Placemark>
+  </Folder>
+</Document>
+</kml>

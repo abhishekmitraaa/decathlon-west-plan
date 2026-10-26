@@ -9,7 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=20261026p">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="assets/css/site.css?v=20261026r">
 </head>
 <body>
 
@@ -330,9 +331,18 @@
           <div class="oct-ig-item"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/De8jWqqoXHh/" data-instgrm-version="14"><a href="https://www.instagram.com/reel/De8jWqqoXHh/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote></div>
         </div>
       </article>
-      <article class="oct-row">
-        <div class="oct-text"><span class="oct-when">From 10 October, Pune</span><h3>Hoardings up in Pune</h3><p>Four hoardings for Q4 and Q1. The festive cycle board went up at Wagholi on 10 October, lit for the evening commute.</p></div>
-        <div class="oct-media"><img src="assets/img/hoarding-wagholi.jpg" alt="Decathlon hoarding at Wagholi, Pune, at night: your festive upgrade is here" loading="lazy"></div>
+      <article class="oct-row oct-social oct-hoard">
+        <div class="oct-text"><span class="oct-when">From 10 October, Pune</span><h3>Hoardings up in Pune</h3><p>Four hoardings for Q4 and Q1, mapped against our five Pune stores. The festive cycle board went up at Wagholi on 10 October, on the Nagar Road entry to the city.</p></div>
+        <div class="hoard-map-grid">
+          <div class="hoard-map" id="puneHoardMap" role="img" aria-label="Map of Pune showing the five Decathlon stores and the Wagholi hoarding"></div>
+          <div class="hoard-photos">
+            <figure><img src="assets/img/hoarding-wagholi.jpg" alt="Decathlon hoarding at Wagholi, Pune, at night: your festive upgrade is here" loading="lazy"><figcaption><b>Wagholi, Nagar Road</b><span>Up since 10 Oct</span></figcaption></figure>
+            <figure class="hp-slot"><span>Hoarding 2</span><small>Photo and location to come</small></figure>
+            <figure class="hp-slot"><span>Hoarding 3</span><small>Photo and location to come</small></figure>
+            <figure class="hp-slot"><span>Hoarding 4</span><small>Photo and location to come</small></figure>
+          </div>
+        </div>
+        <p class="hoard-foot"><span class="hk hk-store"></span>Decathlon store <span class="hk hk-board"></span>Hoarding. Store pins are approximate; the Wagholi pin is the photo's GPS stamp. <a href="assets/pune-hoardings.kml" download>Download this map for Google My Maps</a></p>
       </article>
       <article class="oct-row">
         <div class="oct-text"><span class="oct-when">Around Dussehra, Pune</span><h3>Influencer shoot: 15 Pune creators</h3><p>Fifteen Pune influencers shot with us around Dussehra. Their reels carry the festive and winter campaigns through Q4.</p>
@@ -667,12 +677,13 @@
 <div class="tip" id="tip" role="tooltip" hidden></div>
 <div class="hud" id="hud" hidden></div>
 
-<script src="assets/js/data.js?v=20261026p"></script>
-<script src="assets/js/app.js?v=20261026p"></script>
-<script src="assets/js/stores.js?v=20261026p"></script>
-<script src="assets/js/surat.js?v=20261026p"></script>
-<script src="assets/js/people.js?v=20261026p"></script>
-<script src="assets/js/content.js?v=20261026p"></script>
-<script src="assets/js/calendar.js?v=20261026p"></script>
+<script src="assets/js/data.js?v=20261026r"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="assets/js/app.js?v=20261026r"></script>
+<script src="assets/js/stores.js?v=20261026r"></script>
+<script src="assets/js/surat.js?v=20261026r"></script>
+<script src="assets/js/people.js?v=20261026r"></script>
+<script src="assets/js/content.js?v=20261026r"></script>
+<script src="assets/js/calendar.js?v=20261026r"></script>
 </body>
 </html>
