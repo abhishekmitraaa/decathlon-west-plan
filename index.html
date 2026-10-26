@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=20261025l">
+<link rel="stylesheet" href="assets/css/site.css?v=20261026a">
 </head>
 <body>
 
@@ -190,15 +190,15 @@
         <div id="pulsePickle"></div>
       </div>
       <div class="pulse-card">
-        <h3 class="display-s"><span class="lt">Events</span> pulling people out</h3>
-        <p>Community events and races already on the cluster's calendar.</p>
+        <h3 class="display-s"><span class="lt">Big events</span> pulling people out</h3>
+        <p>The region's largest sports events, run by others. This is where the crowds already are.</p>
         <ul class="pulse-events" id="pulseEvents"></ul>
       </div>
     </div>
 
     <div class="gold-split">
       <figure class="gold-map">
-        <img src="assets/img/west-map.jpg" alt="Map of the 13 Decathlon stores across Gujarat, Madhya Pradesh and Pune city" loading="lazy">
+        <img src="assets/img/west-stores-map.png" alt="Map of Decathlon stores: Motera, Nexus, Rajkot, Baroda and Dumas in Gujarat; Indore, Bhopal and Gwalior in Madhya Pradesh; Wakad, Wagholi, SGS Mall, Amanora and NIBM in Pune city" loading="lazy">
       </figure>
       <div class="per-store">
         <h3 class="display-s"><span class="lt">People</span> per store</h3>
@@ -240,89 +240,23 @@
   <div class="wrap">
     <header class="sec-head">
       <h2 class="display"><span class="lt">The</span> scoreboard</h2>
-      <p class="sec-lede">Where we stand and what we are chasing. Every chart is built from the Q4 plan, the store-level data sheet and the 2027 Marcom calendar.</p>
+      <p class="sec-lede">Q4 only: what each store must sell, what each store gets to spend, and where the money goes. Built from the store-level data sheet.</p>
     </header>
 
     <div class="board">
-      <article class="panel panel-xl">
+      <article class="panel panel-full">
         <div class="panel-head">
-          <h3>Q4 challenge by channel</h3>
-          <p>Q4 2025 against this year's challenge, in crore, from the store-level challenge sheet. Each channel is drawn on its own scale so wholesale stays readable.</p>
+          <h3>Q4 turnover challenge and marketing budget, store by store</h3>
+          <p>Turnover in crore, budget in lakh, October to December 2026, from the store-level data sheet. Click a store to open its plan.</p>
         </div>
-        <div class="chart" id="chChannels"></div>
-        <div class="ramp" id="ramp"></div>
+        <div class="sb-wrap" id="sbStores"></div>
       </article>
-
-      <article class="panel">
+      <article class="panel panel-full">
         <div class="panel-head">
-          <h3>Commercial weekends</h3>
-          <p>Turnover per sale weekend, 2025 actual vs 2026 target (Cr).</p>
+          <h3>Where the Q4 budget goes</h3>
+          <p>Each state's October to December line plan added up, in lakh, and each line's share of the budget.</p>
         </div>
-        <div class="chart" id="chWeekends"></div>
-      </article>
-
-
-      <article class="panel panel-xl">
-        <div class="panel-head row">
-          <div>
-            <h3>Advertising spend, month by month</h3>
-            <p>2026 actual to September, then the Q4 plan, against the 2027 plan. In lakh.</p>
-          </div>
-          <div class="seg" role="group" aria-label="Choose market" id="regionSeg">
-            <button type="button" data-r="All" aria-pressed="true">All</button>
-            <button type="button" data-r="Pune" aria-pressed="false">Pune</button>
-            <button type="button" data-r="Gujarat" aria-pressed="false">Gujarat</button>
-            <button type="button" data-r="MP" aria-pressed="false">MP</button>
-          </div>
-        </div>
-        <div class="chart chart-tall" id="chSpend"></div>
-        <div class="spend-notes" id="spendNotes"></div>
-      </article>
-      <article class="panel panel-tall">
-        <div class="panel-head">
-          <h3>Q4 mix by funnel stage</h3>
-          <p>Spend by funnel stage, in lakh.</p>
-        </div>
-        <div class="funnel" id="funnel"></div>
-        <div class="panel-head" style="margin-top:8px">
-          <h3>City spend by line</h3>
-          <p>Lakh, with the OKR each line answers to.</p>
-        </div>
-        <div class="lines" id="spendLines"></div>
-        <p class="foot">City spend 93 L (0.65% of TO) + MarCom 65 L (0.45%). Realised ambition TO: 244 Cr, to be rechecked.</p>
-      </article>
-
-      <article class="panel">
-        <div class="panel-head">
-          <h3>Outstore is the fastest lane</h3>
-          <p>Omni turnover per month in 2026 (Cr), from the Master Data sheet. Outstore (home delivery, click &amp; collect and wholesale) sits on top.</p>
-        </div>
-        <div class="chart" id="chOmni"></div>
-        <p class="foot">Outstore grew 185% in October and 86% in December. Wholesale is the biggest part: 2.11 Cr of October's 3.61 Cr.</p>
-      </article>
-
-
-
-      <article class="panel">
-        <div class="panel-head">
-          <h3>Pune stores</h3>
-          <p>Each store's share of Pune city turnover.</p>
-        </div>
-        <div class="stores" id="puneStoreShare"></div>
-      </article>
-      <article class="panel panel-full st-rank">
-        <div class="panel-head row">
-          <div>
-            <h3>Compare the stores</h3>
-            <p id="rankNote">Turnover each store must add beyond its ambition in Q4 (Cr).</p>
-          </div>
-          <div class="seg" role="group" aria-label="Sort stores by" id="rankSeg">
-            <button type="button" data-k="overAmbition" aria-pressed="true">Over ambition</button>
-            <button type="button" data-k="growth" aria-pressed="false">Growth</button>
-            <button type="button" data-k="budgetTotal" aria-pressed="false">Q4 budget</button>
-          </div>
-        </div>
-        <div class="st-groups" id="storeRank"></div>
+        <div class="sb-wrap" id="sbLines"></div>
       </article>
       <article class="panel panel-full">
         <div class="panel-head">
@@ -695,6 +629,26 @@
       </article>
     </div>
 
+    <div class="q1-year">
+    <article class="panel panel-xl">
+      <div class="panel-head row">
+        <div>
+          <h3>Advertising spend, month by month</h3>
+          <p>2026 actual to September, then the Q4 plan, against the 2027 plan from the updated data sheet. In lakh.</p>
+        </div>
+        <div class="seg" role="group" aria-label="Choose market" id="regionSeg">
+          <button type="button" data-r="All" aria-pressed="true">All</button>
+          <button type="button" data-r="Pune" aria-pressed="false">Pune</button>
+          <button type="button" data-r="Gujarat" aria-pressed="false">Gujarat</button>
+          <button type="button" data-r="MP" aria-pressed="false">MP</button>
+        </div>
+      </div>
+      <div class="chart chart-tall" id="chSpend"></div>
+      <div class="spend-notes" id="spendNotes"></div>
+      <div class="split27" id="split27"></div>
+    </article>
+    </div>
+
     <div class="q1-spend">
       <h3 class="display-s">Q1 advertising, 2026 vs 2027 plan</h3>
       <div class="chart" id="chQ1"></div>
@@ -746,12 +700,12 @@
 <div class="tip" id="tip" role="tooltip" hidden></div>
 <div class="hud" id="hud" hidden></div>
 
-<script src="assets/js/data.js?v=20261025l"></script>
-<script src="assets/js/app.js?v=20261025l"></script>
-<script src="assets/js/stores.js?v=20261025l"></script>
-<script src="assets/js/surat.js?v=20261025l"></script>
-<script src="assets/js/people.js?v=20261025l"></script>
-<script src="assets/js/content.js?v=20261025l"></script>
-<script src="assets/js/calendar.js?v=20261025l"></script>
+<script src="assets/js/data.js?v=20261026a"></script>
+<script src="assets/js/app.js?v=20261026a"></script>
+<script src="assets/js/stores.js?v=20261026a"></script>
+<script src="assets/js/surat.js?v=20261026a"></script>
+<script src="assets/js/people.js?v=20261026a"></script>
+<script src="assets/js/content.js?v=20261026a"></script>
+<script src="assets/js/calendar.js?v=20261026a"></script>
 </body>
 </html>

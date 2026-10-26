@@ -32,15 +32,17 @@
   const mixTot = D.puneSports.reduce((a, x) => a + x.total, 0);
   $("#pulseMix").innerHTML = `<div class="pm-bar">${D.puneSports.map((x, i) => `<i style="flex:${x.total} 1 0;background:${MIXCOL[i]}" data-tip="<b>${esc(x.sport)}</b><br>${x.total} Cr, ${Math.round(x.total / mixTot * 100)}%"></i>`).join("")}</div>
     <ul class="pm-list">${D.puneSports.map((x, i) => `<li><i style="background:${MIXCOL[i]}"></i><span>${esc(x.sport)}</span><b>${Math.round(x.total / mixTot * 100)}%</b></li>`).join("")}</ul>`;
+  // Big outside events (not Decathlon's), checked against news reports on 26 Oct 2026; see context.md
   const PULSE_EVENTS = [
-    ["18 Oct", "Kiprun community run", "Running clubs across the cluster"],
-    ["31 Oct", "Sports Utsav Junior", "Kids' skating workshop"],
-    ["27–29 Nov", "HYROX", "The fitness race format, same weekend as Black Friday"],
-    ["29 Nov", "Adani Marathon", "Ahmedabad's marathon"],
-    ["Q1 2027", "Move Your Way", "3,500 registrations, fit sessions and in-store challenges"],
-    ["Q1 2027", "Beach Fest, Surat", "5,000 participants"],
-    ["Q1 2027", "Bib collection at stores", "20,000 walk-ins"],
-    ["14 Mar – 30 May", "IPL 2027", "Cricket season across the cluster"]
+    ["Oct – Dec", "Khel Mahakumbh 2026", "Gujarat", "76 lakh players and 3.5 lakh teams registered across 35+ sports"],
+    ["29 Nov", "Adani Ahmedabad Marathon", "Gujarat", "10th edition; a record 24,000+ runners last year"],
+    ["Early Dec", "Pune International Marathon", "Pune", "15,000 runners and 70+ international athletes last year"],
+    ["Mid Dec", "Bajaj Pune Marathon", "Pune", "Full, half, 10K and 5K on the city's roads"],
+    ["Jan", "Khelo MP Youth Games", "MP", "19 days, 28 sports, players from all 313 blocks"],
+    ["Jan", "Army Marathon, Bhopal", "MP", "About 6,500 runners in 2025"],
+    ["26–31 Jan", "Bajaj Pune Grand Tour", "Pune", "UCI 2.1 cycling, 6 stages; 2.5 million roadside fans in 2026"],
+    ["31 Jan", "Vadodara International Marathon", "Gujarat", "1.1 lakh registrations in 2026"],
+    ["Early Feb", "Indore Marathon", "MP", "13th edition; full, half, 10K and 5K"]
   ];
   // market size and the fastest-growing sport (Ahmedabad catchment master, Surat opening plan)
   const MARKETS = [["Ahmedabad", 1801, 2698, "2023 → 2027", "10.6% a year"], ["Surat", 1591, 2451, "2025 → 2030", "9.0% a year"]];
@@ -64,7 +66,8 @@
       IDX.map(i => { const d = i[1] - 100; return `<div class="ki-row"><span>${i[0]}</span><div class="ki-track"><i class="${d >= 0 ? "up" : "down"}" style="${d >= 0 ? `left:50%;width:${d / 30 * 50}%` : `right:50%;width:${-d / 30 * 50}%`}"></i><em></em></div><b>${i[1]}</b></div>`; }).join("");
   }
 
-  $("#pulseEvents").innerHTML = PULSE_EVENTS.map(([d, t, x]) => `<li><span>${d}</span><b>${t}</b><small>${x}</small></li>`).join("");
+  const EV_COL = { Pune: "var(--blue)", Gujarat: "var(--guj)", MP: "var(--mp)" };
+  $("#pulseEvents").innerHTML = PULSE_EVENTS.map(([d, t, st, x]) => `<li><span>${d}</span><b>${t} <em style="color:${EV_COL[st]}">${st}</em></b><small>${x}</small></li>`).join("");
 
   const per = Object.keys(POP).map(k => ({ k, v: POP[k] / STORES[k] }));
   const maxPer = Math.max(...per.map(p => p.v));
@@ -76,45 +79,45 @@
 
   /* ---------- personas ---------- */
   const NEXUS = [
-    { n: "Sports Family", a: "Family Sports Enabler", tag: "Sport brings the family together", now: 32, target: 32, tLabel: "Maintain", img: "persona-family.jpg",
+    { n: "Sports Family", a: "Family Sports Enabler", tag: "Sport brings the family together", now: 32, target: 32, tLabel: "Maintain", img: "u-family-football.jpg", pos: "center 35%",
       age: "30–50", gender: "Family decision", lives: "Vastrapur, Bodakdev, Satellite, Ambawadi, Thaltej", basket: "₹4,000–10,000", abv: "Very high",
       visit: "Every 1–2 months, weekend evenings", online: "30% online", sports: "Swimming, cricket, cycling, football, badminton",
       trigger: "School season, holidays, summer camps", pain: "Finding everything for the family", need: "Convenience and trust" },
-    { n: "Active Lifestyle Professional", a: "Health Optimiser", tag: "Fitness is part of everyday life", now: 25, target: 27, img: "gym.jpg",
+    { n: "Active Lifestyle Professional", a: "Health Optimiser", tag: "Fitness is part of everyday life", now: 25, target: 27, img: "u-runclub.jpg", pos: "center 30%",
       age: "24–40", gender: "65% men, 35% women", lives: "Satellite, SG Highway, Bodakdev, Vastrapur, Navrangpura", basket: "₹3,000–8,000", abv: "High",
       visit: "Monthly, weekday evenings", online: "40% online", sports: "Running, gym, yoga, cycling, walking, pickleball",
       trigger: "Fitness goals, marathons, gym membership", pain: "Limited time", need: "Performance and comfort" },
-    { n: "Outdoor & Travel Explorer", a: "Weekend Adventurer", tag: "Live for the next adventure", now: 23, target: 17, img: "persona-explorer.jpg",
+    { n: "Outdoor & Travel Explorer", a: "Weekend Adventurer", tag: "Live for the next adventure", now: 23, target: 17, img: "u-trek-couple.jpg", pos: "center 45%",
       age: "25–45", gender: "Family driven", lives: "Bopal, Shela, Thaltej, SG Highway", basket: "₹5,000–12,000", abv: "High",
       visit: "Seasonal, weekends", online: "35% online", sports: "Hiking, trekking, camping, travel",
       trigger: "Upcoming trip plans", pain: "Choosing the right gear", need: "Durable gear" },
-    { n: "Progressive Sports Enthusiast", a: "Beginner to intermediate player", tag: "Keep improving every day", now: 11, target: 22, img: "persona-athlete.jpg",
+    { n: "Progressive Sports Enthusiast", a: "Beginner to intermediate player", tag: "Keep improving every day", now: 11, target: 22, img: "u-pickleball.jpg", pos: "center 25%",
       age: "15–35", gender: "Balanced", lives: "Navrangpura, Naranpura, Vastrapur", basket: "₹2,000–6,000", abv: "Medium",
       visit: "Every 1–2 months, evenings and weekends", online: "25% online", sports: "Badminton, tennis, football, pickleball, running",
       trigger: "Joining an academy or a new sport", pain: "Confusion about equipment", need: "Right equipment and guidance" },
-    { n: "Young Trend & Discovery", a: "Future Sports Consumer", tag: "Discover. Try. Play.", now: 9, target: 14, img: "../posters/circuit-games.jpg",
+    { n: "Young Trend & Discovery", a: "Future Sports Consumer", tag: "Discover. Try. Play.", now: 9, target: 14, img: "u-women-football.jpg", pos: "center 40%",
       age: "18–28", gender: "Balanced", lives: "University and PG catchments", basket: "₹1,000–3,000", abv: "Low to medium",
       visit: "Occasional, weekend evenings", online: "60% online", sports: "Gym, walking, beginner sports",
       trigger: "Trends, influencers, offers", pain: "Doesn't know where to start", need: "Affordable discovery" },
-    { n: "The Patron", a: "Business owner (wholesale and network)", tag: "My time is worth more than the discount.", now: null, target: null, img: null,
+    { n: "The Patron", a: "Business owner (wholesale and network)", tag: "My time is worth more than the discount.", now: null, target: null, img: "u-golf.jpg", pos: "center 30%",
       age: "35–55", gender: "75% men, 25% women", lives: "Bodakdev 380054, Science City 380061, Ambli 380055, Bopal 380059", basket: "₹10,000–60,000", abv: "Very high",
       visit: "Quarterly, Sunday mornings", online: "Not given", sports: "Golf, cycling, walking, gym, trekking",
       trigger: "Health goal, doctor's advice, a trip, a corporate order", pain: "Lack of time. Will not queue or hunt for staff.", need: "A frictionless outcome" }
   ];
   const KOTHRUD = [
     { n: "Urban Performance Professional", share: "30–35%", d: "Time-conscious professionals seeking performance, convenience and premium quality.", age: "24–38",
-      occ: "IT professionals, consultants, doctors, finance, researchers, entrepreneurs", inc: "₹10–30 L+", hh: "2–3", img: null },
+      occ: "IT professionals, consultants, doctors, finance, researchers, entrepreneurs", inc: "₹10–30 L+", hh: "2–3", img: "u-kiprun.jpg", pos: "center 40%" },
     { n: "Active Urban Explorer", share: "20–25%", d: "Adventure and outdoor enthusiasts seeking reliable gear for weekend trips and active experiences.", age: "22–40",
-      occ: "Young professionals, master's students, college students, travel enthusiasts", inc: "₹8–15 L+", hh: "2–3", img: "persona-explorer.jpg" },
+      occ: "Young professionals, master's students, college students, travel enthusiasts", inc: "₹8–15 L+", hh: "2–3", img: "u-trek-couple.jpg", pos: "center 45%" },
     { n: "Sports Driven Family", share: "25–30%", d: "Health-conscious families investing in sports and overall development for every member.", age: "Parents 30–45, kids 6–18",
-      occ: "Working parents, business owners, professionals", inc: "₹12–35 L+", hh: "4–5", img: "persona-family.jpg" },
+      occ: "Working parents, business owners, professionals", inc: "₹12–35 L+", hh: "4–5", img: "u-family-cycle.jpg", pos: "center 30%" },
     { n: "Daily Athlete & Academy Player", share: "15–20%", d: "Regular sports practitioners who need technical products, expert guidance and quick availability.", age: "22–40",
-      occ: "College students, academy players, young professionals", inc: "₹4–7 L+", hh: "3–4", img: "persona-athlete.jpg" },
+      occ: "College students, academy players, young professionals", inc: "₹4–7 L+", hh: "3–4", img: "u-padel.jpg", pos: "center 25%" },
     { n: "Active Senior Lifestyle", share: "10–15%", d: "Retired or soon-to-retire residents focused on staying active, healthy and independent.", age: "55–70",
-      occ: "Retired, government employees, business owners", inc: "₹8–25 L+ (pension and investments)", hh: "2–3", img: "persona-senior.jpg" }
+      occ: "Retired, government employees, business owners", inc: "₹8–25 L+ (pension and investments)", hh: "2–3", img: "u-seniors.jpg", pos: "center 30%" }
   ];
-  const ph = (img, name) => img
-    ? `<img src="assets/img/${img}" alt="" loading="lazy">`
+  const ph = (img, name, pos) => img
+    ? `<img src="assets/img/${img}" alt="" loading="lazy"${pos ? ` style="object-position:${pos}"` : ""}>`
     : `<div class="pc-mono">${esc(name.split(" ").map(w => w[0]).join("").slice(0, 2))}</div>`;
   const kv = (k, v) => v ? `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>` : "";
 
@@ -130,7 +133,7 @@
           <b>${p.now}% <em>→ ${p.tLabel || p.target + "%"}</em></b></div>`).join("")}
           <div class="mix2-key"><span><i class="now"></i>Share now</span><span><i class="tgt"></i>Target</span></div></div>`;
       $("#personaGrid").innerHTML = NEXUS.map(p => `<article class="pc">
-        <div class="pc-img">${ph(p.img, p.n)}<span class="pc-share">${p.now === null ? "Not yet in mix" : `${p.now}% now`}</span></div>
+        <div class="pc-img">${ph(p.img, p.n, p.pos)}<span class="pc-share">${p.now === null ? "Not yet in mix" : `${p.now}% now`}</span></div>
         <div class="pc-body"><h4>${esc(p.n)}</h4><p class="pc-tag">“${esc(p.tag)}”</p>
           <dl>${kv("Age", p.age)}${kv("Gender", p.gender)}${kv("Basket", p.basket)}${kv("ABV", p.abv)}${kv("Visits", p.visit)}${kv("Online share", p.online)}</dl>
           <dl class="pc-wide">${kv("Lives in", p.lives)}${kv("Plays", p.sports)}${kv("Buys when", p.trigger)}${kv("Pain point", p.pain)}${kv("Needs", p.need)}</dl></div></article>`).join("");
@@ -139,7 +142,7 @@
         <div class="pi-text"><h3 class="display-s"><span class="lt">Pune:</span> five personas, one destination</h3>
           <p>The team's purpose: be Pune's multi-sport smart city partner, bringing sport closer to people. Shares are the team's estimates.</p></div>`;
       $("#personaGrid").innerHTML = KOTHRUD.map(p => `<article class="pc">
-        <div class="pc-img">${ph(p.img, p.n)}<span class="pc-share">${p.share}</span></div>
+        <div class="pc-img">${ph(p.img, p.n, p.pos)}<span class="pc-share">${p.share}</span></div>
         <div class="pc-body"><h4>${esc(p.n)}</h4><p>${esc(p.d)}</p>
           <dl>${kv("Age", p.age)}${kv("Household", p.hh)}${kv("Income", p.inc)}</dl>
           <dl class="pc-wide">${kv("Occupation", p.occ)}</dl></div></article>`).join("");

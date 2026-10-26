@@ -43,13 +43,15 @@ window.DATA = {
   ],
   spendTotals: { city: 93, marcom: 65, total: 158, share: 1.09, cityShare: 0.65, marcomShare: 0.45 },
 
-  // Advertising spend by month, lakh (ultimate data sheet rows 125-134).
-  // 2026: Jan-Sep realised, Oct-Dec = Q4 plan from the state line tables. 2027 = plan.
+  // Advertising spend by month, lakh (ultimate_data_sheet_1.xlsx, 26 Oct 2026, rows 125-175).
+  // 2026: Jan-Sep realised, Oct-Dec = Q4 plan from the state line tables. 2027 = plan (rows 132-134),
+  // which the sheet splits into lines at a fixed share every month (split27).
   spend: {
     months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    Pune: { y26: [24.07, 8.74, 22.75, 26.57, 25.18, 30.26, 23.42, 22.47, 19.7, 16.5, 27.0, 10.75], y27: [13.1, 12.05, 18.31, 17.45, 22.73, 19.93, 17.31, 13.82, 13.49, 16.7, 22.64, 20.95] },
-    Gujarat: { y26: [20.24, 14.73, 28.75, 33.33, 30.87, 24.42, 24.73, 12.98, 23.82, 19.95, 26.83, 31.65], y27: [11.24, 11.46, 11.69, 14.01, 17.18, 12.85, 10.9, 10.65, 10.84, 10.81, 15.65, 16.68] },
-    MP: { y26: [2.87, 2.22, 0.54, 2.81, 2.86, 2.38, 2.48, 1.92, 7.1, 6.8, 9.87, 11.09], y27: [3.84, 4.07, 3.47, 4.08, 5.22, 4.04, 3.69, 3.62, 3.89, 6.62, 9.25, 10.08] }
+    Pune: { y26: [24.07, 8.74, 22.75, 26.57, 25.18, 30.26, 23.42, 22.47, 19.7, 16.5, 27.0, 10.75], y27: [28.74, 22.68, 28.97, 32.21, 37.55, 33.78, 36.43, 29.77, 22.14, 22.84, 34.1, 36.14] },
+    Gujarat: { y26: [20.24, 14.73, 28.75, 33.33, 30.87, 24.42, 24.73, 12.98, 23.82, 19.95, 26.83, 31.65], y27: [22.54, 15.66, 21.34, 24.44, 28.79, 24.1, 23.14, 22.02, 12.79, 16.88, 23.53, 25.33] },
+    MP: { y26: [2.87, 2.22, 0.54, 2.81, 2.86, 2.38, 2.48, 1.92, 7.1, 6.8, 9.87, 11.09], y27: [11.92, 8.04, 8.55, 9.7, 10.36, 10.42, 10.5, 9.59, 7.29, 9.57, 11.03, 13.07] },
+    split27: [["Digital paid (MarCom)", 30], ["Hoardings, OOH, HIPOP and AOP", 30], ["In-store communication", 20], ["In-mall", 5], ["Store events", 5], ["Influencers", 5], ["Free products and IC", 3], ["Flyers", 2]]
   },
 
   // Omni turnover by month, 2026, Cr (Master Data sheet)

@@ -145,7 +145,7 @@
     });
   });
   // monthly ramp
-  (() => {
+  if ($("#ramp")) (() => {
     const max = Math.max(...D.q4.months.map(m => m.growth));
     $("#ramp").innerHTML = D.q4.months.map(m => `<div style="--h:${m.growth / max * 100}%"><b>+${fmt(m.growth, 2)}%</b><span>${m.m} challenge growth</span></div>`).join("");
   })();
@@ -172,10 +172,10 @@
   });
 
   // funnel
-  $("#funnel").innerHTML = D.funnel.map(f => `<div class="funnel-row"><span>${f.stage}</span><div class="bar" style="--w:${f.v / D.funnel[0].v * 100}%">${f.v} L</div><em>${f.pct}%</em></div>`).join("");
+  if ($("#funnel")) $("#funnel").innerHTML = D.funnel.map(f => `<div class="funnel-row"><span>${f.stage}</span><div class="bar" style="--w:${f.v / D.funnel[0].v * 100}%">${f.v} L</div><em>${f.pct}%</em></div>`).join("");
 
   // spend lines
-  (() => {
+  if ($("#spendLines")) (() => {
     const max = Math.max(...D.spendLines.map(l => l.v));
     $("#spendLines").innerHTML = D.spendLines.map(l => `<div class="line-item"><b>${esc(l.name)}</b><span>${l.v} L</span><i style="--w:${l.v / max * 100}%"></i><small>${esc(l.okr)}</small></div>`).join("");
   })();
@@ -224,6 +224,9 @@
     }).join("");
   };
   spendNotes();
+  $("#split27").innerHTML = `<h4>How the 2027 plan splits each month</h4><div class="split27-bar">${D.spend.split27.map(([n, p], i) => `<i style="flex:${p} 1 0;background:${["#141A5C", "#3643BA", "#00C4E1", "#8A92E0", "#00A99D", "#2BFF88", "#7B3FC4", "#C9CEF0"][i]};color:${[3, 5, 7].includes(i) ? "#10135A" : "#fff"}" data-tip="<b>${n}</b><br>${p}% of each month">${p >= 5 ? p + "%" : ""}</i>`).join("")}</div>
+    <ul>${D.spend.split27.map(([n, p]) => `<li><b>${p}%</b>${n}</li>`).join("")}</ul>
+    <p class="foot">Same split in every month and every state. Pune, Gujarat and MP add up to ${fmt(["Pune", "Gujarat", "MP"].reduce((a, r) => a + D.spend[r].y27.reduce((x, y) => x + y, 0), 0) / 100, 2)} Cr for 2027.</p>`;
   $$("#regionSeg button").forEach(b => b.addEventListener("click", () => {
     region = b.dataset.r;
     $$("#regionSeg button").forEach(x => x.setAttribute("aria-pressed", x === b));
@@ -266,7 +269,7 @@
   })();
 
   // stores
-  (() => {
+  if ($("#puneStoreShare")) (() => {
     const maxS = Math.max(...D.puneStores.map(s => s.share));
     $("#puneStoreShare").innerHTML = D.puneStores.map(st => `<div class="store-row"><b>${st.store}</b><div class="store-bars">
       <i style="--w:${st.share / maxS * 100}%;background:var(--blue)" data-tip="<b>${st.store}</b><br>${st.share}% of Pune turnover"></i></div>

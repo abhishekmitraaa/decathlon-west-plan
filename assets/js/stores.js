@@ -33,42 +33,48 @@
     show("All");
   })();
 
-  /* ---------- ranking ---------- */
-  let sortKey = "overAmbition";
-  const NOTES = {
-    overAmbition: "Turnover each store must add beyond its own ambition in Q4 (Cr).",
-    growth: "Challenge growth over Q4 2025.",
-    budgetTotal: "Store marketing budget for October to December 2026 (L)."
-  };
-  function drawRank() {
-    const vals = stores.map(s => s[sortKey]);
-    const max = Math.max(...vals, 0), min = Math.min(...vals, 0), span = max - min || 1;
-    const zero = (-min / span) * 100;
-    const unit = sortKey === "growth" ? "%" : sortKey === "budgetTotal" ? " L" : " Cr";
-    const fmtV = v => sortKey === "growth" ? (v >= 0 ? "+" : "") + fmt(v, 1) + "%" : sign(v) + unit;
-    $("#storeRank").innerHTML = ["Pune", "Gujarat", "MP"].map(st => {
-      const list = stores.filter(s => s.state === st).sort((a, b) => b[sortKey] - a[sortKey]);
-      const total = list.reduce((a, s) => a + s[sortKey], 0);
-      const sub = sortKey === "growth" ? `${list.length} stores` : `${fmtV(total)} across ${list.length} stores`;
-      return `<div class="st-group"><h4 style="--c:${STATE_COL[st]}">${STATE_NAME[st]}<small>${sub}</small></h4>` + list.map(s => {
-        const v = s[sortKey], w = Math.abs(v) / span * 100, left = v >= 0 ? zero : zero - w;
-        return `<button type="button" class="st-row" data-id="${s.id}" aria-pressed="${s.id === current}">
-          <b>${esc(s.name)}</b>
-          <span class="trk">${min < 0 ? `<span class="zero" style="left:${zero}%"></span>` : ""}<i style="left:${left}%;width:${Math.max(w, 0.8)}%;background:${v < 0 ? "#C03F9C" : STATE_COL[s.state]}"></i></span>
-          <em>${fmtV(v)}</em></button>`;
-      }).join("") + `</div>`;
+  /* ---------- scoreboard: Q4 challenge and budget by store ---------- */
+  function drawBoard() {
+    const f2 = n => Number(n).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const maxCh = Math.max(...stores.map(s => s.challenge)), maxB = Math.max(...stores.map(s => s.budgetTotal));
+    const sum = (list, k) => list.reduce((a, s) => a + s[k], 0);
+    const sumB = (list, i) => list.reduce((a, s) => a + s.budget[i], 0);
+    const g = (q, c) => `${c >= q ? "+" : "−"}${fmt(Math.abs(c - q) / q * 100, 1)}%`;
+    const totRow = (label, list, cls) => {
+      const q = sum(list, "q425"), c = sum(list, "challenge"), bt = sum(list, "budgetTotal");
+      return `<tr class="${cls}"><th scope="row">${label}</th><td>${f2(q)}</td><td>${f2(sum(list, "ambition"))}</td><td><b>${f2(c)}</b></td><td>${g(q, c)}</td>
+        <td class="sep">${f2(sumB(list, 0))}</td><td>${f2(sumB(list, 1))}</td><td>${f2(sumB(list, 2))}</td><td><b>${f2(bt)}</b></td><td>${fmt(bt / (c * 100) * 100)}%</td></tr>`;
+    };
+    const body = ["Pune", "Gujarat", "MP"].map(st => {
+      const list = stores.filter(s => s.state === st);
+      return `<tr class="sb-st" style="--c:${STATE_COL[st]}"><th colspan="10" scope="rowgroup">${STATE_NAME[st]}</th></tr>` + list.map(s => `<tr data-id="${s.id}" tabindex="0" aria-pressed="${s.id === current}">
+        <th scope="row">${esc(s.name)}</th><td>${f2(s.q425)}</td><td>${f2(s.ambition)}</td>
+        <td class="bar" style="--w:${s.challenge / maxCh * 100}%;--c:${STATE_COL[st]}"><b>${f2(s.challenge)}</b></td><td>${s.growth >= 0 ? "+" : "−"}${fmt(Math.abs(s.growth), 1)}%</td>
+        <td class="sep">${f2(s.budget[0])}</td><td>${f2(s.budget[1])}</td><td>${f2(s.budget[2])}</td>
+        <td class="bar" style="--w:${s.budgetTotal / maxB * 100}%;--c:${STATE_COL[st]}"><b>${f2(s.budgetTotal)}</b></td><td>${fmt(s.budgetTotal / (s.challenge * 100) * 100)}%</td></tr>`).join("") +
+        totRow(`${STATE_NAME[st]} stores`, list, "sb-sub");
     }).join("");
-    $("#rankNote").textContent = NOTES[sortKey] + " Click a store to open its plan.";
-    $$("#storeRank .st-row").forEach(b => b.addEventListener("click", () => select(b.dataset.id, true)));
-    if (!$(".st-legend")) {
-      $(".st-rank").insertAdjacentHTML("beforeend", `<div class="st-legend"><span><i style="background:#C03F9C"></i>Challenge below ambition</span></div>`);
-    }
+    $("#sbStores").innerHTML = `<table class="sb-table"><thead>
+      <tr class="sb-grp"><th rowspan="2" scope="col">Store</th><th colspan="4" scope="colgroup">Turnover challenge, Cr</th><th colspan="5" scope="colgroup" class="sep">Marketing budget, lakh</th></tr>
+      <tr><th scope="col">Q4 2025</th><th scope="col">Ambition</th><th scope="col">Q4 2026 challenge</th><th scope="col">Growth</th><th scope="col" class="sep">Oct</th><th scope="col">Nov</th><th scope="col">Dec</th><th scope="col">Q4 total</th><th scope="col">% of challenge</th></tr></thead>
+      <tbody>${body}${totRow("13 stores", stores, "sb-total")}</tbody></table>
+      <p class="foot">With digital and wholesale added, the state challenges are Pune ${f2(D.stateTO["PUNE TOTAL"].ch)} Cr, Gujarat ${f2(D.stateTO["GJ TOTAL"].ch)} Cr and MP ${f2(D.stateTO["MP TOTAL"].ch)} Cr: 178.77 Cr for the cluster.</p>`;
+    $$("#sbStores tr[data-id]").forEach(r => {
+      r.addEventListener("click", () => select(r.dataset.id, true));
+      r.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(r.dataset.id, true); } });
+    });
+
+    // line summary across the three state plans, in the same categories as the state money mix
+    const ST = ["Pune", "Gujarat", "MP"], by = Object.fromEntries(ST.map(st => [st, stateCats(st)]));
+    const tot = CAT.map((c, i) => ST.reduce((a, st) => a + by[st][i], 0)), all = tot.reduce((a, b) => a + b, 0);
+    const order = tot.map((v, i) => i).filter(i => tot[i] > 0).sort((a, b) => (CAT[a][0] === "Other") - (CAT[b][0] === "Other") || tot[b] - tot[a]);
+    const maxT = Math.max(...tot), stTot = ST.map(st => by[st].reduce((a, b) => a + b, 0));
+    $("#sbLines").innerHTML = `<table class="sb-table sb-lines"><thead><tr><th scope="col">Line</th>${ST.map(st => `<th scope="col" style="color:${STATE_COL[st]}">${STATE_NAME[st]}</th>`).join("")}<th scope="col">Total</th><th scope="col" class="share">Share of budget</th></tr></thead><tbody>
+      ${order.map(i => `<tr><th scope="row"><i class="sw" style="background:${CAT[i][1]}"></i>${CAT[i][0]}</th>${ST.map(st => `<td>${by[st][i] ? fmt(by[st][i], 1) : "–"}</td>`).join("")}<td><b>${fmt(tot[i], 1)}</b></td>
+        <td class="share"><div class="sh-cell"><span class="sh-bar"><i style="width:${tot[i] / maxT * 100}%;background:${CAT[i][1]}"></i></span><b>${fmt(tot[i] / all * 100, 1)}%</b></div></td></tr>`).join("")}
+      <tr class="sb-total"><th scope="row">Total</th>${stTot.map(v => `<td><b>${fmt(v, 1)}</b></td>`).join("")}<td><b>${fmt(all, 1)}</b></td><td class="share"><b>100%</b></td></tr></tbody></table>
+      <p class="foot">The store budgets above add up to ${fmt(sum(stores, "budgetTotal"), 1)} L. The state line plans add up to ${fmt(all, 1)} L because they also carry spend that sits with the state, such as digital paid to MarCom. Gujarat's and MP's line items add up to more than their own stated totals (${fmt(D.stateLines.Gujarat.total.reduce((a, b) => a + b, 0), 1)} L and ${fmt(D.stateLines.MP.total.reduce((a, b) => a + b, 0), 1)} L). "Other" is Pune's internal consumption, Gujarat's other online channels and MP's general advertising.</p>`;
   }
-  $$("#rankSeg button").forEach(b => b.addEventListener("click", () => {
-    sortKey = b.dataset.k;
-    $$("#rankSeg button").forEach(x => x.setAttribute("aria-pressed", x === b));
-    drawRank();
-  }));
 
   /* ---------- per-store detail ---------- */
   // Pune store names and catchment areas as they appear in the Marcom calendar
@@ -243,15 +249,15 @@
   /* ---------- wiring ---------- */
   function select(id, scroll) {
     current = id;
-    $$("#storeRank .st-row").forEach(b => b.setAttribute("aria-pressed", b.dataset.id === id));
+    $$("#sbStores tr[data-id]").forEach(b => b.setAttribute("aria-pressed", b.dataset.id === id));
     render();
     if (scroll) {
       const d = $("#storeDetail"), top = d.getBoundingClientRect().top;
       if (top > innerHeight * 0.75 || top < 0) d.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
     }
   }
-  if (!$("#storeRank")) return;
-  drawRank();
+  if (!$("#storeDetail")) return;
+  if ($("#sbStores")) drawBoard();
   drawMix();
   render();
 })();
