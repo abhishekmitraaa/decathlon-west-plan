@@ -1546,6 +1546,35 @@ ul, ol { padding: 0; }
 @media (max-width: 1100px) { .cc-infl-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 700px) { .cc-infl-list { grid-template-columns: 1fr; } }
 
+/* Surat timeline in the store-openings tab */
+.sr-tl { list-style: none; display: grid; gap: 8px; }
+.sr-tl li { display: grid; grid-template-columns: 130px 1fr; gap: 12px; padding: 10px 12px; border-radius: var(--r-sm); background: var(--mist); font-size: 14px; }
+.sr-tl li::before { display: none; }
+.sr-tl li b { color: var(--blue); }
+.sr-tl li.peak { background: var(--mint); }
+.sr-tl li.peak b { color: var(--ink); }
+/* content calendar: market filter, context and compact briefs */
+.cc-mkts { flex-wrap: wrap; margin-bottom: 10px; border-radius: var(--r-md); }
+.cc-mkts button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.cc-ctx { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin: 12px 0; }
+.cc-ctx-col { border: 1.5px solid var(--line); border-top: 4px solid var(--c); border-radius: var(--r-sm); padding: 10px 12px; background: #fff; }
+.cc-ctx-col h5 { font-size: 15px; font-weight: 750; color: var(--c); margin-bottom: 6px; }
+.cc-ctx-col dl { display: grid; gap: 4px; }
+.cc-ctx-col dl div { display: grid; grid-template-columns: 74px 1fr; gap: 8px; font-size: 12.5px; }
+.cc-ctx-col dt { color: var(--text-3); font-weight: 650; }
+.cc-briefs-sm { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.cc-brief.cc-mini { grid-template-columns: 44px 1fr; gap: 10px; padding: 10px 12px; border-left: 4px solid var(--c); overflow: visible; }
+.cm-date b { display: block; font-size: 22px; font-weight: 700; line-height: 1; color: var(--ink); letter-spacing: -0.03em; }
+.cm-date span { font-size: 11px; font-weight: 650; color: var(--text-3); }
+.cm-top { display: flex; flex-wrap: wrap; gap: 4px; }
+.cm-top span { font-size: 10.5px; font-weight: 750; padding: 1px 7px; border-radius: 999px; background: var(--mist); color: var(--blue-deep); }
+.cm-top .cm-fmt { background: var(--c); color: #fff; }
+.cc-mini h5 { font-size: 14px; margin: 4px 0 2px; line-height: 1.25; }
+.cc-mini .cb-hook { font-size: 12.5px; margin-bottom: 2px; }
+.cm-why { font-size: 12px; color: var(--text-2); line-height: 1.35; }
+@media (max-width: 1100px) { .cc-briefs-sm { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .cc-briefs-sm { grid-template-columns: 1fr; } }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }

@@ -104,7 +104,7 @@
 
   const tickerItems = [
     "Q4 challenge 178.77 Cr", "+24.15% vs last year", "Winter Travel: 15 Oct - 30 Jan", "Black Friday 27-30 Nov: 12 Cr", "Christmas sale 19-31 Dec", "Wakad: 30.4 Cr, the biggest store challenge",
-    "Adajan, Surat: opening weekend 18-20 Dec", "16 hoardings: 7 live in Pune", "80+ local influencers", "Kiprun launch: 700 runners, 7 clubs",
+    "Adajan, Surat: grand launch 27 Dec", "16 hoardings: 7 live in Pune", "80+ local influencers", "Kiprun launch: 700 runners, 7 clubs",
     "Q1 2027: +12.1% turnover", "Commonwealth Games 2030, Gujarat"
   ];
   const tk = $("#ticker");
@@ -609,10 +609,10 @@
       stats: [["8 L", "store events, Q4"], ["500", "runners at in-store meetups"], ["10", "apartments for the Workshop Mela"], ["1.38", "purchase frequency OKR"]],
       planTitle: "Residential society plan, Pune", plan: () => monthCards("society") },
     { name: "Store openings", tag: "Dec", media: ["surat-grand-opening.jpg", "surat-map.jpg", "surat-offer.jpg"],
-      title: "Adajan, Surat: 18-20 December",
-      copy: "Chalo Ramiye, Adajan! The opening weekend runs Fri 18 to Sun 20 Dec with an ₹85 L target, then 30 days to ₹2.5 Cr. Gifts on bigger bills instead of discounts, Deca Runners classes, and twice the usual marketing spend in Q1. The full plan is in the Surat section.",
+      title: "Adajan, Surat: grand launch 27 December",
+      copy: "Chalo Ramiye, Adajan! Hoardings locked on 30 Oct, AOPs placed in the catchment from 1 Nov, then events and community activation, and the grand launch on Sunday 27 Dec: ₹85 L in the first three days, then 30 days to ₹2.5 Cr. Gifts on bigger bills instead of discounts, Deca Runners classes, and twice the usual marketing spend in Q1. The full plan is in the Surat section.",
       stats: [["720+", "sports items in store"], ["2x", "Q1 marketing spend"], ["5k", "Beach Fest participants"], ["10:30-10", "open daily"]],
-      planTitle: "Surat new-store timeline, indicative (from the AOP 2027 slide)", plan: () => `<ul><li>Oct-Dec 2026: site finalisation and approvals</li><li>Jan 2027: local partnerships and community build</li><li>Feb 2027: pre-opening campaigns</li><li>Mar 2027: soft launch and preview events</li><li>Apr 2027: grand opening</li><li>Pre-opening activations: city run and fitness events, yoga by the river, racket tournaments, travel and outdoor experiences</li></ul>` },
+      planTitle: "Surat new-store timeline", plan: () => `<ol class="sr-tl"><li><b>30 Oct</b><span>Hoardings finalised, led by the Pal Umra Bridge board</span></li><li><b>1 Nov</b><span>AOPs finalised; kit walls placed at gyms, pools, academies and studios in the Adajan catchment</span></li><li><b>Nov - Dec</b><span>Events and community activation: teaser, date reveal, Ramat Rath in 36 societies, treasure hunt, Happy Streets, creators' preview, 10-day countdown</span></li><li class="peak"><b>Sun 27 Dec</b><span>Grand launch: inauguration with Surat athletes, Tapi Sunrise Run, sports carnival</span></li><li><b>27 Dec - 25 Jan</b><span>First 30 days to ₹2.5 Cr: Night Carnival, New Year run, leagues, Kai Po Che! for Uttarayan</span></li></ol>` },
     { name: "Quick commerce and delivery", tag: "2 hr", media: ["quick-commerce.jpg", "two-hour-delivery.jpg", "app-order.jpg"],
       title: "Sport, delivered fast",
       copy: "The 12 Cr digital challenge splits three ways: home delivery and pick-from-store, sell-at-store in our shops, and express delivery with affiliation. Digital turnover grows 27% when traffic, conversion, orders and basket all move together.",
@@ -626,6 +626,10 @@
       stats: [["5", "stores with a playground"], ["Every week", "an event on each court"], ["3", "channels: events, social, push"], ["Walk-ins", "the measure: footfall and dwell time"]],
       planTitle: "How each court gets used", plan: () => `<ul><li><b>Indore:</b> weekend leagues and weekday evening open play; push to Indore app users before each session</li><li><b>Wagholi:</b> family and kids' sessions on weekends for the Wagholi and Kharadi housing belt; society groups invited by WhatsApp</li><li><b>Surat, Dumas Road:</b> evening box cricket and pickle sessions, kept running as Adajan opens so Dumas stays busy</li><li><b>Baroda:</b> school and academy slots on weekday afternoons, open play on weekends</li><li><b>Motera:</b> the template: Yoga Day filled this court with hundreds of people; repeat with monthly community mornings</li><li><b>Every court:</b> a fixed weekly slot people can plan around, a reel or story from every session, and a push notification to nearby customers before the next one. Playground events give direct footfall; regular use brings repeat visits, longer dwell time and family purchases (strategy toolkit).</li></ul>` }
   ];
+  // Tab order set by the team (27 Oct 2026)
+  const ORDER = ["Hoardings and OOH", "Practice-place hoardings (AOP)", "Playground activation", "Quick commerce and delivery", "Events and community",
+    "Store openings", "Influencers", "In-mall and in-store kit", "Meta, app and landing pages", "WhatsApp channels, PN and RCS"];
+  CHANNELS.sort((a, b) => ORDER.indexOf(a.name) - ORDER.indexOf(b.name));
   (() => {
     const list = $("#switchList"), panel = $("#switchPanel");
     list.innerHTML = CHANNELS.map((c, i) => `<button type="button" class="sw-tab" role="tab" id="tab${i}" aria-selected="${i === 0}" aria-controls="switchPanel" data-i="${i}">${esc(c.name)}<small>${esc(c.tag)}</small></button>`).join("");
@@ -671,7 +675,7 @@
       u: "The Kiprun Challenger launch in March." },
     { n: "process-vs", t: "Process vs product", h: "The mess first. The magic after.",
       w: "Showing the set-up earns the finale. People trust what they saw being built.",
-      u: "The Surat countdown, 8 to 17 December." },
+      u: "The Surat countdown, 17 to 26 December." },
     { n: "yoga-day", t: "Yoga Day from above", h: "One drone shot. A playground of mats.",
       w: "Scale proven in one second, no voice-over needed. The bigger the crowd, the smaller the logo can be.",
       u: "Yoga Day 2027 and Sports Utsav." },

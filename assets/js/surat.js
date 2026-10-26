@@ -10,30 +10,33 @@
   const num = n => Math.round(n).toLocaleString("en-IN");
 
   const KPI = [
-    ["₹85 L", "Opening weekend target", "Fri 18 - Sun 20 Dec"],
+    ["₹85 L", "Target for the first 3 days", "Sun 27 - Tue 29 Dec"],
     ["18,215", "Walk-ins needed in 3 days", "at 25.9% conversion"],
-    ["₹2.5 Cr", "First 30 days", "18 Dec - 16 Jan"],
+    ["₹2.5 Cr", "First 30 days", "27 Dec - 25 Jan"],
     ["49,580", "Walk-ins needed in 30 days", "13,950 bills at a ₹1,800 basket"],
     ["₹18 L", "Budget", "The plan currently spends ₹24.9 L"],
     ["₹50", "Cost per walk-in", "Bhopal's opening: ₹153"]
   ];
 
+  // Timeline from the team (27 Oct 2026): hoardings locked 30 Oct, AOPs from 1 Nov, then events and
+  // community activation, grand launch Sun 27 Dec. Activities come from the opening-plan workbook.
   const PHASES = [
-    ["P0", "Ground game", "19 Oct - 2 Nov", "Customer list of 10,087 near Adajan, map 150+ places, sign partners, permits, Gujarati creative"],
-    ["P1", "Kaink navu aave che", "3 - 22 Nov", "“Something new is coming”: club opens, teaser shop front and reels. Stay light over Diwali (8 Nov) while Surat is away"],
-    ["P2", "Reveal", "23 Nov - 7 Dec", "Date reveal, hoardings, Ramat Rath in 36 societies, society sports days, old-shoe drive, Hazira kiosks, coach codes"],
-    ["P3", "10 Divas, 10 Ramat", "8 - 17 Dec", "Countdown: treasure hunt (12 Dec), Happy Streets #1 on LP Savani (13 Dec), radio, Cinepolis, 80,000 leaflets, creators' preview"],
-    ["P4", "Chalo Ramiye weekend", "18 - 20 Dec", "Pehli Ramat + night run (Fri), Night Carnival (Sat), sunrise run + sports carnival (Sun), gifts on bigger bills"],
-    ["P5", "Ramat chalu rahe", "21 Dec - 16 Jan", "“Keep playing”: Santa Party, New Year run, Happy Streets #2 (3 Jan), box cricket league, pickle league, Kai Po Che!"]
+    ["1", "Hoardings locked", "30 Oct", "Hoardings finalised, led by the Pal Umra Bridge board (40 x 20 ft, Nov 2026 to Oct 2027) between Adajan, Piplod and Vesu"],
+    ["2", "AOPs in the catchment", "From 1 Nov", "AOPs finalised and kit walls placed at gyms, pools, academies and studios around Adajan; partner list of 150+ places and the 10,087 nearby customers"],
+    ["3", "Kaink navu aave che", "1 - 22 Nov", "“Something new is coming”: teaser shop front and reels. Stay light over Diwali (8 Nov) while Surat is away"],
+    ["4", "Events and community activation", "23 Nov - 26 Dec", "Date reveal, Ramat Rath in 36 societies, society sports days, old-shoe drive, treasure hunt, Happy Streets on LP Savani, radio, Cinepolis, 80,000 leaflets, creators' preview, 10-day countdown"],
+    ["5", "Grand launch", "Sun 27 Dec", "Pehli Ramat inauguration with Surat athletes, Tapi Sunrise Run, sports carnival, gifts on bigger bills"],
+    ["6", "Ramat chalu rahe", "28 Dec - 25 Jan", "“Keep playing”: Night Carnival, New Year run, Happy Streets #2, box cricket league, pickle league, Kai Po Che! for Uttarayan (14 Jan)"]
   ];
 
+  // Day targets are the workbook's three opening-day targets (planned for 18-20 Dec), carried to the first three days.
   const WEEKEND = [
-    ["Fri 18 Dec", "Opening day", 2635000, ["10:00 Pehli Ramat inauguration with Surat athletes", "16:00 School and academy kit desk", "19:30 LP Savani After Dark: 3K / 5K night run ending at the store"]],
-    ["Sat 19 Dec", "Night Carnival", 2805000, ["08:00 Golden hour for pass holders", "Hourly plank, push-up and skipping challenges", "18:00 Adajan Night Carnival: box cricket under lights, pickleball, skating, DJ, food trucks"]],
-    ["Sun 20 Dec", "Sunrise run + sports carnival", 3060000, ["06:45 Tapi Sunrise Run (5K / 10K) + yoga, 600 runners", "10:00 - 19:00 Sports carnival: 15 sport zones, kids' obstacle course", "Pickleball King of the Court, carnival finals, Bumper Draw launch"]]
+    ["Sun 27 Dec", "Grand launch", 3060000, ["06:45 Tapi Sunrise Run (5K / 10K) + yoga, 600 runners", "10:00 Pehli Ramat inauguration with Surat athletes", "10:00 - 19:00 Sports carnival: 15 sport zones, kids' obstacle course"]],
+    ["Mon 28 Dec", "Night Carnival", 2805000, ["Hourly plank, push-up and skipping challenges", "16:00 School and academy kit desk", "18:00 Adajan Night Carnival: box cricket under lights, pickleball, skating, DJ, food trucks"]],
+    ["Tue 29 Dec", "Night run", 2635000, ["08:00 Golden hour for pass holders", "Pickleball King of the Court, Bumper Draw launch", "19:30 LP Savani After Dark: 3K / 5K night run ending at the store"]]
   ];
 
-  const WEEKS = [["W1", "Opening weekend", 8500000], ["W2", "", 5551691], ["W3", "", 4683783], ["W4", "Pickle & Cricket Week", 3934818], ["W5", "Kai Po Che!", 2440548]];
+  const WEEKS = [["W1", "Launch week", 8500000], ["W2", "New Year", 5551691], ["W3", "Kai Po Che!", 4683783], ["W4", "Pickle & Cricket Week", 3934818], ["W5", "", 2440548]];
 
   const SOURCES = [["Digital and media", 25100, "var(--blue)"], ["Community and partners", 12409, "var(--teal)"], ["Events", 12095, "var(--purple)"]];
 
@@ -75,11 +78,11 @@
   ];
 
   const WATCH = [
-    "Date: the expansion retroplan shows opening on 27 Dec. Confirm 18 Dec before booking hoardings, radio and cinema.",
+    "Date: opening is Sunday 27 Dec (confirmed by the team). The workbook was built for an 18-20 Dec weekend, so its day and week targets are carried over and need re-phasing; the printed grand-opening poster still shows 20 Dec.",
     "Budget: the plan spends ₹24.9 L against an ₹18 L budget.",
-    "Permissions for Happy Streets, the night run, sunrise run and Night Carnival need police and SMC approval: apply by 26 Oct.",
-    "Tills: at a ₹1,800 basket the weekend needs 4,700 bills. Up to 11 tills are needed at Sunday's peak.",
-    "Stock: winter jackets, fleeces, trek shoes, running shoes and home gym deep by 10 Dec."
+    "Permissions for Happy Streets, the night run, sunrise run and Night Carnival need police and SMC approval: apply now.",
+    "Tills: at a ₹1,800 basket the first three days need 4,700 bills. Up to 11 tills are needed at the launch-day peak.",
+    "Stock: winter jackets, fleeces, trek shoes, running shoes and home gym deep by 20 Dec."
   ];
 
   const maxW = Math.max(...WEEKS.map(w => w[2]));
@@ -96,7 +99,7 @@
       <dl class="sr-kpis">${KPI.map(k => `<div><dt>${k[1]}</dt><dd>${k[0]}</dd><small>${k[2]}</small></div>`).join("")}</dl>
     </div>
 
-    <h3 class="display-s sr-sub"><span class="lt">Six phases,</span> from teaser to day 30</h3>
+    <h3 class="display-s sr-sub"><span class="lt">The timeline,</span> from hoardings to day 30</h3>
     <ol class="sr-phases">${PHASES.map((p, i) => `<li class="${i === 4 ? "peak" : ""}"><span class="ph-id">${p[0]}</span><b>${esc(p[1])}</b><span class="ph-date">${p[2]}</span><p>${esc(p[3])}</p></li>`).join("")}</ol>
 
     <h3 class="display-s sr-sub"><span class="lt">The opening weekend:</span> ₹85 L in three days</h3>
@@ -119,7 +122,7 @@
         <h3 class="display-s"><span class="lt">The market</span> we are opening into</h3>
         <div class="sr-market">${MARKET.map(m => `<div><b>${m[0]}</b><span>${m[1]}</span><small>${m[2]}</small></div>`).join("")}</div>
         <h4>Gifts, never discounts</h4>
-        <p class="sr-note">Decathlon keeps full prices. Opening-weekend gifts on bigger bills, a weekly “Poora Bill Maaf” draw on bills of ₹2,999+ (grand prize: a Rockrider cycle on 16 Jan), and a Ramat Passport that rewards coming back.</p>
+        <p class="sr-note">Decathlon keeps full prices. Opening-weekend gifts on bigger bills, a weekly “Poora Bill Maaf” draw on bills of ₹2,999+ (grand prize: a Rockrider cycle on 24 Jan), and a Ramat Passport that rewards coming back.</p>
         <div class="sr-gifts">${GIFTS.map(g => `<div><b>${g[0]}</b><span>${g[1]}</span></div>`).join("")}</div>
       </div>
     </div>

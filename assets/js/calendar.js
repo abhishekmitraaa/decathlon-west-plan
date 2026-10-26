@@ -11,7 +11,7 @@
   const P = C.pillars, KEYS = Object.keys(P);
   const DOW = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const toPost = ([day, format, pillar, title, campaign, sport, region, hook, why, creator]) => ({ day, format, pillar, title, campaign, sport, region, hook, why, creator });
-  C.months.forEach(m => { m.list = m.posts.map(toPost); });
+  C.months.forEach(m => { m.list = m.posts.map(toPost).sort((a, b) => a.day - b.day); });
   const all = C.months.flatMap(m => m.list);
 
   /* ---------- a picture for every post: our own photos first, Creative Commons for the rest ---------- */
@@ -72,6 +72,7 @@
       </div>
     </div>
 
+    <div class="cc-mkts seg" role="group" aria-label="Choose market" id="ccMkt">${["All markets", "Pune", "Gujarat", "MP"].map((r, i) => `<button type="button" data-r="${i ? r : "All"}" aria-pressed="${i === 0}">${r === "MP" ? "Madhya Pradesh" : r}</button>`).join("")}</div>
     <div class="cc-tabs seg" role="tablist" aria-label="Choose month" id="ccTabs">
       ${C.months.map((m, i) => `<button type="button" role="tab" data-i="${i}" aria-selected="${i === 1}">${m.label.slice(0, 3)} ${m.y}</button>`).join("")}
     </div>
@@ -106,13 +107,35 @@
       ". Other photos are Decathlon's own or supplied by the team.";
   }
 
+  // Market context by month: typical weather (climate normals, approx.), who we talk to, what is on locally
+  const MKT = {
+    Pune: { col: "var(--pune)", who: "IT professionals in Hinjewadi and Kharadi, weekend trekkers, students, sports-driven families",
+      m: { October: ["31° / 20°, monsoon over", "Navratri, Dussehra, trek season opens"], November: ["30° / 15°, dry and clear", "Diwali, Sinhagad and Rajgad fort treks"],
+           December: ["29° / 12°, cool mornings", "Pune International Marathon, Bajaj Pune Marathon"], January: ["29° / 11°, coolest month", "Makar Sankranti, Bajaj Pune Grand Tour (26-31 Jan)"],
+           February: ["32° / 12°, warming", "Shivaji Jayanti long weekend fort treks, Marathi Bhasha Din"], March: ["35° / 16°, summer starts", "Holi, Rang Panchami, IPL, Gudi Padwa next"] } },
+    Gujarat: { col: "var(--guj)", who: "Business-owning and trading families, Surat's diamond and textile workers, Ahmedabad's cricket and Garba crowd",
+      m: { October: ["35° / 24°, hot days", "Navratri and Garba, Khel Mahakumbh"], November: ["32° / 18°, dry", "Diwali (Surat away 6-22 Nov), Adani Ahmedabad Marathon (29 Nov)"],
+           December: ["29° / 14°, best outdoor season", "Adajan grand launch (27 Dec), Rann Utsav"], January: ["28° / 12°, coolest month", "Uttarayan and the Kite Festival, Vadodara Marathon (31 Jan)"],
+           February: ["31° / 14°, warming", "Rann Utsav ends, board exams"], March: ["36° / 19°, summer starts", "Holi, IPL with Gujarat Titans at home"] } },
+    MP: { col: "var(--mp)", who: "Students in Indore and Bhopal, government employees, young families; Gwalior's winter is the coldest in the cluster",
+      m: { October: ["31° / 18°, monsoon over", "Navratri, Dussehra"], November: ["28° / 13°, cool nights", "Diwali, wedding season"],
+           December: ["26° / 9°, cold nights", "Winter wear season; Gwalior nights near 6°"], January: ["25° / 8°, coldest month", "Makar Sankranti, Khelo MP Youth Games"],
+           February: ["28° / 11°, mild", "Indore Marathon, Khajuraho Dance Festival"], March: ["33° / 16°, summer starts", "Bhagoria, Holi, Rang Panchami Gair in Indore"] } }
+  };
+  let market = "All";
+  const inMarket = p => market === "All" || p.region === "All" || p.region === market || (market === "Gujarat" && p.region === "Surat");
+  $$("#ccMkt button").forEach(b => b.addEventListener("click", () => {
+    market = b.dataset.r;
+    $$("#ccMkt button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    showMonth(+($("#ccTabs button[aria-selected='true']") || { dataset: { i: 1 } }).dataset.i);
+  }));
   function showMonth(i) {
     const m = C.months[i], h = (C.heroes || {})[m.label];
     $$("#ccTabs button").forEach(b => b.setAttribute("aria-selected", +b.dataset.i === i));
     const first = new Date(m.y, m.m, 1), days = new Date(m.y, m.m + 1, 0).getDate();
     const lead = (first.getDay() + 6) % 7;
     const byDay = {};
-    m.list.forEach((p, k) => { (byDay[p.day] = byDay[p.day] || []).push({ ...p, k }); });
+    m.list.forEach((p, k) => { if (inMarket(p)) (byDay[p.day] = byDay[p.day] || []).push({ ...p, k }); });
     let cells = "";
     for (let b = 0; b < lead; b++) cells += `<div class="cc-day empty"></div>`;
     for (let d = 1; d <= days; d++) {
@@ -139,18 +162,16 @@
           <div><span>The impossible proof</span><p>${esc(h.proof)}</p></div>
           <div class="res"><span>Decathlon resolves it</span><p>${esc(h.resolve)}</p></div>
         </div></article>` : ""}
+      <div class="cc-ctx">${Object.entries(MKT).filter(([r]) => market === "All" || market === r).map(([r, x]) => { const [wx, ev] = x.m[m.label] || ["", ""]; return `<div class="cc-ctx-col" style="--c:${x.col}"><h5>${r === "MP" ? "Madhya Pradesh" : r}</h5><dl><div><dt>Weather</dt><dd>${wx}</dd></div><div><dt>Who</dt><dd>${x.who}</dd></div><div><dt>On locally</dt><dd>${ev}</dd></div></dl></div>`; }).join("")}</div>
       <div class="cc-grid">${DOW.map(d => `<div class="cc-dow">${d}</div>`).join("")}${cells}</div>
-      <h4 class="cc-sub">Every post in ${m.label}, with the brief</h4>
-      <div class="cc-briefs">${m.list.map((p, k) => {
+      <h4 class="cc-sub">Every post in ${m.label}${market === "All" ? "" : ` for ${market === "MP" ? "Madhya Pradesh" : market}`}, in brief</h4>
+      <div class="cc-briefs cc-briefs-sm">${m.list.map((p, k) => {
+        if (!inMarket(p)) return "";
         const dt = new Date(m.y, m.m, p.day);
-        return `<article class="cc-brief" id="ccb-${k}" style="--c:${P[p.pillar].col}">
-          <div class="cb-img" style="background-image:url('${imgFor(p)}')"><div class="cb-date"><b>${p.day}</b><span>${DOW[(dt.getDay() + 6) % 7]}</span></div><span class="cb-fmt">${p.format}</span></div>
-          <div class="cb-main">
-            <div class="cb-tags"><span class="cb-pil">${P[p.pillar].name}</span><span>${esc(p.region)}</span>${p.sport !== "-" ? `<span>${esc(p.sport)}</span>` : ""}${p.creator ? `<span class="cb-cr">★ ${esc(p.creator)}</span>` : ""}</div>
-            <h5>${esc(p.title)}</h5>
-            <p class="cb-hook">“${esc(p.hook)}”</p>
-            <dl><div><dt>Campaign</dt><dd>${esc(p.campaign)}</dd></div><div><dt>Why this date</dt><dd>${esc(p.why)}</dd></div><div><dt>Feeling</dt><dd>${P[p.pillar].feel}</dd></div></dl>
-          </div></article>`;
+        return `<article class="cc-brief cc-mini" id="ccb-${k}" style="--c:${P[p.pillar].col}">
+          <div class="cm-date"><b>${p.day}</b><span>${DOW[(dt.getDay() + 6) % 7]}</span></div>
+          <div class="cm-main"><div class="cm-top"><span class="cm-fmt">${p.format}</span><span class="cm-reg">${esc(p.region)}</span>${p.creator ? `<span class="cb-cr">★ creator</span>` : ""}</div>
+            <h5>${esc(p.title)}</h5><p class="cb-hook">“${esc(p.hook)}”</p><p class="cm-why">${esc(p.why)}</p></div></article>`;
       }).join("")}</div>`;
     $$("#ccMonth .cc-chip").forEach(c => c.addEventListener("click", () => {
       const el = document.getElementById("ccb-" + c.dataset.k);
