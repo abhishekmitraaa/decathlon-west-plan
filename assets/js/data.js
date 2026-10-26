@@ -114,17 +114,36 @@ window.DATA = {
     { name: "Sports Utsav Jr", when: "Nov", goal: 50000 }
   ],
 
+  // Q1 2027 holidays and moments by market. t: holiday | festival | sport | moment | exams.
+  // approx: date estimated (source lists for 2027 are provisional). Checked 27 Oct 2026; see context.md.
   holidaysQ1: [
-    { d: "2027-01-14", name: "Makar Sankranti / Uttarayan", r: ["Gujarat"] },
-    { d: "2027-01-15", name: "Vasi Uttarayan", r: ["Gujarat"] },
-    { d: "2027-01-26", name: "Republic Day", r: ["Pune","Gujarat","MP"] },
-    { d: "2027-02-19", name: "Shivaji Maharaj Jayanti (long weekend)", r: ["Pune"] },
-    { d: "2027-02-20", name: "Sant Ravidas Jayanti", r: ["MP"] },
-    { d: "2027-03-06", name: "Maha Shivratri", r: ["Pune","Gujarat","MP"] },
-    { d: "2027-03-10", name: "Id-ul-Fitr", r: ["Pune","Gujarat","MP"] },
-    { d: "2027-03-14", name: "IPL starts (runs to 30 May)", r: ["Gujarat"] },
-    { d: "2027-03-22", name: "Holi / Dhuleti (long weekend)", r: ["Pune","Gujarat","MP"] },
-    { d: "2027-03-26", name: "Good Friday (long weekend)", r: ["Pune","Gujarat","MP"] }
+    { d: "2027-01-01", name: "New Year", r: ["Pune","Gujarat","MP"], t: "moment", use: "New Year, New Moves: resolution kits and fitness starters" },
+    { d: "2027-01-14", name: "Makar Sankranti: til-gul and haldi-kunku", r: ["Pune"], t: "festival", use: "Women's get-togethers: yoga and walking edits" },
+    { d: "2027-01-14", e: "2027-01-15", name: "Uttarayan and Vasi Uttarayan", r: ["Gujarat"], t: "holiday", use: "Two days on the terrace: caps, sunglasses, sunscreen, family games" },
+    { d: "2027-01-14", e: "2027-01-16", name: "International Kite Festival, Ahmedabad", r: ["Gujarat"], t: "festival", approx: true, use: "Riverfront crowds near Motera and Nexus" },
+    { d: "2027-01-14", name: "Makar Sankranti", r: ["MP"], t: "festival", use: "Kite flying and fairs: outdoor family kit" },
+    { d: "2027-01-10", e: "2027-01-31", name: "Khelo MP Youth Games", r: ["MP"], t: "sport", approx: true, use: "28 sports, players from every block: team kits and academies" },
+    { d: "2027-01-20", e: "2027-01-26", name: "Republic Day sale", r: ["Pune","Gujarat","MP"], t: "moment", use: "Commercial weekend ending on the 26th" },
+    { d: "2027-01-26", name: "Republic Day", r: ["Pune","Gujarat","MP"], t: "holiday", use: "Tuesday holiday: long-weekend outings" },
+    { d: "2027-01-26", e: "2027-01-31", name: "Bajaj Pune Grand Tour (UCI cycling)", r: ["Pune"], t: "sport", use: "Six stages on Pune roads: cycling push at all five stores" },
+    { d: "2027-01-31", name: "Vadodara International Marathon", r: ["Gujarat"], t: "sport", use: "1.1 lakh registrations: Kiprun bib pick-ups at Baroda" },
+    { d: "2027-02-01", e: "2027-02-28", name: "Rann Utsav season ends", r: ["Gujarat"], t: "festival", approx: true, use: "Kutch travel: last weeks of the winter travel edit" },
+    { d: "2027-02-07", name: "Indore Marathon", r: ["MP"], t: "sport", approx: true, use: "First Sunday of February: running kit and bibs at Indore" },
+    { d: "2027-02-14", name: "Valentine's Day", r: ["Pune","Gujarat","MP"], t: "moment", use: "Couples who train together: gifting" },
+    { d: "2027-02-15", e: "2027-03-31", name: "Board exams (CBSE and state boards)", r: ["Pune","Gujarat","MP"], t: "exams", approx: true, use: "Kids' sport dips; sell summer camps for after the last paper" },
+    { d: "2027-02-19", name: "Chhatrapati Shivaji Maharaj Jayanti", r: ["Pune"], t: "holiday", use: "Friday long weekend: fort treks at Sinhagad and Rajgad" },
+    { d: "2027-02-20", name: "Sant Ravidas Jayanti", r: ["MP"], t: "holiday", use: "State holiday" },
+    { d: "2027-02-20", e: "2027-02-26", name: "Khajuraho Dance Festival", r: ["MP"], t: "festival", approx: true, use: "Tourism week: travel and walking kit" },
+    { d: "2027-02-27", name: "Marathi Bhasha Din", r: ["Pune"], t: "moment", use: "Marathi-first posts and in-store signage" },
+    { d: "2027-03-06", name: "Maha Shivratri", r: ["Pune","Gujarat","MP"], t: "holiday", use: "Saturday holiday (some calendars say 5 Mar)" },
+    { d: "2027-03-08", name: "Women's Day", r: ["Pune","Gujarat","MP"], t: "moment", use: "Women's Sport Month finale: runs and store events" },
+    { d: "2027-03-10", name: "Eid al-Fitr", r: ["Pune","Gujarat","MP"], t: "holiday", approx: true, use: "Depends on the moon; family shopping day" },
+    { d: "2027-03-14", e: "2027-03-21", name: "Bhagoria (Jhabua, Alirajpur, Dhar)", r: ["MP"], t: "festival", approx: true, use: "Tribal fairs the week before Holi" },
+    { d: "2027-03-14", name: "IPL season starts (to end May)", r: ["Pune","Gujarat","MP"], t: "sport", approx: true, use: "Cricket month: box cricket and kit; Gujarat Titans play at home in Ahmedabad" },
+    { d: "2027-03-21", e: "2027-03-22", name: "Holika Dahan and Holi / Dhuleti", r: ["Pune","Gujarat","MP"], t: "holiday", use: "Monday holiday: long weekend" },
+    { d: "2027-03-26", name: "Rang Panchami", r: ["Pune"], t: "festival", use: "Second colour day in Maharashtra" },
+    { d: "2027-03-26", name: "Rang Panchami: Indore's Gair procession", r: ["MP"], t: "festival", use: "The city's biggest street crowd, near our Indore store" },
+    { d: "2027-03-26", e: "2027-03-28", name: "Good Friday to Easter", r: ["Pune","Gujarat","MP"], t: "holiday", use: "Long weekend: travel and trek kit" }
   ]
 };
 

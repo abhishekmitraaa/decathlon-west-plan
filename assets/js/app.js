@@ -473,7 +473,7 @@
   const plannerEl = $("#plannerGrid");
   function buildPlanner() {
     let html = `<div class="pl-corner">Bar under each month: Pune ad spend, relative to the biggest month</div>`;
-    html += PL.months.map((m, i) => `<button type="button" class="pl-month ${i < 3 ? "q1" : ""}" data-m="${i}" aria-pressed="${i === month}">
+    html += PL.months.map((m, i) => `<button type="button" class="pl-month ${i < 3 ? "q1" : i < 6 ? "q2" : i > 8 ? "q4" : ""}" data-m="${i}" aria-pressed="${i === month}">
         <b>${m}</b><small>${PD.seasonality[i].toLowerCase().replace(/^./, c => c.toUpperCase())}<br>${PD.weather[i]}</small><i class="pl-spend" style="--w:${pune27[i] / maxP * 100}%" data-tip="<b>${m} 2027</b><br>Pune ad spend ${fmt(pune27[i])} L"></i></button>`).join("");
     PL.lanes.forEach(lane => {
       const rows = [];
@@ -746,15 +746,25 @@
 
   (() => {
     const t0 = new Date("2027-01-01"), days = 90;
-    const regions = [["Pune", css("--pune")], ["Gujarat", css("--guj")], ["MP", css("--mp")]];
+    const H = D.holidaysQ1;
+    const regions = [["Pune", "Pune", css("--pune")], ["Gujarat", "Gujarat", css("--guj")], ["MP", "Madhya Pradesh", css("--mp")]];
+    const TYPE = { holiday: "Holiday", festival: "Festival", sport: "Sports event", moment: "Moment", exams: "Exams" };
     const pos = d => ((new Date(d) - t0) / 864e5 + 0.5) / days * 100;
+    const day = d => new Date(d).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+    const when = x => x.e ? `${day(x.d)} - ${day(x.e)}` : day(x.d);
+    const tip = x => `<b>${esc(x.name)}</b><br>${when(x)}${x.approx ? " (approx.)" : ""}<br>${esc(x.use)}`;
     let html = `<div class="hol-grid"><div class="hol-head"><span>January</span><span>February</span><span>March</span></div>`;
-    regions.forEach(([r, c]) => {
-      html += `<div class="hol-row"><h4><i style="background:${c}"></i>${r}</h4><div class="hol-track">${
-        D.holidaysQ1.filter(x => x.r.includes(r)).map(x => `<button type="button" class="hol-dot" style="left:${pos(x.d)}%;color:${c}" aria-label="${esc(x.name)}, ${new Date(x.d).toDateString().slice(4, 10)}" data-tip="<b>${esc(x.name)}</b><br>${new Date(x.d).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" })}"></button>`).join("")
+    regions.forEach(([r, name, c]) => {
+      html += `<div class="hol-row"><h4><i style="background:${c}"></i>${name}</h4><div class="hol-track">${
+        H.filter(x => x.r.includes(r)).map(x => x.e
+          ? `<span class="hol-span t-${x.t}" style="left:${pos(x.d)}%;width:${pos(x.e) - pos(x.d)}%;--c:${c}" data-tip="${tip(x)}"></span>`
+          : `<button type="button" class="hol-dot t-${x.t}" style="left:${pos(x.d)}%;color:${c}" aria-label="${esc(x.name)}, ${when(x)}" data-tip="${tip(x)}"></button>`).join("")
       }</div></div>`;
     });
-    html += `</div><ul class="hol-list">${D.holidaysQ1.map(x => `<li><b>${new Date(x.d).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</b>${esc(x.name)} <span style="color:var(--text-3)">(${x.r.length === 3 ? "all" : x.r.join(", ")})</span></li>`).join("")}</ul>`;
+    html += `</div><div class="hol-cols">${regions.map(([r, name, c]) => `<div class="hol-col" style="--c:${c}"><h4>${name}</h4><ul>${
+      H.filter(x => x.r.includes(r)).map(x => `<li><b>${when(x)}</b><div><span class="hol-name">${esc(x.name)}</span><span class="hol-type t-${x.t}">${TYPE[x.t]}${x.approx ? ", date approx." : ""}</span><small>${esc(x.use)}</small></div></li>`).join("")
+    }</ul></div>`).join("")}</div>
+      <p class="foot">Dates from 2027 calendars (Drik Panchang, state holiday lists) and event organisers; state lists for 2027 are provisional, and dates marked approx. are estimates. Next up after March: Gudi Padwa (8 Apr, Pune).</p>`;
     $("#holidays").innerHTML = html;
   })();
 

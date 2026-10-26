@@ -467,7 +467,7 @@ ul, ol { padding: 0; }
 .hol-track { position: relative; border-top: 1px solid var(--line); height: 48px; border-left: 1.5px solid var(--line); background-image: linear-gradient(90deg, transparent calc(34.44% - 1.5px), var(--line) calc(34.44% - 1.5px) 34.44%, transparent 34.44% calc(65.56% - 1.5px), var(--line) calc(65.56% - 1.5px) 65.56%, transparent 65.56%); }
 .hol-dot { position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%; transform: translate(-50%, -50%); border: 3px solid #fff; box-shadow: 0 0 0 1.5px currentColor; background: currentColor; cursor: pointer; padding: 0; }
 .hol-dot:hover, .hol-dot:focus-visible { transform: translate(-50%, -50%) scale(1.25); }
-.hol-list { margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px 24px; font-size: 13.5px; list-style: none; }
+.hol-list-old { margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px 24px; font-size: 13.5px; list-style: none; }
 .hol-list b { font-weight: 750; margin-right: 6px; color: var(--blue); }
 
 /* ---------- horizon ---------- */
@@ -1486,6 +1486,36 @@ ul, ol { padding: 0; }
 #playbook .aopk { margin: 16px 0 24px; }
 .pb-tools { margin-top: 24px; }
 .pb-tools .toolkit { margin-bottom: 28px; }
+
+/* planner: highlight Q1, Q2 and Q4 */
+.pl-month.q1, .pl-month.q2, .pl-month.q4 { background: #F2F4FD; }
+.pl-month.q2 b::after, .pl-month.q4 b::after { font-family: var(--body); font-style: normal; font-size: 7px; font-weight: 650; border-radius: 3px; padding: 1px 4px; margin-left: 4px; vertical-align: 4px; }
+.pl-month.q2 b::after { content: "Q2"; background: #00C4E1; color: var(--ink); }
+.pl-month.q4 b::after { content: "Q4"; background: #C03F9C; color: #fff; }
+.pl-month.q1[aria-pressed="true"], .pl-month.q2[aria-pressed="true"], .pl-month.q4[aria-pressed="true"] { background: var(--blue); }
+
+/* holidays by market */
+.hol-span { position: absolute; top: 50%; height: 10px; transform: translateY(-50%); border-radius: 5px; background: var(--c); opacity: .35; cursor: pointer; }
+.hol-span.t-exams { background: repeating-linear-gradient(135deg, var(--c) 0 3px, transparent 3px 6px); opacity: .5; }
+.hol-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+.hol-col { border: 1.5px solid var(--line); border-top: 4px solid var(--c); border-radius: var(--r-md); padding: 14px 16px; background: #fff; }
+.hol-col h4 { font-family: var(--display); font-size: 19px; font-weight: 700; color: var(--c); letter-spacing: -0.02em; margin-bottom: 8px; }
+.hol-col ul { list-style: none; display: grid; gap: 0; }
+.hol-col li { display: grid; grid-template-columns: 86px 1fr; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 13px; }
+.hol-col li > b { font-weight: 750; color: var(--ink); font-size: 12.5px; }
+.hol-name { font-weight: 700; display: block; }
+.hol-type { display: inline-block; font-size: 10.5px; font-weight: 750; padding: 1px 7px; border-radius: 999px; margin: 3px 0; background: var(--mist); color: var(--blue-deep); }
+.hol-type.t-holiday { background: #FDE7F3; color: #9B2C77; }
+.hol-type.t-sport { background: #DFFBEA; color: var(--mint-ink); }
+.hol-type.t-festival { background: #FFF1D6; color: #8A5A00; }
+.hol-type.t-exams { background: #ECEEF3; color: var(--text-2); }
+.hol-col small { display: block; color: var(--text-2); font-size: 12px; }
+@media (max-width: 900px) { .hol-cols { grid-template-columns: 1fr; } }
+
+.pl-month.q1 b::after, .pl-month.q2 b::after, .pl-month.q4 b::after { font-size: 10px; padding: 2px 6px; vertical-align: 3px; }
+.pl-month.q1 { box-shadow: inset 0 3px 0 var(--mint); }
+.pl-month.q2 { box-shadow: inset 0 3px 0 #00C4E1; }
+.pl-month.q4 { box-shadow: inset 0 3px 0 #C03F9C; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
