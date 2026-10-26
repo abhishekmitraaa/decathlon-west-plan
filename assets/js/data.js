@@ -19,10 +19,10 @@ window.DATA = {
 
   // Commercial weekends, turnover in Cr
   weekends: [
-    { name: "Dussehra", d26: "16–20 Oct", d25: "29 Sep–2 Oct", to25: 5.3, to26: 7.5, g: 40 },
-    { name: "Diwali sale", d26: "31 Oct–1 Nov", d25: "10–12 Oct", to25: 4.7, to26: 5.5, g: 17 },
-    { name: "Black Friday", d26: "27–30 Nov", d25: "28–30 Nov", to25: 9.8, to26: 12, g: 22.4 },
-    { name: "EOY festive sale", d26: "18–25 Dec", d25: "17–25 Dec", to25: 17.7, to26: 20, g: 12.9 }
+    { name: "Dussehra", d26: "16-20 Oct", d25: "29 Sep-2 Oct", to25: 5.3, to26: 7.5, g: 40 },
+    { name: "Diwali sale", d26: "31 Oct-1 Nov", d25: "10-12 Oct", to25: 4.7, to26: 5.5, g: 17 },
+    { name: "Black Friday", d26: "27-30 Nov", d25: "28-30 Nov", to25: 9.8, to26: 12, g: 22.4 },
+    { name: "EOY festive sale", d26: "18-25 Dec", d25: "17-25 Dec", to25: 17.7, to26: 20, g: 12.9 }
   ],
 
   // Q4 marketing mix, lakh
@@ -48,7 +48,7 @@ window.DATA = {
   // which the sheet splits into lines at a fixed share every month (split27).
   spend: {
     months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    Pune: { y26: [24.07, 8.74, 22.75, 26.57, 25.18, 30.26, 23.42, 22.47, 19.7, 16.5, 27.0, 10.75], y27: [28.74, 22.68, 28.97, 32.21, 37.55, 33.78, 36.43, 29.77, 22.14, 22.84, 34.1, 36.14] },
+    Pune: { y26: [24.07, 8.74, 22.75, 26.57, 25.18, 30.26, 23.42, 22.47, 19.7, 25.3, 38.99, 23.11], y27: [28.74, 22.68, 28.97, 32.21, 37.55, 33.78, 36.43, 29.77, 22.14, 22.84, 34.1, 36.14] },
     Gujarat: { y26: [20.24, 14.73, 28.75, 33.33, 30.87, 24.42, 24.73, 12.98, 23.82, 19.95, 26.83, 31.65], y27: [22.54, 15.66, 21.34, 24.44, 28.79, 24.1, 23.14, 22.02, 12.79, 16.88, 23.53, 25.33] },
     MP: { y26: [2.87, 2.22, 0.54, 2.81, 2.86, 2.38, 2.48, 1.92, 7.1, 6.8, 9.87, 11.09], y27: [11.92, 8.04, 8.55, 9.7, 10.36, 10.42, 10.5, 9.59, 7.29, 9.57, 11.03, 13.07] },
     split27: [["Digital paid (MarCom)", 30], ["Hoardings, OOH, HIPOP and AOP", 30], ["In-store communication", 20], ["In-mall", 5], ["Store events", 5], ["Influencers", 5], ["Free products and IC", 3], ["Flyers", 2]]
@@ -107,7 +107,7 @@ window.DATA = {
     { name: "New Year, New Moves", when: "Jan", goal: 25000 },
     { name: "Beach Day", when: "Feb", goal: 10000 },
     { name: "Women's Day", when: "Mar", goal: 15000 },
-    { name: "Summer Camp", when: "Apr–Jun", goal: 5000 },
+    { name: "Summer Camp", when: "Apr-Jun", goal: 5000 },
     { name: "Sports Utsav", when: "May", goal: 200000 },
     { name: "Yoga Day", when: "Jun", goal: 10000 },
     { name: "Mountain Day", when: "Aug", goal: 5000 },
@@ -167,7 +167,7 @@ window.RUNWAY = {
       { t: "Children's Day: back-to-school colouring books", s: "2026-11-14", e: "2026-11-14", k: "local", star: true },
       { t: "Decathlon CSR initiatives", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
       { t: "Christmas: Gift a Sport", s: "2026-12-01", e: "2026-12-31", k: "local", approx: true },
-      { t: "Adajan, Surat: opening weekend", s: "2026-12-18", e: "2026-12-20", k: "open", star: true },
+      { t: "Adajan, Surat: opening", s: "2026-12-01", e: "2027-01-01", k: "open", star: true },
       { t: "Uttarayan", s: "2027-01-14", e: "2027-01-15", k: "local" },
       { t: "Summer launch", s: "2027-03-01", e: "2027-03-31", k: "local", approx: true },
       { t: "Holi", s: "2027-03-15", e: "2027-03-22", k: "local" }
@@ -183,10 +183,13 @@ window.RUNWAY = {
       { t: "Vadodara Marathon: 1.1 lakh", s: "2027-01-31", e: "2027-01-31", k: "ext" },
       { t: "Indore Marathon", s: "2027-02-07", e: "2027-02-07", k: "ext", approx: true }
     ]},
-    { name: "Hoardings and influencers", items: [
+    { name: "Hoardings, influencers and AOPs", items: [
       { t: "16 hoardings: 5 Pune, 4 Baroda, 3 Surat, 2 Ahmedabad, 1 Rajkot, 1 Bhopal", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
       { t: "Influencers: Pune 70, Gujarat 40, MP 40", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
-      { t: "50 influencer videos, 5M views", s: "2027-01-01", e: "2027-03-31", k: "ooh", approx: true }
+      { t: "50 influencer videos, 5M views", s: "2027-01-01", e: "2027-03-31", k: "ooh", approx: true },
+      { t: "AOP practice-place hoardings, Gujarat: 5", s: "2026-11-01", e: "2026-11-30", k: "ooh" },
+      { t: "AOP, Gujarat: 7", s: "2026-12-01", e: "2026-12-31", k: "ooh" },
+      { t: "AOP, Gujarat: 5 gyms, 5 swimming pools", s: "2027-01-01", e: "2027-01-31", k: "ooh" }
     ]}
   ]
 };
@@ -194,7 +197,7 @@ window.RUNWAY = {
 /* Strategy toolkit: what each tactic gives (team's strategy sheet). marcom = run centrally by MarCom. */
 window.TOOLKIT = [
   { s: "Society activations", gives: "New user growth, indirect walk-ins with a bait", word: "Growth", benefit: "Walk-ins" },
-  { s: "Running / cycling events bib collection", gives: "Good awareness, connects with youth (18–28)", word: "Youth", benefit: "Awareness" },
+  { s: "Running / cycling events bib collection", gives: "Good awareness, connects with youth (18-28)", word: "Youth", benefit: "Awareness" },
   { s: "School activation", gives: "Family and kids growth, direct turnover with moms, higher ABV", word: "Families", benefit: "Turnover" },
   { s: "Women-centric events", gives: "Women bring family and friends, so bigger basket", word: "Basket value", benefit: "Turnover" },
   { s: "Influencers", gives: "Fast reach, credibility, new audience trials", word: "Reach", benefit: "Awareness + walk-ins" },
@@ -238,9 +241,9 @@ window.CITY_MEDIUMS = {
 
 /* Store or city specific moments that the sheets and deck confirm. */
 window.STORE_MOMENTS = {
-  Gujarat: ["Navratri and Dussehra in October", "Uttarayan, 14–15 Jan", "IPL starts 14 Mar"],
+  Gujarat: ["Navratri and Dussehra in October", "Uttarayan, 14-15 Jan", "IPL starts 14 Mar"],
   Ahmedabad: ["Adani Marathon, 29 Nov", "Metro stations are on the Sport is Everywhere QR-wall list"],
-  Surat: ["New store at Adajan: opening weekend 18–20 Dec", "Beach Fest with 5k participants in Q1", "2x marketing spend in Q1"],
+  Surat: ["New store at Adajan: opening weekend 18-20 Dec", "Beach Fest with 5k participants in Q1", "2x marketing spend in Q1"],
   Pune: ["Metro stations are on the Sport is Everywhere QR-wall list", "Shivaji Maharaj Jayanti long weekend, 19 Feb"],
   MP: ["Sant Ravidas Jayanti, 20 Feb"],
   Bhopal: ["Bhopal hoardings run Nov to Jan (2026 update)"]
@@ -275,7 +278,7 @@ window.PLANNER = {
     { name: "Commercial", items: [
       { t: "Clearance sale", a: 0, b: 0, k: "sale" }, { t: "51st anniversary", a: 6, b: 6, k: "sale" },
       { t: "Clearance sale", a: 7, b: 7, k: "sale" }, { t: "Diwali sale (optional)", a: 9, b: 9, k: "sale" },
-      { t: "Black Friday, 26–29 Nov", a: 10, b: 10, k: "sale" }, { t: "Christmas sale (optional)", a: 11, b: 11, k: "sale" } ] },
+      { t: "Black Friday, 26-29 Nov", a: 10, b: 10, k: "sale" }, { t: "Christmas sale (optional)", a: 11, b: 11, k: "sale" } ] },
     { name: "Product launch", items: [
       { t: "TBD", a: 0, b: 1, k: "tbd" }, { t: "Kiprun Challenger, ₹9,999", a: 2, b: 4, k: "launch" }, { t: "TBD", a: 7, b: 8, k: "tbd" } ] },
     { name: "Pune cultural moments", items: [
@@ -970,11 +973,19 @@ Object.assign(window.DATA, {
  "stateLines": {
   "Pune": {
    "total": [
-    16.5,
-    27.0,
-    10.75
+    25.3,
+    38.988,
+    23.106
    ],
    "lines": [
+    {
+     "line": "Paid Internal Fees Advertising (Digital Paid to Marcom)",
+     "v": [
+      8.8,
+      11.988,
+      12.356
+     ]
+    },
     {
      "line": "Internal consumption (Non Marketing)",
      "v": [

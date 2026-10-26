@@ -54,7 +54,7 @@
         <td class="bar" style="--w:${s.budgetTotal / maxB * 100}%;--c:${STATE_COL[st]}"><b>${f2(s.budgetTotal)}</b></td><td>${fmt(s.budgetTotal / (s.challenge * 100) * 100)}%</td></tr>`).join("") +
         totRow(`${STATE_NAME[st]} stores`, list, "sb-sub");
     }).join("");
-    $("#sbStores").innerHTML = `<table class="sb-table"><thead>
+    if ($("#sbStores")) $("#sbStores").innerHTML = `<table class="sb-table"><thead>
       <tr class="sb-grp"><th rowspan="2" scope="col">Store</th><th colspan="4" scope="colgroup">Turnover challenge, Cr</th><th colspan="5" scope="colgroup" class="sep">Marketing budget, lakh</th></tr>
       <tr><th scope="col">Q4 2025</th><th scope="col">Ambition</th><th scope="col">Q4 2026 challenge</th><th scope="col">Growth</th><th scope="col" class="sep">Oct</th><th scope="col">Nov</th><th scope="col">Dec</th><th scope="col">Q4 total</th><th scope="col">% of challenge</th></tr></thead>
       <tbody>${body}${totRow("13 stores", stores, "sb-total")}</tbody></table>
@@ -70,10 +70,10 @@
     const order = tot.map((v, i) => i).filter(i => tot[i] > 0).sort((a, b) => (CAT[a][0] === "Other") - (CAT[b][0] === "Other") || tot[b] - tot[a]);
     const maxT = Math.max(...tot), stTot = ST.map(st => by[st].reduce((a, b) => a + b, 0));
     $("#sbLines").innerHTML = `<table class="sb-table sb-lines"><thead><tr><th scope="col">Line</th>${ST.map(st => `<th scope="col" style="color:${STATE_COL[st]}">${STATE_NAME[st]}</th>`).join("")}<th scope="col">Total</th><th scope="col" class="share">Share of budget</th></tr></thead><tbody>
-      ${order.map(i => `<tr><th scope="row"><i class="sw" style="background:${CAT[i][1]}"></i>${CAT[i][0]}</th>${ST.map(st => `<td>${by[st][i] ? fmt(by[st][i], 1) : "–"}</td>`).join("")}<td><b>${fmt(tot[i], 1)}</b></td>
+      ${order.map(i => `<tr><th scope="row"><i class="sw" style="background:${CAT[i][1]}"></i>${CAT[i][0]}</th>${ST.map(st => `<td>${by[st][i] ? fmt(by[st][i], 1) : "-"}</td>`).join("")}<td><b>${fmt(tot[i], 1)}</b></td>
         <td class="share"><div class="sh-cell"><span class="sh-bar"><i style="width:${tot[i] / maxT * 100}%;background:${CAT[i][1]}"></i></span><b>${fmt(tot[i] / all * 100, 1)}%</b></div></td></tr>`).join("")}
       <tr class="sb-total"><th scope="row">Total</th>${stTot.map(v => `<td><b>${fmt(v, 1)}</b></td>`).join("")}<td><b>${fmt(all, 1)}</b></td><td class="share"><b>100%</b></td></tr></tbody></table>
-      <p class="foot">The store budgets above add up to ${fmt(sum(stores, "budgetTotal"), 1)} L. The state line plans add up to ${fmt(all, 1)} L because they also carry spend that sits with the state, such as digital paid to MarCom. Gujarat's and MP's line items add up to more than their own stated totals (${fmt(D.stateLines.Gujarat.total.reduce((a, b) => a + b, 0), 1)} L and ${fmt(D.stateLines.MP.total.reduce((a, b) => a + b, 0), 1)} L). "Other" is Pune's internal consumption, Gujarat's other online channels and MP's general advertising.</p>`;
+      <p class="foot">The store budgets add up to ${f2(sum(stores, "budgetTotal"))} L. The state line plans add up to ${fmt(all, 1)} L because they also carry spend that sits with the state, such as digital paid to MarCom. Pune's digital (MarCom) is the team's figure: 8.80 L in October, 11.99 L in November and 12.36 L in December. Gujarat's and MP's line items add up to more than their own stated totals (${fmt(D.stateLines.Gujarat.total.reduce((a, b) => a + b, 0), 1)} L and ${fmt(D.stateLines.MP.total.reduce((a, b) => a + b, 0), 1)} L). "Other" is Pune's internal consumption, Gujarat's other online channels and MP's general advertising.</p>`;
   }
 
   /* ---------- per-store detail ---------- */
@@ -133,13 +133,13 @@
 
     const what = `
       <div><h5>Q4 campaigns running in every store</h5>${li([
-        "Winter Travel campaign, 15 Oct – 30 Jan",
-        "Dussehra (16–20 Oct) and Diwali sale (31 Oct – 1 Nov)",
+        "Winter Travel campaign, 15 Oct - 30 Jan",
+        "Dussehra (16-20 Oct) and Diwali sale (31 Oct - 1 Nov)",
         "Gift a Sport for Diwali and Christmas",
-        "Black Friday, 27–30 Nov",
-        "Christmas sale, 19–31 Dec",
+        "Black Friday, 27-30 Nov",
+        "Christmas sale, 19-31 Dec",
         "Kiprun launch and community run on 18 Oct",
-        "Kids festival, 31 Oct – 2 Nov",
+        "Kids festival, 31 Oct - 2 Nov",
         "Sport of the month: running (Oct), climbing and trekking (Nov), trekking (Dec)"
       ])}</div>
       ${moments.length ? `<div><h5>Local moments for ${esc(s.city === s.name ? s.city : s.name + ", " + s.city)}</h5>${li(moments.map(esc))}</div>` : ""}
@@ -243,7 +243,7 @@
       </div>`;
     }).join("");
     $("#stateMix").innerHTML = rows +
-      `<p class="mix-note">Pune's line plan has no digital line because Pune's paid digital sits with MarCom. Pune's months follow its campaigns: October is Dussehra and festive, November is Winter Travel, December is the end-of-year sale. Lakh figures are October to December added up from the sheet's line items; Gujarat's and MP's line items add up to more than their stated totals.</p>`;
+      `<p class="mix-note">Pune's digital paid to MarCom (33.14 L for the quarter) comes from the team's figures, not the sheet. Pune's months follow its campaigns: October is Dussehra and festive, November is Winter Travel, December is the end-of-year sale. Lakh figures are October to December added up from the sheet's line items; Gujarat's and MP's line items add up to more than their stated totals.</p>`;
   }
 
   /* ---------- wiring ---------- */
@@ -257,7 +257,7 @@
     }
   }
   if (!$("#storeDetail")) return;
-  if ($("#sbStores")) drawBoard();
+  if ($("#sbStores") || $("#sbLines")) drawBoard();
   drawMix();
   render();
 })();

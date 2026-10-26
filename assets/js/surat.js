@@ -10,27 +10,27 @@
   const num = n => Math.round(n).toLocaleString("en-IN");
 
   const KPI = [
-    ["₹85 L", "Opening weekend target", "Fri 18 – Sun 20 Dec"],
+    ["₹85 L", "Opening weekend target", "Fri 18 - Sun 20 Dec"],
     ["18,215", "Walk-ins needed in 3 days", "at 25.9% conversion"],
-    ["₹2.5 Cr", "First 30 days", "18 Dec – 16 Jan"],
+    ["₹2.5 Cr", "First 30 days", "18 Dec - 16 Jan"],
     ["49,580", "Walk-ins needed in 30 days", "13,950 bills at a ₹1,800 basket"],
     ["₹18 L", "Budget", "The plan currently spends ₹24.9 L"],
     ["₹50", "Cost per walk-in", "Bhopal's opening: ₹153"]
   ];
 
   const PHASES = [
-    ["P0", "Ground game", "19 Oct – 2 Nov", "Customer list of 10,087 near Adajan, map 150+ places, sign partners, permits, Gujarati creative"],
-    ["P1", "Kaink navu aave che", "3 – 22 Nov", "“Something new is coming”: club opens, teaser shop front and reels. Stay light over Diwali (8 Nov) while Surat is away"],
-    ["P2", "Reveal", "23 Nov – 7 Dec", "Date reveal, hoardings, Ramat Rath in 36 societies, society sports days, old-shoe drive, Hazira kiosks, coach codes"],
-    ["P3", "10 Divas, 10 Ramat", "8 – 17 Dec", "Countdown: treasure hunt (12 Dec), Happy Streets #1 on LP Savani (13 Dec), radio, Cinepolis, 80,000 leaflets, creators' preview"],
-    ["P4", "Chalo Ramiye weekend", "18 – 20 Dec", "Pehli Ramat + night run (Fri), Night Carnival (Sat), sunrise run + sports carnival (Sun), gifts on bigger bills"],
-    ["P5", "Ramat chalu rahe", "21 Dec – 16 Jan", "“Keep playing”: Santa Party, New Year run, Happy Streets #2 (3 Jan), box cricket league, pickle league, Kai Po Che!"]
+    ["P0", "Ground game", "19 Oct - 2 Nov", "Customer list of 10,087 near Adajan, map 150+ places, sign partners, permits, Gujarati creative"],
+    ["P1", "Kaink navu aave che", "3 - 22 Nov", "“Something new is coming”: club opens, teaser shop front and reels. Stay light over Diwali (8 Nov) while Surat is away"],
+    ["P2", "Reveal", "23 Nov - 7 Dec", "Date reveal, hoardings, Ramat Rath in 36 societies, society sports days, old-shoe drive, Hazira kiosks, coach codes"],
+    ["P3", "10 Divas, 10 Ramat", "8 - 17 Dec", "Countdown: treasure hunt (12 Dec), Happy Streets #1 on LP Savani (13 Dec), radio, Cinepolis, 80,000 leaflets, creators' preview"],
+    ["P4", "Chalo Ramiye weekend", "18 - 20 Dec", "Pehli Ramat + night run (Fri), Night Carnival (Sat), sunrise run + sports carnival (Sun), gifts on bigger bills"],
+    ["P5", "Ramat chalu rahe", "21 Dec - 16 Jan", "“Keep playing”: Santa Party, New Year run, Happy Streets #2 (3 Jan), box cricket league, pickle league, Kai Po Che!"]
   ];
 
   const WEEKEND = [
     ["Fri 18 Dec", "Opening day", 2635000, ["10:00 Pehli Ramat inauguration with Surat athletes", "16:00 School and academy kit desk", "19:30 LP Savani After Dark: 3K / 5K night run ending at the store"]],
     ["Sat 19 Dec", "Night Carnival", 2805000, ["08:00 Golden hour for pass holders", "Hourly plank, push-up and skipping challenges", "18:00 Adajan Night Carnival: box cricket under lights, pickleball, skating, DJ, food trucks"]],
-    ["Sun 20 Dec", "Sunrise run + sports carnival", 3060000, ["06:45 Tapi Sunrise Run (5K / 10K) + yoga, 600 runners", "10:00 – 19:00 Sports carnival: 15 sport zones, kids' obstacle course", "Pickleball King of the Court, carnival finals, Bumper Draw launch"]]
+    ["Sun 20 Dec", "Sunrise run + sports carnival", 3060000, ["06:45 Tapi Sunrise Run (5K / 10K) + yoga, 600 runners", "10:00 - 19:00 Sports carnival: 15 sport zones, kids' obstacle course", "Pickleball King of the Court, carnival finals, Bumper Draw launch"]]
   ];
 
   const WEEKS = [["W1", "Opening weekend", 8500000], ["W2", "", 5551691], ["W3", "", 4683783], ["W4", "Pickle & Cricket Week", 3934818], ["W5", "Kai Po Che!", 2440548]];
@@ -54,13 +54,13 @@
   ];
 
   const INSIGHTS = [
-    ["Surat leaves town for Diwali", "Diamond units close 3–4 weeks. Tease before Diwali, stay light 6–22 Nov, go big from 23 Nov."],
+    ["Surat leaves town for Diwali", "Diamond units close 3-4 weeks. Tease before Diwali, stay light 6-22 Nov, go big from 23 Nov."],
     ["Distance decides who shops", "64% of homes in Vesu and Athwa shop at Dumas, only 3% in Adajan 395009. The message: “Decathlon now 6 minutes from you”."],
     ["A warm base already exists", "10,087 Dumas customers live in Adajan's pincodes and Katargam. WhatsApp to them is the cheapest walk-in."],
     ["Gujarat notices radio, cinema and print", "Kantar 2024: radio index 127, cinema 119, print 111. So radio, Cinepolis and leaflets are in the mix."],
-    ["Pickleball doubled", "Padel and pickleball at Dumas +108% (Jan–Sep 2026). A court at the Night Carnival and a Pickle Premier League."],
+    ["Pickleball doubled", "Padel and pickleball at Dumas +108% (Jan-Sep 2026). A court at the Night Carnival and a Pickle Premier League."],
     ["Women are under-served", "751 women per 1,000 men in the catchment. A women's run group, a She Plays zone and a women-only pickleball slot."],
-    ["Dec–Jan is the best outdoor season", "31°C days, 16°C nights, almost no rain. Sunrise runs, car-free Sunday mornings and carnivals after sunset."],
+    ["Dec-Jan is the best outdoor season", "31°C days, 16°C nights, almost no rain. Sunrise runs, car-free Sunday mornings and carnivals after sunset."],
     ["₹2.5 Cr is a stretch", "A normal Year-1 month is ₹1.5 Cr, so month one is 1.67x. The tracker holds a lever list for the gap."]
   ];
 

@@ -103,8 +103,8 @@
   if (innerWidth < 520) $$(".phone", hp).forEach((p, i) => { if (i === 0 || i === 3) p.style.display = "none"; });
 
   const tickerItems = [
-    "Q4 challenge 178.77 Cr", "+24.15% vs last year", "Winter Travel: 15 Oct – 30 Jan", "Black Friday 27–30 Nov: 12 Cr", "Christmas sale 19–31 Dec", "Wakad: 30.4 Cr, the biggest store challenge",
-    "Adajan, Surat: opening weekend 18–20 Dec", "16 hoardings across the cluster", "80+ local influencers", "Kiprun launch: 700 runners, 7 clubs",
+    "Q4 challenge 178.77 Cr", "+24.15% vs last year", "Winter Travel: 15 Oct - 30 Jan", "Black Friday 27-30 Nov: 12 Cr", "Christmas sale 19-31 Dec", "Wakad: 30.4 Cr, the biggest store challenge",
+    "Adajan, Surat: opening weekend 18-20 Dec", "16 hoardings across the cluster", "80+ local influencers", "Kiprun launch: 700 runners, 7 clubs",
     "Q1 2027: +12.1% turnover", "Commonwealth Games 2030, Gujarat"
   ];
   const tk = $("#ticker");
@@ -316,8 +316,8 @@
           const lab = `${p.it.star ? '<span class="star" aria-label="key event">★</span>' : ""}${esc(p.it.t)}${p.it.note ? ` <em>${p.it.note}</em>` : ""}`;
           const fd = (d, o) => new Date(d).toLocaleDateString("en-IN", o);
           const when = p.it.approx
-            ? `${fd(p.it.s, { month: "short", year: "numeric" })}${fd(p.it.s, { month: "short" }) !== fd(p.it.e, { month: "short" }) ? " – " + fd(p.it.e, { month: "short", year: "numeric" }) : ""}<br>Approximate, read from the Q4 timeline slide`
-            : `${fd(p.it.s, { day: "numeric", month: "short" })} – ${fd(p.it.e, { day: "numeric", month: "short", year: "numeric" })}`;
+            ? `${fd(p.it.s, { month: "short", year: "numeric" })}${fd(p.it.s, { month: "short" }) !== fd(p.it.e, { month: "short" }) ? " - " + fd(p.it.e, { month: "short", year: "numeric" }) : ""}<br>Approximate, read from the Q4 timeline slide`
+            : `${fd(p.it.s, { day: "numeric", month: "short" })} - ${fd(p.it.e, { day: "numeric", month: "short", year: "numeric" })}`;
           const tipTxt = `<b>${esc(p.it.t)}</b><br>${when}${p.it.note ? "<br>Target " + p.it.note : ""}`;
           return `<div class="rw-item ${p.it.k}" style="left:${p.a}%;width:${p.b - p.a}%;top:${10 + p.r * rowH}px" data-tip="${esc(tipTxt)}">${lab}</div>`;
         }).join("")}
@@ -351,7 +351,7 @@
         if (r < 0) { rows.push(-1); r = rows.length - 1; }
         rows[r] = it.b;
         const on = month >= it.a && month <= it.b;
-        return `<span class="pl-chip ${it.k} ${on ? "" : "dim"}" style="grid-column:${it.a + 1} / ${it.b + 2};grid-row:${r + 1}" data-tip="${esc(`<b>${it.t}</b><br>${PL.months[it.a]}${it.b > it.a ? " – " + PL.months[it.b] : ""} 2027`)}">${esc(it.t)}</span>`;
+        return `<span class="pl-chip ${it.k} ${on ? "" : "dim"}" style="grid-column:${it.a + 1} / ${it.b + 2};grid-row:${r + 1}" data-tip="${esc(`<b>${it.t}</b><br>${PL.months[it.a]}${it.b > it.a ? " - " + PL.months[it.b] : ""} 2027`)}">${esc(it.t)}</span>`;
       }).join("");
       html += `<div class="pl-lane-name">${lane.name}</div><div class="pl-lane">${chips}</div>`;
     });
@@ -449,7 +449,7 @@
     const CM = window.CITY_MEDIUMS, ST = D.stores, NAME = { Pune: "Pune", Gujarat: "Gujarat", MP: "Madhya Pradesh" };
     const tot = s => Object.values(CM[s.city].aop).reduce((x, y) => x + y, 0);
     const head = `<div class="aop-q"><div><span>Q4 2026</span><b>15+</b><p>premium facilities onboarded so far. Team sports, racket and swimming are the busiest practice places.</p></div>
-      <div><span>Q1 2027</span><b>3–5</b><p>QR kit-wall pilots per city in Pune, Ahmedabad and Indore, measured on scans, conversion and margin.</p></div>
+      <div><span>Q1 2027</span><b>3-5</b><p>QR kit-wall pilots per city in Pune, Ahmedabad and Indore, measured on scans, conversion and margin.</p></div>
       <div><span>2027</span><b>${ST.reduce((a, s) => a + tot(s), 0)}</b><p>tie-ups across 13 stores at the per-store mix below: 5 a store in Pune and MP, 10 in Gujarat.</p></div></div>`;
     const rows = ["Pune", "Gujarat", "MP"].map(st => {
       const list = ST.filter(s => s.state === st);
@@ -471,7 +471,7 @@
       title: "Sport is everywhere",
       copy: "We turn the places people already play into small Decathlon stores. A kit wall with prices and QR codes goes up at swimming academies, sports academies, gyms, yoga studios, metro stations in Pune and Ahmedabad, parks, societies and corporate campuses.",
       flow: ["See the display", "Scan the QR code", "Explore or complete a kit", "Shop online", "Home delivery or Click & Collect"],
-      stats: [["90", "tie-ups planned across 13 stores in 2027"], ["3–5", "pilot locations per city in Q1"], ["15+", "premium facilities onboarded"], ["25%", "of the 2027 budget"]],
+      stats: [["90", "tie-ups planned across 13 stores in 2027"], ["3-5", "pilot locations per city in Q1"], ["15+", "premium facilities onboarded"], ["25%", "of the 2027 budget"]],
       planTitle: "Tie-ups by store, sport and quarter", plan: aopPlan },
     { name: "WhatsApp channels, PN and RCS", tag: "5%", media: ["whatsapp.jpg", "push-notification.jpg"], contain: true,
       title: "Bring them back",
@@ -499,10 +499,10 @@
       stats: [["8 L", "store events, Q4"], ["500", "runners at in-store meetups"], ["10", "apartments for the Workshop Mela"], ["1.38", "purchase frequency OKR"]],
       planTitle: "Residential society plan, Pune", plan: () => monthCards("society") },
     { name: "Store openings", tag: "Dec", media: ["surat-grand-opening.jpg", "surat-map.jpg", "surat-offer.jpg"],
-      title: "Adajan, Surat: 18–20 December",
+      title: "Adajan, Surat: 18-20 December",
       copy: "Chalo Ramiye, Adajan! The opening weekend runs Fri 18 to Sun 20 Dec with an ₹85 L target, then 30 days to ₹2.5 Cr. Gifts on bigger bills instead of discounts, Deca Runners classes, and twice the usual marketing spend in Q1. The full plan is in the Surat section.",
-      stats: [["720+", "sports items in store"], ["2x", "Q1 marketing spend"], ["5k", "Beach Fest participants"], ["10:30–10", "open daily"]],
-      planTitle: "Surat new-store timeline, indicative (from the AOP 2027 slide)", plan: () => `<ul><li>Oct–Dec 2026: site finalisation and approvals</li><li>Jan 2027: local partnerships and community build</li><li>Feb 2027: pre-opening campaigns</li><li>Mar 2027: soft launch and preview events</li><li>Apr 2027: grand opening</li><li>Pre-opening activations: city run and fitness events, yoga by the river, racket tournaments, travel and outdoor experiences</li></ul>` },
+      stats: [["720+", "sports items in store"], ["2x", "Q1 marketing spend"], ["5k", "Beach Fest participants"], ["10:30-10", "open daily"]],
+      planTitle: "Surat new-store timeline, indicative (from the AOP 2027 slide)", plan: () => `<ul><li>Oct-Dec 2026: site finalisation and approvals</li><li>Jan 2027: local partnerships and community build</li><li>Feb 2027: pre-opening campaigns</li><li>Mar 2027: soft launch and preview events</li><li>Apr 2027: grand opening</li><li>Pre-opening activations: city run and fitness events, yoga by the river, racket tournaments, travel and outdoor experiences</li></ul>` },
     { name: "Quick commerce and delivery", tag: "2 hr", media: ["quick-commerce.jpg", "two-hour-delivery.jpg", "app-order.jpg"],
       title: "Sport, delivered fast",
       copy: "The 12 Cr digital challenge splits three ways: home delivery and pick-from-store, sell-at-store in our shops, and express delivery with affiliation. Digital turnover grows 27% when traffic, conversion, orders and basket all move together.",
@@ -590,10 +590,10 @@
 
   // AW26 social content plan
   $("#contentPlan").innerHTML = [
-    { q: "Q1", m: "Jan–Mar", c: "Winter campaign, Republic Day, Valentine's Day, Women's Day and Holi", p: "New shoes launch phase 1, running and cycling", h: "New Year, New Moves. Movement for All. Clearance sale alerts.", now: true },
-    { q: "Q2", m: "Apr–Jun", c: "Summer camp, Ugadi and Gudi Padwa, Sports Utsav (22–23 May), Yoga Day", p: "Swimming, cricket, fitness gear, Kiprun Challenger", h: "World Environment Day Circular Bazaar. Beach Day promo." },
-    { q: "Q3", m: "Jul–Sep", c: "Monsoon and back to school, Independence Day, National Sports Day, 51st anniversary", p: "Shoes phase 3 and 4, AW hero and iconic range", h: "Mountain Days. Monsoon gear. Outdoor challenges." },
-    { q: "Q4", m: "Oct–Dec", c: "Dussehra Gift a Sport, Diwali (optional), Black Friday, Christmas sale", p: "Winter and travel, trekking, Kids Carnival", h: "Festive gifting guide. World Mental Health Day.", now: true }
+    { q: "Q1", m: "Jan-Mar", c: "Winter campaign, Republic Day, Valentine's Day, Women's Day and Holi", p: "New shoes launch phase 1, running and cycling", h: "New Year, New Moves. Movement for All. Clearance sale alerts.", now: true },
+    { q: "Q2", m: "Apr-Jun", c: "Summer camp, Ugadi and Gudi Padwa, Sports Utsav (22-23 May), Yoga Day", p: "Swimming, cricket, fitness gear, Kiprun Challenger", h: "World Environment Day Circular Bazaar. Beach Day promo." },
+    { q: "Q3", m: "Jul-Sep", c: "Monsoon and back to school, Independence Day, National Sports Day, 51st anniversary", p: "Shoes phase 3 and 4, AW hero and iconic range", h: "Mountain Days. Monsoon gear. Outdoor challenges." },
+    { q: "Q4", m: "Oct-Dec", c: "Dussehra Gift a Sport, Diwali (optional), Black Friday, Christmas sale", p: "Winter and travel, trekking, Kids Carnival", h: "Festive gifting guide. World Mental Health Day.", now: true }
   ].map(q => `<div class="cp-q ${q.now ? "now" : ""}"><h4>${q.q}<small>${q.m}</small></h4><dl>
       <dt>Campaigns</dt><dd>${q.c}</dd><dt style="margin-top:8px">Product focus</dt><dd>${q.p}</dd><dt style="margin-top:8px">Content hooks</dt><dd>${q.h}</dd></dl></div>`).join("") +
     `<div class="cp-foot">Social content plan, AW26. Runs on Meta reels and stories, WhatsApp and push, organic social with creators, and in-app pages. The line we want people to say back to us: “You inspired me to start.”</div>`;

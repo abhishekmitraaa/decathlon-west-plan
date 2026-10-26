@@ -146,7 +146,7 @@
         return `<article class="cc-brief" id="ccb-${k}" style="--c:${P[p.pillar].col}">
           <div class="cb-img" style="background-image:url('${imgFor(p)}')"><div class="cb-date"><b>${p.day}</b><span>${DOW[(dt.getDay() + 6) % 7]}</span></div><span class="cb-fmt">${p.format}</span></div>
           <div class="cb-main">
-            <div class="cb-tags"><span class="cb-pil">${P[p.pillar].name}</span><span>${esc(p.region)}</span>${p.sport !== "—" ? `<span>${esc(p.sport)}</span>` : ""}${p.creator ? `<span class="cb-cr">★ ${esc(p.creator)}</span>` : ""}</div>
+            <div class="cb-tags"><span class="cb-pil">${P[p.pillar].name}</span><span>${esc(p.region)}</span>${p.sport !== "-" ? `<span>${esc(p.sport)}</span>` : ""}${p.creator ? `<span class="cb-cr">★ ${esc(p.creator)}</span>` : ""}</div>
             <h5>${esc(p.title)}</h5>
             <p class="cb-hook">“${esc(p.hook)}”</p>
             <dl><div><dt>Campaign</dt><dd>${esc(p.campaign)}</dd></div><div><dt>Why this date</dt><dd>${esc(p.why)}</dd></div><div><dt>Feeling</dt><dd>${P[p.pillar].feel}</dd></div></dl>

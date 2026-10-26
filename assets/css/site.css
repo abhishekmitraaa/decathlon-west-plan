@@ -1204,6 +1204,27 @@ ul, ol { padding: 0; }
 .gold-note { background: transparent; border-style: dashed; }
 .gold-note span { font-size: 13px; }
 
+/* October so far */
+.oct { display: grid; gap: 18px; }
+.oct-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 28px; align-items: center; background: #fff; border: 1.5px solid var(--line); border-radius: var(--r-md); padding: 24px; }
+.oct-when { display: inline-block; font-size: 12.5px; font-weight: 750; color: var(--blue); background: var(--mist); border-radius: var(--r-pill); padding: 4px 12px; }
+.oct-text h3 { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 2.6vw, 34px); line-height: 1; letter-spacing: -0.025em; color: var(--ink); margin: 12px 0 10px; }
+.oct-text p { color: var(--text-2); font-size: 15px; max-width: 44ch; }
+.oct-link { display: inline-block; margin-top: 12px; font-weight: 700; font-size: 14px; color: var(--blue); }
+.oct-media { min-width: 0; }
+.oct-media > img { width: 100%; max-height: 420px; object-fit: cover; object-position: center 25%; border-radius: var(--r-sm); display: block; }
+.oct-ig { display: flex; justify-content: center; }
+.oct-ig .instagram-media { margin: 0 !important; min-width: 0 !important; width: 100% !important; max-width: 400px !important; }
+.oct-ig blockquote.instagram-media { background: var(--mist); border-radius: var(--r-sm); padding: 40px 20px; text-align: center; }
+.oct-slots { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.oct-slot { aspect-ratio: 9 / 16; border: 2px dashed var(--line); border-radius: 14px; display: grid; place-items: center; background: var(--hatch), var(--mist); }
+.oct-slot span { font-size: 12.5px; font-weight: 700; color: var(--text-2); background: #fff; border-radius: var(--r-pill); padding: 4px 10px; }
+.pune-range i { background: var(--blue); }
+@media (max-width: 900px) {
+  .oct-row { grid-template-columns: 1fr; padding: 18px; gap: 16px; }
+  .oct-slots { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
