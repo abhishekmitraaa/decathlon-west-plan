@@ -1337,7 +1337,10 @@ window.HOARDINGS = [
   "cost": 40000,
   "status": "nov",
   "why": "Above a DMart car park: families doing their weekly shop, already in a planned-purchase mood.",
-  "img": "hpgm/baroda-akota.jpg"
+  "img": "hpgm/baroda-akota.jpg",
+  "lat": 22.2968,
+  "lon": 73.1663,
+  "exact": false
  },
  {
   "city": "Baroda",
@@ -1347,7 +1350,10 @@ window.HOARDINGS = [
   "cost": 35000,
   "status": "nov",
   "why": "One of the city's busiest circles, close to MS University: students and first-job buyers.",
-  "img": "hpgm/baroda-fatehgunj.jpg"
+  "img": "hpgm/baroda-fatehgunj.jpg",
+  "lat": 22.3195,
+  "lon": 73.1855,
+  "exact": false
  },
  {
   "city": "Baroda",
@@ -1357,7 +1363,10 @@ window.HOARDINGS = [
   "cost": 50000,
   "status": "nov",
   "why": "West Vadodara's growing residential belt, with heavy evening traffic towards Natubhai Circle.",
-  "img": "hpgm/baroda-gotri.jpg"
+  "img": "hpgm/baroda-gotri.jpg",
+  "lat": 22.312,
+  "lon": 73.144,
+  "exact": false
  },
  {
   "city": "Baroda",
@@ -1367,7 +1376,10 @@ window.HOARDINGS = [
   "cost": 40000,
   "status": "nov",
   "why": "Settled residential neighbourhoods with schools and coaching classes around: parents and teenagers.",
-  "img": "hpgm/baroda-subhanpura.jpg"
+  "img": "hpgm/baroda-subhanpura.jpg",
+  "lat": 22.32,
+  "lon": 73.16,
+  "exact": false
  },
  {
   "city": "Rajkot",
@@ -1397,7 +1409,10 @@ window.HOARDINGS = [
   "cost": 190000,
   "status": "nov",
   "why": "Between Adajan, Piplod and Vesu: a year-long anchor for the new Adajan store, booked through to October 2027.",
-  "img": "hpgm/surat-palumra.jpg"
+  "img": "hpgm/surat-palumra.jpg",
+  "lat": 21.169,
+  "lon": 72.788,
+  "exact": false
  },
  {
   "city": "Bhopal",
@@ -1407,7 +1422,10 @@ window.HOARDINGS = [
   "cost": 75000,
   "status": "nov",
   "why": "A busy square on Link Road No. 1, one of the main roads across the new city.",
-  "img": "hpgm/bhopal-vyapam.jpg"
+  "img": "hpgm/bhopal-vyapam.jpg",
+  "lat": 23.2345,
+  "lon": 77.429,
+  "exact": false
  },
  {
   "city": "Bhopal",
@@ -1417,6 +1435,9 @@ window.HOARDINGS = [
   "cost": 80000,
   "status": "nov",
   "why": "Near the Upper Lake, on the road between the old city and the new: steady all-day traffic.",
-  "img": "hpgm/bhopal-kamlapark.jpg"
+  "img": "hpgm/bhopal-kamlapark.jpg",
+  "lat": 23.259,
+  "lon": 77.395,
+  "exact": false
  }
 ];

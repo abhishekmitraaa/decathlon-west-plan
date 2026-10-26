@@ -180,9 +180,36 @@
     box.innerHTML = `<div class="hp-head"><h3 class="display-s"><span class="lt">On the road:</span> winter hoarding programme</h3>
         <div class="hp-stats"><div><b>${HG.length}</b><span>sites in 5 cities</span></div><div><b>${L$(month)}</b><span>a month, all sites</span></div><div><b>${L$(q4)}</b><span>for November and December</span></div><div><b>7 live</b><span>in Pune; Gujarat and Bhopal go live in November</span></div></div></div>
       <div class="hp-cities">${cities.map(c => { const list = HG.filter(h => h.city === c); return `<span><b>${c}</b>${list.length} site${list.length > 1 ? "s" : ""}, ${L$(list.reduce((a, h) => a + h.cost, 0))} a month</span>`; }).join("")}</div>
-      <div class="hp-grid">${HG.map(h => `<article class="hp-card"><div class="hp-img"><img src="assets/img/${h.img}" alt="Hoarding site: ${esc(h.loc)}" loading="lazy"><span class="hp-st ${h.status}">${h.status === "live" ? "Live" : "Live from Nov"}</span><span class="hp-city-tag">${h.city}</span></div>
+      <div class="hp-maps">${["Baroda", "Surat", "Bhopal"].map(c => `<div class="hp-map-card"><h5>${c}<small>${HG.filter(h => h.city === c).length} hoarding${HG.filter(h => h.city === c).length > 1 ? "s" : ""}</small></h5><div class="hp-mini" id="hpMap${c}" role="img" aria-label="Map of ${c} with Decathlon stores and hoardings"></div></div>`).join("")}</div>
+      <div class="hp-grid">${HG.map(h => `<article class="hp-card"><div class="hp-img"><img src="assets/img/${h.img}" alt="Hoarding site: ${esc(h.loc)}" loading="lazy"><span class="hp-st ${h.status}">${h.status === "live" ? "Live" : "Live from Nov"}</span><span class="hp-city-tag">${h.city} ${HG.filter(x => x.city === h.city).indexOf(h) + 1}</span></div>
         <div class="hp-body"><b>${esc(h.loc)}</b><span class="hp-meta">${esc(h.size)}, ${esc(h.dur)}, <strong>${L$(h.cost)} a month</strong></span><p>${esc(h.why)}</p></div></article>`).join("")}</div>
-      <p class="hoard-foot">Ahmedabad: sites near Motera and Nexus still to be confirmed. Gujarat and Bhopal photos show the booked sites before our creative goes up. The Surat board runs a full year, to October 2027 (${L$(190000 * 12)}).</p>`;
+      <p class="hoard-foot">Map pins are approximate. Ahmedabad: sites near Motera and Nexus still to be confirmed. Gujarat and Bhopal photos show the booked sites before our creative goes up. The Surat board runs a full year, to October 2027 (${L$(190000 * 12)}).</p>`;
+  })();
+
+  // Small hoarding maps for Baroda, Surat and Bhopal (playbook programme)
+  (() => {
+    if (!window.L || !window.HOARDINGS) return;
+    const logo = L.icon({ iconUrl: "assets/img/deca-pin.png", iconSize: [22, 22], iconAnchor: [11, 11], className: "map-store" });
+    const EXTRA = { Surat: [{ name: "Adajan (opens Dec)", lat: 21.1960, lon: 72.7930 }] };
+    const CITY = { Baroda: "Vadodara", Surat: "Surat", Bhopal: "Bhopal" };
+    Object.keys(CITY).forEach(c => {
+      const el = $("#hpMap" + c);
+      if (!el) return;
+      const map = L.map(el, { scrollWheelZoom: false, zoomControl: false, attributionControl: true });
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "&copy; OpenStreetMap" }).addTo(map);
+      const pts = [];
+      D.stores.filter(s => s.city === CITY[c]).map(s => ({ name: s.name === c ? (c === "Surat" ? "Dumas Road" : c) : s.name, lat: s.lat, lon: s.lon })).concat(EXTRA[c] || []).forEach(s => {
+        L.marker([s.lat, s.lon], { icon: logo }).addTo(map).bindTooltip(`Decathlon ${s.name}`, { permanent: true, direction: "right", offset: [12, 0], className: "map-tip map-tip-store map-tip-sm" });
+        pts.push([s.lat, s.lon]);
+      });
+      window.HOARDINGS.filter(h => h.city === c && h.lat).forEach((h, i) => {
+        const icon = L.divIcon({ className: "map-board", html: `<i>${i + 1}</i>`, iconSize: [20, 20], iconAnchor: [10, 10] });
+        L.marker([h.lat, h.lon], { icon, zIndexOffset: 1000 }).addTo(map)
+          .bindPopup(`<img src="assets/img/${h.img}" alt="" style="width:200px;border-radius:6px;display:block;margin-bottom:6px"><b>${i + 1}. ${esc(h.loc)}</b><br>${esc(h.size)}, ₹${(h.cost / 1e5).toFixed(2)} L a month`);
+        pts.push([h.lat, h.lon]);
+      });
+      map.fitBounds(pts, { padding: [36, 36], maxZoom: 13 });
+    });
   })();
 
   // Q4 topline: challenge, by state, by channel, by month (store-level challenge sheet)
@@ -505,6 +532,7 @@
   /* ---------- budget 2027 ---------- */
   (() => {
     const B = D.budget2027, barEl = $("#budgetBar");
+    if (!barEl) return;
     barEl.innerHTML = B.lines.map((l, i) => `<button type="button" role="tab" style="--p:${l.pct}" aria-selected="${i === 0}" data-i="${i}"><b>${l.pct}%</b><span>${l.name}</span></button>`).join("");
     const show = i => {
       const l = B.lines[i];
