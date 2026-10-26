@@ -1332,6 +1332,14 @@ ul, ol { padding: 0; }
   #goldGrid .pen-row { grid-template-columns: 92px minmax(0, 1fr) 52px; }
 }
 
+/* October: our social media strip */
+.oct-social { grid-template-columns: 1fr; gap: 16px; }
+.oct-ig-row { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory; align-items: flex-start; }
+.oct-ig-item { flex: 0 0 326px; scroll-snap-align: start; }
+.oct-ig-item .instagram-media { margin: 0 !important; min-width: 0 !important; width: 100% !important; }
+.oct-ig-item blockquote.instagram-media { background: var(--mist); border-radius: var(--r-sm); padding: 40px 20px; text-align: center; }
+@media (max-width: 700px) { .oct-ig-item { flex-basis: 280px; } }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
