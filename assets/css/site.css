@@ -1225,6 +1225,34 @@ ul, ol { padding: 0; }
   .oct-slots { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
+/* goldmine: penetration vs sports market */
+.gold-pen { grid-column: span 3; grid-row: span 3; gap: 12px; justify-content: flex-start; }
+.pen-head span { display: block; font-family: var(--display); font-size: 21px; font-weight: 700; letter-spacing: -0.025em; color: var(--ink); }
+.pen-head small { display: block; margin-top: 4px; font-size: 13.5px; color: var(--text-2); }
+.pen-key { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--text-2); font-weight: 600; }
+.pen-key i { display: inline-block; width: 12px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.pen-key .us { background: var(--blue); }
+.pen-key .m25 { background: #C9CEF0; }
+.pen-key .m30 { background: repeating-linear-gradient(135deg, #DDE1F5 0 3px, #F4F5FC 3px 6px); border: 1px solid #DDE1F5; }
+.pen-row { display: grid; grid-template-columns: 120px minmax(0, 1fr) 64px; grid-template-areas: "city track share" ". note note"; gap: 2px 14px; align-items: center; padding: 6px 0; border-top: 1px solid var(--line); }
+.pen-city { grid-area: city; font-weight: 750; font-size: 14.5px; color: var(--c); display: flex; flex-direction: column; line-height: 1.15; }
+.pen-city em { font-style: normal; font-size: 11.5px; font-weight: 600; color: var(--text-2); }
+.pen-track { grid-area: track; position: relative; height: 22px; }
+.pen-track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; }
+.pen-track .m30 { background: repeating-linear-gradient(135deg, #DDE1F5 0 3px, #F4F5FC 3px 6px); }
+.pen-track .m25 { background: #C9CEF0; }
+.pen-track .us { background: var(--c); border-radius: 4px 0 0 4px; }
+.pen-share { grid-area: share; text-align: right; font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -0.025em; color: var(--ink); white-space: nowrap; }
+.pen-note { grid-area: note; font-size: 12px; color: var(--text-2); }
+.pen-foot { font-size: 12px; color: var(--text-3); margin-top: 4px; }
+.pc-y1 { font-size: 13px; color: var(--text-2); }
+.pc-y1 b { color: var(--blue); font-weight: 750; }
+@media (max-width: 900px) {
+  .gold-pen { grid-column: 1 / -1; grid-row: auto; }
+  .pen-row { grid-template-columns: 92px minmax(0, 1fr) 54px; gap: 2px 10px; }
+  .pen-share { font-size: 18px; }
+}
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }

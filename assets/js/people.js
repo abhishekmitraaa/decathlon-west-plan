@@ -12,24 +12,35 @@
   const POP = { Pune: 10.4, Gujarat: 70.4, MP: 85.8 };
   const STORES = { Pune: 5, Gujarat: 5, MP: 3 };
   const people = POP.Pune + POP.Gujarat + POP.MP;
-  // Store cities: Q4 turnover growth from the store sheet; sports market from the Ahmedabad
-  // catchment master (city snapshot) and the Surat opening plan (TAM sheet).
-  const CITY_ORDER = [["Pune", "Pune"], ["Ahmedabad", "Gujarat"], ["Vadodara", "Gujarat"], ["Surat", "Gujarat"], ["Rajkot", "Gujarat"], ["Indore", "MP"], ["Bhopal", "MP"], ["Gwalior", "MP"]];
-  const CITY_MARKET = {
-    Ahmedabad: "Sports market ₹1,801 Cr (2023) → ₹2,698 Cr (2027), +10.6% a year. Our share 3.3% → 3.7%.",
-    Surat: "Sports market ₹1,591 Cr (2025) → ₹2,451 Cr (2030), +9.0% a year. Our share 2.2% today; Adajan, the second store, opens in December."
-  };
+  // Penetration vs sports market, by store city (India City Ranking 2025, "Final List + T3"):
+  // [city, state, stores, market 2025 Cr, market 2030 Cr (file projection), DSI turnover 2025 Cr, share 2025, untapped Cr (qbr_ranking)]
+  const PEN = [
+    ["Pune", "Pune", 5, 2211.98, 3685.07, 161.25, 7.29, 1554],
+    ["Ahmedabad", "Gujarat", 2, 2207.60, 3677.77, 58.54, 2.65, 1710],
+    ["Surat", "Gujarat", 1, 2160.30, 3598.98, 23.87, 1.10, 1730],
+    ["Vadodara", "Gujarat", 1, 835.35, 1391.67, 24.37, 2.92, 649],
+    ["Indore", "MP", 1, 720.82, 1200.86, 23.45, 3.25, 552],
+    ["Bhopal", "MP", 1, 583.99, 972.90, 3.99, 0.68, 474],
+    ["Rajkot", "Gujarat", 1, 558.80, 930.94, 6.71, 1.20, 449],
+    ["Gwalior", "MP", 1, 239.80, 399.49, 4.89, 2.04, 188]
+  ];
   const ST_COL = { Pune: "var(--blue)", Gujarat: "var(--guj)", MP: "var(--mp)" };
-  const f2 = n => n.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  const cityTiles = CITY_ORDER.map(([city, st]) => {
-    const list = D.stores.filter(x => x.city === city);
-    const q = list.reduce((x, y) => x + y.q425, 0), c = list.reduce((x, y) => x + y.challenge, 0);
-    return `<div class="gold gold-city" style="--c:${ST_COL[st]}"><span class="gc-name">${city}<em>${list.length} store${list.length > 1 ? "s" : ""}</em></span>
-      <b>+${(list.length === 1 ? list[0].growth : (c - q) / q * 100).toFixed(1)}%</b><span>Q4 turnover ${f2(q)} → ${f2(c)} Cr</span>
-      ${CITY_MARKET[city] ? `<small>${CITY_MARKET[city]}</small>` : ""}</div>`;
-  }).join("");
-  $("#goldGrid").innerHTML = `<div class="gold gold-hero"><b>${people.toFixed(1)}M</b><span>people across the three markets</span><small>Only 13 stores: one for every ${(people / 13).toFixed(1)}M people. Every store city is set to grow in Q4.</small></div>` + cityTiles +
-    `<div class="gold gold-note"><span>How to read this</span><small>Big number: growth of our Q4 turnover challenge over Q4 2025 in that city. Sports-market size is from the Ahmedabad and Surat catchment studies; the other cities don't have a market study in our files yet.</small></div>`;
+  const cr = n => "₹" + Math.round(n).toLocaleString("en-IN") + " Cr";
+  const penMax = Math.max(...PEN.map(r => r[4]));
+  const mk25 = PEN.reduce((a, r) => a + r[3], 0), to25 = PEN.reduce((a, r) => a + r[5], 0);
+  const penRows = PEN.map(([city, st, n, m25, m30, to, sh, un]) => `<div class="pen-row" style="--c:${ST_COL[st]}">
+      <span class="pen-city">${city}<em>${n} store${n > 1 ? "s" : ""}</em></span>
+      <div class="pen-track" data-tip="<b>${city}</b><br>Sports market 2025: ${cr(m25)}<br>Our turnover 2025: ${cr(to)} (${sh}%)<br>Market 2030: ${cr(m30)}">
+        <i class="m30" style="width:${m30 / penMax * 100}%"></i><i class="m25" style="width:${m25 / penMax * 100}%"></i><i class="us" style="width:${Math.max(to / penMax * 100, 0.6)}%"></i>
+      </div>
+      <b class="pen-share">${(Math.round(sh * 10 + 1e-9) / 10).toFixed(1)}%</b>
+      <small class="pen-note">${cr(to)} of ${cr(m25)}; ${cr(m30)} by 2030</small></div>`).join("");
+  $("#goldGrid").innerHTML = `<div class="gold gold-hero"><b>${people.toFixed(1)}M</b><span>people across the three markets</span><small>Only 13 stores: one for every ${(people / 13).toFixed(1)}M people.</small></div>
+    <div class="gold gold-pen"><div class="pen-head"><span>Our share of each city's sports market, 2025</span>
+      <small>${cr(to25)} of a ${cr(mk25)} market across our 8 store cities: ${(to25 / mk25 * 100).toFixed(1)}%. Every city's market grows about 10.7% a year to 2030.</small></div>
+      <div class="pen-key"><span><i class="us"></i>Our turnover</span><span><i class="m25"></i>Sports market 2025</span><span><i class="m30"></i>Market by 2030</span></div>
+      ${penRows}
+      <p class="pen-foot">Source: India City Ranking 2025. Market size = people × spend on sport; our turnover is Decathlon's consolidated 2025 turnover in the city.</p></div>`;
 
   // sports market pulse
   const PLAY = [["Pune", 12, 16, "var(--blue)"], ["Gujarat", 10, 14, "var(--guj)"], ["Madhya Pradesh", 8, 12, "var(--mp)"]];
@@ -114,17 +125,39 @@
       visit: "Quarterly, Sunday mornings", online: "Not given", sports: "Golf, cycling, walking, gym, trekking",
       trigger: "Health goal, doctor's advice, a trip, a corporate order", pain: "Lack of time. Will not queue or hunt for staff.", need: "A frictionless outcome" }
   ];
+  // Pune persona sheet (Pune_persona.xlsx, 26 Oct 2026). Daily Athlete age kept at 16-34 on the user's instruction (sheet: 16 to 35).
   const KOTHRUD = [
-    { n: "Urban Performance Professional", share: "30-35%", d: "Time-conscious professionals seeking performance, convenience and premium quality.", age: "24-38",
-      occ: "IT professionals, consultants, doctors, finance, researchers, entrepreneurs", inc: "₹10-30 L+", hh: "2-3", img: "u-kiprun.jpg", pos: "center 40%" },
-    { n: "Active Urban Explorer", share: "20-25%", d: "Adventure and outdoor enthusiasts seeking reliable gear for weekend trips and active experiences.", age: "22-40",
-      occ: "Young professionals, master's students, college students, travel enthusiasts", inc: "₹8-15 L+", hh: "2-3", img: "u-trek-couple.jpg", pos: "center 45%" },
-    { n: "Sports Driven Family", share: "25-30%", d: "Health-conscious families investing in sports and overall development for every member.", age: "Parents 30-45, kids 6-18",
-      occ: "Working parents, business owners, professionals", inc: "₹12-35 L+", hh: "4-5", img: "u-family-cycle.jpg", pos: "center 30%" },
-    { n: "Daily Athlete & Academy Player", share: "15-20%", d: "Regular sports practitioners who need technical products, expert guidance and quick availability.", age: "16-34",
-      occ: "College students, academy players, young professionals", inc: "₹4-7 L+", hh: "3-4", img: "u-padel.jpg", pos: "center 0%" },
-    { n: "Active Senior Lifestyle", share: "10-15%", d: "Retired or soon-to-retire residents focused on staying active, healthy and independent.", age: "55-70",
-      occ: "Retired, government employees, business owners", inc: "₹8-25 L+ (pension and investments)", hh: "2-3", img: "u-seniors.jpg", pos: "center 30%" }
+    { n: "Urban Performance Professional", share: "30-35%", d: "Time-conscious professionals seeking premium sports products, convenience and high-performance solutions for their active lifestyle.",
+      age: "24-38", hh: "2-3", inc: "₹10-30 L+", basket: "₹3,500-5,500", freq: "8-12 orders a year", conv: "28-32%", clv: "₹30K-50K a year",
+      occ: "IT, finance, doctors, consultants, entrepreneurs", plays: "Running, fitness, cycling, swimming", pins: "411038, 411052, 411004",
+      driver: "Performance and convenience", digital: "App, Click & Collect, express delivery (90-95% digital)", pain: "Time poor",
+      store: "Fast checkout, expert teammates", community: "Running clubs, cycling groups", y1: "₹8.3-9.0 Cr (32-35%)", grow: "Premium running, fitness and omni",
+      img: "u-kiprun.jpg", pos: "center 40%" },
+    { n: "Sports Driven Family", share: "25-30%", d: "Health-conscious families investing in sports, fitness and long-term development for every family member.",
+      age: "Parents 30-45, kids 6-18", hh: "4-5", inc: "₹12-35 L+", basket: "₹5,500-9,000", freq: "6-8 orders a year", conv: "35-40%", clv: "₹40K-70K a year",
+      occ: "Working parents, professionals, business owners", plays: "Football, cricket, badminton, tennis", pins: "411038, 411052, 411058, 411051",
+      driver: "Quality and family value", digital: "Omnichannel (80-90% digital)", pain: "Multiple shopping trips",
+      store: "One-stop family store", community: "School events, family sports days", y1: "₹7.0-7.8 Cr (27-30%)", grow: "Kids' sports and family lifetime value",
+      img: "u-family-cycle.jpg", pos: "center 30%" },
+    { n: "Daily Athlete & Academy Player", share: "20-25%", d: "Regular sports practitioners who need technical products, expert guidance and frequent equipment upgrades.",
+      age: "16-34", hh: "3-4", inc: "₹4-15 L", basket: "₹2,000-3,800", freq: "10-16 orders a year", conv: "30-35%", clv: "₹22K-40K a year",
+      occ: "Students, academy players, young professionals", plays: "Tennis, badminton, cricket", pins: "411038, 411004, 411030",
+      driver: "Technical performance", digital: "YouTube, Instagram, reviews (95%+ digital)", pain: "Product availability",
+      store: "Technical services", community: "Academies, leagues, tournaments", y1: "₹5.2-6.0 Cr (20-23%)", grow: "Technical sports and services",
+      img: "u-padel.jpg", pos: "center 0%" },
+    { n: "Active Urban Explorer", share: "15-20%", d: "Adventure and outdoor enthusiasts looking for reliable gear for trekking, travel, cycling and weekend experiences.",
+      age: "22-40", hh: "2-3", inc: "₹8-20 L", basket: "₹2,800-4,500", freq: "3-5 orders a year", conv: "18-25%", clv: "₹12K-25K a year",
+      occ: "Young professionals, travellers", plays: "Hiking, trekking, cycling", pins: "411038, 411021, 411058",
+      driver: "Adventure and experience", digital: "Instagram, Maps, travel blogs (92-95% digital)", pain: "Last-minute purchases",
+      store: "Quick outdoor shopping", community: "Trekking clubs, outdoor communities", y1: "₹3.8-4.5 Cr (15-17%)", grow: "Outdoor, hiking and seasonal categories",
+      img: "u-trek-couple.jpg", pos: "center 45%" },
+    { n: "Active Senior Lifestyle", share: "10-15%", d: "Retired or soon-to-retire residents focused on keeping an active, healthy and independent lifestyle.",
+      age: "55-70", hh: "2-3", inc: "₹8-25 L+ (pension, investments, rent)", basket: "₹3,000-5,000", freq: "4-6 orders a year", conv: "35-40%", clv: "₹18K-35K a year",
+      occ: "Retired professionals, government employees, business owners, professors, senior executives", plays: "Walking, yoga, swimming, cycling, table tennis, badminton, fitness",
+      pins: "411038, 411052, 411004, 411051", driver: "Comfort, durability, safety and health", digital: "Apps, WhatsApp and home delivery, growing (60-75% digital)",
+      pain: "Few quality sports and wellness shops nearby; wants personal help", store: "Knowledgeable teammates, easy navigation, quick billing, health-focused range",
+      community: "Morning walks, yoga groups, social clubs, wellness activities", y1: "₹2.0-2.8 Cr", grow: "Walking, fitness, yoga, swimming, cycling, recovery and wellness",
+      img: "u-seniors.jpg", pos: "center 30%" }
   ];
   const ph = (img, name, pos) => img
     ? `<img src="assets/img/${img}" alt="" loading="lazy"${pos ? ` style="object-position:${pos}"` : ""}>`
@@ -150,15 +183,16 @@
     } else {
       $("#personaIntro").innerHTML = `
         <div class="pi-text"><h3 class="display-s"><span class="lt">Pune:</span> five personas, one destination</h3>
-          <p>The team's purpose: be Pune's multi-sport smart city partner, bringing sport closer to people. Shares are the team's estimates of Pune's customers.</p></div>
+          <p>The team's purpose: be Pune's multi-sport smart city partner, bringing sport closer to people. Shares, spend and year-one turnover are the team's estimates against a ₹26 Cr target.</p></div>
         <div class="pi-chart">${KOTHRUD.map(p => { const [lo, hi] = p.share.replace("%", "").split(/[--]/).map(Number); return `<div class="mix2"><span>${esc(p.n)}</span>
           <div class="pp-track pune-range"><i style="left:${lo / 40 * 100}%;width:${(hi - lo) / 40 * 100}%" data-tip="<b>${esc(p.n)}</b><br>${lo}-${hi}% of customers"></i></div><b>${lo}-${hi}%</b></div>`; }).join("")}
           <div class="pp-axis"><span>0%</span><span>20%</span><span>40%</span></div></div>`;
       $("#personaGrid").innerHTML = KOTHRUD.map(p => `<article class="pc">
-        <div class="pc-img">${ph(p.img, p.n, p.pos)}<span class="pc-share">${p.share}</span></div>
+        <div class="pc-img">${ph(p.img, p.n, p.pos)}<span class="pc-share">${p.share} of customers</span></div>
         <div class="pc-body"><h4>${esc(p.n)}</h4><p>${esc(p.d)}</p>
-          <dl>${kv("Age", p.age)}${kv("Household", p.hh)}${kv("Income", p.inc)}</dl>
-          <dl class="pc-wide">${kv("Occupation", p.occ)}</dl></div></article>`).join("");
+          <p class="pc-y1"><b>${esc(p.y1)}</b> year-one turnover</p>
+          <dl>${kv("Age", p.age)}${kv("Household", p.hh)}${kv("Income", p.inc)}${kv("Basket", p.basket)}${kv("Visits", p.freq)}${kv("Conversion", p.conv)}</dl>
+          <dl class="pc-wide">${kv("Occupation", p.occ)}${kv("Plays", p.plays)}${kv("Lives in (pincodes)", p.pins)}${kv("Decides on", p.driver)}${kv("Online", p.digital)}${kv("Pain point", p.pain)}${kv("Expects in store", p.store)}${kv("Community", p.community)}${kv("Growth opportunity", p.grow)}</dl></div></article>`).join("");
     }
   }
   $$("#personaSeg button").forEach(b => b.addEventListener("click", () => showBoard(b.dataset.b)));
