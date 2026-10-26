@@ -95,13 +95,13 @@
           <p class="foot">Pune's November spike (5 L) is Winter Travel. Gujarat and MP each also run a pool of 40 creators.</p></div>
         <ol class="cc-infl-list">${creators.map(p => {
           const m = C.months.find(x => x.list.includes(p));
-          return `<li><img src="${imgFor(p)}" alt="" loading="lazy"><div><span>${p.day} ${m.label.slice(0, 3)}</span><b>${esc(p.creator)}</b><em>${esc(p.title)}</em><small>${esc(p.region)} · ${esc(p.sport)}</small></div></li>`;
+          return `<li><span>${p.day} ${m.label.slice(0, 3)}</span><div><b>${esc(p.creator)}</b><em>${esc(p.title)}</em></div><small>${esc(p.region)}</small></li>`;
         }).join("")}</ol>
       </div></div>`;
   }
   const cr = document.getElementById("ccCredits");
   if (cr && C.credits) {
-    cr.innerHTML = "Photo credits (Creative Commons): " + Object.values(C.credits).map(c =>
+    cr.innerHTML = "<summary>Photo credits</summary>Creative Commons: " + Object.values(C.credits).map(c =>
       `<a href="${esc(c.link || "#")}" target="_blank" rel="noopener">${esc(c.title)}</a> by ${esc(c.creator)}, ${esc(c.license)}`).join(" · ") +
       ". Other photos are Decathlon's own or supplied by the team.";
   }

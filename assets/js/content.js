@@ -68,7 +68,7 @@ window.CONTENT = {
         [22, "Carousel", "L", "Last-minute gift guide by sport", "Christmas: Gift a Sport", "Multi-sport", "All", "Still shopping? Find their sport.", "Helps late shoppers in the last Christmas week."],
         [24, "Reel", "F", "Santa Party at Adajan", "Surat: Ramat chalu rahe", "Kids", "Surat", "Santa's on skates this year.", "Week-2 theme in the Surat plan keeps the new store busy."],
         [25, "Static", "E", "Merry Christmas: Gift a Sport", "Christmas", "-", "All", "The best gifts get used.", "Christmas day: warm brand moment."],
-        [27, "Reel", "E", "My 2026 in sport", "Year end", "Multi-sport", "Pune", "This year I said yes to every sport.", "Pune's lead creator closes the year with a personal story.", "Pune: Adi"],
+        [27, "Reel", "E", "My 2026 in sport", "Year end", "Multi-sport", "Pune", "This year I said yes to every sport.", "Pune's lead creator closes the year with a personal story.", "Pune lead creator"],
         [29, "Reel", "F", "Your 2026 sport, wrapped", "Year end", "Multi-sport", "All", "Comment your sport of 2026.", "A wrapped-style engagement post that people share."],
         [31, "Reel", "E", "13 stores. One West. Thank you.", "Year end", "Multi-sport", "All", "From Wakad to Gwalior: thank you.", "Year-in-review reel to end on gratitude."]
       ] },
