@@ -12,35 +12,40 @@
   const POP = { Pune: 10.4, Gujarat: 70.4, MP: 85.8 };
   const STORES = { Pune: 5, Gujarat: 5, MP: 3 };
   const people = POP.Pune + POP.Gujarat + POP.MP;
-  // Penetration vs sports market, by store city (India City Ranking 2025, "Final List + T3"):
-  // [city, state, stores, market 2025 Cr, market 2030 Cr (file projection), DSI turnover 2025 Cr, share 2025, untapped Cr (qbr_ranking)]
+  // Penetration, 2026 so far: in-store turnover 1 Jan - 25 Oct 2026 (tuonver_data.xlsx) against each city's
+  // 2026 sports market (India City Ranking 2025 projection) pro-rated to the same 298 days.
+  // [city, state, stores, market 2026 Cr, in-store TO 2026 YTD Cr, customers 2026 YTD, returning customers]
+  const DAYS = 298, YEAR = 365;
   const PEN = [
-    ["Pune", "Pune", 5, 2211.98, 3685.07, 161.25, 7.29, 1554],
-    ["Ahmedabad", "Gujarat", 2, 2207.60, 3677.77, 58.54, 2.65, 1710],
-    ["Surat", "Gujarat", 1, 2160.30, 3598.98, 23.87, 1.10, 1730],
-    ["Vadodara", "Gujarat", 1, 835.35, 1391.67, 24.37, 2.92, 649],
-    ["Indore", "MP", 1, 720.82, 1200.86, 23.45, 3.25, 552],
-    ["Bhopal", "MP", 1, 583.99, 972.90, 3.99, 0.68, 474],
-    ["Rajkot", "Gujarat", 1, 558.80, 930.94, 6.71, 1.20, 449],
-    ["Gwalior", "MP", 1, 239.80, 399.49, 4.89, 2.04, 188]
+    ["Pune", "Pune", 5, 2433.62, 198.93, 571174, 344445],
+    ["Ahmedabad", "Gujarat", 2, 2428.80, 76.39, 213036, 115118],
+    ["Surat", "Gujarat", 1, 2376.77, 31.63, 84137, 44510],
+    ["Vadodara", "Gujarat", 1, 919.06, 28.98, 71364, 39461],
+    ["Indore", "MP", 1, 793.05, 26.13, 72015, 37732],
+    ["Bhopal", "MP", 1, 642.50, 22.14, 70837, 23419],
+    ["Rajkot", "Gujarat", 1, 614.79, 7.41, 26653, 12015],
+    ["Gwalior", "MP", 1, 263.82, 5.93, 25815, 11416]
   ];
   const ST_COL = { Pune: "var(--blue)", Gujarat: "var(--guj)", MP: "var(--mp)" };
   const cr = n => "₹" + Math.round(n).toLocaleString("en-IN") + " Cr";
-  const penMax = Math.max(...PEN.map(r => r[4]));
-  const mk25 = PEN.reduce((a, r) => a + r[3], 0), to25 = PEN.reduce((a, r) => a + r[5], 0);
-  const penRows = PEN.map(([city, st, n, m25, m30, to, sh, un]) => `<div class="pen-row" style="--c:${ST_COL[st]}">
-      <span class="pen-city">${city} <em>${n} store${n > 1 ? "s" : ""}</em></span>
-      <div class="pen-track" data-tip="<b>${city}</b><br>Sports market 2025: ${cr(m25)}<br>Our turnover 2025: ${cr(to)} (${sh}%)<br>Market 2030: ${cr(m30)}">
-        <i class="m30" style="width:${m30 / penMax * 100}%"></i><i class="m25" style="width:${m25 / penMax * 100}%"></i><i class="us" style="width:${Math.max(to / penMax * 100, 0.6)}%"></i>
+  const lakh = n => (n / 1e5).toLocaleString("en-IN", { maximumFractionDigits: 2 }) + " lakh";
+  const rows = PEN.map(([city, st, n, m26, to, cu, ret]) => ({ city, st, n, mk: m26 * DAYS / YEAR, m26, to, cu, ret }));
+  const penMax = Math.max(...rows.map(r => r.mk));
+  const mkAll = rows.reduce((a, r) => a + r.mk, 0), toAll = rows.reduce((a, r) => a + r.to, 0);
+  const cuAll = rows.reduce((a, r) => a + r.cu, 0), retAll = rows.reduce((a, r) => a + r.ret, 0);
+  const penRows = rows.map(r => { const sh = r.to / r.mk * 100; return `<div class="pen-row" style="--c:${ST_COL[r.st]}">
+      <span class="pen-city">${r.city} <em>${r.n} store${r.n > 1 ? "s" : ""}</em></span>
+      <div class="pen-track" data-tip="<b>${r.city}</b><br>Sports market, 1 Jan to 25 Oct: ${cr(r.mk)}<br>Our in-store turnover: ${cr(r.to)} (${sh.toFixed(1)}%)<br>Customers: ${lakh(r.cu)}, ${Math.round(r.ret / r.cu * 100)}% returning">
+        <i class="m25" style="width:${r.mk / penMax * 100}%"></i><i class="us" style="width:${Math.max(r.to / penMax * 100, 0.6)}%"></i>
       </div>
-      <b class="pen-share">${(Math.round(sh * 10 + 1e-9) / 10).toFixed(1)}%</b>
-      <small class="pen-note">${cr(to)} of ${cr(m25)}</small></div>`).join("");
+      <b class="pen-share">${sh.toFixed(1)}%</b>
+      <small class="pen-note">${cr(r.to)} of ${cr(r.mk)}, ${lakh(r.cu)} customers</small></div>`; }).join("");
   $("#goldGrid").innerHTML = `<div class="gold gold-hero"><b>${people.toFixed(1)}M</b><span>people across the three markets</span><small>Only 13 stores: one for every ${(people / 13).toFixed(1)}M people.</small></div>
-    <div class="gold gold-pen"><div class="pen-head"><span>Our share of each city's sports market, 2025</span>
-      <small>${cr(to25)} of a ${cr(mk25)} market across our 8 store cities: ${(to25 / mk25 * 100).toFixed(1)}%. Every city's market grows about 10.7% a year to 2030.</small></div>
-      <div class="pen-key"><span><i class="us"></i>Our turnover</span><span><i class="m25"></i>Sports market 2025</span><span><i class="m30"></i>Market by 2030</span></div>
+    <div class="gold gold-pen"><div class="pen-head"><span>Our share of each city's sports market, 2026 so far</span>
+      <small>${cr(toAll)} in-store turnover from 1 January to 25 October across our 8 store cities, against a ${cr(mkAll)} market for the same days: ${(toAll / mkAll * 100).toFixed(1)}%. ${lakh(cuAll)} customers, ${Math.round(retAll / cuAll * 100)}% of them returning.</small></div>
+      <div class="pen-key"><span><i class="us"></i>Our in-store turnover</span><span><i class="m25"></i>Sports market, same days</span></div>
       ${penRows}
-      <p class="pen-foot">Source: India City Ranking 2025. Market size = people × spend on sport; our turnover is Decathlon's consolidated 2025 turnover in the city.</p></div>`;
+      <p class="pen-foot">Turnover and customers: store data, 1 Jan to 25 Oct 2026. Market: India City Ranking 2025's 2026 projection, pro-rated to those 298 days. Every city's market grows about 10.7% a year to 2030.</p></div>`;
 
   // sports market pulse
   const PLAY = [["Pune", 12, 16, "var(--blue)"], ["Gujarat", 10, 14, "var(--guj)"], ["Madhya Pradesh", 8, 12, "var(--mp)"]];

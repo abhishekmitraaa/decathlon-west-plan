@@ -1255,7 +1255,7 @@ ul, ol { padding: 0; }
 #goldGrid { grid-template-columns: minmax(0, 280px) minmax(0, 1fr); grid-auto-rows: auto; }
 #goldGrid .gold-hero { grid-row: auto; }
 #goldGrid .gold-pen { grid-column: auto; grid-row: auto; padding: 18px 22px; gap: 8px; }
-#goldGrid .pen-row { grid-template-columns: 150px minmax(0, 1fr) 60px 150px; grid-template-areas: "city track share note"; padding: 4px 0; gap: 0 14px; }
+#goldGrid .pen-row { grid-template-columns: 150px minmax(0, 1fr) 60px 250px; grid-template-areas: "city track share note"; padding: 4px 0; gap: 0 14px; }
 #goldGrid .pen-city { flex-direction: row; align-items: baseline; gap: 6px; font-size: 14px; }
 #goldGrid .pen-track { height: 16px; }
 #goldGrid .pen-share { font-size: 19px; }
