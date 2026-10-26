@@ -1444,6 +1444,17 @@ ul, ol { padding: 0; }
 .leaflet-tooltip.map-tip-sm { font-size: 11px; padding: 2px 6px; }
 @media (max-width: 900px) { .hp-maps { grid-template-columns: 1fr; } .hp-mini { height: 210px; } }
 
+/* native Instagram reels in the October recap */
+.oct-ig-row .oct-ig-item { flex: 0 0 210px; height: auto !important; overflow: visible; display: grid; gap: 6px; }
+.ig-reel, .ig-still { aspect-ratio: 9 / 16; width: 100%; border-radius: var(--r-sm); }
+.ig-still { position: relative; display: block; overflow: hidden; background: var(--ink); }
+.ig-still img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ig-still span { position: absolute; left: 10px; bottom: 10px; font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: rgba(16,19,90,.8); color: #fff; }
+.ig-link { font-size: 12.5px; font-weight: 700; color: var(--blue); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.spot-title { color: #fff; margin: clamp(28px, 4vw, 44px) 0 16px; }
+.spot-title + .spotlights { margin-top: 0; }
+@media (max-width: 700px) { .oct-ig-row .oct-ig-item { flex-basis: 170px; } }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
