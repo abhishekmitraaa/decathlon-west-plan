@@ -212,41 +212,34 @@
     });
   })();
 
-  // AOP (area of practice) KPIs by store, Nov 2026 - Oct 2027
+  // AOPs (areas of practice) in Q4: November and December from the store plan
   (() => {
     const box = $("#aopKpis"), A = window.AOP_PLAN;
     if (!box || !A) return;
-    const M = ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"];
     const COL = { Pune: "var(--blue)", Gujarat: "var(--guj)", MP: "var(--mp)" }, NAME = { Pune: "Pune", Gujarat: "Gujarat", MP: "Madhya Pradesh" };
     const L$ = n => "₹" + (n / 1e5).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " L";
     const sum = (list, f) => list.reduce((a, x) => a + f(x), 0);
-    const total = sum(A, x => x.total), cost = sum(A, x => x.total * x.cost);
-    const liveList = A.filter(x => x.live != null), live = sum(liveList, x => x.live);
-    const byMonth = M.map((_, i) => sum(A, x => x.months[i])), maxM = Math.max(...byMonth);
-    const maxCell = Math.max(...A.flatMap(x => x.months));
-    const row = x => {
-      const pct = x.live != null ? Math.round(x.live / x.total * 100) : null;
-      return `<tr><th scope="row">${esc(x.store)}</th>
-        <td class="ak-live">${x.live != null ? `<b>${x.live}</b><span class="ak-prog"><i style="width:${Math.min(pct, 100)}%;background:${COL[x.state]}"></i></span><small>${pct}% of plan</small>` : `<span class="ak-na">Not shared</span>`}</td>
-        <td><b>${x.total}</b></td><td>₹${x.cost.toLocaleString("en-IN")}</td><td><b>${L$(x.total * x.cost)}</b></td>
-        ${x.months.map(v => `<td class="ak-m" style="--a:${v / maxCell};--c:${COL[x.state]}">${v || ""}</td>`).join("")}</tr>`;
-    };
+    const q4 = x => x.months[0] + x.months[1];
+    const total = sum(A, q4), cost = sum(A, x => q4(x) * x.cost);
+    const nov = sum(A, x => x.months[0]), dec = sum(A, x => x.months[1]);
+    const live = sum(A.filter(x => x.live != null), x => x.live);
+    const row = x => `<tr><th scope="row">${esc(x.store)}</th><td>${x.live != null ? `<b>${x.live}</b>` : `<span class="ak-na">Not shared</span>`}</td>
+        <td>${x.months[0]}</td><td>${x.months[1]}</td><td><b>${q4(x)}</b></td><td>₹${x.cost.toLocaleString("en-IN")}</td><td><b>${L$(q4(x) * x.cost)}</b></td></tr>`;
     const body = ["Pune", "Gujarat", "MP"].map(st => {
       const list = A.filter(x => x.state === st);
-      return `<tr class="ak-st" style="--c:${COL[st]}"><th colspan="17" scope="rowgroup">${NAME[st]}<small>${sum(list, x => x.total)} AOPs, ${L$(sum(list, x => x.total * x.cost))}</small></th></tr>` + list.map(row).join("");
+      return `<tr class="ak-st" style="--c:${COL[st]}"><th colspan="7" scope="rowgroup">${NAME[st]}<small>${sum(list, q4)} new AOPs, ${L$(sum(list, x => q4(x) * x.cost))}</small></th></tr>` + list.map(row).join("");
     }).join("");
-    box.innerHTML = `<div class="toolkit-head"><h3 class="display-s"><span class="lt">Areas of practice (AOP):</span> the plan by store</h3>
-        <p>Kit walls with QR codes where people already play: gyms, pools, academies and studios. What each store will open from November to next October, what it costs, and what is already live.</p></div>
+    box.innerHTML = `<div class="toolkit-head"><h3 class="display-s"><span class="lt">Areas of practice (AOP)</span> in Q4</h3>
+        <p>Kit walls with QR codes where people already play: gyms, pools, academies and studios. What each store opens in November and December, and what it costs.</p></div>
       <div class="ak-stats">
-        <div><b>${total}</b><span>AOPs planned across 13 stores, Nov 2026 to Oct 2027</span></div>
-        <div><b>${L$(cost)}</b><span>total cost for the year</span></div>
+        <div><b>${total}</b><span>new AOPs in Q4 across 13 stores</span></div>
+        <div><b>${nov} + ${dec}</b><span>opening in November and December</span></div>
+        <div><b>${L$(cost)}</b><span>Q4 cost</span></div>
         <div><b>${live}</b><span>live now in Pune: Wakad ${A.find(x => x.store === "Wakad").live}, Amanora ${A.find(x => x.store === "Amanora").live}, Wagholi ${A.find(x => x.store === "Wagholi").live}, SGS ${A.find(x => x.store === "SGS Mall").live}</span></div>
-        <div><b>${byMonth[0] + byMonth[1]}</b><span>to open in November and December</span></div>
       </div>
-      <div class="ak-months">${M.map((m, i) => `<div><i style="height:${byMonth[i] / maxM * 100}%"></i><b>${byMonth[i]}</b><span>${m}</span></div>`).join("")}</div>
-      <div class="sb-wrap"><table class="sb-table ak-table"><thead><tr><th scope="col">Store</th><th scope="col">Live now</th><th scope="col">Plan</th><th scope="col">Cost per AOP</th><th scope="col">Total cost</th>${M.map(m => `<th scope="col" class="ak-mh">${m}</th>`).join("")}</tr></thead>
-        <tbody>${body}<tr class="sb-total"><th scope="row">13 stores</th><td>${live}</td><td>${total}</td><td></td><td>${L$(cost)}</td>${byMonth.map(v => `<td class="ak-m">${v}</td>`).join("")}</tr></tbody></table></div>
-      <p class="foot">Live counts were shared for four Pune stores. Wakad is already past its plan (58 live against 54). Rajkot and Gwalior run lighter AOPs at ₹7,000 each.</p>`;
+      <div class="sb-wrap"><table class="sb-table ak-table"><thead><tr><th scope="col">Store</th><th scope="col">Live now</th><th scope="col">Nov</th><th scope="col">Dec</th><th scope="col">Q4 new</th><th scope="col">Cost per AOP</th><th scope="col">Q4 cost</th></tr></thead>
+        <tbody>${body}<tr class="sb-total"><th scope="row">13 stores</th><td>${live}</td><td>${nov}</td><td>${dec}</td><td>${total}</td><td></td><td>${L$(cost)}</td></tr></tbody></table></div>
+      <p class="foot">Live counts were shared for four Pune stores. Rajkot and Gwalior run lighter AOPs at ₹7,000 each.</p>`;
   })();
 
   // Q4 topline: challenge, by state, by channel, by month (store-level challenge sheet)
@@ -610,7 +603,7 @@
       title: "Sport is everywhere",
       copy: "We turn the places people already play into small Decathlon stores. A kit wall with prices and QR codes goes up at swimming academies, sports academies, gyms, yoga studios, metro stations in Pune and Ahmedabad, parks, societies and corporate campuses.",
       flow: ["See the display", "Scan the QR code", "Explore or complete a kit", "Shop online", "Home delivery or Click & Collect"],
-      stats: [["449", "AOPs planned, Nov 2026 to Oct 2027"], ["₹99.47 L", "total cost for the year"], ["101", "live now in Pune"], ["3-5", "pilot locations per city in Q1"]],
+      stats: [["114", "new AOPs in Q4"], ["₹25.04 L", "Q4 cost"], ["101", "live now in Pune"], ["3-5", "pilot locations per city in Q1"]],
       planTitle: "Tie-ups by store, sport and quarter", plan: aopPlan },
     { name: "WhatsApp channels, PN and RCS", tag: "5%", media: ["whatsapp.jpg", "push-notification.jpg"], contain: true,
       title: "Bring them back",

@@ -1481,6 +1481,12 @@ ul, ol { padding: 0; }
 .ak-st th small { font-family: var(--body); font-size: 12px; font-weight: 650; color: var(--text-2); margin-left: 10px; }
 @media (max-width: 900px) { .ak-stats { grid-template-columns: 1fr 1fr; } }
 
+/* light panels inside the blue Marketing playbook */
+.pb-light { background: #fff; color: var(--text); border-radius: var(--r-md); padding: clamp(18px, 2.4vw, 28px); }
+#playbook .aopk { margin: 16px 0 24px; }
+.pb-tools { margin-top: 24px; }
+.pb-tools .toolkit { margin-bottom: 28px; }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
