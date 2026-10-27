@@ -4,7 +4,7 @@ Single source of truth for this project. Read it before any work. Update it at t
 (see CLAUDE.md): add every new number, file, decision, preference and open question. Never delete
 history; mark superseded facts as superseded.
 
-Last updated: 2026-10-26
+Last updated: 2026-10-28
 
 ---
 
@@ -34,6 +34,7 @@ Hero → People ("Who we sell to": Pune, Gujarat, MP state stories with films) �
 ---
 
 ## 2. User preferences and standing instructions (learned)
+- Keep source/caveat footnotes off the scoreboard blocks (user removed them 28 Oct 2026); flag discrepancies in replies and in section 5 instead.
 
 - **Push to repo after every change** ("push to reco" = push to repo). Commit with the Co-Authored-By trailer, push to `main`, confirm the Vercel deploy is READY.
 - **Look: Decathlon "The Blue Voice"** (Oct 2026 cover): font **Inter** everywhere (deck uses Inter; Decathlon's own font is not public). Headlines: light lead-in word(s) + semibold main word; italic letter as accent ("as **O**ne."). Gradient: green #2BFF88 → teal #01EDC9 → cyan #00C4E1 → cobalt #1932C1 → indigo #2920AD → purple #6C3DB1 → magenta #C03F9C, with fine diagonal hatch. Decathlon blue #3643BA, ink #10135A. State colours: Pune blue, Gujarat teal #00A99D, MP purple #7B3FC4.
@@ -144,6 +145,7 @@ Hero → People ("Who we sell to": Pune, Gujarat, MP state stories with films) �
 ### Personas
 - Photos (26 Oct 2026). Ahmedabad: Sports Family → family football; Active Lifestyle Professional → run club; Outdoor & Travel Explorer → trek couple; Progressive Sports Enthusiast → pickleball player; Young Trend & Discovery → women's football Bloom/Glow; The Patron → golf couple. Pune: Urban Performance Professional → Kiprun runner lacing up; Active Urban Explorer → trek couple (only photo used on both boards); Sports Driven Family → family cycling; Daily Athlete & Academy Player → padel player; Active Senior Lifestyle → seniors with frisbee. Card photo height 210px with per-photo focus point.
 - Ahmedabad (Nexus board; 400-person walk-in survey 35%, catchment 25%, footfall analytics 15%, category 15%, ecosystem 10%): Sports Family 32% (maintain), Active Lifestyle Professional 25% → 27%, Outdoor & Travel Explorer 23% → 17%, Progressive Sports Enthusiast 11% → 22%, Young Trend & Discovery 9% → 14%, The Patron (business owner) not yet in mix. Targets sum to 112%.
+- Young Trend & Discovery (Ahmedabad) age is **18-24** (user, 28 Oct 2026); was 18-28 on the Nexus board. Superseded: 18-28.
 - Pune (Kothrud slide; shares are estimates): Urban Performance Professional 30–35%, Active Urban Explorer 20–25%, Sports Driven Family 25–30%, Daily Athlete & Academy Player 15–20%, Active Senior Lifestyle 10–15%.
 
 ### Competitors (Pune Marcom calendar)
@@ -224,6 +226,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - Brand safety: team photos show PUMA kit (run club), Agassi paddle, "Bloom/Glow" jerseys; Tansen image is an Amar Chitra Katha cover. Fine internally, swap before public Decathlon use.
 - The site URL is public even though the repo is private; Vercel password protection needs a paid plan.
 
+- Campaign-wise cluster summary (28 Oct): the campaigns listed add up to ₹120.10 L (Gujarat 55.11 + MP 26.99 + Pune 38.00 shown in its screenshot), while the cluster card shows the Q4 marketing budget ₹1.3 Cr (store budgets ₹129.71 L), per the user. Gap ₹9.61 L; Pune's own plan is ₹54.25 L (₹16.25 L of its campaigns not in the screenshot). Open: confirm whether the 1.3 Cr should be the campaign total.
 ---
 
 ## 6. Change log (newest last)
@@ -279,6 +282,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-10-28: Hero: the 4th phone (Nike "proud to run like a girl" reel, shows the Nike swoosh) replaced by the Yoga Day / Motera Yog Kumbh reel (user: remove Nike from the top). The Nike reel is still in the content-calendar reels band.
 - 2026-10-28: Campaign-wise spend dropdown now opens on a **cluster summary** with a toggle (Cluster summary | Gujarat | Madhya Pradesh | Pune), like the persona toggle. Cluster view: state totals (Gujarat ₹55.11 L, MP ₹26.99 L, Pune ₹54.25 L, cluster ₹136.35 L) and campaigns grouped into themes: Winter and travel ₹39.32 L (28.8%), Festive ₹19.50 L (14.3%), Running/Kiprun/marathons ₹14.72 L (10.8%), Climbing and trekking ₹11.65 L (8.5%), Christmas and year-end ₹14.29 L (10.5%), Kids Fest ₹6.35 L, Black Friday ₹6.07 L, Buffer/anniversary/other ₹8.20 L, Pune not in screenshot ₹16.25 L (11.9%). Assets ?v=20261028k.
 - 2026-10-28: Planner stars (user): Movement for All, Clearance sale (Jan and Aug), Beach Day (renamed "Beach Day, Surat"), Women's Day (Event IP), Summer Camp. Assets ?v=20261028i.
+- 2026-10-28: Young Trend & Discovery age 18-24. Removed three footnotes: campaign-wise source note (Pune 70% / Gujarat ₹55.11 L vs ₹78.43 L), the Q4-so-far note (October challenge +13.9% vs +8.6%, store-level sheet), and the store-budget note under Where the Q4 budget goes (129.71 L, Pune digital, Other). Cluster summary: removed the "Pune: not in the screenshot" row; Pune card shows ₹38.00 L (campaigns shown); cluster card now "₹1.3 Cr Q4 marketing budget" (store budgets ₹129.71 L); theme shares are of the ₹120.10 L campaigns listed (Winter and travel 32.7%). Empty cells use "-". Assets ?v=20261028l.
 - 2026-10-25: No new data. Local preview server (port 8765) stopped; restart with `python -m http.server 8765 --bind 127.0.0.1` when needed.
 
 ---

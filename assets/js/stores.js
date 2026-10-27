@@ -72,8 +72,7 @@
     $("#sbLines").innerHTML = `<table class="sb-table sb-lines"><thead><tr><th scope="col">Line</th>${ST.map(st => `<th scope="col" style="color:${STATE_COL[st]}">${STATE_NAME[st]}</th>`).join("")}<th scope="col">Total</th><th scope="col" class="share">Share of budget</th></tr></thead><tbody>
       ${order.map(i => `<tr><th scope="row"><i class="sw" style="background:${CAT[i][1]}"></i>${CAT[i][0]}</th>${ST.map(st => `<td>${by[st][i] ? fmt(by[st][i], 1) : "-"}</td>`).join("")}<td><b>${fmt(tot[i], 1)}</b></td>
         <td class="share"><div class="sh-cell"><span class="sh-bar"><i style="width:${tot[i] / maxT * 100}%;background:${CAT[i][1]}"></i></span><b>${fmt(tot[i] / all * 100, 1)}%</b></div></td></tr>`).join("")}
-      <tr class="sb-total"><th scope="row">Total</th>${stTot.map(v => `<td><b>${fmt(v, 1)}</b></td>`).join("")}<td><b>${fmt(all, 1)}</b></td><td class="share"><b>100%</b></td></tr></tbody></table>
-      <p class="foot">The store budgets add up to ${f2(sum(stores, "budgetTotal"))} L. The state line plans add up to ${fmt(all, 1)} L because they also carry spend that sits with the state, such as digital paid to MarCom. Pune's digital (MarCom) is the team's figure: 8.80 L in October, 11.99 L in November and 12.36 L in December. Gujarat's and MP's line items add up to more than their own stated totals (${fmt(D.stateLines.Gujarat.total.reduce((a, b) => a + b, 0), 1)} L and ${fmt(D.stateLines.MP.total.reduce((a, b) => a + b, 0), 1)} L). "Other" is Pune's internal consumption, Gujarat's other online channels and MP's general advertising.</p>`;
+      <tr class="sb-total"><th scope="row">Total</th>${stTot.map(v => `<td><b>${fmt(v, 1)}</b></td>`).join("")}<td><b>${fmt(all, 1)}</b></td><td class="share"><b>100%</b></td></tr></tbody></table>`;
   }
 
   /* ---------- per-store detail ---------- */

@@ -254,13 +254,12 @@
     const cluster = () => {
       const grid = THEMES.map(() => ({ Gujarat: 0, MP: 0, Pune: 0 }));
       ST.forEach(([k]) => C[k].forEach(r => { grid[themeOf(r[0])][k] += q4(r); }));
-      const rest = C.puneTotal - stTot("Pune");
-      const all = ST.reduce((a, [k]) => a + stTot(k), 0) + rest;
+      const all = ST.reduce((a, [k]) => a + stTot(k), 0);
+      const budget = D.stores.reduce((a, s) => a + s.budget.reduce((x, y) => x + y, 0), 0); // store budgets, in lakh
       const max = Math.max(...grid.map(g => g.Gujarat + g.MP + g.Pune));
-      return `<div class="cq-kpis">${ST.map(([k, n, c]) => `<div style="--c:${c}"><b>${L1(k === "Pune" ? C.puneTotal : stTot(k))}</b><span>${n}</span></div>`).join("")}<div class="tot"><b>${L1(all)}</b><span>Cluster, Q4 campaigns</span></div></div>
+      return `<div class="cq-kpis">${ST.map(([k, n, c]) => `<div style="--c:${c}"><b>${L1(stTot(k))}</b><span>${n}</span></div>`).join("")}<div class="tot"><b>₹${(budget / 100).toFixed(1)} Cr</b><span>Q4 marketing budget</span></div></div>
         <table class="sb-table sb-lines"><thead><tr><th scope="col">Campaign theme</th>${ST.map(([, n, c]) => `<th scope="col" style="color:${c}">${n}</th>`).join("")}<th scope="col">Cluster</th><th scope="col" class="share">Share</th></tr></thead><tbody>
-        ${grid.map((g, i) => { const t = g.Gujarat + g.MP + g.Pune; return `<tr><th scope="row">${THEMES[i][0]}</th>${ST.map(([k]) => `<td>${g[k] ? L1(g[k]) : "–"}</td>`).join("")}<td><b>${L1(t)}</b></td><td class="share"><div class="sh-cell"><span class="sh-bar"><i style="width:${t / max * 100}%;background:var(--blue)"></i></span><b>${(t / all * 100).toFixed(1)}%</b></div></td></tr>`; }).join("")}
-        <tr><th scope="row">Pune: not in the screenshot</th><td>–</td><td>–</td><td>${L1(rest)}</td><td><b>${L1(rest)}</b></td><td class="share"><div class="sh-cell"><b>${(rest / all * 100).toFixed(1)}%</b></div></td></tr>
+        ${grid.map((g, i) => { const t = g.Gujarat + g.MP + g.Pune; return `<tr><th scope="row">${THEMES[i][0]}</th>${ST.map(([k]) => `<td>${g[k] ? L1(g[k]) : "-"}</td>`).join("")}<td><b>${L1(t)}</b></td><td class="share"><div class="sh-cell"><span class="sh-bar"><i style="width:${t / max * 100}%;background:var(--blue)"></i></span><b>${(t / all * 100).toFixed(1)}%</b></div></td></tr>`; }).join("")}
         </tbody></table>`;
     };
     const state = k => {
@@ -268,12 +267,11 @@
       const top = [...rows].sort((a, b) => q4(b) - q4(a))[0];
       return `<div class="cq-st" style="--c:${c}"><h4>${n}<small>${L1(tot)}${k === "Pune" ? ` shown of ${L1(C.puneTotal)}` : ""} · biggest: ${esc(top[0].split(" (")[0])}</small></h4>
         <table class="sb-table"><thead><tr><th scope="col">Campaign</th><th scope="col">Oct</th><th scope="col">Nov</th><th scope="col">Dec</th><th scope="col">Q4</th><th scope="col">Share</th></tr></thead><tbody>
-        ${rows.map(r => `<tr><th scope="row">${esc(r[0])}</th>${[r[1], r[2], r[3]].map(v => `<td>${v ? L1(v) : "–"}</td>`).join("")}<td><b>${L1(q4(r))}</b></td><td>${(q4(r) / base * 100).toFixed(1)}%</td></tr>`).join("")}
+        ${rows.map(r => `<tr><th scope="row">${esc(r[0])}</th>${[r[1], r[2], r[3]].map(v => `<td>${v ? L1(v) : "-"}</td>`).join("")}<td><b>${L1(q4(r))}</b></td><td>${(q4(r) / base * 100).toFixed(1)}%</td></tr>`).join("")}
         </tbody></table></div>`;
     };
     box.innerHTML = `<div class="seg persona-seg cq-seg" role="group" aria-label="Choose business unit">${[["All", "Cluster summary"], ...ST.map(([k, n]) => [k, n])].map(([k, n], i) => `<button type="button" data-k="${k}" aria-pressed="${i === 0}">${n}</button>`).join("")}</div>
-      <div id="cqView"></div>
-      <p class="foot">From the teams' campaign-split sheets. The cluster view groups each state's campaigns into shared themes. Pune's screenshot shows five campaigns, 70% of its ₹54.25 L plan. Gujarat's campaigns add up to ₹55.11 L, below its ₹78.43 L line plan.</p>`;
+      <div id="cqView"></div>`;
     const show = k => { $("#cqView").innerHTML = k === "All" ? cluster() : state(k); $$(".cq-seg button", box).forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k)); };
     $$(".cq-seg button", box).forEach(b => b.addEventListener("click", () => show(b.dataset.k)));
     show("All");
@@ -317,8 +315,7 @@
     box.innerHTML = `<div class="panel-head row"><div><h3>Q4 so far: 1 to 26 October</h3>
         <p>In-store sales against each store's Q4 challenge. ${fmt(timePct, 0)}% of the quarter's days are gone; November and December carry Diwali, Black Friday and the year-end sale, so stores below the line are not necessarily behind.</p></div>
         <div class="pc-total"><b>₹${fmt(toAll, 2)} Cr</b><span>of ₹${fmt(chAll, 2)} Cr store challenge: ${fmt(toAll / chAll * 100, 1)}%</span></div></div>
-      <div class="pc-groups" style="--t:${timePct}%">${["Pune", "Gujarat", "MP"].map(st => `<div class="pc-grp">${(() => { const L2 = rows.filter(r => r.state === st), o = L2.reduce((a, r) => a + r.oct, 0), ch = L2.reduce((a, r) => a + r.challenge, 0); return `<div class="pc-st" style="--c:${COL[st]}"><h4>${NAME[st]}</h4><b>${(o / ch * 100).toFixed(1)}%</b><small>₹${fmt(o, 2)} of ₹${fmt(ch, 2)} Cr</small></div>`; })()}${rows.filter(r => r.state === st).sort((a, b) => b.pct - a.pct).map(row).join("")}</div>`).join("")}</div>
-      <p class="foot">October's challenge asks for +${fmt(D.q4.months[0].growth, 1)}% on last year; the store report shows +${O.growth}% for 1-26 October. Line on each bar: share of Q4 days gone (${fmt(timePct, 1)}%). Sales from the store report for 1-26 Oct 2026; challenges from the store-level challenge sheet (stores only, without digital and wholesale).</p>`;
+      <div class="pc-groups" style="--t:${timePct}%">${["Pune", "Gujarat", "MP"].map(st => `<div class="pc-grp">${(() => { const L2 = rows.filter(r => r.state === st), o = L2.reduce((a, r) => a + r.oct, 0), ch = L2.reduce((a, r) => a + r.challenge, 0); return `<div class="pc-st" style="--c:${COL[st]}"><h4>${NAME[st]}</h4><b>${(o / ch * 100).toFixed(1)}%</b><small>₹${fmt(o, 2)} of ₹${fmt(ch, 2)} Cr</small></div>`; })()}${rows.filter(r => r.state === st).sort((a, b) => b.pct - a.pct).map(row).join("")}</div>`).join("")}</div>`;
   })();
 
   // Q4 challenge by channel: per-channel scale so wholesale stays readable

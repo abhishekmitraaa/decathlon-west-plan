@@ -123,7 +123,7 @@
       visit: "Every 1-2 months, evenings and weekends", online: "25% online", sports: "Badminton, tennis, football, pickleball, running",
       trigger: "Joining an academy or a new sport", pain: "Confusion about equipment", need: "Right equipment and guidance" },
     { n: "Young Trend & Discovery", a: "Future Sports Consumer", tag: "Discover. Try. Play.", now: 9, target: 14, img: "u-women-football.jpg", pos: "center 40%",
-      age: "18-28", gender: "Balanced", lives: "University and PG catchments", basket: "₹1,000-3,000", abv: "Low to medium",
+      age: "18-24", gender: "Balanced", lives: "University and PG catchments", basket: "₹1,000-3,000", abv: "Low to medium",
       visit: "Occasional, weekend evenings", online: "60% online", sports: "Gym, walking, beginner sports",
       trigger: "Trends, influencers, offers", pain: "Doesn't know where to start", need: "Affordable discovery" },
     { n: "The Patron", a: "Business owner (wholesale and network)", tag: "My time is worth more than the discount.", now: null, target: null, img: "u-golf.jpg", pos: "center 30%",
