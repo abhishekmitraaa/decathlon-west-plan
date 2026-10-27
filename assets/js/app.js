@@ -378,9 +378,9 @@
     const tot = Object.fromEntries(ST.map(([k]) => [k, D.spend[k].y27.reduce((x, y) => x + y, 0)]));
     const all = ST.reduce((a, [k]) => a + tot[k], 0), maxP = Math.max(...D.spend.split27.map(x => x[1]));
     $("#split27").innerHTML = `<table class="sb-table sb-lines"><thead><tr><th scope="col">Line</th>${ST.map(([, n, c]) => `<th scope="col" style="color:${c}">${n}</th>`).join("")}<th scope="col">Total</th><th scope="col" class="share">Share of budget</th></tr></thead><tbody>
-      ${D.spend.split27.map(([n, p], i) => `<tr><th scope="row"><i class="sw" style="background:${COLS[i]}"></i>${n}</th>${ST.map(([k]) => `<td>${fmt(tot[k] * p / 100, 1)}</td>`).join("")}<td><b>${fmt(all * p / 100, 1)}</b></td>
+      ${D.spend.split27.map(([n, p], i) => `<tr><th scope="row"><i class="sw" style="background:${COLS[i]}"></i>${n}</th>${ST.map(([k]) => `<td>₹${fmt(tot[k] * p / 100, 1)} L</td>`).join("")}<td><b>₹${fmt(all * p / 100, 1)} L</b></td>
         <td class="share"><div class="sh-cell"><span class="sh-bar"><i style="width:${p / maxP * 100}%;background:${COLS[i]}"></i></span><b>${p}%</b></div></td></tr>`).join("")}
-      <tr class="sb-total"><th scope="row">Total</th>${ST.map(([k]) => `<td><b>${fmt(tot[k], 1)}</b></td>`).join("")}<td><b>${fmt(all, 1)}</b></td><td class="share"><b>100%</b></td></tr></tbody></table>
+      <tr class="sb-total"><th scope="row">Total</th>${ST.map(([k]) => `<td><b>₹${fmt(tot[k] / 100, 2)} Cr</b></td>`).join("")}<td><b>₹${fmt(all / 100, 2)} Cr</b></td><td class="share"><b>100%</b></td></tr></tbody></table>
       <p class="foot">The data sheet splits every month of every state the same way, so the shares are fixed. ${fmt(all / 100, 2)} Cr in total for 2027.</p>`;
   })();
   $$("#regionSeg button").forEach(b => b.addEventListener("click", () => {
@@ -507,7 +507,7 @@
         if (r < 0) { rows.push(-1); r = rows.length - 1; }
         rows[r] = it.b;
         const on = month >= it.a && month <= it.b;
-        return `<span class="pl-chip ${it.k} ${on ? "" : "dim"}" style="grid-column:${it.a + 1} / ${it.b + 2};grid-row:${r + 1}" data-tip="${esc(`<b>${it.t}</b><br>${PL.months[it.a]}${it.b > it.a ? " - " + PL.months[it.b] : ""} 2027`)}">${esc(it.t)}</span>`;
+        return `<span class="pl-chip ${it.k} ${on ? "" : "dim"}" style="grid-column:${it.a + 1} / ${it.b + 2};grid-row:${r + 1}" data-tip="${esc(`<b>${it.t.split("\n").join("<br>")}</b><br>${PL.months[it.a]}${it.b > it.a ? " - " + PL.months[it.b] : ""} 2027`)}">${it.t.split("\n").map(esc).join("<br>")}</span>`;
       }).join("");
       html += `<div class="pl-lane-name">${lane.name}</div><div class="pl-lane">${chips}</div>`;
     });
@@ -524,6 +524,7 @@
     if (!v) return "";
     return `<div class="md-f ${cls}"><dt>${label}</dt><dd>${esc(v)}</dd></div>`;
   }
+  let mdOpen = false;
   function renderMonth() {
     const i = month, P = k => PD[k][i];
     const [b1, b2] = splitBanner(P("banner"));
@@ -531,8 +532,9 @@
       <div class="md-head">
         <h3 class="display-s">${MONTHS_FULL[i]}</h3>
         <div><span class="md-banner">${esc(b1)}${b2 ? ": " + esc(b2) : ""}</span><p>${esc(P("response"))}. Sport of the month: ${D.puneSportOfMonth[i].toLowerCase()}. Pune ad spend ${fmt(pune27[i])} L.</p></div>
-        <div class="md-nav"><button type="button" data-d="-1" aria-label="Previous month">‹</button><button type="button" data-d="1" aria-label="Next month">›</button></div>
+        <div class="md-nav"><select aria-label="Choose month" id="mdSelect">${MONTHS_FULL.map((n, k) => `<option value="${k}" ${k === i ? "selected" : ""}>${n} 2027</option>`).join("")}</select><button type="button" data-d="-1" aria-label="Previous month">‹</button><button type="button" data-d="1" aria-label="Next month">›</button></div>
       </div>
+      <details class="md-more" ${mdOpen ? "open" : ""}><summary>${MONTHS_FULL[i]} in full: what competitors do, how Pune answers, and what goes live on the ground</summary>
       <div class="md-body">
         <div class="md-col them"><h4>What competitors do</h4>
           ${field("Their campaign", P("compCampaign"))}
@@ -566,7 +568,9 @@
           ${field("Flyers", P("flyers"))}
           ${field("Free products", P("freeProducts"))}
         </div>
-      </div>`;
+      </div></details>`;
+    $(".md-more").addEventListener("toggle", e => { mdOpen = e.target.open; });
+    $("#mdSelect").addEventListener("change", e => selectMonth(+e.target.value));
     $$(".md-nav button").forEach(b => b.addEventListener("click", () => selectMonth((month + +b.dataset.d + 12) % 12, true)));
   }
   function selectMonth(i, keepFocus) {
