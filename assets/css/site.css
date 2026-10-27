@@ -1761,6 +1761,15 @@ ul, ol { padding: 0; }
 .cq-st h4 small { font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-left: 10px; }
 @media (max-width: 900px) { .sr-key-th { grid-template-columns: 1fr; } .th-film { width: 100%; } }
 
+.cq-seg { margin: 14px 0 6px; flex-wrap: wrap; }
+.cq-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 10px 0 12px; }
+.cq-kpis div { background: var(--mist); border-radius: var(--r-sm); padding: 10px 12px; border-left: 4px solid var(--c, var(--ink)); }
+.cq-kpis div.tot { background: var(--ink); color: #fff; }
+.cq-kpis b { display: block; font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+.cq-kpis span { font-size: 12px; font-weight: 650; opacity: .8; }
+#cqView { overflow-x: auto; }
+@media (max-width: 700px) { .cq-kpis { grid-template-columns: 1fr 1fr; } }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }

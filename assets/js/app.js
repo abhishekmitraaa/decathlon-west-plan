@@ -235,20 +235,48 @@
       <p class="foot">Live counts were shared for Wakad, Amanora, Wagholi, SGS, Baroda and Bhopal. Rajkot and Gwalior run lighter AOPs at ₹7,000 each.</p>`;
   };
 
-  // Campaign-wise Q4 spend per state (dropdown under the Q4 line summary)
+  // Campaign-wise Q4 spend: a cluster summary by campaign theme, then a toggle for each business unit
   (() => {
     const box = $("#sbCamp"), C = D.campQ4;
     if (!box || !C) return;
     const L1 = n => "₹" + (n / 1e5).toFixed(2) + " L";
     const ST = [["Gujarat", "Gujarat", css("--guj")], ["MP", "Madhya Pradesh", css("--mp")], ["Pune", "Pune", css("--pune")]];
-    box.innerHTML = ST.map(([k, n, c]) => {
-      const rows = C[k], tot = rows.reduce((a, r) => a + r[1] + r[2] + r[3], 0), base = k === "Pune" ? C.puneTotal : tot;
-      const top = [...rows].sort((a, b) => (b[1] + b[2] + b[3]) - (a[1] + a[2] + a[3]))[0];
+    const q4 = r => r[1] + r[2] + r[3];
+    // each state's campaign names differ, so the cluster view groups them into shared themes
+    const THEMES = [
+      ["Winter and travel", /winter|travel/i], ["Festive: Navratri, Dussehra, Diwali", /navratri|dussehra|diwali|festive/i],
+      ["Running, Kiprun and marathons", /running|kiprun|marathon/i], ["Climbing and trekking", /climbing|trekking/i],
+      ["Kids Fest and Children's Day", /kids/i], ["Black Friday", /black friday/i], ["Christmas and year-end sale", /christmas|end of year/i],
+      ["Buffer, anniversary and other", /./]
+    ];
+    const themeOf = name => THEMES.findIndex(t => t[1].test(name));
+    const stTot = k => C[k].reduce((a, r) => a + q4(r), 0);
+    const cluster = () => {
+      const grid = THEMES.map(() => ({ Gujarat: 0, MP: 0, Pune: 0 }));
+      ST.forEach(([k]) => C[k].forEach(r => { grid[themeOf(r[0])][k] += q4(r); }));
+      const rest = C.puneTotal - stTot("Pune");
+      const all = ST.reduce((a, [k]) => a + stTot(k), 0) + rest;
+      const max = Math.max(...grid.map(g => g.Gujarat + g.MP + g.Pune));
+      return `<div class="cq-kpis">${ST.map(([k, n, c]) => `<div style="--c:${c}"><b>${L1(k === "Pune" ? C.puneTotal : stTot(k))}</b><span>${n}</span></div>`).join("")}<div class="tot"><b>${L1(all)}</b><span>Cluster, Q4 campaigns</span></div></div>
+        <table class="sb-table sb-lines"><thead><tr><th scope="col">Campaign theme</th>${ST.map(([, n, c]) => `<th scope="col" style="color:${c}">${n}</th>`).join("")}<th scope="col">Cluster</th><th scope="col" class="share">Share</th></tr></thead><tbody>
+        ${grid.map((g, i) => { const t = g.Gujarat + g.MP + g.Pune; return `<tr><th scope="row">${THEMES[i][0]}</th>${ST.map(([k]) => `<td>${g[k] ? L1(g[k]) : "–"}</td>`).join("")}<td><b>${L1(t)}</b></td><td class="share"><div class="sh-cell"><span class="sh-bar"><i style="width:${t / max * 100}%;background:var(--blue)"></i></span><b>${(t / all * 100).toFixed(1)}%</b></div></td></tr>`; }).join("")}
+        <tr><th scope="row">Pune: not in the screenshot</th><td>–</td><td>–</td><td>${L1(rest)}</td><td><b>${L1(rest)}</b></td><td class="share"><div class="sh-cell"><b>${(rest / all * 100).toFixed(1)}%</b></div></td></tr>
+        </tbody></table>`;
+    };
+    const state = k => {
+      const [, n, c] = ST.find(x => x[0] === k), rows = C[k], tot = stTot(k), base = k === "Pune" ? C.puneTotal : tot;
+      const top = [...rows].sort((a, b) => q4(b) - q4(a))[0];
       return `<div class="cq-st" style="--c:${c}"><h4>${n}<small>${L1(tot)}${k === "Pune" ? ` shown of ${L1(C.puneTotal)}` : ""} · biggest: ${esc(top[0].split(" (")[0])}</small></h4>
         <table class="sb-table"><thead><tr><th scope="col">Campaign</th><th scope="col">Oct</th><th scope="col">Nov</th><th scope="col">Dec</th><th scope="col">Q4</th><th scope="col">Share</th></tr></thead><tbody>
-        ${rows.map(r => { const q = r[1] + r[2] + r[3]; return `<tr><th scope="row">${esc(r[0])}</th>${[r[1], r[2], r[3]].map(v => `<td>${v ? L1(v) : "–"}</td>`).join("")}<td><b>${L1(q)}</b></td><td>${(q / base * 100).toFixed(1)}%</td></tr>`; }).join("")}
+        ${rows.map(r => `<tr><th scope="row">${esc(r[0])}</th>${[r[1], r[2], r[3]].map(v => `<td>${v ? L1(v) : "–"}</td>`).join("")}<td><b>${L1(q4(r))}</b></td><td>${(q4(r) / base * 100).toFixed(1)}%</td></tr>`).join("")}
         </tbody></table></div>`;
-    }).join("") + `<p class="foot">From the teams' campaign-split sheets. Pune's screenshot shows five campaigns, 70% of its ₹54.25 L plan; the remaining 30% isn't in it. Gujarat's campaigns add up to ₹55.11 L, below its ₹78.43 L line plan.</p>`;
+    };
+    box.innerHTML = `<div class="seg persona-seg cq-seg" role="group" aria-label="Choose business unit">${[["All", "Cluster summary"], ...ST.map(([k, n]) => [k, n])].map(([k, n], i) => `<button type="button" data-k="${k}" aria-pressed="${i === 0}">${n}</button>`).join("")}</div>
+      <div id="cqView"></div>
+      <p class="foot">From the teams' campaign-split sheets. The cluster view groups each state's campaigns into shared themes. Pune's screenshot shows five campaigns, 70% of its ₹54.25 L plan. Gujarat's campaigns add up to ₹55.11 L, below its ₹78.43 L line plan.</p>`;
+    const show = k => { $("#cqView").innerHTML = k === "All" ? cluster() : state(k); $$(".cq-seg button", box).forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k)); };
+    $$(".cq-seg button", box).forEach(b => b.addEventListener("click", () => show(b.dataset.k)));
+    show("All");
   })();
 
   // Q4 topline: challenge, by state, by channel, by month (store-level challenge sheet)
