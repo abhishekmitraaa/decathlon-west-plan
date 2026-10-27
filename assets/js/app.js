@@ -253,6 +253,30 @@
       <p class="tl-key"><span><i class="y1"></i>Q4 2025</span><span><i class="y2"></i>Q4 2026 challenge</span> Each bar is drawn to its own challenge, so the pale part shows how much is new.</p>`;
   })();
 
+  // Q4 so far: in-store sales 1-26 Oct against each store's Q4 challenge
+  (() => {
+    const O = D.octMTD, box = $("#sbPace");
+    if (!O) return;
+    const q0 = new Date("2026-10-01"), q1 = new Date("2026-12-31"), now = new Date(O.to);
+    const timePct = ((now - q0) / 864e5 + 1) / ((q1 - q0) / 864e5 + 1) * 100;
+    const cust = O.custTotal, ret = O.retTotal; // report totals count a customer once across stores
+    const toAll = O.stores.reduce((a, s) => a + s.to, 0);
+    const k = $("#octKpis");
+    if (k) k.innerHTML = `<div><b>₹${fmt(toAll, 2)} Cr</b><span>in-store sales, 1-26 October</span></div><div><b>+${O.growth}%</b><span>growth on last year (store report)</span></div><div><b>${(cust / 1e5).toFixed(2)} lakh</b><span>customers, ${Math.round(ret / cust * 100)}% of them returning</span></div><div><b>${(O.stores.reduce((a, s) => a + s.qty, 0) / 1e5).toFixed(2)} lakh</b><span>items sold</span></div>`;
+    if (!box) return;
+    const COL = { Pune: "var(--blue)", Gujarat: "var(--guj)", MP: "var(--mp)" }, NAME = { Pune: "Pune", Gujarat: "Gujarat", MP: "Madhya Pradesh" };
+    const rows = D.stores.map(s => { const o = O.stores.find(x => x.store === s.name) || { to: 0, cust: 0 }; return { ...s, oct: o.to, cust: o.cust, pct: o.to / s.challenge * 100 }; });
+    const chAll = rows.reduce((a, r) => a + r.challenge, 0);
+    const row = r => `<div class="pc-row"><span>${esc(r.name)}</span>
+        <div class="pc-track" data-tip="<b>${esc(r.name)}</b><br>1-26 Oct: ₹${fmt(r.oct, 2)} Cr<br>Q4 challenge: ₹${fmt(r.challenge, 2)} Cr (${fmt(r.pct, 1)}%)"><i style="width:${Math.min(r.pct, 100)}%;background:${COL[r.state]}"></i></div>
+        <b>${r.pct.toFixed(1)}%</b><small>₹${fmt(r.oct, 2)} of ₹${fmt(r.challenge, 2)} Cr</small></div>`;
+    box.innerHTML = `<div class="panel-head row"><div><h3>Q4 so far: 1 to 26 October</h3>
+        <p>In-store sales against each store's Q4 challenge. ${fmt(timePct, 0)}% of the quarter's days are gone; November and December carry Diwali, Black Friday and the year-end sale, so stores below the line are not necessarily behind.</p></div>
+        <div class="pc-total"><b>₹${fmt(toAll, 2)} Cr</b><span>of ₹${fmt(chAll, 2)} Cr store challenge: ${fmt(toAll / chAll * 100, 1)}%</span></div></div>
+      <div class="pc-groups" style="--t:${timePct}%">${["Pune", "Gujarat", "MP"].map(st => `<div class="pc-grp"><h4 style="color:${COL[st]}">${NAME[st]}</h4>${rows.filter(r => r.state === st).sort((a, b) => b.pct - a.pct).map(row).join("")}</div>`).join("")}</div>
+      <p class="foot">October's challenge asks for +${fmt(D.q4.months[0].growth, 1)}% on last year; the store report shows +${O.growth}% for 1-26 October. Line on each bar: share of Q4 days gone (${fmt(timePct, 1)}%). Sales from the store report for 1-26 Oct 2026; challenges from the store-level challenge sheet (stores only, without digital and wholesale).</p>`;
+  })();
+
   // Q4 challenge by channel: per-channel scale so wholesale stays readable
   addChart($("#chChannels"), (el, W) => {
     const rows = D.q4.channels, rowH = 66, H = rows.length * rowH + 8;

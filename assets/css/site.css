@@ -1614,6 +1614,26 @@ ul, ol { padding: 0; }
   #goldGrid .pen-hd span:nth-child(2) { font-size: 10.5px; }
 }
 
+/* Q4 so far: October progress */
+.pc-total { text-align: left; margin: 4px 0 12px; }
+#sbPace .panel-head.row { display: block; }
+.pc-total b { display: block; font-family: var(--display); font-size: 30px; font-weight: 700; color: var(--blue); letter-spacing: -0.025em; line-height: 1; }
+.pc-total span { font-size: 12.5px; color: var(--text-2); }
+.pc-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.pc-grp h4 { font-size: 15px; font-weight: 750; margin-bottom: 6px; }
+.pc-row { display: grid; grid-template-columns: 74px minmax(0, 1fr) 46px; grid-template-areas: "n t p" ". s s"; gap: 0 8px; align-items: center; padding: 5px 0; border-top: 1px solid var(--line); font-size: 13px; }
+.pc-row > span { grid-area: n; font-weight: 650; }
+.pc-track { grid-area: t; position: relative; height: 12px; background: var(--mist); border-radius: 6px; }
+.pc-track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; }
+.pc-track::after { content: ""; position: absolute; left: var(--t); top: -3px; bottom: -3px; width: 2px; background: var(--ink); }
+.pc-row > b { grid-area: p; text-align: right; font-weight: 800; color: var(--ink); }
+.pc-row > small { grid-area: s; font-size: 11.5px; color: var(--text-2); }
+.oct-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+.oct-kpis div { background: var(--mist); border-radius: var(--r-sm); padding: 12px 14px; }
+.oct-kpis b { display: block; font-family: var(--display); font-size: 26px; font-weight: 700; color: var(--blue); letter-spacing: -0.025em; }
+.oct-kpis span { font-size: 12.5px; color: var(--text-2); font-weight: 600; }
+@media (max-width: 900px) { .pc-groups { grid-template-columns: 1fr; } .oct-kpis { grid-template-columns: 1fr 1fr; } }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
