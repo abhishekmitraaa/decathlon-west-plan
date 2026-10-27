@@ -164,7 +164,7 @@
           <div class="res"><span>Decathlon resolves it</span><p>${esc(h.resolve)}</p></div>
         </div></article>` : ""}
       <div class="cc-ctx">${Object.entries(MKT).filter(([r]) => market === "All" || market === r).map(([r, x]) => { const [wx, ev] = x.m[m.label] || ["", ""]; return `<div class="cc-ctx-col" style="--c:${x.col}"><h5>${r === "MP" ? "Madhya Pradesh" : r}</h5><dl><div><dt>Weather</dt><dd>${wx}</dd></div><div><dt>Who</dt><dd>${x.who}</dd></div><div><dt>On locally</dt><dd>${ev}</dd></div></dl></div>`; }).join("")}</div>
-      <details class="cc-drop" ${ccOpen.grid ? "open" : ""} data-k="grid"><summary>${m.label} calendar: ${m.list.filter(inMarket).length} posts by day</summary>
+      <details class="cc-drop" ${ccOpen.grid ? "open" : ""} data-k="grid"><summary>${m.label} calendar</summary>
       <div class="cc-grid">${DOW.map(d => `<div class="cc-dow">${d}</div>`).join("")}${cells}</div></details>
       <details class="cc-drop" ${ccOpen.brief ? "open" : ""} data-k="brief"><summary>Every post in ${m.label}${market === "All" ? "" : ` for ${market === "MP" ? "Madhya Pradesh" : market}`}, in brief</summary>
       <div class="cc-briefs cc-briefs-sm">${m.list.map((p, k) => {

@@ -1722,6 +1722,29 @@ ul, ol { padding: 0; }
 .cc-drop[open] > summary { margin-bottom: 12px; }
 @media (max-width: 900px) { .sr-hero-media { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 200px; } .sr-kpis { grid-template-columns: 1fr 1fr; } }
 
+/* Surat: key opening strategies */
+.sr-keys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.sr-key { border: 1.5px solid var(--line); border-radius: var(--r-md); padding: 16px 18px; background: #fff; display: grid; gap: 14px; align-content: start; }
+.sr-key-th { grid-column: 1 / -1; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; }
+.sr-key-th img { width: 100%; border-radius: var(--r-sm); display: block; }
+.sr-key-nc { grid-template-columns: minmax(0, 1fr) 120px; }
+.sr-key-nc .ig-reel { width: 120px; }
+.sr-key .sr-kn li { padding: 6px 8px; }
+.sr-key .sr-kn b { font-size: 18px; }
+.sr-kk { display: inline-block; font-size: 12px; font-weight: 750; color: var(--blue); background: var(--mist); border-radius: 999px; padding: 3px 10px; }
+.sr-key h4 { font-size: 19px; font-weight: 750; letter-spacing: -0.02em; color: var(--ink); margin: 8px 0 4px; }
+.sr-key p { font-size: 13.5px; color: var(--text-2); }
+.sr-kn { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+.sr-kn li { font-size: 12px; color: var(--text-2); background: var(--mist); border-radius: var(--r-sm); padding: 8px 10px; }
+.sr-kn b { display: block; font-family: var(--display); font-size: 20px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
+.sr-all { margin: 14px 0; }
+.sr-all > summary { list-style: none; cursor: pointer; padding: 12px 48px 12px 16px; border: 1.5px solid var(--line); border-radius: var(--r-md); background: var(--mist); font-size: 15px; font-weight: 750; color: var(--ink); position: relative; }
+.sr-all > summary::-webkit-details-marker { display: none; }
+.sr-all > summary::after { content: "+"; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-size: 22px; color: var(--blue); }
+.sr-all[open] > summary::after { content: "–"; }
+.sr-all[open] > summary { margin-bottom: 10px; }
+@media (max-width: 900px) { .sr-keys, .sr-key-th, .sr-key-nc { grid-template-columns: 1fr; } .sr-kn { grid-template-columns: 1fr 1fr; } }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }

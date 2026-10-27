@@ -9,12 +9,13 @@
   const L = n => (n / 1e5).toLocaleString("en-IN", { maximumFractionDigits: 1 }) + " L";
   const num = n => Math.round(n).toLocaleString("en-IN");
 
+  // OPENING PLAN tab of the updated workbook (v2). Cost per walk-in ₹50 per the team (the sheet's own line says ₹61).
   const KPI = [
     ["₹85 L", "Target for the first 3 days", "Sun 27 - Tue 29 Dec"],
-    ["18,215", "Walk-ins needed in 3 days", "at 25.9% conversion"],
+    ["14,904", "Walk-ins needed in 3 days", "at 25.9% conversion and a ₹2,200 basket"],
     ["₹2.5 Cr", "First 30 days", "27 Dec - 25 Jan"],
-    ["49,580", "Walk-ins needed in 30 days", "13,950 bills at a ₹1,800 basket"],
-    ["₹18 L", "Budget", "The plan currently spends ₹24.9 L"],
+    ["40,565", "Walk-ins needed in 30 days", "strategies plan for 48,776 (120% covered)"],
+    ["₹24.7 L", "Plan spend", "against an ₹18 L budget"],
     ["₹50", "Cost per walk-in", "Bhopal's opening: ₹153"]
   ];
 
@@ -27,13 +28,6 @@
     ["4", "Events and community activation", "Nov - 26 Dec", "Teaser over Diwali, date reveal from 23 Nov, Ramat Rath in 36 societies, society sports days, treasure hunt, Happy Streets, creators' preview, 10-day countdown"],
     ["5", "Grand launch", "Sun 27 Dec", "Pehli Ramat inauguration with Surat athletes, Tapi Sunrise Run, sports carnival, gifts on bigger bills"],
     ["6", "Ramat chalu rahe", "28 Dec - 25 Jan", "“Keep playing”: Night Carnival, New Year run, Happy Streets #2, box cricket league, pickle league, Kai Po Che! for Uttarayan (14 Jan)"]
-  ];
-
-  // Day targets are the workbook's three opening-day targets (planned for 18-20 Dec), carried to the first three days.
-  const WEEKEND = [
-    ["Sun 27 Dec", "Grand launch", 3060000, ["06:45 Tapi Sunrise Run (5K / 10K) + yoga, 600 runners", "10:00 Pehli Ramat inauguration with Surat athletes", "10:00 - 19:00 Sports carnival: 15 sport zones, kids' obstacle course"]],
-    ["Mon 28 Dec", "Night Carnival", 2805000, ["Hourly plank, push-up and skipping challenges", "16:00 School and academy kit desk", "18:00 Adajan Night Carnival: box cricket under lights, pickleball, skating, DJ, food trucks"]],
-    ["Tue 29 Dec", "Night run", 2635000, ["08:00 Golden hour for pass holders", "Pickleball King of the Court, Bumper Draw launch", "19:30 LP Savani After Dark: 3K / 5K night run ending at the store"]]
   ];
 
   const WEEKS = [["W1", "Launch week", 8500000], ["W2", "New Year", 5551691], ["W3", "Kai Po Che!", 4683783], ["W4", "Pickle & Cricket Week", 3934818], ["W5", "", 2440548]];
@@ -69,19 +63,21 @@
 
   const GIFTS = [["₹2,499+", "Sports sipper"], ["₹3,999+", "10 L hiking backpack"], ["₹5,999+", "17 L football backpack"], ["₹9,999+", "24 L backpack"]];
 
+  const ALL = [["Online ads near the store", "Digital funnel ads", 290000, 6000], ["Happy Streets on LP Savani", "Ramat ni Sadak", 140000, 5400], ["Shop front and street footfall", "Blue on LP Savani", 0, 5200], ["WhatsApp to customers near Adajan", "Decathlon now 6 minutes away", 225000, 3530], ["Influencers and Surat city pages", "Creator waves", 620000, 3000], ["SMS and app to all Surat customers", "Surat, now 2 Decathlons", 0, 2700], ["Come-back passport", "Ramat Passport: aavo pachha", 40000, 2236], ["Hoardings and direction boards", "Chalo Ramiye, Adajan!", 192150, 2000], ["Club before opening", "Adajan Ramat Club", 30000, 2000], ["Sports carnival and sunrise run", "Tapi Sunrise Run + Chalo Ramiye Sports Carnival", 85000, 1980], ["Night sports carnival", "Adajan Night Carnival", 60000, 1925], ["Society visits", "Ramat Rath", 12000, 1620], ["Word of mouth and Google reviews", "Bring a friend + 500 reviews", 0, 1490], ["Newspaper leaflets and press", "Paper ma Decathlon", 115000, 1120], ["Radio countdown", "10 Divas, 10 Ramat on air", 0, 1050], ["Workshops for 50+", "First community", 10000, 1005], ["Theme weeks after opening", "Santa Party, New Year Run, Kai Po Che!", 44000, 900], ["Card and bill partners", "-", 5000, 800], ["School sports days", "School Sports Day kit desk", 80000, 720], ["Society sports days", "Society Ramat Day", 35000, 630], ["Corporates", "Hazira Corporate Saturday", 35000, 600], ["Opening day and run", "Adajan + LP Savani run", 69500, 540], ["City treasure hunt", "Find the box", 35000, 510], ["Cinema ads next door", "Cinepolis Adajan pre-show", 35000, 500], ["Academies and coaches", "Coach Ambassadors + Academy Kit Nights", 110000, 480], ["Box cricket night league", "Adajan Box Cricket Night League", 25000, 400], ["Weekly run club", "Adajan Run Club", 4500, 240], ["Pickleball league", "Adajan Pickle Premier League", 25000, 200]];
+
   const BENCH = [
     ["Bhopal DB Mall (2025)", "Mall, MP", 2623331, 17187, 8473738, 153],
     ["Nexus Ahmedabad (2025)", "Mall, Gujarat", 2405000, 10500, 6500000, 229],
     ["Pondy Bazaar (2025)", "High street, Chennai", 3000000, 9700, 9374300, 309],
     ["Pune (plan, opening week)", "Convenience, Pune", 2300000, 15000, 5300000, 153],
-    ["Adajan (opening weekend)", "High street, Surat", 1800000, 18215, 8500000, 36]
+    ["Adajan (opening plan, 30 days)", "High street, Surat", 2469635, 48776, 25000000, 50]
   ];
 
   const WATCH = [
-    "Date: opening is Sunday 27 Dec (confirmed by the team). The workbook was built for an 18-20 Dec weekend, so its day and week targets are carried over and need re-phasing; the printed grand-opening poster still shows 20 Dec.",
+    "Date: opening is Sunday 27 Dec (confirmed by the team). The workbook was built for an 18-20 Dec weekend, so its week targets need re-phasing; the printed grand-opening poster still shows 20 Dec.",
     "Budget: the plan spends ₹24.9 L against an ₹18 L budget.",
     "Permissions for Happy Streets, the night run, sunrise run and Night Carnival need police and SMC approval: apply now.",
-    "Tills: at a ₹1,800 basket the first three days need 4,700 bills. Up to 11 tills are needed at the launch-day peak.",
+    "Tills: the plan now uses a ₹2,200 basket; plan 12 tills and fast billing for the first three days.",
     "Stock: winter jackets, fleeces, trek shoes, running shoes and home gym deep by 20 Dec."
   ];
 
@@ -103,9 +99,35 @@
     <h3 class="display-s sr-sub"><span class="lt">The timeline,</span> from hoardings to day 30</h3>
     <ol class="sr-phases">${PHASES.map((p, i) => `<li class="${i === 4 ? "peak" : ""}"><span class="ph-id">${p[0]}</span><b>${esc(p[1])}</b><span class="ph-date">${p[2]}</span><p>${esc(p[3])}</p></li>`).join("")}</ol>
 
-    <h3 class="display-s sr-sub"><span class="lt">The opening weekend:</span> ₹85 L in three days</h3>
-    <p class="sr-wk-note">The amount on each day is that day's sales target for the new store; the three days add up to ₹85 L.</p>
-    <div class="sr-weekend">${WEEKEND.map(d => `<article class="sr-day ${d[1] === "Night Carnival" ? "sr-day-nc" : ""}"><div class="sr-day-txt"><span class="sr-date">${d[0]}</span><h4>${d[1]}</h4><b class="sr-target">${L(d[2])}<small>sales target</small></b><ul>${d[3].map(x => `<li>${esc(x)}</li>`).join("")}</ul>${d[1] === "Night Carnival" ? `<p class="sr-nc-insp"><b>Inspiration:</b> Decathlon's Vitalsport in France turns the store grounds into try-every-sport zones run with local clubs. We borrow it after dark. <a class="ig-link" href="https://www.instagram.com/reel/DcbXgJmIvz9/" target="_blank" rel="noopener">@decathlon_campus_hq</a></p>` : ""}</div>${d[1] === "Night Carnival" ? `<div class="sm-video ig-reel"><video muted loop playsinline preload="none" poster="assets/posters/ig/DcbXgJmIvz9.jpg" data-src="assets/videos/ig/DcbXgJmIvz9.mp4" aria-label="Decathlon Vitalsport event reel"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>` : ""}</article>`).join("")}</div>
+    <h3 class="display-s sr-sub"><span class="lt">Key opening strategies</span> to warm up the catchment</h3>
+    <div class="sr-keys">
+      <article class="sr-key sr-key-th">
+        <img src="assets/img/treasure-hunt-journey.jpg" alt="Treasure hunt campaign journey: find a blue box, open it, golden ticket, redeem in store, pass it on" loading="lazy">
+        <div><span class="sr-kk">Treasure hunt, marketed with influencers</span><h4>Find the box. Win the city.</h4>
+          <p>Blue mystery boxes appear at colleges, malls, parks, gyms and playgrounds around Adajan. Inside, a golden ticket to redeem at the new store. Surat creators drop the clues on their pages, so the hunt spreads before the doors open. Format borrowed from the “Kheloge Khudoge Banoge Kharab” campaign deck.</p>
+          <ul class="sr-kn"><li><b>600</b>players; the final clue is in the store</li><li><b>14</b>creator waves on Surat city pages, 10 lakh views</li><li><b>3,510</b>walk-ins (hunt + creators)</li></ul></div>
+      </article>
+      <article class="sr-key sr-key-nc">
+        <div><span class="sr-kk">Night carnival for families</span><h4>Adajan Night Carnival</h4>
+          <p>Surat loves going out at night. Box cricket under lights, pickleball, skating, a DJ and food trucks on the forecourt, with an RJ live, built like Decathlon's Vitalsport weekends in France. <a class="ig-link" href="https://www.instagram.com/reel/DcbXgJmIvz9/" target="_blank" rel="noopener">@decathlon_campus_hq</a></p>
+          <ul class="sr-kn"><li><b>3,500</b>people expected</li><li><b>1,925</b>walk-ins, more than half</li><li><b>₹60,000</b>budget</li></ul></div>
+        <div class="sm-video ig-reel"><video muted loop playsinline preload="none" poster="assets/posters/ig/DcbXgJmIvz9.jpg" data-src="assets/videos/ig/DcbXgJmIvz9.mp4" aria-label="Decathlon Vitalsport event reel"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>
+      </article>
+      <article class="sr-key">
+        <div><span class="sr-kk">Yoga, walking and running</span><h4>Sunrise runs and car-free streets</h4>
+          <p>Tapi Sunrise Run with yoga and a sports carnival, an opening-day run on LP Savani that ends inside the store, Happy Streets (Ramat ni Sadak) on two Sundays, and a weekly Adajan Run Club.</p>
+          <ul class="sr-kn"><li><b>600</b>runners + 3,000 at the carnival</li><li><b>9,000</b>people per Happy Streets Sunday</li><li><b>8,160</b>walk-ins across these events</li></ul></div>
+      </article>
+      <article class="sr-key">
+        <div><span class="sr-kk">Society events</span><h4>Ramat Rath and Society Ramat Day</h4>
+          <p>The Ramat Rath (a sports van) visits 36 societies, and 6 society sports days let families try a sport together; families buy what their kids tried.</p>
+          <ul class="sr-kn"><li><b>36</b>societies visited</li><li><b>6</b>society sports days, about 300 people each</li><li><b>2,250</b>walk-ins</li></ul></div>
+      </article>
+    </div>
+    <details class="sr-all"><summary>All 28 strategies: events, partners, budget and walk-ins</summary>
+      <div class="sb-wrap"><table class="sb-table"><thead><tr><th scope="col">Strategy</th><th scope="col">Event</th><th scope="col">Budget</th><th scope="col">Walk-ins</th></tr></thead><tbody>${ALL.map(r => `<tr><th scope="row">${esc(r[0])}</th><td style="text-align:left">${esc(r[1])}</td><td>${r[2] ? "₹" + num(r[2]) : "No cost"}</td><td>${num(r[3])}</td></tr>`).join("")}
+      <tr class="sb-total"><th scope="row">Total</th><td></td><td>₹23,22,150 + ₹1,47,485 offers</td><td>48,776</td></tr></tbody></table></div>
+    </details>
     <div class="sr-weeks">
       <h4>Turnover by week, first 30 days</h4>
       ${WEEKS.map(w => `<div class="sr-week"><span>${w[0]}${w[1] ? `<small>${w[1]}</small>` : ""}</span><i style="--w:${w[2] / maxW * 100}%" data-tip="<b>${w[0]}</b><br>${L(w[2])}"></i><b>${L(w[2])}</b></div>`).join("")}
