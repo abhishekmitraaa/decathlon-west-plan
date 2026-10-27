@@ -368,7 +368,8 @@
     $("#spendNotes").innerHTML = ["Pune", "Gujarat", "MP"].map(r => {
       const d = D.spend[r], a = sum(d.y26), b = sum(d.y27), ch = (b - a) / a * 100;
       const c = regionColor(r);
-      return `<div><span class="sw" style="background:${c}"></span>${r}<b>${fmt(b / 100, 2)} Cr in 2027</b>${ch >= 0 ? "+" : ""}${fmt(ch, 0)}% vs ${fmt(a / 100, 2)} Cr in 2026</div>`;
+      const qa = sum(d.y26.slice(0, 3)), qb = sum(d.y27.slice(0, 3)), qc = (qb - qa) / qa * 100;
+      return `<div><span class="sw" style="background:${c}"></span>${r}<b>${fmt(b / 100, 2)} Cr in 2027</b>${ch >= 0 ? "+" : ""}${fmt(ch, 0)}% vs ${fmt(a / 100, 2)} Cr in 2026<small class="sn-q1">Q1: ${fmt(qa / 100, 2)} Cr → <b>${fmt(qb / 100, 2)} Cr</b> (${qc >= 0 ? "+" : ""}${fmt(qc, 0)}%)</small></div>`;
     }).join("");
   };
   spendNotes();
@@ -378,9 +379,9 @@
     const tot = Object.fromEntries(ST.map(([k]) => [k, D.spend[k].y27.reduce((x, y) => x + y, 0)]));
     const all = ST.reduce((a, [k]) => a + tot[k], 0), maxP = Math.max(...D.spend.split27.map(x => x[1]));
     $("#split27").innerHTML = `<table class="sb-table sb-lines"><thead><tr><th scope="col">Line</th>${ST.map(([, n, c]) => `<th scope="col" style="color:${c}">${n}</th>`).join("")}<th scope="col">Total</th><th scope="col" class="share">Share of budget</th></tr></thead><tbody>
-      ${D.spend.split27.map(([n, p], i) => `<tr><th scope="row"><i class="sw" style="background:${COLS[i]}"></i>${n}</th>${ST.map(([k]) => `<td>₹${fmt(tot[k] * p / 100, 1)} L</td>`).join("")}<td><b>₹${fmt(all * p / 100, 1)} L</b></td>
+      ${D.spend.split27.map(([n, p], i) => `<tr><th scope="row"><i class="sw" style="background:${COLS[i]}"></i>${n}</th>${ST.map(([k]) => `<td>₹${(tot[k] * p / 1e4).toFixed(2)} Cr</td>`).join("")}<td><b>₹${(all * p / 1e4).toFixed(2)} Cr</b></td>
         <td class="share"><div class="sh-cell"><span class="sh-bar"><i style="width:${p / maxP * 100}%;background:${COLS[i]}"></i></span><b>${p}%</b></div></td></tr>`).join("")}
-      <tr class="sb-total"><th scope="row">Total</th>${ST.map(([k]) => `<td><b>₹${fmt(tot[k] / 100, 2)} Cr</b></td>`).join("")}<td><b>₹${fmt(all / 100, 2)} Cr</b></td><td class="share"><b>100%</b></td></tr></tbody></table>
+      <tr class="sb-total"><th scope="row">Total</th>${ST.map(([k]) => `<td><b>₹${(tot[k] / 100).toFixed(2)} Cr</b></td>`).join("")}<td><b>₹${(all / 100).toFixed(2)} Cr</b></td><td class="share"><b>100%</b></td></tr></tbody></table>
       <p class="foot">The data sheet splits every month of every state the same way, so the shares are fixed. ${fmt(all / 100, 2)} Cr in total for 2027.</p>`;
   })();
   $$("#regionSeg button").forEach(b => b.addEventListener("click", () => {
@@ -584,7 +585,7 @@
   // IP footfall bars
   (() => {
     const max = Math.max(...D.ipEvents.map(e => e.goal));
-    $("#ipBars").innerHTML = D.ipEvents.map(e => `<div class="ip-row ${e.goal === max ? "top" : ""}"><b>${e.name}</b><span>${e.when}</span>
+    if ($("#ipBars")) $("#ipBars").innerHTML = D.ipEvents.map(e => `<div class="ip-row ${e.goal === max ? "top" : ""}"><b>${e.name}</b><span>${e.when}</span>
       <i style="--w:${Math.max(e.goal / max * 100, 1)}%" data-v="${e.goal.toLocaleString("en-IN")}"></i></div>`).join("");
   })();
 
@@ -760,6 +761,7 @@
     const sum = (a, n) => a.slice(0, n).reduce((x, y) => x + y, 0);
     const rows = ["Pune", "Gujarat", "MP"].map(r => ({ r, a: sum(D.spend[r].y26, 3), b: sum(D.spend[r].y27, 3) }));
     const max = Math.max(...rows.flatMap(x => [x.a, x.b]));
+    if (!$("#chQ1")) return;
     $("#chQ1").innerHTML = `<div class="stores">${rows.map(x => {
       const ch = (x.b - x.a) / x.a * 100;
       return `<div class="store-row" style="grid-template-columns:90px 1fr"><b>${x.r}</b><div class="store-bars">
