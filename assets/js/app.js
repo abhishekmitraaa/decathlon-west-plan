@@ -650,7 +650,7 @@
       title: "Adajan, Surat: grand launch 27 December",
       copy: "Chalo Ramiye, Adajan! Hoardings locked on 30 Oct, AOPs placed in the catchment from 1 Nov, then events and community activation, and the grand launch on Sunday 27 Dec: ₹85 L in the first three days, then 30 days to ₹2.5 Cr. Gifts on bigger bills instead of discounts, Deca Runners classes, and twice the usual marketing spend in Q1. The full plan is in the Surat section.",
       stats: [["720+", "sports items in store"], ["2x", "Q1 marketing spend"], ["5k", "Beach Fest participants"], ["10:30-10", "open daily"]],
-      planTitle: "Surat new-store timeline", plan: () => `<ol class="sr-tl"><li><b>30 Oct</b><span>Hoardings finalised, led by the Pal Umra Bridge board</span></li><li><b>1 Nov</b><span>AOPs finalised; kit walls placed at gyms, pools, academies and studios in the Adajan catchment</span></li><li><b>Nov - Dec</b><span>Events and community activation: teaser, date reveal, Ramat Rath in 36 societies, treasure hunt, Happy Streets, creators' preview, 10-day countdown</span></li><li class="peak"><b>Sun 27 Dec</b><span>Grand launch: inauguration with Surat athletes, Tapi Sunrise Run, sports carnival</span></li><li><b>27 Dec - 25 Jan</b><span>First 30 days to ₹2.5 Cr: Night Carnival, New Year run, leagues, Kai Po Che! for Uttarayan</span></li></ol>` },
+      planTitle: "Surat new-store timeline", plan: () => `<ol class="sr-tl"><li><b>Deal signed</b><span>“Opening in December 2026” banner goes up on the building, with a QR code to apply for jobs</span></li><li><b>30 Oct</b><span>Hoardings finalised, led by the Pal Umra Bridge board</span></li><li><b>By 15 Nov</b><span>All 10 AOPs and 2 hoardings live in the Adajan area (placement from 1 Nov)</span></li><li><b>Nov - Dec</b><span>Events and community activation: teaser, date reveal, Ramat Rath in 36 societies, treasure hunt, Happy Streets, creators' preview, 10-day countdown</span></li><li class="peak"><b>Sun 27 Dec</b><span>Grand launch: inauguration with Surat athletes, Tapi Sunrise Run, sports carnival</span></li><li><b>27 Dec - 25 Jan</b><span>First 30 days to ₹2.5 Cr: Night Carnival, New Year run, leagues, Kai Po Che! for Uttarayan</span></li></ol>` },
     { name: "Quick commerce and delivery", tag: "2 hr", media: ["quick-commerce.jpg", "two-hour-delivery.jpg", "app-order.jpg"],
       title: "Sport, delivered fast",
       copy: "The 12 Cr digital challenge splits three ways: home delivery and pick-from-store, sell-at-store in our shops, and express delivery with affiliation. Digital turnover grows 27% when traffic, conversion, orders and basket all move together.",
@@ -747,7 +747,7 @@
   })();
 
   // AW26 social content plan
-  $("#contentPlan").innerHTML = [
+  if ($("#contentPlan")) $("#contentPlan").innerHTML = [
     { q: "Q1", m: "Jan-Mar", c: "Winter campaign, Republic Day, Valentine's Day, Women's Day and Holi", p: "New shoes launch phase 1, running and cycling", h: "New Year, New Moves. Movement for All. Clearance sale alerts.", now: true },
     { q: "Q2", m: "Apr-Jun", c: "Summer camp, Ugadi and Gudi Padwa, Sports Utsav (22-23 May), Yoga Day", p: "Swimming, cricket, fitness gear, Kiprun Challenger", h: "World Environment Day Circular Bazaar. Beach Day promo." },
     { q: "Q3", m: "Jul-Sep", c: "Monsoon and back to school, Independence Day, National Sports Day, 51st anniversary", p: "Shoes phase 3 and 4, AW hero and iconic range", h: "Mountain Days. Monsoon gear. Outdoor challenges." },

@@ -21,10 +21,10 @@
   // Timeline from the team (27 Oct 2026): hoardings locked 30 Oct, AOPs from 1 Nov, then events and
   // community activation, grand launch Sun 27 Dec. Activities come from the opening-plan workbook.
   const PHASES = [
-    ["1", "Hoardings locked", "30 Oct", "Hoardings finalised, led by the Pal Umra Bridge board (40 x 20 ft, Nov 2026 to Oct 2027) between Adajan, Piplod and Vesu"],
-    ["2", "AOPs in the catchment", "From 1 Nov", "AOPs finalised and kit walls placed at gyms, pools, academies and studios around Adajan; partner list of 150+ places and the 10,087 nearby customers"],
-    ["3", "Kaink navu aave che", "1 - 22 Nov", "“Something new is coming”: teaser shop front and reels. Stay light over Diwali (8 Nov) while Surat is away"],
-    ["4", "Events and community activation", "23 Nov - 26 Dec", "Date reveal, Ramat Rath in 36 societies, society sports days, old-shoe drive, treasure hunt, Happy Streets on LP Savani, radio, Cinepolis, 80,000 leaflets, creators' preview, 10-day countdown"],
+    ["1", "Deal signed: banner up", "Day the deal is signed", "The “Opening in December 2026” banner goes up on the building straight away, with a QR code to apply for jobs at the store"],
+    ["2", "Hoardings locked", "30 Oct", "Hoardings finalised, led by the Pal Umra Bridge board between Adajan, Piplod and Vesu"],
+    ["3", "AOPs and hoardings live", "By 15 Nov", "All 10 AOPs and 2 hoardings live in the Adajan area: kit walls at gyms, pools, academies and studios, placed from 1 Nov"],
+    ["4", "Events and community activation", "Nov - 26 Dec", "Teaser over Diwali, date reveal from 23 Nov, Ramat Rath in 36 societies, society sports days, treasure hunt, Happy Streets, creators' preview, 10-day countdown"],
     ["5", "Grand launch", "Sun 27 Dec", "Pehli Ramat inauguration with Surat athletes, Tapi Sunrise Run, sports carnival, gifts on bigger bills"],
     ["6", "Ramat chalu rahe", "28 Dec - 25 Jan", "“Keep playing”: Night Carnival, New Year run, Happy Streets #2, box cricket league, pickle league, Kai Po Che! for Uttarayan (14 Jan)"]
   ];
@@ -93,6 +93,7 @@
     <div class="sr-hero">
       <div class="sr-hero-media">
         <img src="assets/img/surat-store.jpg" alt="Render of the new large-format Decathlon store" loading="lazy">
+        <img src="assets/img/surat-deal-banner.jpg" alt="Decathlon banner on the building: Opening in December 2026, explore more than 50 sports, with a QR code to apply for jobs" loading="lazy">
         <img src="assets/img/surat-grand-opening.jpg" alt="Grand opening Adajan Surat poster" loading="lazy">
         <img src="assets/img/surat-offer.jpg" alt="Adajan opening gifts poster" loading="lazy">
       </div>

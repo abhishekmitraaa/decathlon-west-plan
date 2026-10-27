@@ -129,6 +129,7 @@
     $$("#ccMkt button").forEach(x => x.setAttribute("aria-pressed", x === b));
     showMonth(+($("#ccTabs button[aria-selected='true']") || { dataset: { i: 1 } }).dataset.i);
   }));
+  const ccOpen = { grid: false, brief: false };
   function showMonth(i) {
     const m = C.months[i], h = (C.heroes || {})[m.label];
     $$("#ccTabs button").forEach(b => b.setAttribute("aria-selected", +b.dataset.i === i));
@@ -163,8 +164,9 @@
           <div class="res"><span>Decathlon resolves it</span><p>${esc(h.resolve)}</p></div>
         </div></article>` : ""}
       <div class="cc-ctx">${Object.entries(MKT).filter(([r]) => market === "All" || market === r).map(([r, x]) => { const [wx, ev] = x.m[m.label] || ["", ""]; return `<div class="cc-ctx-col" style="--c:${x.col}"><h5>${r === "MP" ? "Madhya Pradesh" : r}</h5><dl><div><dt>Weather</dt><dd>${wx}</dd></div><div><dt>Who</dt><dd>${x.who}</dd></div><div><dt>On locally</dt><dd>${ev}</dd></div></dl></div>`; }).join("")}</div>
-      <div class="cc-grid">${DOW.map(d => `<div class="cc-dow">${d}</div>`).join("")}${cells}</div>
-      <h4 class="cc-sub">Every post in ${m.label}${market === "All" ? "" : ` for ${market === "MP" ? "Madhya Pradesh" : market}`}, in brief</h4>
+      <details class="cc-drop" ${ccOpen.grid ? "open" : ""} data-k="grid"><summary>${m.label} calendar: ${m.list.filter(inMarket).length} posts by day</summary>
+      <div class="cc-grid">${DOW.map(d => `<div class="cc-dow">${d}</div>`).join("")}${cells}</div></details>
+      <details class="cc-drop" ${ccOpen.brief ? "open" : ""} data-k="brief"><summary>Every post in ${m.label}${market === "All" ? "" : ` for ${market === "MP" ? "Madhya Pradesh" : market}`}, in brief</summary>
       <div class="cc-briefs cc-briefs-sm">${m.list.map((p, k) => {
         if (!inMarket(p)) return "";
         const dt = new Date(m.y, m.m, p.day);
@@ -172,9 +174,11 @@
           <div class="cm-date"><b>${p.day}</b><span>${DOW[(dt.getDay() + 6) % 7]}</span></div>
           <div class="cm-main"><div class="cm-top"><span class="cm-fmt">${p.format}</span><span class="cm-reg">${esc(p.region)}</span>${p.creator ? `<span class="cb-cr">★ creator</span>` : ""}</div>
             <h5>${esc(p.title)}</h5><p class="cb-hook">“${esc(p.hook)}”</p><p class="cm-why">${esc(p.why)}</p></div></article>`;
-      }).join("")}</div>`;
+      }).join("")}</div></details>`;
+    $$("#ccMonth .cc-drop").forEach(d => d.addEventListener("toggle", () => { ccOpen[d.dataset.k] = d.open; }));
     $$("#ccMonth .cc-chip").forEach(c => c.addEventListener("click", () => {
       const el = document.getElementById("ccb-" + c.dataset.k);
+      el.closest("details").open = true; ccOpen.brief = true;
       $$(".cc-brief.on").forEach(x => x.classList.remove("on"));
       el.classList.add("on");
       el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
