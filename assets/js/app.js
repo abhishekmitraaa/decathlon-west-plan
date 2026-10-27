@@ -229,11 +229,27 @@
       const list = A.filter(x => x.state === st);
       return `<tr class="ak-st" style="--c:${COL[st]}"><th colspan="7" scope="rowgroup">${NAME[st]}<small>${sum(list, q4)} new AOPs, ${L$(sum(list, x => q4(x) * x.cost))}</small></th></tr>` + list.map(row).join("");
     }).join("");
-    return `<p class="ak-lead">${nov} open in November and ${dec} in December. Live counts so far: Wakad ${A.find(x => x.store === "Wakad").live}, Amanora ${A.find(x => x.store === "Amanora").live}, Wagholi ${A.find(x => x.store === "Wagholi").live}, SGS ${A.find(x => x.store === "SGS Mall").live}.</p>
+    return `<p class="ak-lead">${nov} open in November and ${dec} in December. Live now: ${A.filter(x => x.live != null).map(x => `${x.store} ${x.live}`).join(", ")}.</p>
       <div class="sb-wrap"><table class="sb-table ak-table"><thead><tr><th scope="col">Store</th><th scope="col">Live now</th><th scope="col">Nov</th><th scope="col">Dec</th><th scope="col">Q4 new</th><th scope="col">Cost per AOP</th><th scope="col">Q4 cost</th></tr></thead>
         <tbody>${body}<tr class="sb-total"><th scope="row">13 stores</th><td>${live}</td><td>${nov}</td><td>${dec}</td><td>${total}</td><td></td><td>${L$(cost)}</td></tr></tbody></table></div>
-      <p class="foot">Live counts were shared for four Pune stores. Rajkot and Gwalior run lighter AOPs at ₹7,000 each.</p>`;
+      <p class="foot">Live counts were shared for Wakad, Amanora, Wagholi, SGS, Baroda and Bhopal. Rajkot and Gwalior run lighter AOPs at ₹7,000 each.</p>`;
   };
+
+  // Campaign-wise Q4 spend per state (dropdown under the Q4 line summary)
+  (() => {
+    const box = $("#sbCamp"), C = D.campQ4;
+    if (!box || !C) return;
+    const L1 = n => "₹" + (n / 1e5).toFixed(2) + " L";
+    const ST = [["Gujarat", "Gujarat", css("--guj")], ["MP", "Madhya Pradesh", css("--mp")], ["Pune", "Pune", css("--pune")]];
+    box.innerHTML = ST.map(([k, n, c]) => {
+      const rows = C[k], tot = rows.reduce((a, r) => a + r[1] + r[2] + r[3], 0), base = k === "Pune" ? C.puneTotal : tot;
+      const top = [...rows].sort((a, b) => (b[1] + b[2] + b[3]) - (a[1] + a[2] + a[3]))[0];
+      return `<div class="cq-st" style="--c:${c}"><h4>${n}<small>${L1(tot)}${k === "Pune" ? ` shown of ${L1(C.puneTotal)}` : ""} · biggest: ${esc(top[0].split(" (")[0])}</small></h4>
+        <table class="sb-table"><thead><tr><th scope="col">Campaign</th><th scope="col">Oct</th><th scope="col">Nov</th><th scope="col">Dec</th><th scope="col">Q4</th><th scope="col">Share</th></tr></thead><tbody>
+        ${rows.map(r => { const q = r[1] + r[2] + r[3]; return `<tr><th scope="row">${esc(r[0])}</th>${[r[1], r[2], r[3]].map(v => `<td>${v ? L1(v) : "–"}</td>`).join("")}<td><b>${L1(q)}</b></td><td>${(q / base * 100).toFixed(1)}%</td></tr>`; }).join("")}
+        </tbody></table></div>`;
+    }).join("") + `<p class="foot">From the teams' campaign-split sheets. Pune's screenshot shows five campaigns, 70% of its ₹54.25 L plan; the remaining 30% isn't in it. Gujarat's campaigns add up to ₹55.11 L, below its ₹78.43 L line plan.</p>`;
+  })();
 
   // Q4 topline: challenge, by state, by channel, by month (store-level challenge sheet)
   if ($("#sbTop")) (() => {
@@ -508,7 +524,7 @@
         if (r < 0) { rows.push(-1); r = rows.length - 1; }
         rows[r] = it.b;
         const on = month >= it.a && month <= it.b;
-        return `<span class="pl-chip ${it.k} ${on ? "" : "dim"}" style="grid-column:${it.a + 1} / ${it.b + 2};grid-row:${r + 1}" data-tip="${esc(`<b>${it.t.split("\n").join("<br>")}</b><br>${PL.months[it.a]}${it.b > it.a ? " - " + PL.months[it.b] : ""} 2027`)}">${it.t.split("\n").map(esc).join("<br>")}</span>`;
+        return `<span class="pl-chip ${it.k} ${on ? "" : "dim"}" style="grid-column:${it.a + 1} / ${it.b + 2};grid-row:${r + 1}" data-tip="${esc(`<b>${it.t.split("\n").join("<br>")}</b><br>${PL.months[it.a]}${it.b > it.a ? " - " + PL.months[it.b] : ""} 2027${it.star ? "<br>★ Key moment" : ""}`)}">${it.star ? "★ " : ""}${it.t.split("\n").map(esc).join("<br>")}</span>`;
       }).join("");
       html += `<div class="pl-lane-name">${lane.name}</div><div class="pl-lane">${chips}</div>`;
     });
@@ -617,7 +633,7 @@
       title: "Sport is everywhere",
       copy: "We turn the places people already play into small Decathlon stores. A kit wall with prices and QR codes goes up at swimming academies, sports academies, gyms, yoga studios, metro stations in Pune and Ahmedabad, parks, societies and corporate campuses.",
       flow: ["See the display", "Scan the QR code", "Explore or complete a kit", "Shop online", "Home delivery or Click & Collect"],
-      stats: [["114", "new AOPs in Q4"], ["₹25.04 L", "Q4 cost"], ["101", "live now in Pune"], ["3-5", "pilot locations per city in Q1"]],
+      stats: [["114", "new AOPs in Q4"], ["₹25.04 L", "Q4 cost"], ["114", "live now (6 stores)"], ["3-5", "pilot locations per city in Q1"]],
       planTitle: "AOPs in Q4, store by store: what opens in November and December, and what it costs", plan: aopQ4 },
     { name: "WhatsApp channels, PN and RCS", tag: "5%", media: ["whatsapp.jpg", "push-notification.jpg"], contain: true,
       title: "Bring them back",

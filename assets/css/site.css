@@ -1745,6 +1745,22 @@ ul, ol { padding: 0; }
 .sr-all[open] > summary { margin-bottom: 10px; }
 @media (max-width: 900px) { .sr-keys, .sr-key-th, .sr-key-nc { grid-template-columns: 1fr; } .sr-kn { grid-template-columns: 1fr 1fr; } }
 
+/* Surat cards: small treasure-hunt film, Happy Streets collage */
+.sr-key-th { grid-template-columns: 300px minmax(0, 1fr); }
+.th-film { aspect-ratio: 16 / 9; width: 300px; }
+.hs-collage { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 6px; height: 130px; }
+.hs-collage img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--r-sm); display: block; }
+/* campaign-wise spend dropdown */
+.cq-drop { margin-top: 14px; }
+.cq-drop > summary { list-style: none; cursor: pointer; padding: 12px 48px 12px 16px; border: 1.5px solid var(--line); border-radius: var(--r-md); background: var(--mist); font-size: 15px; font-weight: 750; color: var(--ink); position: relative; }
+.cq-drop > summary::-webkit-details-marker { display: none; }
+.cq-drop > summary::after { content: "+"; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-size: 22px; color: var(--blue); }
+.cq-drop[open] > summary::after { content: "–"; }
+.cq-st { margin-top: 16px; overflow-x: auto; }
+.cq-st h4 { font-size: 16px; font-weight: 750; color: var(--c); border-bottom: 2px solid var(--c); padding-bottom: 4px; margin-bottom: 4px; }
+.cq-st h4 small { font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-left: 10px; }
+@media (max-width: 900px) { .sr-key-th { grid-template-columns: 1fr; } .th-film { width: 100%; } }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }

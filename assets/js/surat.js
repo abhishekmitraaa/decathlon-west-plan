@@ -102,7 +102,7 @@
     <h3 class="display-s sr-sub"><span class="lt">Key opening strategies</span> to warm up the catchment</h3>
     <div class="sr-keys">
       <article class="sr-key sr-key-th">
-        <img src="assets/img/treasure-hunt-journey.jpg" alt="Treasure hunt campaign journey: find a blue box, open it, golden ticket, redeem in store, pass it on" loading="lazy">
+        <div class="sm-video th-film"><video muted loop playsinline preload="none" poster="assets/posters/treasure-hunt.jpg" data-src="assets/videos/treasure-hunt.mp4" aria-label="Treasure hunt film: a runner finds a Decathlon box with a golden ticket and redeems it in store"></video></div>
         <div><span class="sr-kk">Treasure hunt, marketed with influencers</span><h4>Find the box. Win the city.</h4>
           <p>Blue mystery boxes appear at colleges, malls, parks, gyms and playgrounds around Adajan. Inside, a golden ticket to redeem at the new store. Surat creators drop the clues on their pages, so the hunt spreads before the doors open. Format borrowed from the “Kheloge Khudoge Banoge Kharab” campaign deck.</p>
           <ul class="sr-kn"><li><b>600</b>players; the final clue is in the store</li><li><b>14</b>creator waves on Surat city pages, 10 lakh views</li><li><b>3,510</b>walk-ins (hunt + creators)</li></ul></div>
@@ -114,13 +114,14 @@
         <div class="sm-video ig-reel"><video muted loop playsinline preload="none" poster="assets/posters/ig/DcbXgJmIvz9.jpg" data-src="assets/videos/ig/DcbXgJmIvz9.mp4" aria-label="Decathlon Vitalsport event reel"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>
       </article>
       <article class="sr-key">
-        <div><span class="sr-kk">Yoga, walking and running</span><h4>Sunrise runs and car-free streets</h4>
-          <p>Tapi Sunrise Run with yoga and a sports carnival, an opening-day run on LP Savani that ends inside the store, Happy Streets (Ramat ni Sadak) on two Sundays, and a weekly Adajan Run Club.</p>
+        <div class="hs-collage"><img src="assets/img/happy-streets-1.jpg" alt="Decathlon team at Happy Streets, Pune" loading="lazy"><img src="assets/img/happy-streets-2.jpg" alt="Kids doing push-up challenges with a Decathlon coach at Happy Streets" loading="lazy"><img src="assets/img/happy-streets-3.jpg" alt="Kids and families at a Decathlon Happy Streets game" loading="lazy"></div>
+        <div><span class="sr-kk">Yoga, walking and running</span><h4>New Year run and Happy Streets</h4>
+          <p>A New Year run from the new store, Happy Streets (car-free Sundays on LP Savani, as we ran with Pune Municipal Corporation in Pune), the Tapi Sunrise Run with yoga, and a weekly Adajan Run Club.</p>
           <ul class="sr-kn"><li><b>600</b>runners + 3,000 at the carnival</li><li><b>9,000</b>people per Happy Streets Sunday</li><li><b>8,160</b>walk-ins across these events</li></ul></div>
       </article>
       <article class="sr-key">
-        <div><span class="sr-kk">Society events</span><h4>Ramat Rath and Society Ramat Day</h4>
-          <p>The Ramat Rath (a sports van) visits 36 societies, and 6 society sports days let families try a sport together; families buy what their kids tried.</p>
+        <div><h4>Society events</h4>
+          <p>We visit 36 housing societies around Adajan with sports to try, and host 6 society sports days where families play together; families buy what their kids tried.</p>
           <ul class="sr-kn"><li><b>36</b>societies visited</li><li><b>6</b>society sports days, about 300 people each</li><li><b>2,250</b>walk-ins</li></ul></div>
       </article>
     </div>
