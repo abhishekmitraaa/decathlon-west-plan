@@ -89,7 +89,7 @@
     { n: "circuit-games", c: "Mall circuit games", x: "-104%", y: "-4%", r: "-9deg" },
     { n: "winter-gear", c: "Winter gear UGC", x: "-36%", y: "-12%", r: "-3deg" },
     { n: "kiprun", c: "Kiprun run club", x: "34%", y: "-2%", r: "4deg" },
-    { n: "run-like-a-girl", c: "Run like a girl", x: "100%", y: "9%", r: "10deg" }
+    { n: "yoga-day", c: "Yoga Day, Motera", x: "100%", y: "9%", r: "10deg" }
   ];
   const hp = $("#heroPhones");
   heroReels.forEach((r, i) => {
