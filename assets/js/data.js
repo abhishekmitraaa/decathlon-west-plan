@@ -273,6 +273,13 @@ window.STORE_MOMENTS = {
 window.PLANNER = {
   months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
   lanes: [
+    { name: "Holidays and moments", items: [
+      { t: "Uttarayan, Republic Day", a: 0, b: 0, k: "hol" }, { t: "Valentine's, Shivaji Jayanti", a: 1, b: 1, k: "hol" },
+      { t: "Women's Day, Holi", a: 2, b: 2, k: "hol" }, { t: "Gudi Padwa", a: 3, b: 3, k: "hol" }, { t: "Maharashtra Day", a: 4, b: 4, k: "hol" },
+      { t: "Yoga Day", a: 5, b: 5, k: "hol" }, { t: "Wari", a: 6, b: 6, k: "hol" }, { t: "Independence Day", a: 7, b: 7, k: "hol" },
+      { t: "Ganesh Chaturthi", a: 8, b: 8, k: "hol" }, { t: "Navratri, Dussehra, Diwali", a: 9, b: 9, k: "hol" },
+      { t: "Children's Day, Black Friday", a: 10, b: 10, k: "hol" }, { t: "Christmas, New Year's Eve", a: 11, b: 11, k: "hol" }
+    ]},
     { name: "Season", items: [
       { t: "Winter", a: 0, b: 0, k: "season" }, { t: "Summer + summer camp", a: 2, b: 4, k: "season" },
       { t: "Monsoon & back to school", a: 5, b: 8, k: "season" }, { t: "Winter & travel", a: 9, b: 11, k: "season" } ] },

@@ -372,9 +372,17 @@
     }).join("");
   };
   spendNotes();
-  $("#split27").innerHTML = `<h4>How the 2027 plan splits each month</h4><div class="split27-bar">${D.spend.split27.map(([n, p], i) => `<i style="flex:${p} 1 0;background:${["#141A5C", "#3643BA", "#00C4E1", "#8A92E0", "#00A99D", "#2BFF88", "#7B3FC4", "#C9CEF0"][i]};color:${[3, 5, 7].includes(i) ? "#10135A" : "#fff"}" data-tip="<b>${n}</b><br>${p}% of each month">${p >= 5 ? p + "%" : ""}</i>`).join("")}</div>
-    <ul>${D.spend.split27.map(([n, p]) => `<li><b>${p}%</b>${n}</li>`).join("")}</ul>
-    <p class="foot">Same split in every month and every state. Pune, Gujarat and MP add up to ${fmt(["Pune", "Gujarat", "MP"].reduce((a, r) => a + D.spend[r].y27.reduce((x, y) => x + y, 0), 0) / 100, 2)} Cr for 2027.</p>`;
+  (() => {
+    const ST = [["Pune", "Pune", css("--pune")], ["Gujarat", "Gujarat", css("--guj")], ["MP", "Madhya Pradesh", css("--mp")]];
+    const COLS = ["#141A5C", "#3643BA", "#00C4E1", "#8A92E0", "#00A99D", "#2BFF88", "#7B3FC4", "#C9CEF0"];
+    const tot = Object.fromEntries(ST.map(([k]) => [k, D.spend[k].y27.reduce((x, y) => x + y, 0)]));
+    const all = ST.reduce((a, [k]) => a + tot[k], 0), maxP = Math.max(...D.spend.split27.map(x => x[1]));
+    $("#split27").innerHTML = `<table class="sb-table sb-lines"><thead><tr><th scope="col">Line</th>${ST.map(([, n, c]) => `<th scope="col" style="color:${c}">${n}</th>`).join("")}<th scope="col">Total</th><th scope="col" class="share">Share of budget</th></tr></thead><tbody>
+      ${D.spend.split27.map(([n, p], i) => `<tr><th scope="row"><i class="sw" style="background:${COLS[i]}"></i>${n}</th>${ST.map(([k]) => `<td>${fmt(tot[k] * p / 100, 1)}</td>`).join("")}<td><b>${fmt(all * p / 100, 1)}</b></td>
+        <td class="share"><div class="sh-cell"><span class="sh-bar"><i style="width:${p / maxP * 100}%;background:${COLS[i]}"></i></span><b>${p}%</b></div></td></tr>`).join("")}
+      <tr class="sb-total"><th scope="row">Total</th>${ST.map(([k]) => `<td><b>${fmt(tot[k], 1)}</b></td>`).join("")}<td><b>${fmt(all, 1)}</b></td><td class="share"><b>100%</b></td></tr></tbody></table>
+      <p class="foot">The data sheet splits every month of every state the same way, so the shares are fixed. ${fmt(all / 100, 2)} Cr in total for 2027.</p>`;
+  })();
   $$("#regionSeg button").forEach(b => b.addEventListener("click", () => {
     region = b.dataset.r;
     $$("#regionSeg button").forEach(x => x.setAttribute("aria-pressed", x === b));
@@ -490,7 +498,7 @@
   const plannerEl = $("#plannerGrid");
   function buildPlanner() {
     let html = `<div class="pl-corner">Bar under each month: Pune ad spend, relative to the biggest month</div>`;
-    html += PL.months.map((m, i) => `<button type="button" class="pl-month ${i < 3 ? "q1" : i < 6 ? "q2" : i > 8 ? "q4" : ""}" data-m="${i}" aria-pressed="${i === month}">
+    html += PL.months.map((m, i) => `<button type="button" class="pl-month ${["q1", "q2", "q3", "q4"][Math.floor(i / 3)]}" data-m="${i}" aria-pressed="${i === month}">
         <b>${m}</b><small>${PD.seasonality[i].toLowerCase().replace(/^./, c => c.toUpperCase())}<br>${PD.weather[i]}</small><i class="pl-spend" style="--w:${pune27[i] / maxP * 100}%" data-tip="<b>${m} 2027</b><br>Pune ad spend ${fmt(pune27[i])} L"></i></button>`).join("");
     PL.lanes.forEach(lane => {
       const rows = [];
@@ -774,9 +782,9 @@
           : `<button type="button" class="hol-dot t-${x.t}" style="left:${pos(x.d)}%;color:${c}" aria-label="${esc(x.name)}, ${when(x)}" data-tip="${tip(x)}"></button>`).join("")
       }</div></div>`;
     });
-    html += `</div><div class="hol-cols">${regions.map(([r, name, c]) => `<div class="hol-col" style="--c:${c}"><h4>${name}</h4><ul>${
+    html += `</div><div class="hol-cols">${regions.map(([r, name, c]) => `<details class="hol-col" style="--c:${c}"><summary><h4>${name}</h4><span>${H.filter(x => x.r.includes(r)).length} holidays and moments</span></summary><ul>${
       H.filter(x => x.r.includes(r)).map(x => `<li><b>${when(x)}</b><div><span class="hol-name">${esc(x.name)}</span><span class="hol-type t-${x.t}">${TYPE[x.t]}${x.approx ? ", date approx." : ""}</span><small>${esc(x.use)}</small></div></li>`).join("")
-    }</ul></div>`).join("")}</div>
+    }</ul></details>`).join("")}</div>
       <p class="foot">Dates from 2027 calendars (Drik Panchang, state holiday lists) and event organisers; state lists for 2027 are provisional, and dates marked approx. are estimates. Next up after March: Gudi Padwa (8 Apr, Pune).</p>`;
     $("#holidays").innerHTML = html;
   })();

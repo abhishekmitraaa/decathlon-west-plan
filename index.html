@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-<link rel="stylesheet" href="assets/css/site.css?v=20261027x">
+<link rel="stylesheet" href="assets/css/site.css?v=20261027z">
 </head>
 <body>
 
@@ -29,8 +29,8 @@
     <a href="#playbook">Marketing playbook</a>
     <a href="#calendar">Content</a>
     <a href="#surat">Surat</a>
-    <a href="#q1">Q1 2027</a>
     <a href="#planner">2027</a>
+    <a href="#q1">Q1 2027</a>
   </nav>
   <button class="present-btn" id="presentBtn" type="button" aria-pressed="false" title="Arrow keys move section by section">Present</button>
   <div class="progress" id="progress" aria-hidden="true"></div>
@@ -470,10 +470,61 @@
 <!-- CHAPTER 4 -->
 <div class="chapter" id="ch-2027">
   <div class="wrap">
-    <span class="ch-num">04</span>
-    <div><h2 class="ch-title">Q1 2027 and the year ahead</h2><p>Keep the momentum in January to March, then the full 2027 calendar.</p></div>
+    <div><h2 class="ch-title">Q1 2027 and the year ahead</h2><p>The full 2027 calendar, its budget and where it goes, then January to March in detail.</p></div>
   </div>
 </div>
+
+<!-- 2027 PLANNER -->
+<section class="sec sec-mist" id="planner" data-step>
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 class="display">2027<span class="lt">, month by month</span></h2>
+      <p class="sec-lede">The full Marcom calendar for Pune. Pick a month to see what competitors will do, how we answer, and what goes live on the ground.</p>
+    </header>
+    <div class="planner-scroll"><div class="planner" id="plannerGrid"></div></div>
+    <div class="month-detail" id="monthDetail" aria-live="polite"></div>
+
+    <div class="holidays">
+      <h3 class="display-s"><span class="lt">Holidays and moments,</span> January to March, by market</h3>
+      <p class="hol-hint">Open a market to see its list.</p>
+      <div class="hol-chart" id="holidays"></div>
+    </div>
+
+    <div class="q1-year">
+    <article class="panel panel-xl">
+      <div class="panel-head row">
+        <div>
+          <h3>Advertisement Budget 2027</h3>
+          <p>2027 budget month by month, against 2026 (actual to September, then the Q4 plan). In lakh.</p>
+        </div>
+        <div class="seg" role="group" aria-label="Choose market" id="regionSeg">
+          <button type="button" data-r="All" aria-pressed="true">All</button>
+          <button type="button" data-r="Pune" aria-pressed="false">Pune</button>
+          <button type="button" data-r="Gujarat" aria-pressed="false">Gujarat</button>
+          <button type="button" data-r="MP" aria-pressed="false">MP</button>
+        </div>
+      </div>
+      <div class="chart chart-tall" id="chSpend"></div>
+      <div class="spend-notes" id="spendNotes"></div>
+    </article>
+    <article class="panel panel-full split-panel">
+      <div class="panel-head"><h3>Where the 2027 budget goes</h3><p>Each state's 2027 plan split into lines, in lakh, and each line's share of the budget.</p></div>
+      <div class="sb-wrap" id="split27"></div>
+    </article>
+    </div>
+
+    <div class="ip">
+      <div class="ip-body">
+        <h3 class="display-s"><span class="lt">Decathlon Play event IPs,</span> 2027 national footfall goals</h3>
+        <div class="ip-bars" id="ipBars"></div>
+      </div>
+      <figure class="ip-poster">
+        <img src="assets/img/sports-utsav-jr.jpg" alt="Sports Utsav Junior skating workshop poster, 31 October, 11 AM to 2 PM" loading="lazy">
+        <figcaption>Sports Utsav Junior is already live: a kids' skating workshop on 31 Oct, 11 AM - 2 PM.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
 <!-- Q1 2027 -->
 <section class="sec sec-paper" id="q1" data-step>
@@ -525,40 +576,23 @@
     </div>
 
 
+
+
     <div class="wd">
-      <div class="sm-video wd-film"><video muted loop playsinline preload="none" poster="assets/posters/womens-day.jpg" data-src="assets/videos/womens-day.mp4" aria-label="Reference film: a rooftop pilates morning for women"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>
-      <div class="wd-body">
+      <div class="wd-head">
         <span class="oct-when">Sat 6 and Sun 7 March, Women's Day weekend</span>
         <h3 class="display-s"><span class="lt">Women's Day:</span> one weekend, all 13 stores</h3>
         <p>Women are a third of our business and the fastest-growing part of it. Women's Day (Mon 8 March) falls after a weekend, so every store hosts women-only mornings on Saturday and Sunday: pilates or yoga first, then a sport to try, then shopping with a Women's Day offer. The film is the feel we want: a rooftop pilates session that looks like a party, not a class.</p>
         <div class="wd-flow"><span>Women-only session</span><i></i><span>Try a sport</span><i></i><span>Shop with the day's offer</span><i></i><span>Join a women's club that keeps meeting</span></div>
-        <div class="wd-pics">
+      </div>
+      <div class="wd-media">
+        <div class="sm-video wd-film"><video muted loop playsinline preload="none" poster="assets/posters/womens-day.jpg" data-src="assets/videos/womens-day.mp4" aria-label="Reference film: a rooftop pilates morning for women"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>
+
           <figure><img src="assets/img/wd-giveaway.jpg" alt="Giveaway: a Women's Day pilates accessory pack with snood, socks, drawstring bag, mat and cap" loading="lazy"><figcaption><b>Giveaway</b>A Women's Day pilates accessory pack (snood, socks, drawstring bag, mat, cap) for women who register and post from the session.</figcaption></figure>
           <figure><img src="assets/img/wd-pink-run.jpg" alt="Decathlon community run in pink under a Decathlon arch, with a pink flag and a cheque for a women's cause" loading="lazy"><figcaption><b>Wear pink</b>A pink community run like Decathlon's in France: one colour, one arch, a cause for women, and a photo every store can post.</figcaption></figure>
-        </div>
-        <div class="wd-grid"><div class="wd-st"><h5>Pune</h5><ul><li><b>Wakad</b>Pilates and core on the forecourt, then a women's 5K club run</li><li><b>Wagholi</b>Playground morning: pilates, then a women-only pickleball slot</li><li><b>SGS Mall</b>In-mall studio: pilates and strength taster classes</li><li><b>Amanora</b>Mall-atrium yoga flow and a She Plays try-a-sport zone</li><li><b>NIBM</b>Mothers and daughters: yoga and skipping challenges</li></ul></div><div class="wd-st"><h5>Gujarat</h5><ul><li><b>Motera</b>Rooftop-style pilates on the playground, the format in the film</li><li><b>Nexus</b>In-mall pilates and a women's run group launch</li><li><b>Baroda</b>Court morning: pilates, then women's box cricket</li><li><b>Dumas, Surat</b>Sunrise yoga and a women-only pickleball slot</li><li><b>Rajkot</b>Garba-fit cardio and a women's walking group</li></ul></div><div class="wd-st"><h5>Madhya Pradesh</h5><ul><li><b>Indore</b>Playground pilates, then a women's 5K</li><li><b>Bhopal</b>Lakeside yoga by the Upper Lake, back to DB Mall</li><li><b>Gwalior</b>Morning walk and yoga, with a self-defence basics class</li></ul></div></div>
+      </div>
+      <div class="wd-grid"><div class="wd-st"><h5>Pune</h5><ul><li><b>Wakad</b>Pilates and core on the forecourt, then a women's 5K club run</li><li><b>Wagholi</b>Playground morning: pilates, then a women-only pickleball slot</li><li><b>SGS Mall</b>In-mall studio: pilates and strength taster classes</li><li><b>Amanora</b>Mall-atrium yoga flow and a She Plays try-a-sport zone</li><li><b>NIBM</b>Mothers and daughters: yoga and skipping challenges</li></ul></div><div class="wd-st"><h5>Gujarat</h5><ul><li><b>Motera</b>Rooftop-style pilates on the playground, the format in the film</li><li><b>Nexus</b>In-mall pilates and a women's run group launch</li><li><b>Baroda</b>Court morning: pilates, then women's box cricket</li><li><b>Dumas, Surat</b>Sunrise yoga and a women-only pickleball slot</li><li><b>Rajkot</b>Garba-fit cardio and a women's walking group</li></ul></div><div class="wd-st"><h5>Madhya Pradesh</h5><ul><li><b>Indore</b>Playground pilates, then a women's 5K</li><li><b>Bhopal</b>Lakeside yoga by the Upper Lake, back to DB Mall</li><li><b>Gwalior</b>Morning walk and yoga, with a self-defence basics class</li></ul></div></div>
         <p class="foot">Run with local women creators (Women's Sport Month in February leads into it), registrations through the app, and a push to women customers near each store. Store formats follow each store's space: playground stores go outdoors, mall stores use the atrium.</p>
-      </div>
-    </div>
-
-    <div class="q1-year">
-    <article class="panel panel-xl">
-      <div class="panel-head row">
-        <div>
-          <h3>Advertising spend, month by month</h3>
-          <p>2026 actual to September, then the Q4 plan, against the 2027 plan from the updated data sheet. In lakh.</p>
-        </div>
-        <div class="seg" role="group" aria-label="Choose market" id="regionSeg">
-          <button type="button" data-r="All" aria-pressed="true">All</button>
-          <button type="button" data-r="Pune" aria-pressed="false">Pune</button>
-          <button type="button" data-r="Gujarat" aria-pressed="false">Gujarat</button>
-          <button type="button" data-r="MP" aria-pressed="false">MP</button>
-        </div>
-      </div>
-      <div class="chart chart-tall" id="chSpend"></div>
-      <div class="spend-notes" id="spendNotes"></div>
-      <div class="split27" id="split27"></div>
-    </article>
     </div>
 
     <div class="q1-spend">
@@ -566,33 +600,6 @@
       <div class="chart" id="chQ1"></div>
     </div>
 
-    <div class="holidays">
-      <h3 class="display-s"><span class="lt">Holidays and moments,</span> January to March, by market</h3>
-      <div class="hol-chart" id="holidays"></div>
-    </div>
-  </div>
-</section>
-
-<!-- 2027 PLANNER -->
-<section class="sec sec-mist" id="planner" data-step>
-  <div class="wrap">
-    <header class="sec-head">
-      <h2 class="display">2027<span class="lt">, month by month</span></h2>
-      <p class="sec-lede">The full Marcom calendar for Pune. Pick a month to see what competitors will do, how we answer, and what goes live on the ground.</p>
-    </header>
-    <div class="planner-scroll"><div class="planner" id="plannerGrid"></div></div>
-    <div class="month-detail" id="monthDetail" aria-live="polite"></div>
-
-    <div class="ip">
-      <div class="ip-body">
-        <h3 class="display-s"><span class="lt">Decathlon Play event IPs,</span> 2027 national footfall goals</h3>
-        <div class="ip-bars" id="ipBars"></div>
-      </div>
-      <figure class="ip-poster">
-        <img src="assets/img/sports-utsav-jr.jpg" alt="Sports Utsav Junior skating workshop poster, 31 October, 11 AM to 2 PM" loading="lazy">
-        <figcaption>Sports Utsav Junior is already live: a kids' skating workshop on 31 Oct, 11 AM - 2 PM.</figcaption>
-      </figure>
-    </div>
   </div>
 </section>
 
@@ -613,13 +620,13 @@
 <div class="tip" id="tip" role="tooltip" hidden></div>
 <div class="hud" id="hud" hidden></div>
 
-<script src="assets/js/data.js?v=20261027x"></script>
+<script src="assets/js/data.js?v=20261027z"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="assets/js/app.js?v=20261027x"></script>
-<script src="assets/js/stores.js?v=20261027x"></script>
-<script src="assets/js/surat.js?v=20261027x"></script>
-<script src="assets/js/people.js?v=20261027x"></script>
-<script src="assets/js/content.js?v=20261027x"></script>
-<script src="assets/js/calendar.js?v=20261027x"></script>
+<script src="assets/js/app.js?v=20261027z"></script>
+<script src="assets/js/stores.js?v=20261027z"></script>
+<script src="assets/js/surat.js?v=20261027z"></script>
+<script src="assets/js/people.js?v=20261027z"></script>
+<script src="assets/js/content.js?v=20261027z"></script>
+<script src="assets/js/calendar.js?v=20261027z"></script>
 </body>
 </html>
