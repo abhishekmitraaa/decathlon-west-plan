@@ -273,7 +273,7 @@
     box.innerHTML = `<div class="panel-head row"><div><h3>Q4 so far: 1 to 26 October</h3>
         <p>In-store sales against each store's Q4 challenge. ${fmt(timePct, 0)}% of the quarter's days are gone; November and December carry Diwali, Black Friday and the year-end sale, so stores below the line are not necessarily behind.</p></div>
         <div class="pc-total"><b>₹${fmt(toAll, 2)} Cr</b><span>of ₹${fmt(chAll, 2)} Cr store challenge: ${fmt(toAll / chAll * 100, 1)}%</span></div></div>
-      <div class="pc-groups" style="--t:${timePct}%">${["Pune", "Gujarat", "MP"].map(st => `<div class="pc-grp"><h4 style="color:${COL[st]}">${NAME[st]}</h4>${rows.filter(r => r.state === st).sort((a, b) => b.pct - a.pct).map(row).join("")}</div>`).join("")}</div>
+      <div class="pc-groups" style="--t:${timePct}%">${["Pune", "Gujarat", "MP"].map(st => `<div class="pc-grp">${(() => { const L2 = rows.filter(r => r.state === st), o = L2.reduce((a, r) => a + r.oct, 0), ch = L2.reduce((a, r) => a + r.challenge, 0); return `<div class="pc-st" style="--c:${COL[st]}"><h4>${NAME[st]}</h4><b>${(o / ch * 100).toFixed(1)}%</b><small>₹${fmt(o, 2)} of ₹${fmt(ch, 2)} Cr</small></div>`; })()}${rows.filter(r => r.state === st).sort((a, b) => b.pct - a.pct).map(row).join("")}</div>`).join("")}</div>
       <p class="foot">October's challenge asks for +${fmt(D.q4.months[0].growth, 1)}% on last year; the store report shows +${O.growth}% for 1-26 October. Line on each bar: share of Q4 days gone (${fmt(timePct, 1)}%). Sales from the store report for 1-26 Oct 2026; challenges from the store-level challenge sheet (stores only, without digital and wholesale).</p>`;
   })();
 

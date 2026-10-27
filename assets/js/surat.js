@@ -104,6 +104,10 @@
 
     <h3 class="display-s sr-sub"><span class="lt">The opening weekend:</span> ₹85 L in three days</h3>
     <div class="sr-weekend">${WEEKEND.map(d => `<article class="sr-day"><span class="sr-date">${d[0]}</span><h4>${d[1]}</h4><b class="sr-target">${L(d[2])}</b><ul>${d[3].map(x => `<li>${esc(x)}</li>`).join("")}</ul></article>`).join("")}</div>
+    <div class="sr-insp">
+      <div class="sm-video ig-reel"><video muted loop playsinline preload="none" poster="assets/posters/ig/DcbXgJmIvz9.jpg" data-src="assets/videos/ig/DcbXgJmIvz9.mp4" aria-label="Decathlon Vitalsport event reel"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>
+      <div><span class="oct-when">Inspiration for the Night Carnival</span><h4>Vitalsport, Decathlon Campus HQ</h4><p>Decathlon's Vitalsport in France turns the store grounds into a weekend of try-every-sport zones run with local clubs. The Adajan Night Carnival borrows it after dark: club stalls, open courts and a reason to stay till late.</p><a class="ig-link" href="https://www.instagram.com/reel/DcbXgJmIvz9/" target="_blank" rel="noopener">@decathlon_campus_hq on Instagram</a></div>
+    </div>
     <div class="sr-weeks">
       <h4>Turnover by week, first 30 days</h4>
       ${WEEKS.map(w => `<div class="sr-week"><span>${w[0]}${w[1] ? `<small>${w[1]}</small>` : ""}</span><i style="--w:${w[2] / maxW * 100}%" data-tip="<b>${w[0]}</b><br>${L(w[2])}"></i><b>${L(w[2])}</b></div>`).join("")}
