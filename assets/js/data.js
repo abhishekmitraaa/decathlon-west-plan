@@ -207,9 +207,8 @@ window.RUNWAY = {
       { t: "Gujarat and Bhopal: 9 hoardings live", s: "2026-11-01", e: "2026-12-31", k: "ooh" },
       { t: "Influencers: Pune 70, Gujarat 40, MP 40", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
       { t: "50 influencer videos, 5M views", s: "2027-01-01", e: "2027-03-31", k: "ooh", approx: true },
-      { t: "AOP practice-place hoardings, Gujarat: 5", s: "2026-11-01", e: "2026-11-30", k: "ooh" },
-      { t: "AOP, Gujarat: 7", s: "2026-12-01", e: "2026-12-31", k: "ooh" },
-      { t: "AOP, Gujarat: 5 gyms, 5 swimming pools", s: "2027-01-01", e: "2027-01-31", k: "ooh" }
+      // Q4 target from AOP_PLAN (Nov + Dec per store): Pune 49, Gujarat 40, MP 25
+      { t: "AOPs, Q4: 114 (Pune 49, Gujarat 40, MP 25)", s: "2026-11-01", e: "2026-12-31", k: "ooh" }
     ]}
   ]
 };
