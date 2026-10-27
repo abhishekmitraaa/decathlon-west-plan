@@ -255,9 +255,8 @@
       const grid = THEMES.map(() => ({ Gujarat: 0, MP: 0, Pune: 0 }));
       ST.forEach(([k]) => C[k].forEach(r => { grid[themeOf(r[0])][k] += q4(r); }));
       const all = ST.reduce((a, [k]) => a + stTot(k), 0);
-      const budget = D.stores.reduce((a, s) => a + s.budget.reduce((x, y) => x + y, 0), 0); // store budgets, in lakh
       const max = Math.max(...grid.map(g => g.Gujarat + g.MP + g.Pune));
-      return `<div class="cq-kpis">${ST.map(([k, n, c]) => `<div style="--c:${c}"><b>${L1(stTot(k))}</b><span>${n}</span></div>`).join("")}<div class="tot"><b>₹${(budget / 100).toFixed(1)} Cr</b><span>Q4 marketing budget</span></div></div>
+      return `<div class="cq-kpis">${ST.map(([k, n, c]) => `<div style="--c:${c}"><b>${L1(stTot(k))}</b><span>${n}</span></div>`).join("")}<div class="tot"><b>₹1.6 Cr</b><span>Q4 marketing budget</span></div></div>
         <table class="sb-table sb-lines"><thead><tr><th scope="col">Campaign theme</th>${ST.map(([, n, c]) => `<th scope="col" style="color:${c}">${n}</th>`).join("")}<th scope="col">Cluster</th><th scope="col" class="share">Share</th></tr></thead><tbody>
         ${grid.map((g, i) => { const t = g.Gujarat + g.MP + g.Pune; return `<tr><th scope="row">${THEMES[i][0]}</th>${ST.map(([k]) => `<td>${g[k] ? L1(g[k]) : "-"}</td>`).join("")}<td><b>${L1(t)}</b></td><td class="share"><div class="sh-cell"><span class="sh-bar"><i style="width:${t / max * 100}%;background:var(--blue)"></i></span><b>${(t / all * 100).toFixed(1)}%</b></div></td></tr>`; }).join("")}
         </tbody></table>`;

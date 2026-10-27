@@ -14,7 +14,7 @@
     ["₹85 L", "Target for the first 3 days", "Sun 27 - Tue 29 Dec"],
     ["14,904", "Walk-ins needed in 3 days", "at 25.9% conversion and a ₹2,200 basket"],
     ["₹2.5 Cr", "First 30 days", "27 Dec - 25 Jan"],
-    ["40,565", "Walk-ins needed in 30 days", "strategies plan for 48,776 (120% covered)"],
+    ["49,600", "Walk-ins target, first 30 days", "27 Dec - 25 Jan, from 28 strategies"],
     ["₹24.7 L", "Plan spend", "against an ₹18 L budget"],
     ["₹50", "Cost per walk-in", "Bhopal's opening: ₹153"]
   ];
@@ -61,7 +61,7 @@
     ["₹2.5 Cr is a stretch", "A normal Year-1 month is ₹1.5 Cr, so month one is 1.67x. The tracker holds a lever list for the gap."]
   ];
 
-  const GIFTS = [["₹2,499+", "Sports sipper"], ["₹3,999+", "10 L hiking backpack"], ["₹5,999+", "17 L football backpack"], ["₹9,999+", "24 L backpack"]];
+  const GIFTS = [["₹2,499+", "Gift card"], ["₹3,999+", "10 L hiking backpack"], ["₹5,999+", "17 L football backpack"], ["₹9,999+", "24 L backpack"]];
 
   const ALL = [["Online ads near the store", "Digital funnel ads", 290000, 6000], ["Happy Streets on LP Savani", "Ramat ni Sadak", 140000, 5400], ["Shop front and street footfall", "Blue on LP Savani", 0, 5200], ["WhatsApp to customers near Adajan", "Decathlon now 6 minutes away", 225000, 3530], ["Influencers and Surat city pages", "Creator waves", 620000, 3000], ["SMS and app to all Surat customers", "Surat, now 2 Decathlons", 0, 2700], ["Come-back passport", "Ramat Passport: aavo pachha", 40000, 2236], ["Hoardings and direction boards", "Chalo Ramiye, Adajan!", 192150, 2000], ["Club before opening", "Adajan Ramat Club", 30000, 2000], ["Sports carnival and sunrise run", "Tapi Sunrise Run + Chalo Ramiye Sports Carnival", 85000, 1980], ["Night sports carnival", "Adajan Night Carnival", 60000, 1925], ["Society visits", "Ramat Rath", 12000, 1620], ["Word of mouth and Google reviews", "Bring a friend + 500 reviews", 0, 1490], ["Newspaper leaflets and press", "Paper ma Decathlon", 115000, 1120], ["Radio countdown", "10 Divas, 10 Ramat on air", 0, 1050], ["Workshops for 50+", "First community", 10000, 1005], ["Theme weeks after opening", "Santa Party, New Year Run, Kai Po Che!", 44000, 900], ["Card and bill partners", "-", 5000, 800], ["School sports days", "School Sports Day kit desk", 80000, 720], ["Society sports days", "Society Ramat Day", 35000, 630], ["Corporates", "Hazira Corporate Saturday", 35000, 600], ["Opening day and run", "Adajan + LP Savani run", 69500, 540], ["City treasure hunt", "Find the box", 35000, 510], ["Cinema ads next door", "Cinepolis Adajan pre-show", 35000, 500], ["Academies and coaches", "Coach Ambassadors + Academy Kit Nights", 110000, 480], ["Box cricket night league", "Adajan Box Cricket Night League", 25000, 400], ["Weekly run club", "Adajan Run Club", 4500, 240], ["Pickleball league", "Adajan Pickle Premier League", 25000, 200]];
 
@@ -70,14 +70,14 @@
     ["Nexus Ahmedabad (2025)", "Mall, Gujarat", 2405000, 10500, 6500000, 229],
     ["Pondy Bazaar (2025)", "High street, Chennai", 3000000, 9700, 9374300, 309],
     ["Pune (plan, opening week)", "Convenience, Pune", 2300000, 15000, 5300000, 153],
-    ["Adajan (opening plan, 30 days)", "High street, Surat", 2469635, 48776, 25000000, 50]
+    ["Adajan (opening plan, 30 days)", "High street, Surat", 2469635, 49600, 25000000, 50]
   ];
 
   const WATCH = [
     "Date: opening is Sunday 27 Dec (confirmed by the team). The workbook was built for an 18-20 Dec weekend, so its week targets need re-phasing; the printed grand-opening poster still shows 20 Dec.",
     "Budget: the plan spends ₹24.9 L against an ₹18 L budget.",
     "Permissions for Happy Streets, the night run, sunrise run and Night Carnival need police and SMC approval: apply now.",
-    "Tills: the plan now uses a ₹2,200 basket; plan 12 tills and fast billing for the first three days.",
+    "Tills: 5 tills needed. ₹85 L in 3 days at a ₹2,200 basket is about 3,860 bills (14,904 walk-ins at 25.9% conversion): about 1,290 a day, or 107 an hour over 12 hours. A till handles 20-30 bills an hour, so 4-5 tills; keep mobile billing ready for the launch-day peak.",
     "Stock: winter jackets, fleeces, trek shoes, running shoes and home gym deep by 20 Dec."
   ];
 
@@ -127,7 +127,7 @@
     </div>
     <details class="sr-all"><summary>All 28 strategies: events, partners, budget and walk-ins</summary>
       <div class="sb-wrap"><table class="sb-table"><thead><tr><th scope="col">Strategy</th><th scope="col">Event</th><th scope="col">Budget</th><th scope="col">Walk-ins</th></tr></thead><tbody>${ALL.map(r => `<tr><th scope="row">${esc(r[0])}</th><td style="text-align:left">${esc(r[1])}</td><td>${r[2] ? "₹" + num(r[2]) : "No cost"}</td><td>${num(r[3])}</td></tr>`).join("")}
-      <tr class="sb-total"><th scope="row">Total</th><td></td><td>₹23,22,150 + ₹1,47,485 offers</td><td>48,776</td></tr></tbody></table></div>
+      <tr class="sb-total"><th scope="row">Total</th><td></td><td>₹23,22,150 + ₹1,47,485 offers</td><td>49,600</td></tr></tbody></table></div>
     </details>
     <div class="sr-weeks">
       <h4>Turnover by week, first 30 days</h4>
