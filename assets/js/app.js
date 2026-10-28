@@ -682,7 +682,7 @@
       title: "Bring them back",
       copy: "Existing customers hear about sales, new arrivals and local events on channels they already check: WhatsApp, push notifications in the app and RCS messages. The WhatsApp channel also carries express delivery: customers in pin codes a store can reach in 2 hours get a message when express is live for them, so the nearest store becomes the fastest one.",
       flow: ["Store sets its express pin codes", "WhatsApp alert to customers in those pin codes", "Order in the app", "Delivered from the nearest store in 2 hours"],
-      stats: [["5 L", "customers reached in Q1"], ["2 hr", "express delivery, pin-code targeted"], ["30", "express orders a day, target"], ["+15%", "returning customers in Q1"]],
+      stats: [["5 L", "customers reached in Q1"], ["2 hr", "express delivery, pin-code targeted"], ["100+", "express orders a day by Q1"], ["+15%", "returning customers in Q1"]],
       planTitle: "Months where WhatsApp and CRM lead in Pune", plan: () => monthCards("channels", v => /WhatsApp|CRM/i.test(v)) },
     { name: "Influencers", tag: "25%", media: ["../posters/process-vs.jpg", "../posters/winter-gear.jpg", "../posters/kiprun.jpg"],
       title: "Local voices, buying intent",
@@ -694,10 +694,8 @@
       copy: "Meta reels and stories carry each campaign, and ads land on campaign pages in the app and on decathlon.in. Festive pages can speak the local language, like नव-ऊर्जा, नव-खेल for new arrivals from ₹199.",
       stats: [["65 L", "MarCom spend in Q4"], ["0.45%", "of turnover"], ["20%", "bounce-rate target"], ["50 L", "turnover from omni campaigns"]],
       planTitle: "Pune website banners, 2027", plan: () => monthCards("banner").replace(/([a-z])([A-Z])/g, "$1: $2") },
-    { name: "In-mall and in-store kit", tag: "16 L", media: ["winter-off.jpg", "two-hour-delivery.jpg"],
-      title: "Close the sale at the shelf",
-      copy: "Once people are in the mall, the kit pulls them into the store and to the right aisle: facade, flyers, TG headers, standees, A4 and stop-rayon signs, and a winter window with signage in every store.",
-      stats: [["11 L", "in-mall media, Q4"], ["+0.5 pts", "mall-to-store conversion"], ["3 L", "in-store communication"], ["2 L", "flyers, BF sale +25%"]],
+    { name: "In-mall and in-store kit", tag: "16 L", media: [],
+      stats: [["11 L", "in-mall media, Q4"], ["3 L", "in-store communication"], ["2 L", "flyers, BF sale +25%"]],
       planTitle: "In-mall communication live now: Pune, Gujarat and MP", plan: inMall },
     { name: "Events and community", tag: "10%", media: ["heritage-run.jpg", "gwalior-sports-utsav.jpg", "kiprun-runner.jpg"],
       title: "Show up where people play",
@@ -730,11 +728,11 @@
         <h4 class="hr-sub">Key opening strategies to warm up the catchment</h4><ul><li><b>Treasure hunt, marketed with influencers:</b> blue mystery boxes around the catchment, clues dropped by local creators, the final clue in the store</li><li><b>Night carnival for families:</b> box cricket under lights, pickleball, skating, a DJ and food trucks</li><li><b>New Year run and Happy Streets:</b> car-free Sunday mornings and a run that ends inside the store</li><li><b>Society events:</b> sports days that let families try a sport together</li></ul>` },
     { name: "Quick commerce and delivery", tag: "2 hr", media: ["quick-commerce.jpg", "two-hour-promise-store.jpg", "app-order.jpg"],
       title: "Sport, delivered in 2 hours",
-      copy: "Express delivery goes live in Ahmedabad and Pune, and in Surat with the Adajan opening on 27 December. From December to March we animate it in these three cities: only pin codes we can really serve, the stock people order online, and a 2-Hour Promise our teammates talk about in store. It feeds the 12 Cr digital challenge alongside home delivery, pick-from-store and sell-at-store.",
+      copy: "Express delivery is already live in Ahmedabad and Pune. In Surat it goes live with the Adajan opening on 27 December. From December to March we animate it in these three cities: only pin codes we can really serve, the stock people order online, and a 2-Hour Promise our teammates talk about in store.",
       equation: true,
-      stats: [["8 Cr", "home delivery and pick-up, 66% share"], ["3.3 Cr", "sell-at-store, 27.5% share"], ["80 L", "express and affiliation"], ["30", "express orders a day"]],
+      stats: [["100+", "express orders a day by Q1, at minimum"]],
       planTitle: "Express delivery, December to March", plan: () => `<div class="sp-months">${[
-        ["December", "Go live in Ahmedabad and Pune; Surat goes live with the Adajan opening on 27 Dec. Check every pin code within 5 km is serviceable end to end (pick, pack and rider), not just in radius on paper. Year-end sale: “Need it before New Year? Get it in 2 hours.”"],
+        ["December", "Already live in Ahmedabad and Pune; Surat goes live with the Adajan opening on 27 Dec. Check every pin code within 5 km is serviceable end to end (pick, pack and rider), not just in radius on paper. Year-end sale: “Need it before New Year? Get it in 2 hours.”"],
         ["January", "Geo-fenced WhatsApp, SMS and app push only to pin codes inside the 5 km zone: “2-hour delivery now live in your area”. Uttarayan in Ahmedabad and Surat: “Need it before Uttarayan? Get it in 2 hours.” Republic Day sale."],
         ["February", "Society, academy and corporate-park tie-ups inside the radius, with a small QR-code drive at the gate for the nearest store. The 4-6 week pilot ends: keep what works."],
         ["March", "Holi and Women's Day: “Need it before Holi? Get it in 2 hours.” Re-check online order rankings, drop dead SKUs, add new ones for summer."]
@@ -757,9 +755,9 @@
     const show = i => {
       const c = CHANNELS[i];
       panel.setAttribute("aria-labelledby", "tab" + i);
-      panel.innerHTML = `
+      panel.innerHTML = `${c.media.length || c.title ? `
         <div class="sp-hero">
-          <div class="sp-media ${c.contain ? "contain" : ""} ${c.wideMedia ? "wide" : ""}">${c.media.map(m => m.endsWith(".mp4") ? `<div class="sm-video"><video autoplay muted loop playsinline poster="assets/posters/${m.replace(".mp4", ".jpg")}" src="assets/videos/${m}"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play video with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>` : `<img src="assets/img/${m}" alt="" loading="lazy">`).join("")}</div>
+          <div class="sp-media ${c.contain ? "contain" : ""} ${c.wideMedia ? "wide" : ""}">${c.media.map(m => m.endsWith(".mp4") ? `<div class="sm-video"><video autoplay muted loop playsinline poster="assets/posters/${m.replace(".mp4", ".jpg")}" src="assets/videos/${m}"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play video with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>` : `<img src="assets/img/${m}" alt="" fetchpriority="high">`).join("")}</div>
           <div class="sp-copy">
             <h3>${esc(c.title)}</h3>
             <p>${esc(c.copy)}</p>
@@ -767,12 +765,15 @@
             ${c.flow ? `<div class="sp-flow">${c.flow.map(f => `<span>${f}</span>`).join("<i></i>")}</div>` : ""}
             ${c.equation ? `<div class="sp-flow"><span>Traffic +18%</span><i></i><span>CVR 1.6%, +7%</span><i></i><span>Orders +22%</span><i></i><span>ABV +6%</span><i></i><span style="background:var(--mint)">Digital TO +27%</span></div>` : ""}
           </div>
-        </div>
-        <div class="sp-stats">${c.stats.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>
+        </div>` : ""}
+        <div class="sp-stats ${c.stats.length < 3 ? "few" : ""}">${c.stats.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>
         <div class="sp-plan"><h4>${esc(c.planTitle)}</h4>${c.plan()}</div>`;
       $$(".sw-tab", list).forEach((b, k) => b.setAttribute("aria-selected", k === i));
     };
     $$(".sw-tab", list).forEach(b => b.addEventListener("click", () => show(+b.dataset.i)));
+    // warm the cache so every tab's pictures are there the moment it opens
+    const warm = () => setTimeout(() => CHANNELS.forEach(c => c.media.filter(m => !m.endsWith(".mp4")).forEach(m => { new Image().src = "assets/img/" + m; })), 300);
+    if (document.readyState === "complete") warm(); else addEventListener("load", warm);
     list.addEventListener("keydown", e => {
       if (!["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) return;
       e.preventDefault(); e.stopPropagation();
