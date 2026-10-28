@@ -208,7 +208,7 @@ window.RUNWAY = {
       { t: "Influencers: Pune 70, Gujarat 40, MP 40", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
       { t: "50 influencer videos, 5M views", s: "2027-01-01", e: "2027-03-31", k: "ooh", approx: true },
       // Q4 target from AOP_PLAN (Nov + Dec per store): Pune 49, Gujarat 40, MP 25
-      { t: "AOPs, Q4: 114 (Pune 49, Gujarat 40, MP 25)", s: "2026-11-01", e: "2026-12-31", k: "ooh" }
+      { t: "New AOPs, Nov-Dec: 114 (Pune 49, Gujarat 40, MP 25)", s: "2026-11-01", e: "2026-12-31", k: "ooh" }
     ]}
   ]
 };

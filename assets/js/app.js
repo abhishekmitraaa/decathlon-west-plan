@@ -274,10 +274,10 @@
         <td>${x.months[0]}</td><td>${x.months[1]}</td><td><b>${q4(x)}</b></td><td>₹${x.cost.toLocaleString("en-IN")}</td><td><b>${L$(q4(x) * x.cost)}</b></td></tr>`;
     const body = ["Pune", "Gujarat", "MP"].map(st => {
       const list = A.filter(x => x.state === st);
-      return `<tr class="ak-st" style="--c:${COL[st]}"><th colspan="7" scope="rowgroup">${NAME[st]}<small>${sum(list, q4)} new AOPs, ${L$(sum(list, x => q4(x) * x.cost))}</small></th></tr>` + list.map(row).join("");
+      return `<tr class="ak-st" style="--c:${COL[st]}"><th colspan="7" scope="rowgroup">${NAME[st]}<small>${sum(list, q4)} new AOPs in Nov and Dec, ${L$(sum(list, x => q4(x) * x.cost))}</small></th></tr>` + list.map(row).join("");
     }).join("");
-    return `<p class="ak-lead">${nov} open in November and ${dec} in December. Live now: ${A.filter(x => x.live != null).map(x => `${x.store} ${x.live}`).join(", ")}.</p>
-      <div class="sb-wrap"><table class="sb-table ak-table"><thead><tr><th scope="col">Store</th><th scope="col">Live now</th><th scope="col">Nov</th><th scope="col">Dec</th><th scope="col">Q4 new</th><th scope="col">Cost per AOP</th><th scope="col">Q4 cost</th></tr></thead>
+    return `<p class="ak-lead">${total} new AOPs open in Q4: ${nov} in November and ${dec} in December. On top of the ${live} already live: ${A.filter(x => x.live != null).map(x => `${x.store} ${x.live}`).join(", ")}.</p>
+      <div class="sb-wrap"><table class="sb-table ak-table"><thead><tr><th scope="col">Store</th><th scope="col">Already live</th><th scope="col">New in Nov</th><th scope="col">New in Dec</th><th scope="col">New in Q4</th><th scope="col">Cost per AOP</th><th scope="col">Q4 cost</th></tr></thead>
         <tbody>${body}<tr class="sb-total"><th scope="row">13 stores</th><td>${live}</td><td>${nov}</td><td>${dec}</td><td>${total}</td><td></td><td>${L$(cost)}</td></tr></tbody></table></div>
       <p class="foot">Live counts were shared for Wakad, Amanora, Wagholi, SGS, Baroda and Bhopal. Rajkot and Gwalior run lighter AOPs at ₹7,000 each.</p>`;
   };
@@ -777,7 +777,7 @@
       title: "Sport is everywhere",
       copy: "We turn the places people already play into small Decathlon stores. A kit wall with prices and QR codes goes up at swimming academies, sports academies, gyms, yoga studios, metro stations in Pune and Ahmedabad, parks, societies and corporate campuses.",
       flow: ["See the display", "Scan the QR code", "Explore or complete a kit", "Shop online", "Home delivery or Click & Collect"],
-      stats: [["114", "new AOPs in Q4"], ["₹25.04 L", "Q4 cost"], ["114", "live now (6 stores)"], ["3-5", "pilot locations per city in Q1"]],
+      stats: [["114", "new AOPs opening in Nov and Dec"], ["₹25.04 L", "cost of the new AOPs"], ["114", "already live today, 6 stores"], ["3-5", "pilot locations per city in Q1"]],
       planTitle: "AOPs in Q4, store by store: what opens in November and December, and what it costs", plan: aopQ4 },
     { name: "WhatsApp channels, PN and RCS", tag: "5%", media: ["whatsapp.jpg", "push-notification.jpg"], contain: true,
       title: "Bring them back",
