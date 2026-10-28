@@ -276,6 +276,58 @@
     show("All");
   })();
 
+  // Digital YTD 2026 (Jan - Oct) for the three business units: charts animate in when the dropdown opens
+  (() => {
+    const box = $("#sbDigital"), G = D.digitalYTD;
+    if (!box || !G) return;
+    const BUS = [["Pune", "Pune", "var(--pune)"], ["Gujarat", "Gujarat", "var(--guj)"], ["MP", "Madhya Pradesh", "var(--mp)"]];
+    const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"];
+    const L = n => "₹" + (n / 1e5).toFixed(1) + " L", Cr = n => "₹" + (n / 1e7).toFixed(2) + " Cr";
+    const sum = a => a.reduce((x, y) => x + y, 0);
+    const ytd = Object.fromEntries(BUS.map(([k]) => [k, sum(G.bu[k].months)])), all = sum(Object.values(ytd));
+    const month = MON.map((m, i) => sum(BUS.map(([k]) => G.bu[k].months[i]))), maxM = Math.max(...month);
+    const CH = [["ecom", "E-commerce", "var(--ink)"], ["store", "Orders through stores", "var(--blue)"], ["mkt", "Marketplace", "var(--teal)"]];
+    const spMax = Math.max(...G.sports.map(s => sum(Object.values(s[1]))));
+    const stMax = G.stores[0][2];
+    const find = n => G.octSports.find(s => s[0] === n);
+    const cyc = find("Cycling"), win = find("Winter sports"), camp = find("Camping");
+    const pct = x => (x >= 1 ? "+" : "") + Math.round((x - 1) * 100) + "%";
+    const legend = items => `<div class="dg-legend">${items.map(([n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join("")}</div>`;
+    box.innerHTML = `<div class="cq-kpis">${BUS.map(([k, n, c]) => `<div style="--c:${c}"><b>${Cr(ytd[k])}</b><span>${n}, ${Math.round(ytd[k] / all * 100)}%</span></div>`).join("")}<div class="tot"><b>${Cr(all)}</b><span>West digital, Jan to Oct</span></div></div>
+      <div class="dg-block dg-share"><h4 class="dg-h">Digital's share of total turnover, and who brings it</h4>
+        <div class="dg-share-row"><div class="dg-big"><b>${(all / G.totalTO * 100).toFixed(1)}%</b><span>of ₹${(G.totalTO / 1e7).toFixed(0)} Cr total turnover so far this year (stores and digital) is digital</span></div>
+          <div class="dg-bar dg-tot"><i style="--w:${all / G.totalTO * 100}%;background:var(--blue)" data-tip="<b>Digital</b><br>${Cr(all)}">Digital ${Cr(all)}</i><i style="--w:${100 - all / G.totalTO * 100}%;background:var(--mist);color:var(--ink)">Stores and other channels</i></div></div>
+        <div class="dg-bar dg-reg">${G.regions.map(([n, v], i) => `<i style="--w:${v / all * 100}%;background:${["var(--pune)", "var(--guj)", "var(--mp)", "#7fe0cf"][i]}" data-tip="<b>${n}</b><br>${Cr(v)}, ${(v / all * 100).toFixed(1)}% of digital">${(v / all * 100).toFixed(1)}%</i>`).join("")}</div>
+        ${legend(G.regions.map(([n], i) => [n, ["var(--pune)", "var(--guj)", "var(--mp)", "#7fe0cf"][i]]))}</div>
+      <div class="dg-block"><h4 class="dg-h">Month by month</h4>
+        <div class="dg-cols">${MON.map((m, i) => `<div class="dg-col ${i === 9 ? "mtd" : ""}" style="--i:${i}" data-tip="<b>${m} 2026${i === 9 ? ", to date" : ""}</b><br>${BUS.map(([k, n]) => `${n}: ${L(G.bu[k].months[i])}`).join("<br>")}"><b>${(month[i] / 1e7).toFixed(2)}</b><div class="dg-track"><div class="dg-stack" style="--h:${month[i] / maxM * 100}%">${BUS.map(([k, , c]) => `<i style="flex:${G.bu[k].months[i]} 1 0;background:${c}"></i>`).join("")}</div></div><span>${m}</span></div>`).join("")}</div>
+        ${legend(BUS.map(([, n, c]) => [n, c]))}<p class="dg-cap">In ₹ crore. July was the peak at ${Cr(Math.max(...month))}; October is month to date.</p></div>
+      <div class="dg-two">
+        <div class="dg-block"><h4 class="dg-h">How digital sells</h4>
+          ${BUS.map(([k, n]) => { const c = G.bu[k].ch, t = c.ecom + c.store + c.mkt; return `<div class="dg-ch"><span>${n}</span><div class="dg-bar">${CH.map(([ck, cn, col]) => `<i style="--w:${c[ck] / t * 100}%;background:${col}" data-tip="<b>${n}: ${cn}</b><br>${Cr(c[ck])}, ${(c[ck] / t * 100).toFixed(1)}%">${c[ck] / t > 0.12 ? Math.round(c[ck] / t * 100) + "%" : ""}</i>`).join("")}</div></div>`; }).join("")}
+          ${legend(CH.map(([, n, c]) => [n, c]))}</div>
+        <div class="dg-block"><h4 class="dg-h">Top sports, Jan to Oct</h4>
+          ${G.sports.map(([s, v], i) => { const t = sum(Object.values(v)); return `<div class="dg-sp" style="--i:${i}"><span>${esc(s)}</span><div class="dg-sbar"><div style="--w:${t / spMax * 100}%">${BUS.map(([k, n, c]) => `<i style="flex:${v[k]} 1 0;background:${c}" data-tip="<b>${esc(s)}, ${n}</b><br>${L(v[k])}"></i>`).join("")}</div></div><b>${L(t)}</b></div>`; }).join("")}</div>
+      </div>
+      <div class="dg-block dg-oct-wrap"><h4 class="dg-h">October so far: what worked</h4>
+        <ul class="dg-hl">
+          ${cyc ? `<li><b>Cycling is the standout:</b> ${L(cyc[1])} in October, already ${pct(cyc[2])} on its monthly average with the month not over, and ${G.bu.MP.octTop.find(s => s[0] === "Cycling") ? G.bu.MP.octTop.find(s => s[0] === "Cycling")[2] + "x" : "up"} in Madhya Pradesh.</li>` : ""}
+          ${win && win[2] > 1 ? `<li><b>Winter is starting:</b> winter sports ${L(win[1])}, ${pct(win[2])} on the monthly average${camp ? `; camping ${pct(camp[3])} on September` : ""}.</li>` : ""}
+          <li><b>More new customers:</b> the share of new customers is up in every business unit (${BUS.map(([k, n]) => `${n} ${G.bu[k].newOct}% against ${G.bu[k].newYtd}% for the year`).join(", ")}).</li>
+          <li><b>Hiking stays the biggest sport</b> online: ${L(G.octSports[0][1])} so far in October.</li>
+        </ul>
+        <div class="dg-oct">${BUS.map(([k, n, c]) => { const b = G.bu[k], mx = b.octTop[0][1]; return `<article style="--c:${c}"><h5>${n}<b>${L(b.months[9])}</b></h5><small>New customers ${b.newOct}% (year ${b.newYtd}%)</small>
+          ${b.octTop.map(([s, v, x], i) => `<div class="dg-os" style="--i:${i}"><span>${esc(s)}</span><div><i style="--w:${v / mx * 100}%"></i></div><b>${L(v)}</b><em class="${x >= 1 ? "up" : ""}">${x}x</em></div>`).join("")}</article>`; }).join("")}</div>
+        <p class="dg-cap">The x figure is October so far against the sport's January to September monthly average, so anything at 1x or above is already ahead with days still to come.</p></div>
+      <div class="dg-block"><h4 class="dg-h">Digital orders through each store, Jan to Oct</h4>
+        <div class="dg-stores">${G.stores.map(([s, st, v, o], i) => `<div class="dg-st" style="--i:${i}"><span>${s}</span><div><i style="--w:${v / stMax * 100}%;background:${BUS.find(b => b[0] === st)[2]}"></i></div><b>${L(v)}</b><small>Oct ${L(o)}</small></div>`).join("")}</div></div>
+      <p class="foot">From the digital YTD 2026 sheet, January to October (October to date). Gujarat is Ahmedabad plus Surat, Baroda and Rajkot. New-customer shares count customers per sport, so one customer buying two sports counts twice.</p>`;
+    const drop = box.closest("details");
+    const go = () => { box.classList.remove("go"); void box.offsetWidth; requestAnimationFrame(() => box.classList.add("go")); };
+    if (drop) drop.addEventListener("toggle", () => { if (drop.open) go(); else box.classList.remove("go"); });
+    else go();
+  })();
+
   // Q4 topline: challenge, by state, by channel, by month (store-level challenge sheet)
   if ($("#sbTop")) (() => {
     const T = D.stateTO, q = D.q4;

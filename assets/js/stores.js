@@ -210,7 +210,7 @@
 
   /* ---------- state money mix ---------- */
   const CAT = [
-    ["Digital (MarCom)", "#141A5C", /digital paid/i, ["Awareness", "Loyalty"]],
+    ["Digital (MarCom)", "#141A5C", /digital paid/i, ["Awareness", "Conversion"]],
     ["Hoardings, OOH, HIPOP", "#3643BA", /hoarding/i, ["Awareness"]],
     ["In-mall", "#8A92E0", /in mall/i, ["Interest"]],
     ["Influencers", "#2BFF88", /influencer/i, ["Awareness", "Interest"]],
@@ -223,7 +223,7 @@
   // Funnel stages, after the Mumbai cluster's Q4 funnel slide (stages and roles only, not its numbers)
   const FUNNEL = [
     ["Awareness", "Get known: reach new customers", "#141A5C"],
-    ["Interest", "Get considered: bring them to the mall, the store and our events", "#3643BA"],
+    ["Interest", "Get considered: walk-ins to the mall, the store and our events", "#3643BA"],
     ["Conversion", "Get the bill: in store, on the app, express delivery", "#00A99D"],
     ["Loyalty", "Bring them back: communities, WhatsApp and app retention", "#7B3FC4"]
   ];
