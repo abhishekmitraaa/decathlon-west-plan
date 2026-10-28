@@ -323,8 +323,7 @@
           ${b.octTop.map(([s, v, x], i) => `<div class="dg-os" style="--i:${i}"><span>${esc(s)}</span><div><i style="--w:${v / mx * 100}%"></i></div><b>${L(v)}</b><em class="${x >= 1 ? "up" : ""}">${pct(x)}</em></div>`).join("")}</article>`; }).join("")}</div>
         <p class="dg-cap">“vs usual month” compares October so far with the sport's average month from January to September. Pune cycling: ₹25.2 L so far against a usual ₹22.9 L, so +10%, with October not over yet.</p></div>
       <div class="dg-block"><h4 class="dg-h">Digital orders through each store, Jan to Oct</h4>
-        <div class="dg-stores">${G.stores.map(([s, st, v, o], i) => `<div class="dg-st" style="--i:${i}"><span>${s}</span><div><i style="--w:${v / stMax * 100}%;background:${BUS.find(b => b[0] === st)[2]}"></i></div><b>${L(v)}</b><small>Oct ${L(o)}</small></div>`).join("")}</div></div>
-      <p class="foot">From the digital YTD 2026 sheet, January to October (October to date). Gujarat is Ahmedabad plus Surat, Baroda and Rajkot. Customer shares count customers per sport, so one customer buying two sports counts twice.</p>`;
+        <div class="dg-stores">${G.stores.map(([s, st, v, o], i) => `<div class="dg-st" style="--i:${i}"><span>${s}</span><div><i style="--w:${v / stMax * 100}%;background:${BUS.find(b => b[0] === st)[2]}"></i></div><b>${L(v)}</b><small>Oct ${L(o)}</small></div>`).join("")}</div></div>`;
     const drop = box.closest("details");
     const go = () => { box.classList.remove("go"); void box.offsetWidth; requestAnimationFrame(() => box.classList.add("go")); };
     if (drop) drop.addEventListener("toggle", () => { if (drop.open) go(); else box.classList.remove("go"); });
