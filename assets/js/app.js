@@ -305,23 +305,26 @@
       <div class="dg-two">
         <div class="dg-block"><h4 class="dg-h">How digital sells</h4>
           ${BUS.map(([k, n]) => { const c = G.bu[k].ch, t = c.ecom + c.store + c.mkt; return `<div class="dg-ch"><span>${n}</span><div class="dg-bar">${CH.map(([ck, cn, col]) => `<i style="--w:${c[ck] / t * 100}%;background:${col}" data-tip="<b>${n}: ${cn}</b><br>${Cr(c[ck])}, ${(c[ck] / t * 100).toFixed(1)}%">${c[ck] / t > 0.12 ? Math.round(c[ck] / t * 100) + "%" : ""}</i>`).join("")}</div></div>`; }).join("")}
-          ${legend(CH.map(([, n, c]) => [n, c]))}</div>
+          ${legend(CH.map(([, n, c]) => [n, c]))}
+          <h4 class="dg-h dg-h2">Returning customers</h4>
+          ${BUS.map(([k, n, c]) => `<div class="dg-ret"><span>${n}</span><div><div class="dg-rt"><i style="--w:${G.bu[k].retYtd}%;background:${c}"></i><b>${G.bu[k].retYtd}%</b></div><div class="dg-rt oct"><i style="--w:${G.bu[k].retOct}%;background:${c}"></i><b>${G.bu[k].retOct}%</b></div></div></div>`).join("")}
+          <p class="dg-cap">Top bar: January to October. Lower bar: October so far. Returning customers are the share of customers who had bought before; the rest are new.</p></div>
         <div class="dg-block"><h4 class="dg-h">Top sports, Jan to Oct</h4>
           ${G.sports.map(([s, v], i) => { const t = sum(Object.values(v)); return `<div class="dg-sp" style="--i:${i}"><span>${esc(s)}</span><div class="dg-sbar"><div style="--w:${t / spMax * 100}%">${BUS.map(([k, n, c]) => `<i style="flex:${v[k]} 1 0;background:${c}" data-tip="<b>${esc(s)}, ${n}</b><br>${L(v[k])}"></i>`).join("")}</div></div><b>${L(t)}</b></div>`; }).join("")}</div>
       </div>
       <div class="dg-block dg-oct-wrap"><h4 class="dg-h">October so far: what worked</h4>
         <ul class="dg-hl">
-          ${cyc ? `<li><b>Cycling is the standout:</b> ${L(cyc[1])} in October, already ${pct(cyc[2])} on its monthly average with the month not over, and ${G.bu.MP.octTop.find(s => s[0] === "Cycling") ? G.bu.MP.octTop.find(s => s[0] === "Cycling")[2] + "x" : "up"} in Madhya Pradesh.</li>` : ""}
+          ${cyc ? `<li><b>Cycling is the standout:</b> ${L(cyc[1])} in October, already ${pct(cyc[2])} on its monthly average with the month not over, and ${G.bu.MP.octTop.find(s => s[0] === "Cycling") ? pct(G.bu.MP.octTop.find(s => s[0] === "Cycling")[2]) : "up"} in Madhya Pradesh.</li>` : ""}
           ${win && win[2] > 1 ? `<li><b>Winter is starting:</b> winter sports ${L(win[1])}, ${pct(win[2])} on the monthly average${camp ? `; camping ${pct(camp[3])} on September` : ""}.</li>` : ""}
-          <li><b>More new customers:</b> the share of new customers is up in every business unit (${BUS.map(([k, n]) => `${n} ${G.bu[k].newOct}% against ${G.bu[k].newYtd}% for the year`).join(", ")}).</li>
+          <li><b>More new customers:</b> October brought in more first-time buyers, so the returning share is lower than for the year in every business unit (${BUS.map(([k, n]) => `${n} ${G.bu[k].retOct}% returning against ${G.bu[k].retYtd}%`).join(", ")}).</li>
           <li><b>Hiking stays the biggest sport</b> online: ${L(G.octSports[0][1])} so far in October.</li>
         </ul>
-        <div class="dg-oct">${BUS.map(([k, n, c]) => { const b = G.bu[k], mx = b.octTop[0][1]; return `<article style="--c:${c}"><h5>${n}<b>${L(b.months[9])}</b></h5><small>New customers ${b.newOct}% (year ${b.newYtd}%)</small>
-          ${b.octTop.map(([s, v, x], i) => `<div class="dg-os" style="--i:${i}"><span>${esc(s)}</span><div><i style="--w:${v / mx * 100}%"></i></div><b>${L(v)}</b><em class="${x >= 1 ? "up" : ""}">${x}x</em></div>`).join("")}</article>`; }).join("")}</div>
-        <p class="dg-cap">The x figure is October so far against the sport's January to September monthly average, so anything at 1x or above is already ahead with days still to come.</p></div>
+        <div class="dg-oct">${BUS.map(([k, n, c]) => { const b = G.bu[k], mx = b.octTop[0][1]; return `<article style="--c:${c}"><h5>${n}<b>${L(b.months[9])}</b></h5><small>Returning customers ${b.retOct}% (year ${b.retYtd}%)</small><div class="dg-os dg-os-h"><span>Sport</span><span></span><span>October</span><span>vs usual month</span></div>
+          ${b.octTop.map(([s, v, x], i) => `<div class="dg-os" style="--i:${i}"><span>${esc(s)}</span><div><i style="--w:${v / mx * 100}%"></i></div><b>${L(v)}</b><em class="${x >= 1 ? "up" : ""}">${pct(x)}</em></div>`).join("")}</article>`; }).join("")}</div>
+        <p class="dg-cap">“vs usual month” compares October so far with the sport's average month from January to September. Pune cycling: ₹25.2 L so far against a usual ₹22.9 L, so +10%, with October not over yet.</p></div>
       <div class="dg-block"><h4 class="dg-h">Digital orders through each store, Jan to Oct</h4>
         <div class="dg-stores">${G.stores.map(([s, st, v, o], i) => `<div class="dg-st" style="--i:${i}"><span>${s}</span><div><i style="--w:${v / stMax * 100}%;background:${BUS.find(b => b[0] === st)[2]}"></i></div><b>${L(v)}</b><small>Oct ${L(o)}</small></div>`).join("")}</div></div>
-      <p class="foot">From the digital YTD 2026 sheet, January to October (October to date). Gujarat is Ahmedabad plus Surat, Baroda and Rajkot. New-customer shares count customers per sport, so one customer buying two sports counts twice.</p>`;
+      <p class="foot">From the digital YTD 2026 sheet, January to October (October to date). Gujarat is Ahmedabad plus Surat, Baroda and Rajkot. Customer shares count customers per sport, so one customer buying two sports counts twice.</p>`;
     const drop = box.closest("details");
     const go = () => { box.classList.remove("go"); void box.offsetWidth; requestAnimationFrame(() => box.classList.add("go")); };
     if (drop) drop.addEventListener("toggle", () => { if (drop.open) go(); else box.classList.remove("go"); });

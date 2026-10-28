@@ -1853,6 +1853,18 @@ ul, ol { padding: 0; }
 .dg-st div i { display: block; height: 100%; width: 0; transition: width .8s cubic-bezier(.2,.8,.2,1) calc(var(--i) * 50ms + .1s); }
 .go .dg-st div i { width: var(--w); }
 .dg-st small { font-size: 11.5px; color: var(--text-2); }
+.dg-h2 { margin-top: 18px; }
+.dg-ret { display: grid; grid-template-columns: 110px minmax(0, 1fr); align-items: center; gap: 10px; margin-bottom: 8px; font-size: 13px; font-weight: 650; color: var(--ink); }
+.dg-rt { display: grid; grid-template-columns: minmax(0, 1fr) 46px; align-items: center; gap: 8px; }
+.dg-rt + .dg-rt { margin-top: 3px; }
+.dg-rt i { display: block; height: 12px; width: 0; border-radius: 4px; transition: width .9s cubic-bezier(.2,.8,.2,1) .2s; }
+.dg-rt.oct i { height: 7px; opacity: .55; }
+.dg-rt b { font-size: 12px; text-align: right; }
+.dg-rt.oct b { font-weight: 600; color: var(--text-2); }
+.go .dg-rt i { width: var(--w); }
+.dg-os-h { margin-bottom: 4px; font-size: 10.5px !important; color: var(--text-3) !important; font-weight: 650; }
+.dg-os-h span:nth-child(3), .dg-os-h span:nth-child(4) { text-align: right; }
+.dg-os { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) 54px 64px !important; }
 .dg-share-row { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 16px; align-items: center; margin-bottom: 10px; }
 .dg-big b { display: block; font-family: var(--display); font-size: 40px; font-weight: 700; line-height: 1; color: var(--blue); letter-spacing: -0.03em; }
 .dg-big span { font-size: 12.5px; color: var(--text-2); }
