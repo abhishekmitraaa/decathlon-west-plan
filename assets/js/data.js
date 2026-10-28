@@ -204,7 +204,7 @@ window.RUNWAY = {
     ]},
     { name: "Hoardings, influencers and AOPs", items: [
       { t: "Pune: 7 hoardings live", s: "2026-10-10", e: "2026-12-31", k: "ooh", star: true },
-      { t: "Gujarat and Bhopal: 9 hoardings live", s: "2026-11-01", e: "2026-12-31", k: "ooh" },
+      { t: "Gujarat and Bhopal: 11 hoardings live", s: "2026-11-01", e: "2026-12-31", k: "ooh" },
       { t: "Influencers: Pune 70, Gujarat 40, MP 40", s: "2026-10-01", e: "2027-02-28", k: "ooh", approx: true },
       { t: "50 influencer videos, 5M views", s: "2027-01-01", e: "2027-03-31", k: "ooh", approx: true },
       // Q4 target from AOP_PLAN (Nov + Dec per store): Pune 49, Gujarat 40, MP 25
@@ -1260,6 +1260,7 @@ Object.assign(window.DATA, {
 });
 
 /* Winter hoarding programme 2026 (2026_WINTER_HOARDING_PGM.xlsx, 26 Oct 2026). cost = rupees per month.
+   Ahmedabad: 2 hoardings, ₹3.5 L a month for the two (user, 28 Oct 2026), split evenly; sites to be confirmed.
    status live = Pune boards up from 10-13 Oct (photo stamps); nov = Gujarat and Bhopal go live in November.
    lat/lon: exact = photo GPS stamp, otherwise an approximate area pin. why = our rationale for the site. */
 window.HOARDINGS = [
@@ -1464,6 +1465,26 @@ window.HOARDINGS = [
   "lat": 23.259,
   "lon": 77.395,
   "exact": false
+ },
+ {
+  "city": "Ahmedabad",
+  "loc": "Ahmedabad hoarding 1, site to be confirmed",
+  "size": "Size to be confirmed",
+  "dur": "Nov-Dec 2026",
+  "cost": 175000,
+  "status": "nov",
+  "why": "Our two Ahmedabad stores, Motera and Nexus, get the same road presence in sale weeks as the rest of Gujarat.",
+  "img": null
+ },
+ {
+  "city": "Ahmedabad",
+  "loc": "Ahmedabad hoarding 2, site to be confirmed",
+  "size": "Size to be confirmed",
+  "dur": "Nov-Dec 2026",
+  "cost": 175000,
+  "status": "nov",
+  "why": "Our two Ahmedabad stores, Motera and Nexus, get the same road presence in sale weeks as the rest of Gujarat.",
+  "img": null
  }
 ];
 

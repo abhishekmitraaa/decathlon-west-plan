@@ -26,7 +26,7 @@
     ["2", "Hoardings locked", "30 Oct", "Hoardings finalised, led by the Pal Umra Bridge board between Adajan, Piplod and Vesu"],
     ["3", "AOPs and hoardings live", "By 15 Nov", "All 10 AOPs and 2 hoardings live in the Adajan area: kit walls at gyms, pools, academies and studios, placed from 1 Nov"],
     ["4", "Events and community activation", "Nov - 26 Dec", "Teaser over Diwali, date reveal from 23 Nov, Ramat Rath in 36 societies, society sports days, treasure hunt, Happy Streets, creators' preview, 10-day countdown"],
-    ["5", "Grand launch", "Sun 27 Dec", "Pehli Ramat inauguration with Surat athletes, Tapi Sunrise Run, sports carnival, gifts on bigger bills"],
+    ["5", "Grand launch", "Sun 27 Dec", "Pehli Ramat inauguration with Surat athletes, Tapi Sunrise Run, sports carnival, gifts on bigger bills. Express delivery for Surat goes live the same day"],
     ["6", "Ramat chalu rahe", "28 Dec - 25 Jan", "“Keep playing”: Night Carnival, New Year run, Happy Streets #2, box cricket league, pickle league, Kai Po Che! for Uttarayan (14 Jan)"]
   ];
 
