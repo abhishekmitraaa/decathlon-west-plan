@@ -69,10 +69,12 @@
     const tot = CAT.map((c, i) => ST.reduce((a, st) => a + by[st][i], 0)), all = tot.reduce((a, b) => a + b, 0);
     const order = tot.map((v, i) => i).filter(i => tot[i] > 0).sort((a, b) => (CAT[a][0] === "Other") - (CAT[b][0] === "Other") || tot[b] - tot[a]);
     const maxT = Math.max(...tot), stTot = ST.map(st => by[st].reduce((a, b) => a + b, 0));
-    $("#sbLines").innerHTML = `<table class="sb-table sb-lines"><thead><tr><th scope="col">Line</th>${ST.map(st => `<th scope="col" style="color:${STATE_COL[st]}">${STATE_NAME[st]}</th>`).join("")}<th scope="col">Total</th><th scope="col" class="share">Share of budget</th></tr></thead><tbody>
+    $("#sbLines").innerHTML = `<table class="sb-table sb-lines"><thead><tr><th scope="col">Line</th>${ST.map(st => `<th scope="col" style="color:${STATE_COL[st]}">${STATE_NAME[st]}</th>`).join("")}<th scope="col">Total</th><th scope="col" class="share">Share of budget</th><th scope="col" class="fn-col">Funnel stage</th></tr></thead><tbody>
       ${order.map(i => `<tr><th scope="row"><i class="sw" style="background:${CAT[i][1]}"></i>${CAT[i][0]}</th>${ST.map(st => `<td>${by[st][i] ? fmt(by[st][i], 1) : "-"}</td>`).join("")}<td><b>${fmt(tot[i], 1)}</b></td>
-        <td class="share"><div class="sh-cell"><span class="sh-bar"><i style="width:${tot[i] / maxT * 100}%;background:${CAT[i][1]}"></i></span><b>${fmt(tot[i] / all * 100, 1)}%</b></div></td></tr>`).join("")}
-      <tr class="sb-total"><th scope="row">Total</th>${stTot.map(v => `<td><b>${fmt(v, 1)}</b></td>`).join("")}<td><b>${fmt(all, 1)}</b></td><td class="share"><b>100%</b></td></tr></tbody></table>`;
+        <td class="share"><div class="sh-cell"><span class="sh-bar"><i style="width:${tot[i] / maxT * 100}%;background:${CAT[i][1]}"></i></span><b>${fmt(tot[i] / all * 100, 1)}%</b></div></td><td class="fn-col">${CAT[i][3].map(stageChip).join("")}</td></tr>`).join("")}
+      <tr class="sb-total"><th scope="row">Total</th>${stTot.map(v => `<td><b>${fmt(v, 1)}</b></td>`).join("")}<td><b>${fmt(all, 1)}</b></td><td class="share"><b>100%</b></td><td class="fn-col"></td></tr></tbody></table>`;
+    const fn = $("#sbFunnel");
+    if (fn) fn.innerHTML = FUNNEL.map(([n, t, c], k) => `<div class="fn-step" style="--c:${c};--k:${k}"><b>${n}</b><span>${t}</span></div>`).join("");
   }
 
   /* ---------- per-store detail ---------- */
@@ -208,16 +210,24 @@
 
   /* ---------- state money mix ---------- */
   const CAT = [
-    ["Digital (MarCom)", "#141A5C", /digital paid/i],
-    ["Hoardings, OOH, HIPOP", "#3643BA", /hoarding/i],
-    ["In-mall", "#8A92E0", /in mall/i],
-    ["Influencers", "#2BFF88", /influencer/i],
-    ["Store events", "#00A99D", /store event/i],
-    ["In-store comms and flyers", "#00C4E1", /instore comm|flyers/i],
-    ["Partnerships and free products", "#7B3FC4", /community|free product/i],
-    ["PR", "#C03F9C", /press/i],
-    ["Other", "#C9CEF0", /./]
+    ["Digital (MarCom)", "#141A5C", /digital paid/i, ["Awareness", "Loyalty"]],
+    ["Hoardings, OOH, HIPOP", "#3643BA", /hoarding/i, ["Awareness"]],
+    ["In-mall", "#8A92E0", /in mall/i, ["Interest"]],
+    ["Influencers", "#2BFF88", /influencer/i, ["Awareness", "Interest"]],
+    ["Store events", "#00A99D", /store event/i, ["Interest", "Loyalty"]],
+    ["In-store comms and flyers", "#00C4E1", /instore comm|flyers/i, ["Conversion"]],
+    ["Partnerships and free products", "#7B3FC4", /community|free product/i, ["Interest", "Loyalty"]],
+    ["PR", "#C03F9C", /press/i, ["Awareness"]],
+    ["Other", "#C9CEF0", /./, []]
   ];
+  // Funnel stages, after the Mumbai cluster's Q4 funnel slide (stages and roles only, not its numbers)
+  const FUNNEL = [
+    ["Awareness", "Get known: reach new customers", "#141A5C"],
+    ["Interest", "Get considered: bring them to the mall, the store and our events", "#3643BA"],
+    ["Conversion", "Get the bill: in store, on the app, express delivery", "#00A99D"],
+    ["Loyalty", "Bring them back: communities, WhatsApp and app retention", "#7B3FC4"]
+  ];
+  const stageChip = n => { const f = FUNNEL.find(x => x[0] === n); return `<span class="fn-chip" style="--c:${f[2]}">${n}</span>`; };
   const catOf = line => CAT.findIndex(c => c[2].test(line));
   function stateCats(state) {
     const sums = CAT.map(() => 0);
