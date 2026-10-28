@@ -244,14 +244,9 @@
     setBtn(btn, false);
     v.play().catch(() => {});
   });
-  const filmObs = new IntersectionObserver(entries => entries.forEach(en => {
-    const v = en.target, btn = $(".snd-btn", v.parentElement);
-    if (en.isIntersecting) {
-      if (!v.src && v.dataset.src) v.src = v.dataset.src;
-      if (!reduced || v.dataset.user) playOrFallback(v, btn);
-    } else v.pause();
-  }), { threshold: 0.15 });
-  $$(".sm-video video").forEach(v => { v.muted = true; filmObs.observe(v); });
+  // playback is shared with every other video on the page through the gate in app.js
+  const gate = window.vidGate;
+  $$(".sm-video video").forEach(v => { v.muted = true; gate.observe(v); });
 
   document.addEventListener("click", e => {
     const tile = e.target.closest(".sm-video");
@@ -271,9 +266,10 @@
         v.muted = true;
         setBtn(btn, false);
       }
+      gate.refresh();
       return;
     }
     // a reel turned up elsewhere silences the films
-    if (e.target.closest(".reel-phone")) $$(".sm-video").forEach(f => { $("video", f).muted = true; setBtn($(".snd-btn", f), false); });
+    if (e.target.closest(".reel-phone")) { $$(".sm-video").forEach(f => { $("video", f).muted = true; setBtn($(".snd-btn", f), false); }); gate.refresh(); }
   });
 })();

@@ -72,17 +72,64 @@
   }, { rootMargin: "-45% 0px -50% 0px" });
   $$("section[id]").forEach(sec => secObs.observe(sec));
 
-  /* ---------- videos: play only while visible ---------- */
-  const vidObs = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      const v = en.target;
-      if (en.isIntersecting) {
-        if (v.dataset.src && !v.src) { v.src = v.dataset.src; }
-        if (!reduced || v.dataset.user) v.play().catch(() => {});
-      } else v.pause();
-    });
-  }, { threshold: 0.25 });
-  const watch = v => vidObs.observe(v);
+  /* ---------- videos: one gate for every video on the page ----------
+     Only the few videos most in view play at once (4, or 2 on a phone), so a slow connection is not
+     split ten ways; the rest wait on their poster until they are among the most visible. A video
+     playing with sound gets the connection to itself. A video that stalls is reloaded where it stopped. */
+  const vidGate = (() => {
+    const ratio = new Map(), seen = new WeakMap();
+    const cap = () => innerWidth < 700 ? 2 : 4;
+    const area = v => { const r = v.getBoundingClientRect(); return r.width * r.height; };
+    let queued = false;
+    const pick = () => {
+      queued = false;
+      for (const v of [...ratio.keys()]) if (!v.isConnected) { io.unobserve(v); ratio.delete(v); }
+      const vis = [...ratio].filter(([, r]) => r >= 0.2).map(([v]) => v);
+      const loud = [...ratio].filter(([v, r]) => r > 0 && !v.muted && v.dataset.user).map(([v]) => v);
+      const rest = vis.filter(v => !loud.includes(v)).sort((a, b) => (!!b.dataset.user - !!a.dataset.user) || (ratio.get(b) - ratio.get(a)) || (area(b) - area(a)));
+      const play = new Set(loud.length ? loud : reduced ? rest.filter(v => v.dataset.user).slice(0, cap()) : rest.slice(0, cap()));
+      for (const v of ratio.keys()) {
+        if (play.has(v)) start(v);
+        else { if (!v.paused) v.pause(); park(v); }
+      }
+    };
+    // a paused video that is still downloading gives its bandwidth back; it resumes where it was
+    const bufEnd = v => v.buffered.length ? v.buffered.end(v.buffered.length - 1) : 0;
+    const park = v => {
+      if (!v.dataset.src || !v.getAttribute("src") || v.networkState !== 2 || (v.duration && bufEnd(v) >= v.duration - 0.5)) return;
+      v.dataset.at = v.currentTime;
+      v.removeAttribute("src"); v.load();
+    };
+    const start = v => {
+      if (!v.getAttribute("src") && v.dataset.src) {
+        const at = +v.dataset.at || 0;
+        v.src = v.dataset.src;
+        if (at) v.addEventListener("loadedmetadata", () => { try { v.currentTime = at; } catch (err) { /* starts from the top */ } }, { once: true });
+      }
+      if (v.paused) v.play().catch(() => {});
+    };
+    const refresh = () => { if (!queued) { queued = true; requestAnimationFrame(pick); } };
+    const io = new IntersectionObserver(es => { es.forEach(e => ratio.set(e.target, e.isIntersecting ? e.intersectionRatio : 0)); refresh(); }, { threshold: [0, 0.2, 0.35, 0.5, 0.75, 1] });
+    setInterval(() => {
+      for (const v of ratio.keys()) {
+        if (v.paused || !v.getAttribute("src")) continue;
+        const p = seen.get(v) || { t: -1, b: -1, n: 0, tries: 0 };
+        // stuck = neither playing on nor downloading for 6 seconds; a slow download is left to finish
+        if (p.t === v.currentTime && p.b === bufEnd(v) && v.readyState < 3) {
+          if (++p.n >= 3 && p.tries < 2) {
+            p.tries++; p.n = 0;
+            const at = v.currentTime;
+            v.load();
+            v.addEventListener("loadedmetadata", () => { try { v.currentTime = at; } catch (err) { /* plays from the start */ } v.play().catch(() => {}); }, { once: true });
+          }
+        } else { p.t = v.currentTime; p.b = bufEnd(v); p.n = 0; }
+        seen.set(v, p);
+      }
+    }, 2000);
+    return { observe: v => io.observe(v), refresh };
+  })();
+  window.vidGate = vidGate;
+  const watch = v => vidGate.observe(v);
 
   /* ---------- hero ---------- */
   const heroReels = [
@@ -811,7 +858,7 @@
       panel.setAttribute("aria-labelledby", "tab" + i);
       panel.innerHTML = `${c.media.length || c.title ? `
         <div class="sp-hero">
-          <div class="sp-media ${c.contain ? "contain" : ""} ${c.wideMedia ? "wide" : ""} ${c.fit || ""}">${c.media.map(m => m.endsWith(".mp4") ? `<div class="sm-video"><video autoplay muted loop playsinline poster="assets/posters/${m.replace(".mp4", ".jpg")}" src="assets/videos/${m}"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play video with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>` : `<img src="assets/img/${m}" alt="" fetchpriority="high">`).join("")}</div>
+          <div class="sp-media ${c.contain ? "contain" : ""} ${c.wideMedia ? "wide" : ""} ${c.fit || ""}">${c.media.map(m => m.endsWith(".mp4") ? `<div class="sm-video"><video muted loop playsinline preload="none" poster="assets/posters/${m.replace(".mp4", ".jpg")}" data-src="assets/videos/${m}"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play video with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>` : `<img src="assets/img/${m}" alt="" fetchpriority="high">`).join("")}</div>
           <div class="sp-copy">
             <h3>${esc(c.title)}</h3>
             <p>${esc(c.copy)}</p>
@@ -823,6 +870,7 @@
         <div class="sp-stats ${c.stats.length < 3 ? "few" : ""}">${c.stats.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>
         <div class="sp-plan"><h4>${esc(c.planTitle)}</h4>${c.plan()}</div>`;
       $$(".sw-tab", list).forEach((b, k) => b.setAttribute("aria-selected", k === i));
+      $$("video", panel).forEach(v => { v.muted = true; vidGate.observe(v); });
     };
     $$(".sw-tab", list).forEach(b => b.addEventListener("click", () => show(+b.dataset.i)));
     // warm the cache so every tab's pictures are there the moment it opens
@@ -880,6 +928,7 @@
         $$(".reel-phone", row).forEach(o => { const ov = $("video", o); ov.muted = true; o.dataset.sound = "off"; $(".snd", o).textContent = "Sound off"; });
         if (!v.src) v.src = v.dataset.src;
         if (turnOn) { v.muted = false; v.dataset.user = "1"; v.play().catch(() => {}); btn.dataset.sound = "on"; $(".snd", btn).textContent = "Sound on"; }
+        vidGate.refresh();
       });
     });
   })();
