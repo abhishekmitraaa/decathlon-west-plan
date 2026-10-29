@@ -779,6 +779,14 @@
       flow: ["See the display", "Scan the QR code", "Explore or complete a kit", "Shop online", "Home delivery or Click & Collect"],
       stats: [["114", "new AOPs opening in Nov and Dec"], ["₹25.04 L", "cost of the new AOPs"], ["114", "already live today, 6 stores"], ["3-5", "pilot locations per city in Q1"]],
       planTitle: "AOPs in Q4, store by store: what opens in November and December, and what it costs", plan: aopQ4 },
+    { name: "My Store pages", tag: "13", media: ["mystore/motera.jpg"],
+      title: "Every store has its own page",
+      copy: "In Decathlon terms each store's page on decathlon.in is its My Store page: the store photo, address and directions, opening hours, Google rating and reviews, contact, the store leader, services and events. All 13 West stores have one, so a local campaign can send people straight to their nearest store.",
+      stats: (() => { const M = window.MY_STORES || []; const rv = M.reduce((a, s) => a + s[7], 0); return [[String(M.length), "My Store pages in the West"], [(M.reduce((a, s) => a + s[6], 0) / M.length).toFixed(1) + " ★", "average Google rating"], [(rv / 1e5).toFixed(2) + " lakh", "Google reviews across the stores"]]; })(),
+      planTitle: "The 13 My Store pages: tap one to open it", plan: () => {
+        const M = window.MY_STORES || [], BU = [["Pune", "Pune"], ["Gujarat", "Gujarat"], ["MP", "Madhya Pradesh"]];
+        return BU.map(([k, n]) => `<h4 class="hr-sub">${n}</h4><div class="ms-grid">${M.filter(s => s[3] === k).map(([slug, name, city, , addr, hrs, rt, rv, lead]) => `<a class="ms-card" href="https://www.decathlon.in/store/${slug}" target="_blank" rel="noopener"><img src="assets/img/mystore/${slug}.jpg" alt="My Store page of Decathlon ${esc(name)}" loading="lazy"><div><b>${esc(name)}</b><span class="ms-rt">${rt} ★ <small>${rv.toLocaleString("en-IN")} reviews</small></span><span>${esc(addr)}</span><span>${esc(hrs)}, store leader ${esc(lead)}</span><em>decathlon.in/store/${slug}</em></div></a>`).join("")}</div>`).join("");
+      } },
     { name: "WhatsApp channels, PN and RCS", tag: "5%", media: ["whatsapp.jpg", "push-notification.jpg"], contain: true,
       title: "Bring them back",
       copy: "Existing customers hear about sales, new arrivals and local events on channels they already check: WhatsApp, push notifications in the app and RCS messages. The WhatsApp channel also carries express delivery: customers in pin codes a store can reach in 2 hours get a message when express is live for them, so the nearest store becomes the fastest one.",
@@ -848,7 +856,7 @@
   ];
   // Tab order set by the team (27 Oct 2026)
   const ORDER = ["Hoardings and OOH", "Practice-place hoardings (AOP)", "Playground activation", "Quick commerce and delivery", "Events and community",
-    "Store openings", "Influencers", "In-mall and in-store kit", "Meta, app and landing pages", "WhatsApp channels, PN and RCS"];
+    "Store openings", "Influencers", "In-mall and in-store kit", "Meta, app and landing pages", "My Store pages", "WhatsApp channels, PN and RCS"];
   CHANNELS.sort((a, b) => ORDER.indexOf(a.name) - ORDER.indexOf(b.name));
   (() => {
     const list = $("#switchList"), panel = $("#switchPanel");
