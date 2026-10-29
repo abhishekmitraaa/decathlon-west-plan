@@ -856,7 +856,7 @@
   ];
   // Tab order set by the team (27 Oct 2026)
   const ORDER = ["Hoardings and OOH", "Practice-place hoardings (AOP)", "Playground activation", "Quick commerce and delivery", "Events and community",
-    "Store openings", "Influencers", "In-mall and in-store kit", "Meta, app and landing pages", "My Store pages", "WhatsApp channels, PN and RCS"];
+    "Store openings", "Influencers", "In-mall and in-store kit", "My Store pages", "Meta, app and landing pages", "WhatsApp channels, PN and RCS"];
   CHANNELS.sort((a, b) => ORDER.indexOf(a.name) - ORDER.indexOf(b.name));
   (() => {
     const list = $("#switchList"), panel = $("#switchPanel");
