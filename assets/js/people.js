@@ -16,6 +16,7 @@
   // 2026 sports market (India City Ranking 2025 projection) pro-rated to the same 298 days.
   // [city, state, stores, market 2026 Cr, in-store TO 2026 YTD Cr, customers 2026 YTD, returning customers]
   const DAYS = 298, YEAR = 365;
+  const OVERALL = 410; // user, 29 Oct 2026: overall West turnover 1 Jan - 25 Oct 2026, ₹ Cr, stores plus B2B, digital and marketplace
   const PEN = [
     ["Pune", "Pune", 5, 2433.62, 198.93, 571174, 344445],
     ["Ahmedabad", "Gujarat", 2, 2428.80, 76.39, 213036, 115118],
@@ -42,11 +43,11 @@
       <span class="pen-n">${cr(r.to)}</span><span class="pen-n">${cr(r.mk)}</span><span class="pen-n">${lakh(r.cu)}</span></div>`; }).join("");
   $("#goldGrid").innerHTML = `<div class="gold gold-hero"><b>${people.toFixed(1)}M</b><span>people across the three markets</span><small>Only 13 stores: one for every ${(people / 13).toFixed(1)}M people.</small></div>
     <div class="gold gold-pen"><div class="pen-head"><span>Our share of each city's sports market, 2026 so far</span>
-      <small>${cr(toAll)} in-store turnover from 1 January to 25 October across our 8 store cities, against a ${cr(mkAll)} market for the same days: ${(toAll / mkAll * 100).toFixed(1)}%. ${lakh(cuAll)} customers, ${Math.round(retAll / cuAll * 100)}% of them returning.</small></div>
+      <small>${cr(OVERALL)} overall turnover from 1 January to 25 October, including B2B, digital and marketplace, against a ${cr(mkAll)} sports market in our 8 store cities for the same days: ${(OVERALL / mkAll * 100).toFixed(1)}%. ${lakh(cuAll)} customers, ${Math.round(retAll / cuAll * 100)}% of them returning.</small></div>
       <div class="pen-key"><span><i class="us"></i>Our in-store turnover</span><span><i class="m25"></i>Sports market, same days</span></div>
       <div class="pen-row pen-hd"><span>City</span><span>2026 so far: 1 Jan to 25 Oct</span><span>Our share</span><span class="pen-n">Our sales, YTD</span><span class="pen-n">City market, YTD</span><span class="pen-n">Customers, YTD</span></div>
       ${penRows}
-      <p class="pen-foot">Turnover and customers: store data, 1 Jan to 25 Oct 2026. Market: India City Ranking 2025's 2026 projection, pro-rated to those 298 days. Every city's market grows about 10.7% a year to 2030.</p></div>`;
+      <p class="pen-foot">City rows are in-store turnover and customers from store data, 1 Jan to 25 Oct 2026 (${cr(toAll)} across the 8 cities). Market: India City Ranking 2025's 2026 projection, pro-rated to those 298 days. Every city's market grows about 10.7% a year to 2030.</p></div>`;
 
   // sports market pulse
   const PLAY = [["Pune", 12, 16, "var(--blue)"], ["Gujarat", 10, 14, "var(--guj)"], ["Madhya Pradesh", 8, 12, "var(--mp)"]];

@@ -342,7 +342,7 @@
     const legend = items => `<div class="dg-legend">${items.map(([n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join("")}</div>`;
     box.innerHTML = `<div class="cq-kpis">${BUS.map(([k, n, c]) => `<div style="--c:${c}"><b>${Cr(ytd[k])}</b><span>${n}, ${Math.round(ytd[k] / all * 100)}%</span></div>`).join("")}<div class="tot"><b>${Cr(all)}</b><span>West digital, Jan to Oct</span></div></div>
       <div class="dg-block dg-share"><h4 class="dg-h">Digital's share of total turnover, and who brings it</h4>
-        <div class="dg-share-row"><div class="dg-big"><b>${(all / G.totalTO * 100).toFixed(1)}%</b><span>of ₹${(G.totalTO / 1e7).toFixed(0)} Cr total turnover so far this year (stores and digital) is digital</span></div>
+        <div class="dg-share-row"><div class="dg-big"><b>${(all / G.totalTO * 100).toFixed(1)}%</b><span>of ₹${(G.totalTO / 1e7).toFixed(0)} Cr overall turnover so far this year (stores, B2B, digital and marketplace) is digital</span></div>
           <div class="dg-bar dg-tot"><i style="--w:${all / G.totalTO * 100}%;background:var(--blue)" data-tip="<b>Digital</b><br>${Cr(all)}">Digital ${Cr(all)}</i><i style="--w:${100 - all / G.totalTO * 100}%;background:var(--mist);color:var(--ink)">Stores and other channels</i></div></div>
         <div class="dg-bar dg-reg">${G.regions.map(([n, v], i) => `<i style="--w:${v / all * 100}%;background:${["var(--pune)", "var(--guj)", "var(--mp)", "#7fe0cf"][i]}" data-tip="<b>${n}</b><br>${Cr(v)}, ${(v / all * 100).toFixed(1)}% of digital">${(v / all * 100).toFixed(1)}%</i>`).join("")}</div>
         ${legend(G.regions.map(([n], i) => [n, ["var(--pune)", "var(--guj)", "var(--mp)", "#7fe0cf"][i]]))}</div>
