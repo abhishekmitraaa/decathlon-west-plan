@@ -169,3 +169,54 @@
       </div>
     </div>`;
 })();
+
+// Adajan hoarding map: a dropdown in the Surat section with a street map of both stores, the candidate boards and the crowd hotspots
+(() => {
+  const A = window.ADAJAN, anchor = document.querySelector("#surat .sr-all");
+  if (!A || !anchor) return;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const km = (a, b) => { const R = 6371, r = Math.PI / 180, dLa = (b[0] - a[0]) * r, dLo = (b[1] - a[1]) * r;
+    const x = Math.sin(dLa / 2) ** 2 + Math.cos(a[0] * r) * Math.cos(b[0] * r) * Math.sin(dLo / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(x)); };
+  const gm = (la, lo) => `https://www.google.com/maps/search/?api=1&query=${la},${lo}`;
+  const box = document.createElement("details");
+  box.className = "sr-all adj-drop";
+  box.innerHTML = `<summary>Adajan hoarding map: where the boards go</summary>
+    <p class="adj-lead"><b>Priority, budget ignored: B Madhuvan Circle, E Cable Bridge, A Shell, C Sardar Bridge, G Rander Rd, F Anand Mahal Rd.</b> The strongest spot is the Madhuvan to TGB core, 0.5 km from the store, and board B sits right on it. Nothing is final until a board clears the site checklist.</p>
+    <div class="seg adj-seg" role="group" aria-label="Map view"><button type="button" data-v="boards" aria-pressed="true">Adajan and its boards</button><button type="button" data-v="both" aria-pressed="false">Both stores</button></div>
+    <div class="adj-map" id="adjMap" role="img" aria-label="Map of Surat with Decathlon Dumas Road, Decathlon Adajan, the candidate hoarding boards and the crowd hotspots"></div>
+    <div class="adj-key"><span><i class="k-store"></i>Decathlon store</span><span><i class="k-pick">B</i>Top-two board</span><span><i class="k-board">A</i>Other board</span><span><i class="k-hot">1</i>Crowd hotspot</span><span><i class="k-dot" style="background:#C84A12"></i>Sports place</span><span><i class="k-dot" style="background:#6C4DC4"></i>IT or office</span><span><i class="k-dot" style="background:#187A4D"></i>School or housing</span><span><i class="k-road"></i>Busy road</span></div>
+    <div class="sb-wrap"><table class="sb-table adj-table"><thead><tr><th scope="col">Board</th><th scope="col">Score</th><th scope="col">From Adajan</th><th scope="col">Rate</th><th scope="col">Role</th></tr></thead><tbody>
+      ${A.sites.map(([id, name, la, lo, ma, sc, rate, role, pick], i) => `<tr><th scope="row"><span class="adj-b ${pick ? "pick" : ""}">${id}</span>${esc(name)}<small>${esc(ma)}</small></th><td>${sc}</td><td>${km(A.store, [la, lo]).toFixed(1)} km</td><td style="text-align:left">${esc(rate)}</td><td style="text-align:left">${esc(role)}</td></tr>`).join("")}
+    </tbody></table></div>
+    <ol class="adj-hot">${A.hot.map(([n, , , d]) => `<li><b>${esc(n)}.</b> ${esc(d)}</li>`).join("")}</ol>
+    <p class="foot">Score is out of 100 with cost left out, so a cheap board gets no credit. Pins are Google place pins near each board, not surveyed positions. Dumas Road is ${km(A.store, A.dumas).toFixed(1)} km from Adajan in a straight line. <a href="${A.link}" target="_blank" rel="noopener">Open the full interactive hoarding map</a> for the site checklist, every place in the catchment and the busy-road notes.</p>`;
+  anchor.before(box);
+  let map = null;
+  const build = () => {
+    if (map || !window.L) return;
+    map = L.map("adjMap", { scrollWheelZoom: false });
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "&copy; OpenStreetMap" }).addTo(map);
+    const logo = L.icon({ iconUrl: "assets/img/deca-pin.png", iconSize: [28, 28], iconAnchor: [14, 14], className: "map-store" });
+    const store = (p, name, tip) => L.marker(p, { icon: logo, zIndexOffset: 800 }).addTo(map).bindTooltip(name, { permanent: true, direction: "right", offset: [14, 0], className: "map-tip map-tip-store" }).bindPopup(`<b>${name}</b><br>${tip}<br><a href="${gm(p[0], p[1])}" target="_blank" rel="noopener">Open in Google Maps</a>`);
+    store(A.store, "Decathlon Adajan, opens 27 Dec", "Pacific Solitaire, L.P. Savani Rd");
+    store(A.dumas, "Decathlon Dumas Road", "Opposite Surat International Airport");
+    const rings = L.layerGroup([1.4, 4.2, 5.6].map((r, i) => L.circle(A.store, { radius: r * 1000, color: "#3643BA", weight: 1.5, dashArray: "6 6", fillOpacity: i ? 0 : 0.05, interactive: false })));
+    const roads = L.layerGroup(A.roads.map(([n, path]) => L.polyline(path, { color: "#B26A00", weight: 5, dashArray: "10 6" }).bindTooltip(n)));
+    const COL = { it: "#6C4DC4", sport: "#C84A12", fam: "#187A4D" };
+    const places = g => L.layerGroup(A.pts.filter(p => p[1] === g).map(([n, , c, la, lo, ar]) => L.circleMarker([la, lo], { radius: 4.5, color: "#fff", weight: 1, fillColor: COL[g], fillOpacity: 0.9 }).bindTooltip(`<b>${n}</b><br>${c}, ${ar}`)));
+    const hot = L.layerGroup(A.hot.map(([n, la, lo, d], i) => L.marker([la, lo], { icon: L.divIcon({ className: "adj-hot-ic", html: `<i>${i + 1}</i>`, iconSize: [26, 26], iconAnchor: [13, 13] }), zIndexOffset: 500 })
+      .bindPopup(`<b>Hotspot ${i + 1}: ${n}</b><br>${d}`)));
+    const boards = L.layerGroup(A.sites.map(([id, name, la, lo, ma, sc, rate, role, pick]) => L.marker([la, lo], { icon: L.divIcon({ className: "adj-board-ic" + (pick ? " pick" : ""), html: `<i>${id}</i>`, iconSize: [28, 28], iconAnchor: [14, 14] }), zIndexOffset: 1000 })
+      .bindTooltip(`${id} ${name.split(",")[0]}`, { direction: "top", offset: [0, -14] })
+      .bindPopup(`<b>Board ${id}: ${name}</b><br>${ma}, score ${sc}, ${km(A.store, [la, lo]).toFixed(1)} km from Adajan<br>${rate}<br>${role}<br><a href="${gm(la, lo)}" target="_blank" rel="noopener">Open in Google Maps</a>`)));
+    const comp = L.layerGroup(A.comp.map(([n, la, lo]) => L.circleMarker([la, lo], { radius: 5, color: "#fff", weight: 1.5, fillColor: "#5B6B79", fillOpacity: 1 }).bindTooltip(n)));
+    const layers = { "Catchment rings, 5 / 15 / 20 min": rings, "Busy roads": roads, "Sports places": places("sport"), "IT and offices": places("it"), "Schools and housing": places("fam"), "Crowd hotspots": hot, "Hoarding boards": boards, "Nike, adidas, Puma": comp };
+    Object.values(layers).forEach(l => l.addTo(map));
+    L.control.layers(null, layers, { collapsed: innerWidth < 700 }).addTo(map);
+    const VIEWS = { boards: L.latLngBounds([A.store, ...A.sites.map(s => [s[2], s[3]]), ...A.hot.map(h => [h[1], h[2]])]), both: L.latLngBounds([A.store, A.dumas, ...A.sites.map(s => [s[2], s[3]])]) };
+    const show = v => { map.fitBounds(VIEWS[v], { padding: [40, 40] }); box.querySelectorAll(".adj-seg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === v)); };
+    box.querySelectorAll(".adj-seg button").forEach(b => b.addEventListener("click", () => show(b.dataset.v)));
+    show("boards");
+  };
+  box.addEventListener("toggle", () => { if (box.open) { build(); setTimeout(() => map && map.invalidateSize(), 60); } });
+})();

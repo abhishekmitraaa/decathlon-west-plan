@@ -237,7 +237,7 @@
   (() => {
     if (!window.L || !window.HOARDINGS) return;
     const logo = L.icon({ iconUrl: "assets/img/deca-pin.png", iconSize: [22, 22], iconAnchor: [11, 11], className: "map-store" });
-    const EXTRA = { Surat: [{ name: "Adajan (opens Dec)", lat: 21.1960, lon: 72.7930 }] };
+    const EXTRA = { Surat: [{ name: "Adajan (opens Dec)", lat: 21.1883, lon: 72.7893 }] };
     const CITY = { Baroda: "Vadodara", Surat: "Surat", Bhopal: "Bhopal" };
     Object.keys(CITY).forEach(c => {
       const el = $("#hpMap" + c);

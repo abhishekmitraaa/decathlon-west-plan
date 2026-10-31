@@ -4,7 +4,7 @@ Single source of truth for this project. Read it before any work. Update it at t
 (see CLAUDE.md): add every new number, file, decision, preference and open question. Never delete
 history; mark superseded facts as superseded.
 
-Last updated: 2026-10-29
+Last updated: 2026-10-31
 
 ---
 
@@ -235,6 +235,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - Digital YTD sheet: October cut-off date not stated (month to date). "HIRING" appears as a sport (₹1.19 Cr YTD), meaning unclear. ₹398 Cr total turnover is the user's figure; not cross-checked against store turnover data.
 - Pickleball October: the film's opening caption says "758+ participants"; the user's figure is 754 (site uses 754). Average purchase frequency for digital: needs an orders or unique-customer column.
 - Store TO (₹397.54 Cr) + digital (₹44.93 Cr) = ₹442.5 Cr, above the ₹410 Cr overall (which also includes B2B and marketplace): store turnover likely already includes digital orders booked through stores (₹10.62 Cr) or definitions differ. Ask the team which; it decides the true online share per BU.
+- Adajan artifact notes: it lists the opening as 18 Dec in one place and 27 Dec in the retroplan (site uses 27 Dec, confirmed by the team); the two brand guides disagree on DOOH/LED boards and flex (brand team to decide); the live Surat hoarding in our programme is Pal Umra Bridge, which is not one of the artifact's six candidates.
 ---
 
 ## 6. Change log (newest last)
@@ -312,6 +313,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-10-29: My Store pages tab moved above "Meta, app and landing pages" (user). Playbook tab order now: Hoardings, AOP, Playground activation, Quick commerce, Events and community, Store openings, Influencers, In-mall and in-store kit, My Store pages, Meta/app/landing pages, WhatsApp. Assets ?v=20261029h.
 - 2026-10-29: **Overall West turnover 1 Jan - 25 Oct 2026 = ₹410 Cr** (user), including B2B, digital and marketplace; supersedes ₹398 Cr. (₹398 Cr on the page was the sum of in-store turnover in the 8 store cities, ₹397.54 Cr; the user's earlier "398 Cr including digital" is superseded too.) Why the West: headline now "₹410 Cr overall turnover ... including B2B, digital and marketplace, against a ₹8,550 Cr sports market in our 8 store cities for the same days: 4.8%" (was 4.6% on in-store); city rows stay in-store (footnote says ₹398 Cr across the 8 cities). Digital YTD dropdown: digital ₹44.93 Cr = 11.0% of ₹410 Cr (was 11.3% of ₹398 Cr). Assets ?v=20261029i.
 - 2026-10-29: Question only, no site change (user: digital share offline vs online per BU). Digital YTD (Jan-Oct) vs in-store 1 Jan-25 Oct: Pune ₹20.15 Cr vs ₹198.93 Cr = 9.2%; Gujarat ₹15.16 Cr vs ₹144.41 Cr (Ahmedabad 76.39, Surat 31.63, Vadodara 28.98, Rajkot 7.41) = 9.5%; MP ₹9.62 Cr vs ₹54.20 Cr (Indore 26.13, Bhopal 22.14, Gwalior 5.93) = 15.1%; West ₹44.93 Cr vs ₹397.54 Cr = 10.2%. Excluding digital orders booked to stores (e-com + marketplace only): Pune ₹14.48 Cr 6.8%, Gujarat ₹12.09 Cr 7.7%, MP ₹7.74 Cr 12.5%.
+- 2026-10-31: **Adajan hoarding map** (user shared artifact https://claude.ai/artifact/KjC3d6kGs7wYJ2sCGozgw6, "Adajan Hoarding Map": pre-opening outdoor plan for DSI Adajan, Pacific Solitaire, L.P. Savani Rd; sources: Master and Opening Plan workbook, Where We Play guide, OOH Landscape Case Study 2026, Media Ant listings, Google pins). New dropdown in the Surat section, just before "All 28 strategies": priority line (B Madhuvan Circle 86, E Cable Bridge 85, A Shell L.P. Savani Rd 80, C Sardar Bridge 66, G Rander Rd 57, F Anand Mahal Rd 57; scores 0-100 without cost; rates B ₹5,400/day offer (base ₹5,940), E ₹3,940/day, C ₹7,875/day, G ₹2,170/day, F ₹46,000 period unclear, A not listed), Leaflet street map with both stores marked (Adajan 21.1883, 72.7893; Dumas Road 21.11868, 72.73562), boards, 5 crowd hotspots (Madhuvan to TGB core strongest: 8 IT, 8 sports, 7 housing/school sites within 0.5 km), 148 catchment places (sports, IT, schools/housing), 2 busy roads, Nike/adidas/Puma, 1.4/4.2/5.6 km rings; layer toggle; views "Adajan and its boards" (default) and "Both stores"; board table and hotspot list; link to the full artifact. Data in `window.ADAJAN` (data.js). **Store pins corrected**: Dumas Road store was 21.145, 72.758 (approximate) → 21.1187, 72.7356 (Google place from its My Store page, ~3.8 km off before); Adajan pin in the hoarding-programme Surat mini map 21.1960, 72.7930 → 21.1883, 72.7893 (artifact). Dumas to Adajan 9.3 km straight line. Assets ?v=20261031b.
 - 2026-10-25: No new data. Local preview server (port 8765) stopped; restart with `python -m http.server 8765 --bind 127.0.0.1` when needed.
 
 ---
