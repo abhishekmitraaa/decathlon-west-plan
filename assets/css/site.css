@@ -1900,7 +1900,7 @@ ul, ol { padding: 0; }
 /* Adajan hoarding map dropdown */
 .adj-lead { font-size: 14px; color: var(--text-2); margin: 0 0 10px; max-width: 95ch; }
 .adj-lead b { color: var(--ink); }
-.adj-seg { margin: 0 0 10px; }
+.adj-seg { margin: 0 0 10px; flex-wrap: wrap; max-width: 100%; border-radius: 14px; }
 .adj-map { height: clamp(380px, 62vh, 620px); border-radius: var(--r-md); border: 1.5px solid var(--line); overflow: hidden; z-index: 0; }
 .adj-key { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 10px 0 14px; font-size: 12.5px; color: var(--text-2); align-items: center; }
 .adj-key i { display: inline-grid; place-items: center; vertical-align: middle; margin-right: 6px; font-style: normal; font-weight: 800; font-size: 11px; }
@@ -1960,7 +1960,9 @@ ul, ol { padding: 0; }
 .adj-pop-img { display: block; width: 240px; max-width: 100%; border-radius: 6px; margin-bottom: 6px; }
 .adj-booked-ic i, .adj-key .k-booked { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: #15222E; color: #2BFF88; border: 2px solid #2BFF88; font: 800 13px/1 var(--body); font-style: normal; box-shadow: 0 1px 5px rgba(0,0,0,.4); }
 .adj-key .k-booked { display: inline-grid; width: 20px; height: 20px; font-size: 11px; }
-.adj-k-ic.pick i { background: #2BFF88; } .adj-k-ic.scale i { background: #00C4E1; } .adj-k-ic.skip i { background: #E4E7F2; color: #6b7280; border-color: #9aa3b5; }
+.adj-k-ic.pick i { background: #2BFF88; }
+.adj-k-ic.shah i { border-style: dashed; }
+.k360 td small, .k360 th small { display: block; font-size: 11px; font-weight: 600; color: var(--text-3); } .adj-k-ic.scale i { background: #00C4E1; } .adj-k-ic.skip i { background: #E4E7F2; color: #6b7280; border-color: #9aa3b5; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
