@@ -1919,6 +1919,23 @@ ul, ol { padding: 0; }
 .adj-b.pick { background: var(--blue); color: #fff; }
 .adj-hot { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 4px; font-size: 13.5px; color: var(--text-2); }
 .adj-hot b { color: var(--ink); }
+.adj-h { font-size: 16px; font-weight: 750; color: var(--ink); margin: 18px 0 8px; }
+.adj-rec { background: var(--mist); border-left: 4px solid var(--blue); border-radius: var(--r-sm); padding: 12px 14px; font-size: 13.5px; color: var(--text-2); margin-bottom: 10px; }
+.adj-rec > b { display: block; color: var(--ink); font-size: 14.5px; margin-bottom: 6px; }
+.adj-rec span { display: inline-flex; align-items: center; gap: 6px; margin: 0 14px 6px 0; color: var(--ink); font-weight: 650; }
+.adj-rec span i, .adj-key .k-k, .k360 .k-no { display: inline-grid; place-items: center; min-width: 22px; height: 22px; border-radius: 5px; background: #fff; border: 2px solid var(--ink); font: 800 11px/1 var(--body); font-style: normal; color: var(--ink); }
+.adj-rec span i, .adj-key .k-k.pick { background: #2BFF88; }
+.adj-rec p { margin: 6px 0 0; }
+.k360 .k-no { margin-right: 8px; vertical-align: middle; }
+.k360 tr.pick th, .k360 tr.pick td { background: #e9fff2; }
+.k360 tr.skip th, .k360 tr.skip td { color: var(--text-3); }
+.k-v { display: inline-block; font-size: 11.5px; font-weight: 750; border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+.k-v.pick { background: #2BFF88; color: #06331b; } .k-v.scale { background: #c9f6fd; color: #04424d; } .k-v.alt { background: var(--mist); color: var(--ink); } .k-v.skip { background: #f1f2f6; color: var(--text-3); }
+.adj-k-ic i { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 6px; background: #fff; border: 2px solid #15222E; font: 800 11px/1 var(--body); font-style: normal; color: #15222E; box-shadow: 0 1px 4px rgba(0,0,0,.35); }
+.adj-pop-img { display: block; width: 240px; max-width: 100%; border-radius: 6px; margin-bottom: 6px; }
+.adj-booked-ic i, .adj-key .k-booked { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: #15222E; color: #2BFF88; border: 2px solid #2BFF88; font: 800 13px/1 var(--body); font-style: normal; box-shadow: 0 1px 5px rgba(0,0,0,.4); }
+.adj-key .k-booked { display: inline-grid; width: 20px; height: 20px; font-size: 11px; }
+.adj-k-ic.pick i { background: #2BFF88; } .adj-k-ic.scale i { background: #00C4E1; } .adj-k-ic.skip i { background: #E4E7F2; color: #6b7280; border-color: #9aa3b5; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
