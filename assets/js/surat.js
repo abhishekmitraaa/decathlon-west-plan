@@ -191,7 +191,7 @@
     <ol class="adj-hot">${A.hot.map(([n, , , d]) => `<li><b>${esc(n)}.</b> ${esc(d)}</li>`).join("")}</ol>
     ${A.city ? (() => { const CTN = { live: "Where people live", work: "Where they work", shop: "Shopping and leisure", move: "Stations and airport" };
       return `<h4 class="adj-h">Surat, the whole city: where the crowds are</h4>
-      <p class="adj-sub">Not only our catchments. Pick "Whole city: hotspots" above the map to see them all; each pin shows how far it is from both stores.</p>
+      <p class="adj-sub">Not only our catchments. Pick "Whole city: hotspots" above the map: it shows these city hotspots with the sports clubs, academies and venues, schools and housing, our crowd hotspots and the Nike, adidas and Puma stores we have located, across Surat. Each pin shows how far it is from both stores. Places outside Adajan come from OpenStreetMap, which lists fewer of them, so the west of the city looks denser than it is.</p>
       <div class="adj-city">${Object.entries(CTN).map(([t, n]) => `<div><h5>${n}</h5><ul>${A.city.filter(c => c[1] === t).map(([nm, , la, lo, note]) => `<li><b>${esc(nm)}</b> <small>${Math.min(km([la, lo], A.store), km([la, lo], A.dumas)).toFixed(1)} km from the nearest Decathlon</small><span>${esc(note)}</span></li>`).join("")}</ul></div>`).join("")}</div>
       <div class="adj-rec"><b>What it means for the city</b><p>Our two stores cover the west and south-west: Adajan, Pal, Rander, Vesu, Piplod and Dumas Road. The biggest crowds without a Decathlon nearby are Katargam, Varachha and the Ring Road markets, 5 to 9 km from both stores. Boards there build awareness and push express delivery and the app rather than store visits. For the opening, keep boards on the Adajan side; for the city, a big board on the Ring Road or the Varachha flyover is the one place that reaches Surat's largest crowds.</p></div>`; })() : ""}
     ${A.k360 ? (() => { const K = A.k360, L$ = n => "₹" + (n / 1e5).toFixed(2) + " L", byNo = n => K.find(k => k[0] === n);
@@ -245,7 +245,7 @@
     L.control.layers(null, layers, { collapsed: innerWidth < 700 }).addTo(map);
     const VIEWS = { boards: L.latLngBounds([A.store, ...A.sites.map(s => [s[2], s[3]]), ...A.hot.map(h => [h[1], h[2]])]), both: L.latLngBounds([A.store, A.dumas, ...A.sites.map(s => [s[2], s[3]])]), city: L.latLngBounds([A.store, A.dumas, ...(A.city || []).filter(c => !/Hazira|Sachin|Dumas Beach|Diamond Bourse/.test(c[0])).map(c => [c[2], c[3]])]), vendor: L.latLngBounds([A.store, ...(A.k360 || []).map(k => [k[8], k[9]]), ...(window.HOARDINGS || []).filter(h => h.city === "Surat" && h.lat).map(h => [h.lat, h.lon])]) };
     // the whole-city view shows only the city hotspots and the stores; the catchment layers come back in the other views
-    const CATCH = ["Hoarding planned, not booked", "Krishna 360 proposal, 22 sites", "Catchment rings, 5 / 15 / 20 min", "Busy roads", "Sports places", "IT and offices", "Schools and housing", "Crowd hotspots", "Hoarding boards", "Nike, adidas, Puma"];
+    const CATCH = ["Hoarding planned, not booked", "Krishna 360 proposal, 22 sites", "Catchment rings, 5 / 15 / 20 min", "Busy roads", "Hoarding boards"];
     const show = v => {
       CATCH.forEach(n => v === "city" ? map.removeLayer(layers[n]) : map.addLayer(layers[n]));
       v === "city" ? map.addLayer(city) : map.removeLayer(city);
