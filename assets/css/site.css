@@ -1964,6 +1964,71 @@ ul, ol { padding: 0; }
 .adj-k-ic.shah i { border-style: dashed; }
 .k360 td small, .k360 th small { display: block; font-size: 11px; font-weight: 600; color: var(--text-3); } .adj-k-ic.scale i { background: #00C4E1; } .adj-k-ic.skip i { background: #E4E7F2; color: #6b7280; border-color: #9aa3b5; }
 
+/* November 2026 update: menu on the main page and the separate page */
+.nov-menu { position: relative; margin-left: 8px; flex: none; }
+.nov-menu > summary { list-style: none; cursor: pointer; color: var(--ink); background: var(--mint); font-weight: 750; font-size: 13px; padding: 7px 30px 7px 14px; border-radius: var(--r-pill); white-space: nowrap; position: relative; }
+.nov-menu > summary::-webkit-details-marker { display: none; }
+.nov-menu > summary::after { content: ""; position: absolute; right: 13px; top: 50%; width: 6px; height: 6px; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: translateY(-70%) rotate(45deg); }
+.nov-menu[open] > summary::after { transform: translateY(-20%) rotate(-135deg); }
+.nov-pop { position: absolute; right: 0; top: calc(100% + 8px); width: 270px; background: #fff; border-radius: var(--r-md); box-shadow: 0 14px 40px rgba(10,14,60,.28); padding: 6px; z-index: 50; display: grid; }
+.nov-pop a { color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 600; padding: 9px 12px; border-radius: var(--r-sm); }
+.nov-pop a:hover, .nov-pop a:focus-visible { background: var(--mist); }
+.nov-pop a b { display: block; font-weight: 800; color: var(--blue); }
+.nov-pop a small { font-size: 12px; color: var(--text-2); font-weight: 600; }
+@media (max-width: 700px) { .nov-menu > summary { font-size: 12px; padding: 6px 26px 6px 11px; } .nov-pop { width: min(270px, calc(100vw - 24px)); right: 0; } #novInflKpis { grid-template-columns: 1fr 1fr; } }
+.nov-page .nov-back { text-decoration: none; margin-left: 8px; white-space: nowrap; }
+.nov-hero { padding-top: clamp(96px, 12vw, 140px); }
+.nov-hero .display { color: #fff; margin: 12px 0 10px; }
+.nov-when { background: var(--mint); color: var(--ink); }
+.nov-jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.nov-jump a { color: #fff; border: 1.5px solid rgba(255,255,255,.5); border-radius: var(--r-pill); padding: 7px 14px; font-size: 14px; font-weight: 650; text-decoration: none; }
+.nov-jump a:hover { background: rgba(255,255,255,.12); }
+.nov-days { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; }
+.nov-days div { background: #fff; border: 1.5px solid var(--line); border-radius: var(--r-md); padding: 12px 14px; }
+.nov-days div.main { background: #FFB21E; border-color: #FFB21E; }
+.nov-days b { display: block; font-size: 17px; font-weight: 800; color: var(--ink); }
+.nov-days span { font-size: 13px; color: var(--text-2); font-weight: 600; }
+.nov-days .main span { color: var(--ink); }
+.nov-two { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 14px; }
+.nov-two .panel { padding: 18px 20px; }
+.nov-two h3 { font-size: 17px; font-weight: 750; color: var(--ink); margin: 0 0 10px; }
+.nov-live ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.nov-live li { font-size: 14px; color: var(--text-2); display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 10px; }
+.nov-live li b { color: var(--blue); font-size: 13px; }
+.nov-flow { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14px; font-weight: 650; color: var(--ink); flex-wrap: wrap; }
+.nov-flow span { background: var(--mist); border-radius: var(--r-pill); padding: 6px 12px; }
+.nov-flow i { font-style: normal; color: var(--blue); font-weight: 800; }
+.nov-recycle p, .nov-note { font-size: 13.5px; color: var(--text-2); margin-top: 8px; }
+.nov-kpis { margin-bottom: 14px; }
+.nov-city { margin-bottom: 12px; border-left: 5px solid var(--c); }
+.nov-city .oct-text a { color: var(--blue); font-weight: 700; }
+.nov-ig-link { display: block; font-size: 12px; font-weight: 650; color: var(--blue); margin-top: 4px; text-decoration: none; }
+.nov-stores { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.nov-stores h4 { font-size: 15px; font-weight: 750; color: var(--ink); margin: 0 0 8px; }
+.nov-stores ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.nov-stores li { background: #fff; border: 1.5px solid var(--line); border-left: 4px solid var(--c); border-radius: var(--r-sm); padding: 9px 12px; display: flex; justify-content: space-between; gap: 8px; font-size: 14px; }
+.nov-stores li span { font-size: 12px; font-weight: 650; color: var(--text-3); }
+.nov-bf-kpis div:not(.tot) { background: #fff; color: var(--ink); }
+.nov-bf-kpis div:not(.tot) span { color: var(--text-2); opacity: 1; }
+#novInflKpis { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 700px) { #novInflKpis { grid-template-columns: 1fr 1fr; } }
+.nov-bf { padding: 8px 12px; margin-top: 4px; background: #fff; color: var(--ink); }
+.nov-bf .sb-table th, .nov-bf .sb-table td { color: var(--ink); }
+.nov-creative { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 20px; padding: 18px 20px; margin-top: 14px; align-items: start; }
+.nov-cr-img { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.nov-cr-img figure { margin: 0; }
+.nov-cr-img img { width: 100%; border-radius: var(--r-sm); display: block; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+.nov-cr-img figcaption { font-size: 12px; font-weight: 650; color: var(--text-2); margin-top: 6px; }
+.nov-cr-copy h3 { font-size: 18px; font-weight: 750; margin: 0 0 10px; color: var(--ink); }
+.nov-cr-copy ul { margin: 0 0 12px; padding-left: 18px; display: grid; gap: 8px; font-size: 14px; color: var(--text-2); }
+.nov-cr-copy li b { color: var(--ink); }
+.nov-hold { background: #FFF4D6; border-left: 4px solid #FFB21E; border-radius: var(--r-sm); padding: 10px 12px; font-size: 14px; color: var(--ink); }
+@media (max-width: 900px) { .nov-creative { grid-template-columns: 1fr; } }
+.nov-steps { margin: 6px 0 4px; }
+.nov-foot { padding: 22px 0 40px; font-size: 12.5px; color: var(--text-2); }
+.nov-foot a { color: var(--blue); font-weight: 700; }
+@media (max-width: 900px) { .nov-days { grid-template-columns: 1fr 1fr; } .nov-two, .nov-stores { grid-template-columns: 1fr; } .nov-live li { grid-template-columns: 1fr; gap: 0; } }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
