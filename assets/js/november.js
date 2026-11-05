@@ -88,32 +88,34 @@
       `<tr class="sb-total"><th scope="row">${bu === "MP" ? "Madhya Pradesh" : bu} total</th><td>${tot(bu)}${bu === "Gujarat" ? "+" : ""}</td><td>${bu === "Gujarat" ? "₹7.4 L" : bu === "Pune" ? "₹4 L" : "₹2.02 L"}</td><td></td></tr>`).join("")}
     <tr class="sb-total"><th scope="row">All Black Friday</th><td>${all}+</td><td>₹13.42 L</td><td style="text-align:left"></td></tr></tbody></table>`;
 
-  // November and December budget (user, 5 Nov 2026), in rupees. Committed lines: hoardings (booked sites, a month), Black Friday influencers
-  // (plus Gujarat's Diwali influencers, done in November), in-store comms at ₹50,000 a store a month. What is left is highlighted.
-  const BUD = { Gujarat: [2000000, 2100000], MP: [986000, 1100000], Pune: [1798000, 1853400] };
+  // November budget (user, 5-6 Nov 2026), rupees. Committed: hoardings (booked sites, a month, from the winter hoarding programme;
+  // Ahmedabad's two boards ₹3.5 L; the planned Surat board is not booked), Black Friday influencers, in-store comms ₹50,000 a store.
+  const BUD = { Gujarat: 2000000, MP: 986000, Pune: 1798000 };
   const STORES_N = { Gujarat: 5, MP: 3, Pune: 5 };
   const CITY_BU = { Pune: "Pune", Ahmedabad: "Gujarat", Baroda: "Gujarat", Rajkot: "Gujarat", Surat: "Gujarat", Bhopal: "MP", Indore: "MP", Gwalior: "MP" };
   const HOARD = { Gujarat: 0, MP: 0, Pune: 0 };
   (window.HOARDINGS || []).filter(x => x.status !== "plan").forEach(x => { HOARD[CITY_BU[x.city]] += x.cost; });
-  const INF = { Gujarat: [740000 + 130000, 0], MP: [70000 + 100000 + 32000, 0], Pune: [400000, 0] };
-  const INF_NOTE = { Gujarat: "₹7.4 L Black Friday + ₹1.3 L Diwali (done)", MP: "Bhopal ₹70,000, Indore ₹1 L, Gwalior ₹32,000 for Black Friday", Pune: "₹4 L Black Friday" };
+  const INF = { Gujarat: 740000, MP: 70000 + 100000 + 32000, Pune: 400000 };
   const WALK = { Gujarat: 30000, MP: 30000, Pune: 140000 };
   const BUN = { Gujarat: "Gujarat", MP: "Madhya Pradesh", Pune: "Pune" };
-  const rows = ["Gujarat", "MP", "Pune"].flatMap(bu => [0, 1].map(m => { const b = BUD[bu][m], ho = HOARD[bu], inf = INF[bu][m], ins = STORES_N[bu] * 50000; return { bu, m, b, ho, inf, ins, left: b - ho - inf - ins }; }));
-  const M = ["November", "December"];
-  const btot = k => rows.reduce((a, r) => a + r[k], 0);
-  $("#novBudgetKpis").innerHTML = `<div style="--c:var(--blue)"><b>${L$(btot("b"))}</b><span>budget, Nov and Dec</span></div><div style="--c:#8A92E0"><b>${L$(btot("ho"))}</b><span>hoardings</span></div><div style="--c:#00A99D"><b>${L$(btot("inf") + btot("ins"))}</b><span>influencers and in-store comms</span></div><div class="tot nov-left"><b>${L$(btot("left"))}</b><span>left to plan</span></div>`;
-  const PARTS = [["ho", "Hoardings", "#3643BA"], ["inf", "Influencers", "#00A99D"], ["ins", "In-store comms", "#8A92E0"], ["left", "Left to plan", "#FFC21A"]];
-  $("#novBudget").innerHTML = ["Gujarat", "MP", "Pune"].map(bu => `<article class="nov-bud-card" style="--c:${BU[bu]}"><h3>${BUN[bu]}</h3>
-      ${rows.filter(r => r.bu === bu).map(r => `<div class="nov-bud-row"><div class="nov-bud-top"><b>${M[r.m]}</b><span>${L$(r.b)}</span></div>
-        <div class="nov-bud-bar">${PARTS.map(([k, n, c]) => r[k] > 0 ? `<i style="--w:${r[k] / r.b * 100}%;background:${c}" title="${n}: ${L$(r[k])}"></i>` : "").join("")}</div>
-        <div class="nov-bud-left ${r.left < 0 ? "neg" : ""}">${r.left < 0 ? "Over by" : "Left to plan"} <b>${L$(Math.abs(r.left))}</b></div></div>`).join("")}
-      <p class="nov-bud-inf">Influencers: ${INF_NOTE[bu]}</p></article>`).join("") +
-    `<div class="nov-bud-key">${PARTS.map(([, n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join("")}</div>`;
-  $("#novBudgetTable").innerHTML = `<table class="sb-table"><thead><tr><th scope="col">Business unit</th><th scope="col">Month</th><th scope="col">Budget</th><th scope="col">Hoardings</th><th scope="col">Influencers</th><th scope="col">In-store comms</th><th scope="col" class="nov-left-col">Left to plan</th></tr></thead><tbody>
-    ${rows.map(r => `<tr><th scope="row">${r.m ? "" : BUN[r.bu]}</th><td style="text-align:left">${M[r.m]}</td><td>${L$(r.b)}</td><td>${L$(r.ho)}</td><td>${r.inf ? L$(r.inf) : "-"}</td><td>${L$(r.ins)}</td><td class="nov-left-col"><b>${L$(r.left)}</b></td></tr>`).join("")}
-    <tr class="sb-total"><th scope="row">West</th><td style="text-align:left">Nov + Dec</td><td>${L$(btot("b"))}</td><td>${L$(btot("ho"))}</td><td>${L$(btot("inf"))}</td><td>${L$(btot("ins"))}</td><td class="nov-left-col"><b>${L$(btot("left"))}</b></td></tr></tbody></table>`;
-  $("#novBudgetNote").innerHTML = `Hoardings: booked sites only, a month each (Pune 7, Ahmedabad 2, Baroda 4, Rajkot 2, Bhopal 2). The planned Surat board (₹1.9 L a month) is not booked and is not counted. In-store comms: ₹50,000 a store a month, ${STORES_N.Gujarat + STORES_N.MP + STORES_N.Pune} stores. December influencers are not planned yet. If the Black Friday walk-in events go ahead, November's left-to-plan falls by ${L$(WALK.Pune)} in Pune, ${L$(WALK.Gujarat)} in Gujarat (Baroda) and ${L$(WALK.MP)} in MP (Indore).`;
+  const PARTS = [["ho", "Hoardings", "#1F2A8A"], ["inf", "Influencers", "#E0457B"], ["ins", "In-store comms", "#14A38B"], ["left", "Left to plan", "#FFC21A"]];
+  const brow = ["Gujarat", "MP", "Pune"].map(bu => { const b = BUD[bu], ho = HOARD[bu], inf = INF[bu], ins = STORES_N[bu] * 50000; return { bu, b, ho, inf, ins, left: b - ho - inf - ins }; });
+  const btot = k => brow.reduce((a, r) => a + r[k], 0);
+  // donut for the West
+  let acc = 0; const B = btot("b");
+  const stops = PARTS.map(([k, , c]) => { const from = acc / B * 360; acc += btot(k); return `${c} ${from}deg ${acc / B * 360}deg`; }).join(", ");
+  $("#nbDonut").innerHTML = `<div class="nb-ring" style="background:conic-gradient(${stops})"><div><b>${L$(btot("left"))}</b><span>left to plan of ${L$(B)}</span></div></div>`;
+  $("#nbLegend").innerHTML = PARTS.map(([k, n, c]) => `<li><i style="background:${c}"></i>${n}<b>${L$(btot(k))}</b><small>${Math.round(btot(k) / B * 100)}%</small></li>`).join("");
+  // one bar per business unit, the amount written on each part
+  const bmax = Math.max(...brow.map(r => r.b));
+  $("#nbBars").innerHTML = brow.map(r => `<div class="nb-bu"><div class="nb-bu-head"><b>${BUN[r.bu]}</b><span>${L$(r.b)}</span></div>
+      <div class="nb-bar" style="width:${r.b / bmax * 100}%">${PARTS.map(([k, n, c]) => r[k] > 0 ? `<i style="flex:${r[k]} 1 0;background:${c}" title="${n}: ${L$(r[k])}"><em>${r[k] / r.b > 0.09 ? L$(r[k]) : ""}</em></i>` : "").join("")}</div>
+      <div class="nb-left">Left to plan <b>${L$(r.left)}</b></div></div>`).join("") +
+    `<div class="nb-key">${PARTS.map(([, n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join("")}</div>`;
+  $("#novBudgetTable").innerHTML = `<table class="sb-table"><thead><tr><th scope="col">November</th><th scope="col">Budget</th><th scope="col">Hoardings</th><th scope="col">Influencers</th><th scope="col">In-store comms</th><th scope="col" class="nov-left-col">Left to plan</th></tr></thead><tbody>
+    ${brow.map(r => `<tr><th scope="row">${BUN[r.bu]}</th><td>${L$(r.b)}</td><td>${L$(r.ho)}</td><td>${L$(r.inf)}</td><td>${L$(r.ins)}</td><td class="nov-left-col"><b>${L$(r.left)}</b></td></tr>`).join("")}
+    <tr class="sb-total"><th scope="row">West</th><td>${L$(btot("b"))}</td><td>${L$(btot("ho"))}</td><td>${L$(btot("inf"))}</td><td>${L$(btot("ins"))}</td><td class="nov-left-col"><b>${L$(btot("left"))}</b></td></tr></tbody></table>`;
+  $("#novBudgetNote").innerHTML = `Hoardings: booked sites, a month (Pune 7, Ahmedabad 2, Baroda 4, Rajkot 2, Bhopal 2); the planned Surat board is not booked. Influencers: Black Friday (Gujarat ₹7.4 L, Pune ₹4 L, MP ₹2.02 L). In-store comms: ₹50,000 a store. If the walk-in events go ahead, left to plan falls by ${L$(WALK.Pune)} in Pune, ${L$(WALK.Gujarat)} in Gujarat and ${L$(WALK.MP)} in MP.`;
 
   // Q4 campaign turnover goals, SD piloting sheet (Q4_CAMPAIGN_WISE_TURONVER_GOAL_.xlsx, 6 Nov 2026). ₹ Cr except Kiprun and Kids Utsav (₹).
   // [store, BU, Q4'26 challenge, Q4'26 piloting, BFS 2025, BF 2026 goal, Christmas 2025, Christmas 2026 goal, Kiprun shoes incremental, Kids Utsav]
@@ -126,6 +128,11 @@
   const pct = (a, b) => (a >= b ? "+" : "") + Math.round((a / b - 1) * 100) + "%";
   const cr = n => "₹" + n.toFixed(2) + " Cr";
   $("#novGoalKpis").innerHTML = `<div style="--c:#050505"><b>${cr(gs(null, 5))}</b><span>Black Friday goal, ${pct(gs(null, 5), gs(null, 4))} on 2025</span></div><div style="--c:#C8102E"><b>${cr(gs(null, 7))}</b><span>Christmas sale goal, ${pct(gs(null, 7), gs(null, 6))} on 2025</span></div><div style="--c:var(--blue)"><b>${cr(gs(null, 8) / 1e7)}</b><span>Kiprun shoes, extra turnover</span></div><div class="tot"><b>${cr(gs(null, 2))}</b><span>Q4 store challenge</span></div>`;
+  const gmax = Math.max(...["Pune", "Gujarat", "MP"].flatMap(bu => [gs(bu, 6), gs(bu, 7)]));
+  $("#nbGoalChart").innerHTML = `<div class="nb-goals">${["Pune", "Gujarat", "MP"].map(bu => `<div class="nb-g"><b>${BUN[bu]}</b>
+      ${[["Black Friday", 4, 5], ["Christmas sale", 6, 7]].map(([n, a, z]) => `<div class="nb-g-pair"><span>${n}</span>
+        <div class="nb-g-bar ly"><i style="width:${gs(bu, a) / gmax * 62}%"></i><em>2025 ${cr(gs(bu, a))}</em></div>
+        <div class="nb-g-bar ty ${gs(bu, z) < gs(bu, a) ? "neg" : ""}"><i style="width:${gs(bu, z) / gmax * 62}%"></i><em>2026 goal ${cr(gs(bu, z))} <small>${pct(gs(bu, z), gs(bu, a))}</small></em></div></div>`).join("")}</div>`).join("")}</div>`;
   $("#novGoals").innerHTML = `<table class="sb-table"><thead><tr><th scope="col">Store</th><th scope="col">Q4 challenge</th><th scope="col">Piloting</th><th scope="col">Black Friday 27-30 Nov</th><th scope="col">Christmas 18-25 Dec</th><th scope="col">Kiprun shoes</th><th scope="col">Kids Utsav</th></tr></thead><tbody>
     ${["Pune", "Gujarat", "MP"].map(bu => G.filter(g => g[1] === bu).map(g => `<tr><th scope="row">${g[0]}</th><td>${cr(g[2])}</td><td>${g[3] ? cr(g[3]) : "-"}</td><td>${cr(g[5])} <small>${pct(g[5], g[4])}</small></td><td>${cr(g[7])} <small class="${g[7] < g[6] ? "neg" : ""}">${pct(g[7], g[6])}</small></td><td>${L$(g[8])}</td><td>${g[9] ? L$(g[9]) : "-"}</td></tr>`).join("") +
       `<tr class="sb-total"><th scope="row">${BUN[bu]}</th><td>${cr(gs(bu, 2))}</td><td></td><td>${cr(gs(bu, 5))} <small>${pct(gs(bu, 5), gs(bu, 4))}</small></td><td>${cr(gs(bu, 7))} <small class="${gs(bu, 7) < gs(bu, 6) ? "neg" : ""}">${pct(gs(bu, 7), gs(bu, 6))}</small></td><td>${L$(gs(bu, 8))}</td><td>${gs(bu, 9) ? L$(gs(bu, 9)) : "-"}</td></tr>`).join("")}

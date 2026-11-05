@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=20261106c">
+<link rel="stylesheet" href="assets/css/site.css?v=20261106f">
 </head>
 <body class="nov-page">
 
@@ -20,10 +20,9 @@
     <a href="#social">Social media</a>
     <a href="#influencers">Influencers</a>
     <a href="#instore">In-store comms</a>
-    <a href="#budget">Budget</a>
     <a href="#blackfriday">Black Friday</a>
-    <a href="#goals">Turnover goals</a>
     <a href="#walkins">Walk-in events</a>
+    <a href="#budget">Budget and goals</a>
   </nav>
   <a class="present-btn nov-back" href="index.html">Back to the plan</a>
 </header>
@@ -94,17 +93,6 @@
   </div>
 </section>
 
-<section class="sec sec-paper" id="budget">
-  <div class="wrap">
-    <header class="sec-head"><h2 class="display">November and December<span class="lt"> budget</span></h2>
-      <p class="sec-lede">Each business unit's monthly budget, what is already committed to hoardings, influencers and in-store comms, and what is left to plan.</p></header>
-    <div class="cq-kpis nov-kpis" id="novBudgetKpis"></div>
-    <div class="nov-bud" id="novBudget"></div>
-    <div class="panel nov-bud-table"><div class="sb-wrap" id="novBudgetTable"></div></div>
-    <p class="nov-note" id="novBudgetNote"></p>
-  </div>
-</section>
-
 <section class="sec nov-black" id="blackfriday">
   <svg class="nov-swoosh" viewBox="0 0 1440 420" preserveAspectRatio="none" aria-hidden="true"><path d="M0 330 C 380 250, 760 120, 1440 40 L 1440 120 C 800 190, 420 320, 0 420 Z" fill="#2E5BFF"/></svg>
   <div class="wrap">
@@ -124,15 +112,6 @@
   </div>
 </section>
 
-<section class="sec sec-mist" id="goals">
-  <div class="wrap">
-    <header class="sec-head"><h2 class="display">Q4 turnover goals<span class="lt">, campaign by campaign</span></h2>
-      <p class="sec-lede">What each store pilots for Black Friday and the Christmas sale, against last year, with the Kiprun shoes and Kids Utsav turnover it adds. From the SD piloting sheet.</p></header>
-    <div class="cq-kpis nov-kpis" id="novGoalKpis"></div>
-    <div class="panel nov-goal"><div class="sb-wrap" id="novGoals"></div></div>
-  </div>
-</section>
-
 <section class="sec sec-paper" id="walkins">
   <div class="wrap">
     <header class="sec-head"><h2 class="display">Walk-in events<span class="lt">: a suggestion for Black Friday morning</span></h2>
@@ -146,10 +125,26 @@
   </div>
 </section>
 
+<section class="sec sec-mist" id="budget">
+  <div class="wrap">
+    <header class="sec-head"><h2 class="display">November budget<span class="lt"> and Q4 goals</span></h2>
+      <p class="sec-lede">What each business unit has for November, what is already committed, what is left to plan, and the turnover each campaign has to deliver.</p></header>
+    <div class="nb-top">
+      <div class="panel nb-donut-card"><h3>West, November</h3><div class="nb-donut" id="nbDonut"></div><ul class="nb-legend" id="nbLegend"></ul></div>
+      <div class="panel nb-bars-card"><h3>By business unit</h3><div id="nbBars"></div><p class="nov-note" id="novBudgetNote"></p></div>
+    </div>
+    <div class="panel nov-bud-table"><div class="sb-wrap" id="novBudgetTable"></div></div>
+    <h3 class="nb-sub" id="goals">Q4 turnover goals, campaign by campaign</h3>
+    <div class="cq-kpis nov-kpis" id="novGoalKpis"></div>
+    <div class="panel nb-goal-chart"><h3>Black Friday and Christmas sale: 2025 against the 2026 goal</h3><div id="nbGoalChart"></div></div>
+    <div class="panel nov-goal"><div class="sb-wrap" id="novGoals"></div></div>
+  </div>
+</section>
+
 <footer class="nov-foot"><div class="wrap">Instagram follower and post counts, and reel views, read from each page's public profile on 5 November 2026. Views show only for a page's latest 12 reels. Shares and saves are not public: they are in each page's Insights, so the page admins can send them. Diwali dates as observed in India. <a href="index.html">Back to the West plan</a></div></footer>
 
 <script>window.DATA = window.DATA || {};</script>
-<script src="assets/js/data.js?v=20261106c"></script>
-<script src="assets/js/november.js?v=20261106c"></script>
+<script src="assets/js/data.js?v=20261106f"></script>
+<script src="assets/js/november.js?v=20261106f"></script>
 </body>
 </html>
