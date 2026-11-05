@@ -58,15 +58,16 @@
   ];
   $("#novInflKpis").innerHTML = INFL.map(([c, n, how], i) => `<div style="--c:${["var(--guj)", "var(--mp)", "var(--mp)", "var(--mp)"][i]}"><b>${n}</b><span>${c}${how ? ", " + how : ""}</span></div>`).join("") + `<div class="tot"><b>${INFL.reduce((a, x) => a + x[1], 0)}</b><span>influencers so far</span></div>`;
   const IR = [["Gujarat", "Ahmedabad and Baroda", [["DfHm1Z2vrbd", "v", "hetansh_shahh"], ["DfHJeAntkw4", "v", "aishwaryaradhani"], ["DfG0V96gt7T", "v", "ayushithakkarrr"], ["DfG2BaXNPLH", "v", "monikacreatescontent"], ["DfHEdoasy0O", "v", "kashii__w"], ["DfG8IBLiePI", "p", "vadodara_foodiesisters"]]],
-    ["Madhya Pradesh", "Bhopal", [["DfMvv1cuhKa", "v", "bhopal_events_update"], ["DerYOikTLww", "v", "jasminethakurr"], ["DfPVVJkI_wa", "v", "__.bhavya"], ["DfPFRE0KFpO", "v", "wassup_bhopal"]]]];
+    ["Madhya Pradesh", "Bhopal", [["DfMvv1cuhKa", "v", "bhopal_events_update"], ["DerYOikTLww", "v", "jasminethakurr"], ["DfPVVJkI_wa", "v", "__.bhavya"], ["DfPFRE0KFpO", "v", "wassup_bhopal"]]],
+    ["Madhya Pradesh", "Indore", [["DfXGo04OAM4", "v", "taste_budds"]]]];
   $("#novInfl").innerHTML = IR.map(([bu, where, list]) => { const t = list.reduce((a, [id]) => a + (VW[id] || 0), 0);
-    return `<div class="oct-row oct-social nov-city" style="--c:${bu === "Gujarat" ? "var(--guj)" : "var(--mp)"}"><div class="oct-text"><span class="oct-when">${bu}</span><h3>${where}: ${list.length} reels live</h3><p>About <b>${short(t)} views</b> so far on the reels below.</p></div>
+    return `<div class="oct-row oct-social nov-city" style="--c:${bu === "Gujarat" ? "var(--guj)" : "var(--mp)"}"><div class="oct-text"><span class="oct-when">${bu}</span><h3>${where}: ${list.length} reel${list.length > 1 ? "s" : ""} live</h3><p>About <b>${short(t)} views</b> so far on the reels below.</p></div>
     <div class="oct-ig-row">${list.map(([id, k, by]) => tile(id, k, by)).join("")}</div></div>`; }).join("");
 
   // in-store comms: all 13 stores, photos to come
   const STORES = [["Pune", ["Wakad", "Wagholi", "SGS Mall", "NIBM", "Amanora"]], ["Gujarat", ["Motera", "Nexus Ahmedabad", "Surat, Dumas Road", "Baroda", "Rajkot"]], ["MP", ["Indore", "Bhopal", "Gwalior"]]];
   const DONE = { Bhopal: 5, Motera: 5 };
-  $("#novStores").innerHTML = STORES.map(([bu, list]) => `<div><h4>${bu === "MP" ? "Madhya Pradesh" : bu}</h4><ul>${list.map(s => `<li class="${DONE[s] ? "done" : ""}" style="--c:${BU[bu]}"><b>${s}</b><span>${DONE[s] ? "Diwali comms live" : "Photos to come"}</span></li>`).join("")}</ul></div>`).join("");
+  $("#novStores").innerHTML = STORES.map(([bu, list]) => `<div><h4>${bu === "MP" ? "Madhya Pradesh" : bu}</h4><ul>${list.map(s => `<li class="${DONE[s] ? "done" : ""}" style="--c:${BU[bu]}"><b>${s}</b><span>${DONE[s] ? "Diwali comms live" : "Not up yet"}</span></li>`).join("")}</ul></div>`).join("");
   const SHOTS = { Bhopal: ["Diwali entrance: diyas, garlands and blue and gold balloons", "Gift a Sport rangoli of balls, frisbees and shuttles", "Welcome desk with marigold garlands and Happy Diwali bunting", "The team with the Gift a Sport display", "Gift a Sport corner by camping"], Motera: ["Gift a Sport light box outside the store", "The Gift a Sport light box", "Gift a Sport headers on the ball wall, from ₹399", "Gift a Sport gondola with the ₹899 cricket combo", "Gift a Sport headers on the archery and darts wall"] };
   $("#novStorePhotos").innerHTML = Object.entries(SHOTS).map(([st, caps]) => `<h4 class="dw-store">${st}</h4><div class="dw-shots">${caps.map((c, i) => `<figure><img src="assets/img/nov/${st.toLowerCase()}-instore-${i + 1}.jpg" alt="${esc(st)}: ${esc(c)}" loading="lazy"><figcaption>${esc(c)}</figcaption></figure>`).join("")}</div>`).join("");
 
