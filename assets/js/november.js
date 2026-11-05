@@ -60,9 +60,9 @@
 
   // Black Friday influencer plan; nothing finalised yet
   const BF = [
-    ["Gujarat", "Surat", 25, null, "To finalise"], ["Gujarat", "Ahmedabad", 30, null, "To finalise"], ["Gujarat", "Rajkot", 12, null, "To finalise by Monday 9 Nov"], ["Gujarat", "Baroda", null, null, "Number to come"],
-    ["Pune", "Pune", 40, 400000, "To finalise"],
-    ["MP", "Indore", 15, null, "To finalise"], ["MP", "Bhopal", 15, null, "To finalise"], ["MP", "Gwalior", 10, null, "To finalise"]
+    ["Gujarat", "Surat", 25, null, "To be finalised by Monday 9 Nov"], ["Gujarat", "Ahmedabad", 30, null, "To be finalised by Monday 9 Nov"], ["Gujarat", "Rajkot", 12, null, "To be finalised by Monday 9 Nov"], ["Gujarat", "Baroda", null, null, "To be finalised by Monday 9 Nov"],
+    ["Pune", "Pune", 40, 400000, "Cross-checking with the vendor; likely done by Tuesday 10 Nov"],
+    ["MP", "Indore", 15, null, "To be finalised by Monday 9 Nov"], ["MP", "Bhopal", 15, null, "To be finalised by Monday 9 Nov"], ["MP", "Gwalior", 10, null, "To be finalised by Monday 9 Nov"]
   ];
   const tot = bu => BF.filter(r => r[0] === bu).reduce((a, r) => a + (r[2] || 0), 0);
   const all = BF.reduce((a, r) => a + (r[2] || 0), 0);

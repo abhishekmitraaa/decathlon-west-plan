@@ -2008,6 +2008,24 @@ ul, ol { padding: 0; }
 .nov-stores ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .nov-stores li { background: #fff; border: 1.5px solid var(--line); border-left: 4px solid var(--c); border-radius: var(--r-sm); padding: 9px 12px; display: flex; justify-content: space-between; gap: 8px; font-size: 14px; }
 .nov-stores li span { font-size: 12px; font-weight: 650; color: var(--text-3); }
+/* Black Friday in the black comms look: black, bold white type, a blue swoosh */
+.nov-black { position: relative; overflow: hidden; background: #050505; color: #fff; }
+.nov-black .wrap { position: relative; }
+.nov-swoosh { position: absolute; left: 0; right: 0; top: 34%; width: 100%; height: 340px; opacity: .9; pointer-events: none; }
+.nov-black .display { color: #fff; font-weight: 800; letter-spacing: -0.03em; }
+.nov-black .display .lt { color: #fff; font-weight: 800; }
+.nov-black .sec-lede { color: rgba(255,255,255,.82); }
+.nov-bf-date { display: inline-block; background: #fff; color: #050505; font-weight: 800; font-size: clamp(16px, 2vw, 22px); padding: 6px 14px; margin-bottom: 12px; }
+.nov-black .nov-bf-kpis div:not(.tot) { background: #111; color: #fff; border-left-color: #2E5BFF; }
+.nov-black .nov-bf-kpis div:not(.tot) span { color: rgba(255,255,255,.7); }
+.nov-black .nov-bf-kpis .tot { background: #2E5BFF; color: #fff; }
+.nov-black .nov-bf { background: rgba(17,17,17,.94); color: #fff; border: 1px solid #262626; }
+.nov-black .nov-bf .sb-table th, .nov-black .nov-bf .sb-table td { color: #fff; border-color: #2a2a2a; }
+.nov-black .nov-bf .sb-table thead th { color: rgba(255,255,255,.6); }
+.nov-black .nov-bf .sb-total th, .nov-black .nov-bf .sb-total td { border-top-color: #2E5BFF; }
+.nov-black .nov-cr-copy h3, .nov-black .nov-cr-copy li b { color: #fff; }
+.nov-black .nov-cr-copy ul, .nov-black .nov-cr-img figcaption { color: rgba(255,255,255,.75); }
+.nov-black .nov-hold { background: #1d1a10; color: #fff; }
 .nov-bf-kpis div:not(.tot) { background: #fff; color: var(--ink); }
 .nov-bf-kpis div:not(.tot) span { color: var(--text-2); opacity: 1; }
 #novInflKpis { grid-template-columns: repeat(5, minmax(0, 1fr)); }
