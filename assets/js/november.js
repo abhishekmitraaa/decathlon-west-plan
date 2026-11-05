@@ -101,6 +101,7 @@
   const PARTS = [["ho", "Hoardings", "#1F2A8A"], ["inf", "Influencers", "#E0457B"], ["ins", "In-store comms", "#14A38B"], ["left", "Left to plan", "#FFC21A"]];
   const brow = ["Gujarat", "MP", "Pune"].map(bu => { const b = BUD[bu], ho = HOARD[bu], inf = INF[bu], ins = STORES_N[bu] * 50000; return { bu, b, ho, inf, ins, left: b - ho - inf - ins }; });
   const btot = k => brow.reduce((a, r) => a + r[k], 0);
+  $("#novBudgetKpis").innerHTML = `<div class="tot"><b>${L$(btot("b"))}</b><span>total budget, November</span></div>${brow.map(r => `<div style="--c:${BU[r.bu]}"><b>${L$(r.b)}</b><span>${BUN[r.bu]}</span></div>`).join("")}<div class="nov-left"><b>${L$(btot("left"))}</b><span>left to plan, after ${L$(btot("b") - btot("left"))} committed</span></div>`;
   // donut for the West
   let acc = 0; const B = btot("b");
   const stops = PARTS.map(([k, , c]) => { const from = acc / B * 360; acc += btot(k); return `${c} ${from}deg ${acc / B * 360}deg`; }).join(", ");

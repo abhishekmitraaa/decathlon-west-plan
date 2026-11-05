@@ -2004,6 +2004,8 @@ ul, ol { padding: 0; }
 .nov-city { margin-bottom: 12px; border-left: 5px solid var(--c); }
 .nov-city .oct-text a { color: var(--blue); font-weight: 700; }
 /* November page: budget and goals at the end, with charts */
+.nb-kpis { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-bottom: 14px; }
+@media (max-width: 900px) { .nb-kpis { grid-template-columns: 1fr 1fr; } }
 .nb-top { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: 14px; margin-bottom: 14px; }
 .nb-top .panel, .nb-goal-chart { padding: 18px 20px; }
 .nb-top h3, .nb-goal-chart h3 { font-size: 16px; font-weight: 750; color: var(--ink); margin: 0 0 12px; }
