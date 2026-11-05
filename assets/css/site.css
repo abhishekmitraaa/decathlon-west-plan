@@ -1989,6 +1989,7 @@ ul, ol { padding: 0; }
 .nov-days b { display: block; font-size: 17px; font-weight: 800; color: var(--ink); }
 .nov-days span { font-size: 13px; color: var(--text-2); font-weight: 600; }
 .nov-days .main span { color: var(--ink); }
+#walkins .nov-two { align-items: start; }
 .nov-two { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 14px; }
 .nov-two .panel { padding: 18px 20px; }
 .nov-two h3 { font-size: 17px; font-weight: 750; color: var(--ink); margin: 0 0 10px; }
@@ -2002,6 +2003,42 @@ ul, ol { padding: 0; }
 .nov-kpis { margin-bottom: 14px; }
 .nov-city { margin-bottom: 12px; border-left: 5px solid var(--c); }
 .nov-city .oct-text a { color: var(--blue); font-weight: 700; }
+/* November page: budget, goals, centred short rows and gliding galleries */
+.nov-page .oct-ig-row { scroll-snap-type: none; scrollbar-width: thin; }
+.nov-page .oct-ig-row.few { justify-content: center; }
+.dw-marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+.dw-track { display: flex; gap: 10px; width: max-content; animation: dwSlide calc(var(--n) * 6s) linear infinite; }
+.dw-marquee:hover .dw-track { animation-play-state: paused; }
+.dw-track figure { flex: 0 0 240px; margin: 0; background: #fff; border-radius: var(--r-sm); overflow: hidden; }
+.dw-track img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; display: block; }
+.dw-track figcaption { font-size: 12px; color: var(--text-2); padding: 7px 9px 9px; line-height: 1.35; }
+@keyframes dwSlide { to { transform: translateX(calc(-50% - 5px)); } }
+@media (prefers-reduced-motion: reduce) { .dw-track { animation: none; } .dw-marquee { overflow-x: auto; } }
+@media (max-width: 700px) { .dw-track figure { flex-basis: 170px; } }
+.dw-shots figure { flex: 0 1 240px !important; }
+.dw-shots { display: flex !important; flex-wrap: wrap; justify-content: center; }
+.dw-shots figure { flex: 0 1 calc((100% - 40px) / 5); min-width: 150px; }
+.nov-bud { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 4px 0 12px; }
+.nov-bud-card { background: #fff; border: 1.5px solid var(--line); border-top: 5px solid var(--c); border-radius: var(--r-md); padding: 16px 18px; }
+.nov-bud-card h3 { font-size: 18px; font-weight: 750; color: var(--ink); margin: 0 0 10px; }
+.nov-bud-row { margin-bottom: 12px; }
+.nov-bud-top { display: flex; justify-content: space-between; font-size: 13.5px; color: var(--text-2); margin-bottom: 5px; }
+.nov-bud-top b { color: var(--ink); }
+.nov-bud-bar { display: flex; height: 22px; border-radius: 6px; overflow: hidden; background: var(--mist); }
+.nov-bud-bar i { display: block; width: var(--w); }
+.nov-bud-left { margin-top: 6px; font-size: 13px; font-weight: 650; color: var(--ink); background: #FFF4D2; border-left: 4px solid #FFC21A; border-radius: 4px; padding: 5px 9px; }
+.nov-bud-left b { font-size: 15px; }
+.nov-bud-left.neg { background: #ffe1e1; border-left-color: #d43a3a; }
+.nov-bud-inf { font-size: 12.5px; color: var(--text-2); margin: 4px 0 0; }
+.nov-bud-key { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--text-2); }
+.nov-bud-key i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.nov-left { background: #FFC21A !important; color: var(--ink) !important; }
+.nov-left span { color: var(--ink) !important; opacity: .85; }
+.nov-bud-table, .nov-goal { padding: 8px 12px; }
+.nov-left-col { background: #FFF4D2; }
+.nov-goal small { font-size: 11.5px; font-weight: 750; color: #0b7a4b; margin-left: 4px; }
+.nov-goal small.neg { color: #c0392b; }
+@media (max-width: 900px) { .nov-bud { grid-template-columns: 1fr; } .dw-shots figure { flex-basis: calc((100% - 10px) / 2); } }
 .nov-views { display: inline-flex; align-items: center; gap: 5px; margin-top: 6px; font-size: 11.5px; font-weight: 750; color: #fff; background: rgba(16,19,90,.82); padding: 4px 10px; border-radius: 999px; width: max-content; }
 .nov-ig-link { display: block; font-size: 12px; font-weight: 650; color: var(--blue); margin-top: 4px; text-decoration: none; }
 .nov-stores { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
