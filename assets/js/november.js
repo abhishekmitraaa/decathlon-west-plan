@@ -23,24 +23,26 @@
     : `<div class="oct-ig-item"><a class="ig-still" href="https://www.instagram.com/p/${id}/" target="_blank" rel="noopener"><img src="assets/posters/ig/${id}.jpg" alt="Post by @${esc(by)}" loading="lazy"><span>Watch on Instagram</span></a></div>`;
 
   // city pages, 5 Nov 2026 (public profile counts)
+  // city pages, 5 Nov 2026 (public profile counts); reels = the latest posts on each page's grid, collabs included
   const CITIES = [
-    ["Gujarat", "Ahmedabad", "letsplay_ahmedabad", 7203, 266, [["DeHTVs1MlIq", "v"], ["DerNs9uMOzh", "v"], ["DejcABnxu21", "p"]]],
-    ["Gujarat", "Surat", "letsplaysurat", 10600, 342, [["Dd8J7lzNngs", "v"], ["DehJUqQtsej", "v"], ["DewQ1znDYeS", "p"]]],
-    ["Gujarat", "Baroda", "lets_play_baroda", 4178, 360, []],
-    ["Gujarat", "Rajkot", null, null, null, []],
-    ["Pune", "Pune", "letsplaypune", 3653, 264, [["De8wddSJ_Md", "v"], ["DeogOh8ueLw", "v"]]],
-    ["MP", "Indore", "lets_playindore", 4339, 99, [["DfU25F5ADdQ", "p"]]],
-    ["MP", "Bhopal", "letsplaybhopal", 259, 46, []],
+    ["Gujarat", "Ahmedabad", "letsplay_ahmedabad", 7203, 266, [["DfWmPyARQTi", "v"], ["DfTvKjJMMEv", "v"], ["DfR5JF9xhnU", "p"], ["DfARs-kRF7G", "v"], ["De4J7EvhdBz", "p"], ["DezBlWXjO_i", "p"]]],
+    ["Gujarat", "Surat", "letsplaysurat", 10600, 342, [["DfH4ZLHtzTY", "v"], ["DfFUtI_tj0d", "v"], ["DewQ1znDYeS", "p"], ["DeosStPNuxE", "p"], ["DehJUqQtsej", "v"], ["Dd8J7lzNngs", "v"]]],
+    ["Gujarat", "Baroda", "lets_play_baroda", 4178, 360, [["DfErMzJoxFv", "v"], ["DewTiKNIDpW", "v"], ["DfWmPyARQTi", "v"], ["DfTvKjJMMEv", "v"], ["DfR5JF9xhnU", "p"], ["DfARs-kRF7G", "v"]]],
+    ["Gujarat", "Rajkot", "play_rajkot", 3676, 187, [["DfT8OR-ML-9", "v"], ["Deq8s6ms1G5", "v"], ["DfTvKjJMMEv", "v"], ["DfR5JF9xhnU", "p"], ["DfH4ZLHtzTY", "v"], ["DfErMzJoxFv", "v"]]],
+    ["Pune", "Pune", "letsplaypune", 3653, 264, [["DfWc3lrALwl", "p"], ["DfUg1stSYDY", "p"], ["DfRwSCQMThb", "p"], ["DfQCQKltWXg", "v"], ["DfPckVPtYok", "p"], ["DfOjP_Ega2u", "p"]]],
+    ["MP", "Indore", "lets_playindore", 4339, 99, [["DfU25F5ADdQ", "p"], ["DfUWa1cAFwo", "p"], ["DfSWm7UAH3K", "p"], ["DfRxzv1zGEc", "v"], ["DfPoeqygHml", "p"], ["DfMvGGDTaaV", "v"]]],
+    ["MP", "Bhopal", "letsplaybhopal", 259, 46, [["DfXLqoETY1p", "v"], ["DfRyd7KTa0b", "p"], ["DfPVVJkI_wa", "v"], ["DfM09PzqoXZ", "p"], ["DfMvv1cuhKa", "v"], ["DfG-yANhDpg", "p"]]],
     ["MP", "Gwalior", "letsplayygwalior", 24, 3, [["DfXGxBSNynn", "v"], ["DfUWnpNtb7g", "v"], ["DfPRG2rNlj2", "p"]]]
   ];
+  const BY = {"DfWc3lrALwl": "___sportsarena___", "DfUg1stSYDY": "doctor.who.runs", "DfRwSCQMThb": "doctor.who.runs", "DfQCQKltWXg": "fitness_after_fifty", "DfPckVPtYok": "satishdubey07", "DfOjP_Ega2u": "___sportsarena___", "DfH4ZLHtzTY": "letsplaysurat", "DfFUtI_tj0d": "letsplaysurat", "DewQ1znDYeS": "letsplaysurat", "DeosStPNuxE": "letsplaysurat", "DehJUqQtsej": "letsplaysurat", "Dd8J7lzNngs": "letsplaysurat", "DfWmPyARQTi": "letsplay_ahmedabad", "DfTvKjJMMEv": "letsplay_ahmedabad", "DfR5JF9xhnU": "letsplay_ahmedabad", "DfARs-kRF7G": "letsplay_ahmedabad", "De4J7EvhdBz": "letsplay_ahmedabad", "DezBlWXjO_i": "letsplay_ahmedabad", "DfErMzJoxFv": "lets_play_baroda", "DewTiKNIDpW": "lets_play_baroda", "DfT8OR-ML-9": "play_rajkot", "Deq8s6ms1G5": "play_rajkot", "DfU25F5ADdQ": "lets_playindore", "DfUWa1cAFwo": "lets_playindore", "DfSWm7UAH3K": "lets_playindore", "DfRxzv1zGEc": "lets_playindore", "DfPoeqygHml": "lets_playindore", "DfMvGGDTaaV": "lets_playindore", "DfXLqoETY1p": "letsplaybhopal", "DfRyd7KTa0b": "bhopal.sb", "DfPVVJkI_wa": "__.bhavya", "DfM09PzqoXZ": "tinyshuttlestar", "DfMvv1cuhKa": "bhopal_events_update", "DfG-yANhDpg": "yakshitdairies_10", "DfXGxBSNynn": "letsplayygwalior", "DfUWnpNtb7g": "letsplayygwalior", "DfPRG2rNlj2": "letsplayygwalior"};
   const num = n => n >= 10000 ? (n / 1000).toFixed(1) + "K" : n.toLocaleString("en-IN");
   const live = CITIES.filter(c => c[2]), F = live.reduce((a, c) => a + c[3], 0), P = live.reduce((a, c) => a + c[4], 0);
   $("#novSocialKpis").innerHTML = `<div style="--c:var(--blue)"><b>${live.length} of 8</b><span>city pages live</span></div><div style="--c:var(--guj)"><b>${num(F)}</b><span>followers across them</span></div><div style="--c:var(--mp)"><b>${P.toLocaleString("en-IN")}</b><span>posts so far</span></div><div class="tot"><b>Surat</b><span>biggest page, ${num(10600)} followers</span></div>`;
   const BU = { Gujarat: "var(--guj)", Pune: "var(--pune)", MP: "var(--mp)" };
   $("#novSocial").innerHTML = CITIES.map(([bu, city, h, f, p, reels]) => `<article class="oct-row oct-social nov-city" style="--c:${BU[bu]}">
       <div class="oct-text"><span class="oct-when">${bu === "MP" ? "Madhya Pradesh" : bu}</span><h3>${city}</h3>
-        ${h ? `<p><a href="https://www.instagram.com/${h}/" target="_blank" rel="noopener">@${h}</a>: <b>${num(f)}</b> followers, <b>${p}</b> posts.${reels.length ? ` ${reels.length} of the latest below.` : " Open the page to see what is live."}</p>` : `<p>No Let's Play page found for Rajkot yet. Share the handle and it goes here.</p>`}</div>
-      ${reels.length ? `<div class="oct-ig-row">${reels.map(([id, k]) => tile(id, k, h)).join("")}</div>` : ""}
+        ${h ? `<p><a href="https://www.instagram.com/${h}/" target="_blank" rel="noopener">@${h}</a>: <b>${num(f)}</b> followers, <b>${p}</b> posts.${reels.length ? ` The latest ${reels.length} on the page below.` : " Open the page to see what is live."}</p>` : `<p>No page yet.</p>`}</div>
+      ${reels.length ? `<div class="oct-ig-row">${reels.map(([id, k]) => tile(id, k, BY[id] || h)).join("")}</div>` : ""}
     </article>`).join("");
 
   // influencers done so far
@@ -56,7 +58,10 @@
 
   // in-store comms: all 13 stores, photos to come
   const STORES = [["Pune", ["Wakad", "Wagholi", "SGS Mall", "NIBM", "Amanora"]], ["Gujarat", ["Motera", "Nexus Ahmedabad", "Surat, Dumas Road", "Baroda", "Rajkot"]], ["MP", ["Indore", "Bhopal", "Gwalior"]]];
-  $("#novStores").innerHTML = STORES.map(([bu, list]) => `<div><h4>${bu === "MP" ? "Madhya Pradesh" : bu}</h4><ul>${list.map(s => `<li style="--c:${BU[bu]}"><b>${s}</b><span>Photos to come</span></li>`).join("")}</ul></div>`).join("");
+  const DONE = { Bhopal: 5, Motera: 5 };
+  $("#novStores").innerHTML = STORES.map(([bu, list]) => `<div><h4>${bu === "MP" ? "Madhya Pradesh" : bu}</h4><ul>${list.map(s => `<li class="${DONE[s] ? "done" : ""}" style="--c:${BU[bu]}"><b>${s}</b><span>${DONE[s] ? "Diwali comms live" : "Photos to come"}</span></li>`).join("")}</ul></div>`).join("");
+  const SHOTS = { Bhopal: ["Diwali entrance: diyas, garlands and blue and gold balloons", "Gift a Sport rangoli of balls, frisbees and shuttles", "Welcome desk with marigold garlands and Happy Diwali bunting", "The team with the Gift a Sport display", "Gift a Sport corner by camping"], Motera: ["Gift a Sport light box outside the store", "The Gift a Sport light box", "Gift a Sport headers on the ball wall, from ₹399", "Gift a Sport gondola with the ₹899 cricket combo", "Gift a Sport headers on the archery and darts wall"] };
+  $("#novStorePhotos").innerHTML = Object.entries(SHOTS).map(([st, caps]) => `<h4 class="dw-store">${st}</h4><div class="dw-shots">${caps.map((c, i) => `<figure><img src="assets/img/nov/${st.toLowerCase()}-instore-${i + 1}.jpg" alt="${esc(st)}: ${esc(c)}" loading="lazy"><figcaption>${esc(c)}</figcaption></figure>`).join("")}</div>`).join("");
 
   // Black Friday influencer plan; nothing finalised yet
   const BF = [
@@ -78,6 +83,13 @@
   $("#novWalk").innerHTML = `<table class="sb-table"><thead><tr><th scope="col">Store</th><th scope="col">Partner budget</th><th scope="col">Walk-ins asked</th></tr></thead><tbody>
     ${W.map(([s, b]) => `<tr><th scope="row">${s}</th><td>₹${b.toLocaleString("en-IN")}</td><td>1,000+</td></tr>`).join("")}
     <tr class="sb-total"><th scope="row">${W.length} stores</th><td>${L$(wt)}</td><td>${(W.length * 1000).toLocaleString("en-IN")}+</td></tr></tbody></table>`;
+
+  // Diwali string lights: bulbs placed along the garland curve, twinkling one after another
+  $$(".dw-bulbs").forEach(box => {
+    const N = innerWidth < 700 ? 14 : 26;
+    box.innerHTML = Array.from({ length: N }, (_, i) => { const t = (i + 0.5) / N, half = t < 0.5 ? t * 2 : (t - 0.5) * 2, y = 8 + 110 * 2 * half * (1 - half) * 0.85;
+      return `<i style="left:${t * 100}%;top:${y}px;--d:${(i % 6) * 0.35}s"></i>`; }).join("");
+  });
 
   // section jump links
   $("#novJump").innerHTML = $$(".nav a").map(a => `<a href="${a.getAttribute("href")}">${a.textContent}</a>`).join("");
