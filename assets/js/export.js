@@ -63,65 +63,77 @@
 
   const tagVideos = () => document.querySelectorAll("video[poster]").forEach(v => { if (v.parentElement) v.parentElement.setAttribute("data-exp-poster", v.getAttribute("poster")); });
 
+  const pageBg = () => {
+    for (const el of [document.body, document.documentElement]) { const c = getComputedStyle(el).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; }
+    return "#ffffff";
+  };
+
+  // capture every block, remembering where it sits on the page (CSS pixels), so the gaps between blocks stay as they are
   const capture = async (scale, label) => {
     await load("h2c"); await settle(); tagVideos();
-    const list = blocks(), out = [];
+    const list = blocks(), out = [], bg = pageBg();
     for (let i = 0; i < list.length; i++) {
       say(`${label}: capturing part ${i + 1} of ${list.length}`);
-      const el = list[i], h = el.scrollHeight, s = Math.min(scale, 30000 / Math.max(h, 1));
-      out.push(await window.html2canvas(el, { scale: s, useCORS: true, backgroundColor: getComputedStyle(document.body).backgroundColor || "#fff", logging: false, windowWidth: document.documentElement.clientWidth, onclone }));
+      const el = list[i], r = el.getBoundingClientRect(), s = Math.min(scale, 30000 / Math.max(el.scrollHeight, 1));
+      const c = await window.html2canvas(el, { scale: s, useCORS: true, backgroundColor: bg, logging: false, windowWidth: document.documentElement.clientWidth, onclone });
+      out.push({ c, top: r.top + scrollY, left: r.left + scrollX, w: r.width, h: r.height });
     }
-    // same width for every part
-    const W = Math.min(...out.map(c => c.width));
-    return out.map(c => { if (c.width === W) return c; const r = document.createElement("canvas"); r.width = W; r.height = Math.round(c.height * W / c.width); r.getContext("2d").drawImage(c, 0, 0, r.width, r.height); return r; });
+    const y0 = Math.min(...out.map(o => o.top)), y1 = Math.max(...out.map(o => o.top + o.h));
+    out.forEach(o => { o.top -= y0; });
+    return { items: out, total: y1 - y0, width: document.documentElement.clientWidth, bg };
   };
 
-  // draw any horizontal band of the stacked parts into a context
-  const band = (parts, y, h, ctx, W, outW, outH) => {
-    let top = 0;
-    for (const c of parts) {
-      const a = Math.max(y, top), b = Math.min(y + h, top + c.height);
-      if (b > a) ctx.drawImage(c, 0, a - top, W, b - a, 0, (a - y) * outW / W, outW, (b - a) * outW / W);
-      top += c.height;
+  // draw the page band from y to y + h (CSS pixels) into ctx at k canvas pixels per CSS pixel
+  const band = (cap, y, h, ctx, k) => {
+    ctx.fillStyle = cap.bg; ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    for (const o of cap.items) {
+      const a = Math.max(y, o.top), b = Math.min(y + h, o.top + o.h);
+      if (b <= a) continue;
+      const f = o.c.height / o.h; // canvas pixels per CSS pixel in this part
+      ctx.drawImage(o.c, 0, (a - o.top) * f, o.c.width, (b - a) * f, o.left * k, (a - y) * k, o.w * k, (b - a) * k);
     }
   };
 
+  // the PDF is one continuous page shaped like the website: no page breaks, nothing cut in the middle
   async function toPDF() {
-    const parts = await capture(Math.min(2, devicePixelRatio || 1.5) || 1.5, "PDF");
-    await load("pdf"); say("PDF: laying out pages");
-    const { jsPDF } = window.jspdf, W = parts[0].width;
-    const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4", compress: true });
-    const pw = 210, ph = 297, pagePx = Math.round(W * ph / pw);
-    const total = parts.reduce((a, c) => a + c.height, 0), pages = Math.ceil(total / pagePx);
+    const s = Math.min(2, Math.max(1.5, devicePixelRatio || 1.5));
+    const cap = await capture(s, "PDF");
+    await load("pdf"); say("PDF: building the page");
+    const { jsPDF } = window.jspdf;
+    const MAX = 14400; // the largest page side PDF readers accept, in points
+    const pt = Math.min(0.75, MAX / cap.total, MAX / cap.width); // points per CSS pixel
+    const pw = cap.width * pt, ph = cap.total * pt;
+    const pdf = new jsPDF({ orientation: pw > ph ? "landscape" : "portrait", unit: "pt", format: [pw, ph], compress: true });
+    const hex = ((cap.bg.match(/\d+/g) || [255, 255, 255]).slice(0, 3)).map(v => (+v).toString(16).padStart(2, "0")).join("");
+    pdf.setFillColor("#" + hex); pdf.rect(0, 0, pw, ph, "F");
+    // in strips small enough for a canvas; each strip runs 2px into the next, which is drawn over it, so no seam shows
+    const STRIP = Math.floor(3000 / s), OV = 2;
     const tmp = document.createElement("canvas"), ctx = tmp.getContext("2d");
-    for (let p = 0; p < pages; p++) {
-      const y = p * pagePx, h = Math.min(pagePx, total - y);
-      tmp.width = W; tmp.height = h; ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, h);
-      band(parts, y, h, ctx, W, W, h);
-      if (p) pdf.addPage();
-      pdf.addImage(tmp.toDataURL("image/jpeg", 0.86), "JPEG", 0, 0, pw, h * pw / W);
-      say(`PDF: page ${p + 1} of ${pages}`);
+    const n = Math.ceil(cap.total / STRIP);
+    for (let i = 0; i < n; i++) {
+      const y = i * STRIP, h = Math.min(STRIP + OV, cap.total - y);
+      tmp.width = Math.round(cap.width * s); tmp.height = Math.max(1, Math.round(h * s));
+      band(cap, y, h, ctx, s);
+      pdf.addImage(tmp.toDataURL("image/jpeg", 0.9), "JPEG", 0, y * pt, pw, h * pt, undefined, "FAST");
+      say(`PDF: part ${i + 1} of ${n}`);
       await new Promise(r => setTimeout(r));
     }
     save(pdf.output("blob"), name("pdf"));
   }
 
   async function toGIF() {
-    const outW = Math.min(720, document.documentElement.clientWidth);
-    const parts = await capture(outW / document.documentElement.clientWidth, "GIF");
+    const cssW = document.documentElement.clientWidth, outW = Math.min(720, cssW), k = outW / cssW;
+    const cap = await capture(k, "GIF");
     await load("gif");
     const res = await fetch(LIB.gifw[0], { integrity: LIB.gifw[1] });
     const workerURL = URL.createObjectURL(new Blob([await res.text()], { type: "application/javascript" }));
-    const W = parts[0].width, frameH = Math.round(W * (innerHeight / document.documentElement.clientWidth));
-    const total = parts.reduce((a, c) => a + c.height, 0);
-    const steps = Math.min(90, Math.max(2, Math.ceil((total - frameH) / (frameH * 0.7)) + 1));
-    const gif = new window.GIF({ workers: 2, quality: 12, width: W, height: frameH, workerScript: workerURL, background: "#ffffff" });
-    const tmp = document.createElement("canvas"); tmp.width = W; tmp.height = frameH;
+    const frameCss = Math.min(innerHeight, cap.total), W = Math.round(cssW * k), H = Math.round(frameCss * k);
+    const steps = Math.min(90, Math.max(2, Math.ceil((cap.total - frameCss) / (frameCss * 0.7)) + 1));
+    const gif = new window.GIF({ workers: 2, quality: 12, width: W, height: H, workerScript: workerURL, background: "#ffffff" });
+    const tmp = document.createElement("canvas"); tmp.width = W; tmp.height = H;
     const ctx = tmp.getContext("2d", { willReadFrequently: true });
     for (let i = 0; i < steps; i++) {
-      const y = Math.round((total - frameH) * i / (steps - 1));
-      ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, frameH);
-      band(parts, y, frameH, ctx, W, W, frameH);
+      band(cap, (cap.total - frameCss) * i / (steps - 1), frameCss, ctx, k);
       gif.addFrame(ctx, { copy: true, delay: i === 0 || i === steps - 1 ? 1600 : 650 });
       say(`GIF: frame ${i + 1} of ${steps}`);
       await new Promise(r => setTimeout(r));
