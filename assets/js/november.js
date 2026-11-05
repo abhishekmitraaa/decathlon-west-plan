@@ -9,7 +9,7 @@
   $("#novDays").innerHTML = DAYS.map(([d, n], i) => `<div class="${i === 2 ? "main" : ""}"><b>${d}</b><span>${n}</span></div>`).join("");
   const LIVE = [
     ["No sale", "No Diwali sale in the stores this year: we celebrate with Gift a Sport instead of discounts"],
-    ["In store", "Gift a Sport comms: light boxes, wall headers, rangoli of balls and frisbees, garlands at the welcome desk. Live in Bhopal and Motera, other stores to follow"],
+    ["In store", "Gift a Sport comms: light boxes, wall headers, rangoli of balls and frisbees, garlands at the welcome desk. Live in Bhopal, Motera and Surat; the other stores are not putting them up"],
     ["Influencers", "23 so far: Gujarat 13 (₹1.3 L, with Akshat), Indore 4 on barter, Bhopal 4, Gwalior 2 with a gift card each. The 10 reels below have about 1.9 lakh views"],
     ["City pages", "Diwali reels on all 8 Let's Play pages, e.g. Gwalior's “why gift mithai? When you have Decathlon”"],
     ["Recycling", "Gujarat content reused in MP, the best of MP reused in Gujarat, the same with Pune"],
@@ -66,10 +66,10 @@
 
   // in-store comms: all 13 stores, photos to come
   const STORES = [["Pune", ["Wakad", "Wagholi", "SGS Mall", "NIBM", "Amanora"]], ["Gujarat", ["Motera", "Nexus Ahmedabad", "Surat, Dumas Road", "Baroda", "Rajkot"]], ["MP", ["Indore", "Bhopal", "Gwalior"]]];
-  const DONE = { Bhopal: 5, Motera: 5 };
-  $("#novStores").innerHTML = STORES.map(([bu, list]) => `<div><h4>${bu === "MP" ? "Madhya Pradesh" : bu}</h4><ul>${list.map(s => `<li class="${DONE[s] ? "done" : ""}" style="--c:${BU[bu]}"><b>${s}</b><span>${DONE[s] ? "Diwali comms live" : "Not up yet"}</span></li>`).join("")}</ul></div>`).join("");
-  const SHOTS = { Bhopal: ["Diwali entrance: diyas, garlands and blue and gold balloons", "Gift a Sport rangoli of balls, frisbees and shuttles", "Welcome desk with marigold garlands and Happy Diwali bunting", "The team with the Gift a Sport display", "Gift a Sport corner by camping"], Motera: ["Gift a Sport light box outside the store", "The Gift a Sport light box", "Gift a Sport headers on the ball wall, from ₹399", "Gift a Sport gondola with the ₹899 cricket combo", "Gift a Sport headers on the archery and darts wall"] };
-  $("#novStorePhotos").innerHTML = Object.entries(SHOTS).map(([st, caps]) => `<h4 class="dw-store">${st}</h4><div class="dw-shots">${caps.map((c, i) => `<figure><img src="assets/img/nov/${st.toLowerCase()}-instore-${i + 1}.jpg" alt="${esc(st)}: ${esc(c)}" loading="lazy"><figcaption>${esc(c)}</figcaption></figure>`).join("")}</div>`).join("");
+  const DONE = { Bhopal: 5, Motera: 5, "Surat, Dumas Road": 2 };
+  $("#novStores").innerHTML = STORES.map(([bu, list]) => `<div><h4>${bu === "MP" ? "Madhya Pradesh" : bu}</h4><ul>${list.map(s => `<li class="${DONE[s] ? "done" : ""}" style="--c:${BU[bu]}"><b>${s}</b><span>${DONE[s] ? "Diwali comms live" : "Not putting them up"}</span></li>`).join("")}</ul></div>`).join("");
+  const SHOTS = { Bhopal: ["Diwali entrance: diyas, garlands and blue and gold balloons", "Gift a Sport rangoli of balls, frisbees and shuttles", "Welcome desk with marigold garlands and Happy Diwali bunting", "The team with the Gift a Sport display", "Gift a Sport corner by camping"], "Surat, Dumas Road": ["Diwali gift tower: Decathlon-wrapped gifts, Happy Diwali ribbons and marigold toran", "Gift a Sport winter stand: padded jackets from ₹1,999 and gloves"], Motera: ["Gift a Sport light box outside the store", "The Gift a Sport light box", "Gift a Sport headers on the ball wall, from ₹399", "Gift a Sport gondola with the ₹899 cricket combo", "Gift a Sport headers on the archery and darts wall"] };
+  $("#novStorePhotos").innerHTML = Object.entries(SHOTS).map(([st, caps]) => `<h4 class="dw-store">${st}</h4><div class="dw-shots">${caps.map((c, i) => `<figure><img src="assets/img/nov/${st.split(",")[0].toLowerCase()}-instore-${i + 1}.jpg" alt="${esc(st)}: ${esc(c)}" loading="lazy"><figcaption>${esc(c)}</figcaption></figure>`).join("")}</div>`).join("");
 
   // Black Friday influencer plan; nothing finalised yet
   const BF = [
@@ -97,6 +97,31 @@
     const N = innerWidth < 700 ? 14 : 26;
     box.innerHTML = Array.from({ length: N }, (_, i) => { const t = (i + 0.5) / N, half = t < 0.5 ? t * 2 : (t - 0.5) * 2, y = 8 + 110 * 2 * half * (1 - half) * 0.85;
       return `<i style="left:${t * 100}%;top:${y}px;--d:${(i % 6) * 0.35}s"></i>`; }).join("");
+  });
+
+  // Diwali fireworks: a few gold and saffron bursts in each Diwali section, only while it is on screen
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) $$(".nov-diwali").forEach(sec => {
+    const cv = document.createElement("canvas"); cv.className = "dw-fire"; cv.setAttribute("aria-hidden", "true"); sec.prepend(cv);
+    const ctx = cv.getContext("2d"), COL = ["#FFC21A", "#FFD966", "#FF8A1F", "#FFFFFF", "#FF5A8A", "#7FE3FF"];
+    let W = 0, H = 0, parts = [], rockets = [], on = false, raf = 0, next = 0;
+    const size = () => { const r = sec.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); W = r.width; H = r.height; cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0); };
+    const launch = () => { const side = Math.random() < 0.5 ? 0.04 + Math.random() * 0.22 : 0.74 + Math.random() * 0.22;
+      rockets.push({ x: W * side, y: Math.min(H, 640), ty: 70 + Math.random() * 230, vy: -(11 + Math.random() * 3), c: COL[Math.random() * COL.length | 0] }); };
+    const burst = (x, y, c) => { const n = 46 + (Math.random() * 20 | 0); for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2, s = 1.2 + Math.random() * 2.6;
+      parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 1, c: Math.random() < 0.25 ? "#FFFFFF" : c }); } };
+    const tick = t => {
+      raf = on ? requestAnimationFrame(tick) : 0;
+      ctx.clearRect(0, 0, W, H);
+      if (t > next) { launch(); next = t + 900 + Math.random() * 1600; }
+      rockets = rockets.filter(r => { r.y += r.vy; ctx.fillStyle = r.c; ctx.fillRect(r.x - 1, r.y, 2, 6); if (r.y <= r.ty) { burst(r.x, r.y, r.c); return false; } return true; });
+      parts = parts.filter(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.035; p.vx *= 0.985; p.vy *= 0.985; p.life -= 0.0085;
+        ctx.globalAlpha = Math.max(p.life, 0); ctx.fillStyle = p.c; ctx.shadowColor = p.c; ctx.shadowBlur = 8; ctx.beginPath(); ctx.arc(p.x, p.y, 2.6, 0, 6.283); ctx.fill(); return p.life > 0; });
+      ctx.globalAlpha = 1;
+    };
+    let first = true;
+    new IntersectionObserver(es => es.forEach(e => { on = e.isIntersecting; if (on && !raf) { size(); if (first) { first = false; [0.12, 0.86].forEach(f => burst(W * f, 120 + Math.random() * 90, COL[Math.random() * 3 | 0])); } raf = requestAnimationFrame(tick); } }), { threshold: 0.05 }).observe(sec);
+    new ResizeObserver(() => on && size()).observe(sec);
+    addEventListener("resize", () => on && size());
   });
 
   // section jump links
