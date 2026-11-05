@@ -172,6 +172,17 @@
     requestAnimationFrame(step);
   });
 
+  // reel views under the October recap reels (window.IG_VIEWS, public Reels tab counts)
+  (() => {
+    const VW = window.IG_VIEWS || {};
+    const short = n => n >= 1e5 ? (n / 1e5).toFixed(2).replace(/\.?0+$/, "") + " lakh" : n >= 1e3 ? (n / 1e3).toFixed(1).replace(/\.0$/, "") + "K" : String(n);
+    $$("#october .oct-ig-item").forEach(it => {
+      const src = it.querySelector("video")?.dataset.src || it.querySelector("img")?.getAttribute("src") || "";
+      const id = (src.match(/ig\/([A-Za-z0-9_-]+)\./) || [])[1];
+      if (id && VW[id]) it.insertAdjacentHTML("beforeend", `<span class="nov-views"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>${short(VW[id])} views</span>`);
+    });
+  })();
+
   /* ---------- charts ---------- */
   const renderers = [];
   const addChart = (el, fn) => { if (!el) return; renderers.push(() => fn(el, el.clientWidth)); };

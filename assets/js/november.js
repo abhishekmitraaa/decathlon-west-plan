@@ -8,19 +8,23 @@
   const DAYS = [["Fri 6 Nov", "Dhanteras"], ["Sat 7 Nov", "Choti Diwali"], ["Sun 8 Nov", "Diwali, Lakshmi Puja"], ["Tue 10 Nov", "Govardhan Puja and Gujarati New Year"], ["Wed 11 Nov", "Bhai Dooj"]];
   $("#novDays").innerHTML = DAYS.map(([d, n], i) => `<div class="${i === 2 ? "main" : ""}"><b>${d}</b><span>${n}</span></div>`).join("");
   const LIVE = [
-    ["31 Oct - 1 Nov", "Diwali sale in the stores, ₹5.5 Cr target (₹4.7 Cr last year)"],
-    ["1 - 30 Nov", "Gift a Sport: Diwali gifting in store and on the city pages"],
-    ["Oct - Nov", "Diwali campaigns: Gujarat ₹3.63 L (24 - 26 Oct, Gift a Sport); MP ₹2.87 L (Diwali + Dussehra)"],
-    ["Since 10 Oct", "7 hoardings live in Pune"],
-    ["Now", "114 practice-place AOPs live in 6 stores; 114 more open in November and December"],
-    ["This week", "Diwali reels on the city pages, e.g. Gwalior's “why gift mithai? When you have Decathlon”"]
+    ["No sale", "No Diwali sale in the stores this year: we celebrate with Gift a Sport instead of discounts"],
+    ["In store", "Gift a Sport comms: light boxes, wall headers, rangoli of balls and frisbees, garlands at the welcome desk. Live in Bhopal and Motera, other stores to follow"],
+    ["Influencers", "23 so far: Gujarat 13 (₹1.3 L, with Akshat), Indore 4 on barter, Bhopal 4, Gwalior 2 with a gift card each. The 10 reels below have about 1.9 lakh views"],
+    ["City pages", "Diwali reels on all 8 Let's Play pages, e.g. Gwalior's “why gift mithai? When you have Decathlon”"],
+    ["Recycling", "Gujarat content reused in MP, the best of MP reused in Gujarat, the same with Pune"],
+    ["On the road", "7 hoardings live in Pune; 114 practice-place AOPs live in 6 stores"],
+    ["Next", "Black Friday influencers finalised by Mon 9 Nov (Pune by Tue 10 Nov)"]
   ];
   $("#novLive").innerHTML = LIVE.map(([w, t]) => `<li><b>${w}</b>${esc(t)}</li>`).join("");
 
-  // reel tiles: v = video id (assets/videos/ig), p = photo post (assets/posters/ig)
+  // reel tiles: v = video id (assets/videos/ig), p = photo post (assets/posters/ig); views from the page's public Reels tab
+  const VW = window.IG_VIEWS || {};
+  const short = n => n >= 1e5 ? (n / 1e5).toFixed(n >= 1e6 ? 0 : 2).replace(/\.?0+$/, "") + " lakh" : n >= 1e3 ? (n / 1e3).toFixed(1).replace(/\.0$/, "") + "K" : String(n);
+  const pill = id => VW[id] ? `<span class="nov-views"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>${short(VW[id])} views</span>` : "";
   const tile = (id, kind, by) => kind === "v"
-    ? `<div class="oct-ig-item"><div class="sm-video ig-reel"><video muted loop playsinline preload="none" poster="assets/posters/ig/${id}.jpg" data-src="assets/videos/ig/${id}.mp4" aria-label="Reel by @${esc(by)}"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div><a class="nov-ig-link" href="https://www.instagram.com/reel/${id}/" target="_blank" rel="noopener">@${esc(by)} on Instagram</a></div>`
-    : `<div class="oct-ig-item"><a class="ig-still" href="https://www.instagram.com/p/${id}/" target="_blank" rel="noopener"><img src="assets/posters/ig/${id}.jpg" alt="Post by @${esc(by)}" loading="lazy"><span>Watch on Instagram</span></a></div>`;
+    ? `<div class="oct-ig-item"><div class="sm-video ig-reel"><video muted loop playsinline preload="none" poster="assets/posters/ig/${id}.jpg" data-src="assets/videos/ig/${id}.mp4" aria-label="Reel by @${esc(by)}"></video><button type="button" class="snd-btn" aria-pressed="false" aria-label="Play with sound"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg><span>Sound off</span></button></div>${pill(id)}<a class="nov-ig-link" href="https://www.instagram.com/reel/${id}/" target="_blank" rel="noopener">@${esc(by)} on Instagram</a></div>`
+    : `<div class="oct-ig-item"><a class="ig-still" href="https://www.instagram.com/p/${id}/" target="_blank" rel="noopener"><img src="assets/posters/ig/${id}.jpg" alt="Post by @${esc(by)}" loading="lazy"><span>Watch on Instagram</span></a>${pill(id)}</div>`;
 
   // city pages, 5 Nov 2026 (public profile counts)
   // city pages, 5 Nov 2026 (public profile counts); reels = the latest posts on each page's grid, collabs included
@@ -53,8 +57,11 @@
     ["Gwalior", 2, "A gift card each"]
   ];
   $("#novInflKpis").innerHTML = INFL.map(([c, n, how], i) => `<div style="--c:${["var(--guj)", "var(--mp)", "var(--mp)", "var(--mp)"][i]}"><b>${n}</b><span>${c}${how ? ", " + how : ""}</span></div>`).join("") + `<div class="tot"><b>${INFL.reduce((a, x) => a + x[1], 0)}</b><span>influencers so far</span></div>`;
-  $("#novInfl").innerHTML = `<div class="oct-row oct-social"><div class="oct-text"><span class="oct-when">Diwali</span><h3>Celebrate Diwali, the Decathlon way</h3><p>A creator reel live now: gifts and everyday sports essentials for Diwali. The rest of the influencer videos will be added as they come in.</p></div>
-    <div class="oct-ig-row">${tile("DfPVVJkI_wa", "v", "__.bhavya")}</div></div>`;
+  const IR = [["Gujarat", "Ahmedabad and Baroda", [["DfHm1Z2vrbd", "v", "hetansh_shahh"], ["DfHJeAntkw4", "v", "aishwaryaradhani"], ["DfG0V96gt7T", "v", "ayushithakkarrr"], ["DfG2BaXNPLH", "v", "monikacreatescontent"], ["DfHEdoasy0O", "v", "kashii__w"], ["DfG8IBLiePI", "p", "vadodara_foodiesisters"]]],
+    ["Madhya Pradesh", "Bhopal", [["DfMvv1cuhKa", "v", "bhopal_events_update"], ["DerYOikTLww", "v", "jasminethakurr"], ["DfPVVJkI_wa", "v", "__.bhavya"], ["DfPFRE0KFpO", "v", "wassup_bhopal"]]]];
+  $("#novInfl").innerHTML = IR.map(([bu, where, list]) => { const t = list.reduce((a, [id]) => a + (VW[id] || 0), 0);
+    return `<div class="oct-row oct-social nov-city" style="--c:${bu === "Gujarat" ? "var(--guj)" : "var(--mp)"}"><div class="oct-text"><span class="oct-when">${bu}</span><h3>${where}: ${list.length} reels live</h3><p>About <b>${short(t)} views</b> so far on the reels below.</p></div>
+    <div class="oct-ig-row">${list.map(([id, k, by]) => tile(id, k, by)).join("")}</div></div>`; }).join("");
 
   // in-store comms: all 13 stores, photos to come
   const STORES = [["Pune", ["Wakad", "Wagholi", "SGS Mall", "NIBM", "Amanora"]], ["Gujarat", ["Motera", "Nexus Ahmedabad", "Surat, Dumas Road", "Baroda", "Rajkot"]], ["MP", ["Indore", "Bhopal", "Gwalior"]]];
