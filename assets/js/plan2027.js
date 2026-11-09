@@ -24,6 +24,10 @@
   const qSpend = (st, q) => Q[q].months.reduce((t, m) => t + spend(st, m), 0);
   const qAop = (st, q) => Q[q].months.reduce((t, m) => t + aopMonth(st, m), 0);
 
+  // a sport's budget in a quarter and state (lakh). Q1: from the Q1 playbook allocation (budget27.js); Q2: proposed share of the state's budget
+  const ALLOC = {};
+  const sb = (s, q, st) => q === "q1" ? ((ALLOC[st] = ALLOC[st] || window.BUDGET27.alloc(st)).sport[s.id] || 0) : (s.budget[q][st] || 0) * qSpend(st, q);
+
   // a sport's numbers for a view (q1, q2 or h1)
   function nums(s, view) {
     let base = 0, goal = 0, budget = 0, aops = 0, online = 0;
@@ -35,7 +39,7 @@
         base += b; online += o; goal += b * (1 + s.growth[q]);
         byState[st] = (byState[st] || 0) + b;
         byStateOn[st] = (byStateOn[st] || 0) + o;
-        budget += (s.budget[q][st] || 0) * qSpend(st, q);
+        budget += sb(s, q, st);
         aops += s.aop[q][st] || 0;
       });
     });
@@ -129,8 +133,8 @@
       const maxM = Math.max(...series.map(x => x.v));
       const spark = `<div class="y27-spark" aria-label="Turnover by month, January to October 2026, in-store and online">${series.map((x, i) => `<span class="${Q[view].months.includes(i) ? "on" : ""}" style="--h:${x.v / maxM * 100}%;--c:${s.color};--o:${x.o / x.v * 100}%" title="${MONTHS[i]} 2026: ${L(rupeesL(x.v))} (in-store ${L(rupeesL(x.v - x.o))}, online ${L(rupeesL(x.o))})"><em>${MONTHS[i][0]}</em></span>`).join("")}</div>`;
       const moves = Q[view].qs.map(q => `<div><h4>${q.toUpperCase()}: what we do</h4><ul>${s.moves[q].map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
-      const perState = STATES.filter(st => Q[view].qs.some(q => s.aop[q][st] || s.budget[q][st])).map(st => {
-        const b = Q[view].qs.reduce((t, q) => t + (s.budget[q][st] || 0) * qSpend(st, q), 0), a = Q[view].qs.reduce((t, q) => t + (s.aop[q][st] || 0), 0);
+      const perState = STATES.filter(st => Q[view].qs.some(q => s.aop[q][st] || sb(s, q, st))).map(st => {
+        const b = Q[view].qs.reduce((t, q) => t + sb(s, q, st), 0), a = Q[view].qs.reduce((t, q) => t + (s.aop[q][st] || 0), 0);
         return `<span style="--c:${SC[st]}"><b>${st}</b>${L(b)}, ${a} AOPs</span>`;
       }).join("");
       return `<article class="y27-card" style="--c:${s.color};--tx:${s.ink}" id="sport-${s.id}">
@@ -214,6 +218,7 @@
     $("#y27Strat").style.setProperty("--n", Q[view].months.length);
     $$("#y27Seg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.q === view));
     kpis(); calendar(); monthPanel(); toShare(); sports(); strategies();
+    window.Y27VIEW = view; document.dispatchEvent(new CustomEvent("y27view", { detail: view }));
   }
 
   $("#y27Key").innerHTML = SP.sports.map(s => `<a href="#sport-${s.id}" style="--c:${s.color}">${s.name}</a>`).join("");
