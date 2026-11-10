@@ -58,6 +58,10 @@
     });
     doc.querySelectorAll("img[loading='lazy']").forEach(i => { i.loading = "eager"; if (!i.complete) waits.push(new Promise(r => { i.onload = i.onerror = r; })); });
     doc.querySelectorAll("details").forEach(d => { d.open = true; });
+    // html2canvas cannot parse colours written as color(srgb ...) (what color-mix() computes to): rewrite them as rgba() inline
+    const fix = v => v.replace(/color\(srgb ([\d.e-]+) ([\d.e-]+) ([\d.e-]+)(?: \/ ([\d.e-]+))?\)/g, (m, r, g, b, a) => `rgba(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)}, ${a ?? 1})`);
+    const win = doc.defaultView, PROPS = ["backgroundColor", "color", "borderTopColor", "borderRightColor", "borderBottomColor", "borderLeftColor", "outlineColor", "backgroundImage", "boxShadow", "textDecorationColor", "fill", "stroke"];
+    doc.querySelectorAll("*").forEach(el => { const cs = win.getComputedStyle(el); PROPS.forEach(k => { const v = cs[k]; if (v && v.includes("color(")) el.style[k] = fix(v); }); });
     doc.querySelectorAll("#sbDigital").forEach(d => d.classList.add("go"));
     await Promise.race([Promise.all(waits), new Promise(r => setTimeout(r, 8000))]);
   };
