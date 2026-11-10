@@ -167,7 +167,7 @@
   window.renderPyramid?.($("#mktPyramid"));
   window.renderPunePlan?.($("#pb27Pune"), [2, 3, 4]);
   window.renderPuneAops?.($("#pb27PuneAops"), [2, 3, 4, 5]);
-  window.renderInfluencers?.($("#pb27Infl"), "2026-11-01", "2027-05-31", false);
+  window.renderInfluencers?.($("#pb27Infl"), "2027-01-01", "2027-03-31", false); // Q1 only (user, 10 Nov 2026)
   $("#pb27Tabs").addEventListener("keydown", e => {
     if (!["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) return;
     e.preventDefault();

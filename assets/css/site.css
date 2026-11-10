@@ -3342,3 +3342,8 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 .nd-hu-map { min-height: 470px; }
 @media (max-width: 860px) { .ndi-kpis { grid-template-columns: 1fr 1fr; } .ndi-axis { margin-left: 0; } .ndi-row { grid-template-columns: 1fr; padding: 6px 0; } .nd-sum-cards { grid-template-columns: 1fr 1fr; } .pm-aop { grid-template-columns: 1fr; } .nd-hu-map { min-height: 280px; } }
 .ndi-dt.l { margin-left: 0; margin-right: 8px; } .ndi-track { overflow: hidden; }
+
+/* 2027 and water pages: calmer section headings (user, 10 Nov 2026) */
+.y27-page .sec-head .display { font-size: clamp(28px, 3.1vw, 42px); }
+.y27-page .sec-head .display .lt { font-size: .82em; }
+.y27-page .display-s { font-size: clamp(20px, 2vw, 26px); }
