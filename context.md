@@ -4,7 +4,7 @@ Single source of truth for this project. Read it before any work. Update it at t
 (see CLAUDE.md): add every new number, file, decision, preference and open question. Never delete
 history; mark superseded facts as superseded.
 
-Last updated: 2026-11-10 (tenth brief)
+Last updated: 2026-11-10 (eleventh brief)
 
 ---
 
@@ -85,6 +85,7 @@ Hero â†’ People ("Who we sell to": Pune, Gujarat, MP state stories with films) â
 - **Eighth brief (user, 10 Nov 2026)**: runway heading smaller; the week detail ("Week 46: 9 Nov to 15 Nov") in a dropdown; heading "AOP cost, November and December" with Pune's totals up front and the stores in a dropdown; remove the "AOPs store by store, live now, added, cost per AOP" block; make the influencer view clearer; clicking a hoarding's number must show that board's photo; remove the footer line about Instagram follower and post counts; the "November and December in one view" dropdown needs an icon, with Black Friday, Winter, Christmas and Always on cards before it.
 - **Ninth brief (user, 10 Nov 2026)**: the 2027 plan is about Q1 (Jan to Mar): the Pune influencer timeline must not run November to May; AOP money (Pune store by store, Jan to Apr) goes at the bottom of the AOP section in a dropdown; section headings on the 2027 page are too big (e.g. "Pune hotspots: who lives around each store, and where they play"): make them smaller.
 - **Tenth brief (user, 10 Nov 2026)**: Women's Day formats: SGS has no in-mall studio; Amanora has a small playground, not a mall atrium. March 2027: go strong with **swimming hoardings** (not generic summer); remove the "New Year, New Moves" line in the March table and its "looks copied from January: confirm" note; summer goes strong with water sports. Pune money (Nov page): charts and percentages like the November budget block, shorter. Add **Download as PowerPoint in the Google Slides size (16:9)** next to PDF and GIF, looking good. 2027 Pune: drop the "Pune influencers in the spend plan, Jan to Mar" block; in Influencers 2027, clicking a quarter shows what Pune spends on influencers month by month. Pune hotspots: a map of the AOPs tied up so far, pools, gyms (partnerships file). 2027 sports Q1 in a dropdown.
+- **Eleventh brief (user, 10 Nov 2026)**: the downloaded PowerPoint looked "very short, invisible, blurry and cramped" in Google Slides: fix it to the slide's length and breadth.
 - **Never estimate a split that is not in the data** (from the fourth brief): Gujarat and MP Q1 money stays unsplit (month totals only) until their campaign plans arrive.
 - **Pune market hotspots, light touch** (user, 10 Nov 2026): store catchments, how many travel agencies, swimming pools, gyms, societies, how to tap them, and mark the AOPs (pools, gyms) already tied up from the partnerships file. "Not very in depth ... normal data" (the user has a lot more work coming).
 
@@ -551,6 +552,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-11-10 (tenth brief, fix): the export test on plan2027 found that html2canvas cannot parse color(srgb ...) values (what CSS color-mix() computes to), which broke PDF and PowerPoint downloads on the 2027 page; export.js now rewrites those colours as rgba() in the captured copy. export.js 20261110f on all pages.
 - 2026-11-10: PowerPoint export re-tested on plan2027 (Pune) after the colour fix: 46 slides, 11.8 MB, no errors; slides checked visually.
 - 2026-11-10: local test server (port 8777) stopped at its time limit after testing finished; no site change.
+- 2026-11-10 (eleventh brief): PowerPoint export rebuilt (export.js 20261110h): the page is re-laid out in a hidden frame 1100 px wide (was the screen width, about 1440, so body text came out about 7 pt), captured at 2x (slide images 2200 px wide), every slide cut to at most one 16:9 page (1100 x 619 CSS px) at the gaps between whole cards and sections first (finer cuts only when one card is taller than a slide), placed full width and top-aligned on the 10 x 5.625 in slide (Google Slides 16:9), flat empty slices skipped; footer and download bar left out. Tested on november.html: 56 slides, 14.1 MB, legible.
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 
