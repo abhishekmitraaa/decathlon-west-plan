@@ -3408,3 +3408,5 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 .nov-black #ndBfPune .fr-bar { background: rgba(255,255,255,.14); } .nov-black #ndBfPune .fr-bar > i { background: #2E5BFF; }
 .nov-black #ndBfPune .fr-tot b { color: #fff; font-size: 26px; } .nov-black #ndBfPune .fr-tot span, .nov-black #ndBfPune .fr-tot small { color: rgba(255,255,255,.8); }
 .nov-black #ndBfPune .fr-brings { background: rgba(46,91,255,.18); color: #fff; } .nov-black #ndBfPune .fr-brings b { color: #9DB4FF; }
+.aop-nd { padding: 14px 18px; } .aop-nd .aop27 { min-width: 900px; } .aop-nd .aop27 th:last-child { text-align: right; } .aop-nd .aop27 tr.tot td { font-weight: 800; }
+.aop-nd .aop27 td:nth-child(2) { text-align: right; } .aop-nd .aop27 th:nth-child(2) { text-align: right; }

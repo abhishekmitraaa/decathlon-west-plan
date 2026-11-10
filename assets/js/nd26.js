@@ -91,7 +91,7 @@
     const rows = A.map(a => { const n = a.months[0] + a.months[1], v = (M[a.store] || [0, 0]); const c = v[0] + v[1];
       return `<tr><td><b>${a.store}</b></td><td>${a.live ?? "-"}</td><td class="n">${a.months[0]}</td><td class="n">${a.months[1]}</td><td class="n"><b>${n}</b></td><td class="n">${inr(v[0] / (a.months[0] || 1))}</td><td class="n">${inr(v[0])}</td><td class="n">${inr(v[1])}</td><td class="n"><b>${inr(c)}</b></td></tr>`; }).join("");
     const tN = i => A.reduce((t, a) => t + a.months[i], 0), tV = i => A.reduce((t, a) => t + ((M[a.store] || [0, 0])[i]), 0);
-    el.innerHTML = `<table class="y27-table aop27"><thead><tr><th>Store</th><th>Live now</th><th>Added Nov</th><th>Added Dec</th><th>Nov + Dec</th><th>Per AOP</th><th>Nov money</th><th>Dec money</th><th>Nov + Dec money</th></tr></thead><tbody>${rows}
+    el.innerHTML = `<table class="y27-table aop27"><thead><tr><th>Store</th><th>AOPs live now</th><th>AOPs to add, Nov</th><th>AOPs to add, Dec</th><th>Nov + Dec AOPs</th><th>Cost per AOP</th><th>Nov cost</th><th>Dec cost</th><th>Nov + Dec cost</th></tr></thead><tbody>${rows}
       <tr class="tot"><td><b>Pune</b></td><td>${A.reduce((t, a) => t + (a.live || 0), 0)}</td><td class="n">${tN(0)}</td><td class="n">${tN(1)}</td><td class="n"><b>${tN(0) + tN(1)}</b></td><td></td><td class="n">${inr(tV(0))}</td><td class="n">${inr(tV(1))}</td><td class="n"><b>${inr(tV(0) + tV(1))}</b></td></tr></tbody></table>`;
   }
 

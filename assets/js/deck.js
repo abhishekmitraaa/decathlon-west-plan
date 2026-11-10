@@ -87,6 +87,14 @@ window.buildNativeDeck = async function (pptx) {
       s.addText(b, { x: 5.78, y: y + 0.08, w: 3.6, h: 0.45, fontFace: F, fontSize: 20, bold: true, color: dark ? "FFFFFF" : INK, margin: 0 });
       s.addText(t, { x: 5.78, y: y + 0.52, w: 3.6, h: 0.38, fontFace: F, fontSize: 10, color: dark ? "D9DEFF" : GREY, margin: 0 }); }); }
 
+  // AOPs store by store, right after the money
+  { const s = base("AOPs, November and December, store by store", "How many practice places each store adds, and what they cost (Pune spend plan)", { band: "12A150" });
+    const A = (window.AOP_PLAN || []).filter(a => a.state === "Pune"), Mny = Object.fromEntries(P.aopStores.rows.map(r => [r[0], [r[1], r[2]]]));
+    const rows = A.map(a => { const v = Mny[a.store] || [0, 0]; return [a.store, a.months[0], inr(v[0]), a.months[1], inr(v[1]), inr(v[0] + v[1])]; });
+    const sv = i => A.reduce((t, a) => t + (Mny[a.store] || [0, 0])[i], 0), sn = i => A.reduce((t, a) => t + a.months[i], 0);
+    rows.push(["Pune", sn(0), inr(sv(0)), sn(1), inr(sv(1)), inr(sv(0) + sv(1))].map((v, i) => cell(v, { bold: true, align: i ? "right" : "left" })));
+    table(s, ["Store", "AOPs to add, Nov", "Nov cost", "AOPs to add, Dec", "Dec cost", "Nov + Dec cost"], rows, { y: 1.35, colW: [2.3, 1.2, 1.5, 1.2, 1.5, 1.4], rowH: 0.42, align: ["left", "right", "right", "right", "right", "right"] }); }
+
   // 5-6. key dates (the runway, as a list)
   { const fd = s => { const [y, m, d] = s.split("-").map(Number); return `${d} ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1]}`; };
     const lane = Object.fromEntries(N.LANES);
@@ -118,14 +126,6 @@ window.buildNativeDeck = async function (pptx) {
     if (dark) s.addText("We are not allowed to say “deals up to 40% off” or any flat percentage off.", { x: 0.45, y: 4.75, w: 6.4, h: 0.35, fontFace: F, fontSize: 10, bold: true, color: "FFD24D", margin: 0 });
   };
   FR.forEach(campSlide);
-
-  // 10. AOPs store by store
-  { const s = base("AOP cost, store by store", "Practice places added in November and December, from the Pune spend plan", { band: "12A150" });
-    const A = (window.AOP_PLAN || []).filter(a => a.state === "Pune"), Mny = Object.fromEntries(P.aopStores.rows.map(r => [r[0], [r[1], r[2]]]));
-    const rows = A.map(a => { const v = Mny[a.store] || [0, 0]; return [a.store, a.months[0], inr(v[0]), a.months[1], inr(v[1]), inr(v[0] + v[1])]; });
-    const sv = i => A.reduce((t, a) => t + (Mny[a.store] || [0, 0])[i], 0), sn = i => A.reduce((t, a) => t + a.months[i], 0);
-    rows.push(["Pune", sn(0), inr(sv(0)), sn(1), inr(sv(1)), inr(sv(0) + sv(1))].map((v, i) => cell(v, { bold: true, align: i ? "right" : "left" })));
-    table(s, ["Store", "AOPs, Nov", "Nov", "AOPs, Dec", "Dec", "Nov + Dec"], rows, { y: 1.35, colW: [2.3, 1.2, 1.5, 1.2, 1.5, 1.4], rowH: 0.42, align: ["left", "right", "right", "right", "right", "right"] }); }
 
   // 11. influencers
   { const s = base("Influencers, November and December", "Pune's paid creators, campaign by campaign", { band: "C2185B" });
