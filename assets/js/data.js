@@ -273,8 +273,8 @@ window.PLANNER = {
   months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
   lanes: [
     { name: "Holidays and moments", items: [
-      { t: "Uttarayan 14 Jan\nRepublic Day 26 Jan", a: 0, b: 0, k: "hol" }, { t: "Valentine's Day 14 Feb\nShivaji Jayanti 19 Feb", a: 1, b: 1, k: "hol" },
-      { t: "Women's Day 8 Mar\nHoli 22 Mar", a: 2, b: 2, k: "hol" }, { t: "Gudi Padwa 8 Apr", a: 3, b: 3, k: "hol" }, { t: "Maharashtra Day 1 May", a: 4, b: 4, k: "hol" },
+      { t: "Lohri 13 Jan\nUttarayan 14 Jan\nRepublic Day 26 Jan", a: 0, b: 0, k: "hol" }, { t: "Valentine's Day 14 Feb\nShivaji Jayanti 19 Feb", a: 1, b: 1, k: "hol" },
+      { t: "Maha Shivaratri 6 Mar\nWomen's Day 8 Mar\nEid al-Fitr 9-10 Mar\nHoli 22 Mar\nGood Friday 26 Mar", a: 2, b: 2, k: "hol" }, { t: "Gudi Padwa 8 Apr", a: 3, b: 3, k: "hol" }, { t: "Maharashtra Day 1 May", a: 4, b: 4, k: "hol" },
       { t: "Yoga Day 21 Jun", a: 5, b: 5, k: "hol" }, { t: "Ashadhi Ekadashi\n(Wari) 13 Jul", a: 6, b: 6, k: "hol" }, { t: "Independence Day 15 Aug", a: 7, b: 7, k: "hol" },
       { t: "Ganesh Chaturthi 3 Sep\nNavratri from 30 Sep", a: 8, b: 8, k: "hol" }, { t: "Dussehra 9 Oct\nDiwali 29 Oct", a: 9, b: 9, k: "hol" },
       { t: "Children's Day 14 Nov\nBlack Friday 26 Nov", a: 10, b: 10, k: "hol" }, { t: "Christmas 25 Dec\nNew Year's Eve 31 Dec", a: 11, b: 11, k: "hol" }

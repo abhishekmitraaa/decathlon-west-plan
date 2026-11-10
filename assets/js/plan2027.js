@@ -88,6 +88,17 @@
       html += `<div class="pl-lane-name">${lane.name}</div><div class="pl-lane">${chips}</div>`;
     });
     html += `<div class="pl-lane-name">Sport of the month (Pune)</div><div class="pl-sport">${ms.map(i => `<span class="${i === month ? "on" : ""}">${D.puneSportOfMonth[i]}</span>`).join("")}</div>`;
+    // Pune plan lane: events and influencers by month (Pune spend plan, BFS PUNE; Jan to Mar 2027 = months 2 to 4 there)
+    const PP = window.PUNE_PLAN;
+    if (PP) {
+      const cell = m => {
+        if (m <= 2) return PP.lines.filter(x => x.m === m + 2 && (x.ch === "evt" || x.ch === "inf")).map(x => `${x.t.replace("Influencer campaign: ", "Influencers: ").replace("Partner event: ", "Event: ")}${x.q ? " (" + x.q.replace(" expected", "") + ")" : ""}${x.d ? ", " + x.d : ""}`);
+        if (m <= 4) return ["Summer + summer camp: 50 influencers continue (March to May)"];
+        return ["Not in the Pune plan yet"];
+      };
+      html += `<div class="pl-lane-name y27-lane-name" style="--c:#C2185B"><i></i><span>Pune plan<small>events and influencers</small></span></div><div class="pl-lane y27-lane">${ms.map((m, k) =>
+        `<span class="pl-chip y27-chip ${m === month ? "" : "dim"}" style="grid-column:${k + 1};--c:#C2185B">${cell(m).map(esc).join("<br>")}</span>`).join("")}</div>`;
+    }
     html += `<div class="y27-band">Our 7 sports</div>`;
     SP.sports.forEach(s => {
       html += `<div class="pl-lane-name y27-lane-name" style="--c:${s.color}"><i></i><span>${s.name}<small>${s.where.join(", ")}</small></span></div><div class="pl-lane y27-lane">${ms.map((m, k) =>

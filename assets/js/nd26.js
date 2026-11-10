@@ -1,0 +1,102 @@
+/* November + December 2026 page, part 2: December (Winter & Travel, Christmas gifting, Christmas sale), the Pune runway week by week,
+   AOPs for November and December, the Pune plan line by line, influencers, and the marketing pyramid.
+   Data: PUNE_PLAN, MKT_PYRAMID (puneplan.js), AOP_PLAN (data.js). Sources noted per item. */
+(() => {
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const inr = v => "₹" + Math.round(v).toLocaleString("en-IN");
+  const DAY = 864e5, MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const d = s => { const [y, m, x] = s.split("-").map(Number); return new Date(Date.UTC(y, m - 1, x)); };
+  const fd = x => `${x.getUTCDate()} ${MON[x.getUTCMonth()]}`;
+  const TODAY = new Date(Date.UTC(2026, 10, 10));
+
+  /* ---------- the Pune runway, Mon 2 Nov 2026 to Sun 3 Jan 2027 (ISO weeks 45 to 53) ---------- */
+  const W0 = d("2026-11-02"), NW = 9;
+  const weeks = [...Array(NW)].map((_, i) => ({ w: 45 + i, mon: new Date(W0.getTime() + i * 7 * DAY), sun: new Date(W0.getTime() + (i * 7 + 6) * DAY) }));
+  const LANES = [
+    ["moments", "Season and moments"], ["sales", "Sales"], ["camp", "Campaigns and gifting"], ["inf", "Influencers"], ["ins", "In-store, mall and coupons"],
+    ["ooh", "Hoardings"], ["aop", "AOPs"], ["evt", "City events and our events"], ["soc", "Social and content"]
+  ];
+  // n: source. plan = Pune spend plan (BFS PUNE); rw = Q4 runway on the main site; web = public race listings (to confirm); ours = our suggestion
+  const ITEMS = [
+    { l: "moments", t: "Winter and travel season", s: "2026-11-02", e: "2027-01-03", k: "season" },
+    { l: "moments", t: "Diwali 8 Nov", s: "2026-11-08", e: "2026-11-08", k: "hol" },
+    { l: "moments", t: "Children's Day 14 Nov", s: "2026-11-14", e: "2026-11-14", k: "hol" },
+    { l: "moments", t: "Christmas 25 Dec", s: "2026-12-25", e: "2026-12-25", k: "hol" },
+    { l: "moments", t: "New Year's Eve 31 Dec", s: "2026-12-31", e: "2026-12-31", k: "hol" },
+    { l: "sales", t: "Black Friday, 27 to 30 Nov", s: "2026-11-27", e: "2026-11-30", k: "sale", go: 1, n: "plan" },
+    { l: "sales", t: "Christmas Sale, 19 to 31 Dec", s: "2026-12-19", e: "2026-12-31", k: "sale", go: 1, n: "plan" },
+    { l: "camp", t: "Diwali: Gift a Sport", s: "2026-11-02", e: "2026-11-15", k: "local", n: "rw" },
+    { l: "camp", t: "Winter & Travel", s: "2026-11-02", e: "2027-01-03", k: "nat", n: "rw" },
+    { l: "camp", t: "Christmas gifting videos: Gift a Sport continues", s: "2026-12-01", e: "2026-12-25", k: "launch", n: "user" },
+    { l: "camp", t: "MH500 backpack", s: "2026-11-02", e: "2026-11-30", k: "tech", n: "rw" },
+    { l: "inf", t: "Black Friday: 40 influencers, ₹4 L", s: "2026-11-21", e: "2026-11-28", k: "evt", n: "plan" },
+    { l: "inf", t: "Winter & Travel: 10 influencers (₹1 L) + 7 on barter", s: "2026-12-01", e: "2026-12-31", k: "eco", n: "plan" },
+    { l: "inf", t: "Christmas: 35 influencers, ₹3.5 L", s: "2026-12-19", e: "2026-12-23", k: "evt", n: "plan" },
+    { l: "ins", t: "Coupon cards: basket over ₹2,799 gets a product free (35,000 cards)", s: "2026-11-17", e: "2026-11-30", k: "local", n: "plan" },
+    { l: "ins", t: "Black Friday comms live, whole city", s: "2026-11-23", e: "2026-11-30", k: "nat", go: 1, n: "plan" },
+    { l: "ins", t: "Christmas comms live, whole city", s: "2026-12-19", e: "2026-12-31", k: "nat", go: 1, n: "plan" },
+    { l: "ins", t: "In-mall: NIBM, Amanora, SGS (₹1.70 L Nov, ₹1.65 L Dec)", s: "2026-11-02", e: "2026-12-31", k: "tbd", n: "plan" },
+    { l: "ooh", t: "7 hoardings live: Winter & Travel (₹9.35 L a month)", s: "2026-11-02", e: "2026-12-31", k: "sale", n: "plan" },
+    { l: "aop", t: "22 AOPs: Wakad 5, Wagholi 5, SGS 4, NIBM 4, Amanora 4 (₹6.25 L)", s: "2026-11-02", e: "2026-11-30", k: "eco", n: "plan" },
+    { l: "aop", t: "27 AOPs: Wakad 6, Wagholi 6, SGS 5, NIBM 5, Amanora 5 (₹7.65 L)", s: "2026-12-01", e: "2026-12-31", k: "eco", n: "plan" },
+    { l: "evt", t: "Children's Day: colouring books", s: "2026-11-14", e: "2026-11-14", k: "local", n: "rw" },
+    { l: "evt", t: "Kiprun event (₹20,000)", s: "2026-11-16", e: "2026-11-22", k: "launch", n: "plan" },
+    { l: "evt", t: "Pune International Marathon, Sun 6 Dec", s: "2026-12-06", e: "2026-12-06", k: "ext", n: "web" },
+    { l: "evt", t: "SRT Ultra trail (53 km), Sat 12 Dec", s: "2026-12-12", e: "2026-12-12", k: "ext", n: "web" },
+    { l: "evt", t: "Bajaj Pune Marathon, Sun 13 Dec (to confirm)", s: "2026-12-13", e: "2026-12-13", k: "ext", n: "web" },
+    { l: "evt", t: "Kiprun event (₹20,000)", s: "2026-12-14", e: "2026-12-20", k: "launch", n: "plan" },
+    { l: "evt", t: "Pimpri Chinchwad Half Marathon, Sun 20 Dec", s: "2026-12-20", e: "2026-12-20", k: "ext", n: "web" },
+    { l: "soc", t: "Black Friday countdown: 4 posts + 4 stories", s: "2026-11-23", e: "2026-11-28", k: "nat", n: "plan" },
+    { l: "soc", t: "Boost: 5 posts (₹30,000)", s: "2026-11-16", e: "2026-11-30", k: "tbd", n: "plan" },
+    { l: "soc", t: "Christmas countdown: 4 posts + 4 stories; boost 10 posts (₹30,000)", s: "2026-12-14", e: "2026-12-23", k: "nat", n: "plan" },
+    { l: "soc", t: "Media vendor (₹1 L)", s: "2026-12-01", e: "2026-12-31", k: "tbd", n: "plan" }
+  ];
+  const SRC = { plan: "Pune spend plan", rw: "Q4 runway", web: "public race listing, to confirm", user: "brief", ours: "our suggestion" };
+  let week = Math.max(0, weeks.findIndex(x => TODAY >= x.mon && TODAY <= x.sun));
+  const span = it => { const s = d(it.s).getTime(), e = d(it.e).getTime(), a = W0.getTime(), b = weeks[NW - 1].sun.getTime(); if (e < a || s > b) return null; return [Math.max(0, Math.floor((s - a) / (7 * DAY))), Math.min(NW - 1, Math.floor((e - a) / (7 * DAY)))]; };
+  function runway() {
+    const g = $("#ndGrid"); if (!g) return;
+    g.style.setProperty("--n", NW);
+    const months = [{ m: 10, a: 0, b: 3 }, { m: 11, a: 4, b: 8 }];
+    const now = weeks.findIndex(x => TODAY >= x.mon && TODAY <= x.sun);
+    let h = `<div class="pl-corner w27-corner">Pune only. Weeks start on Monday. ★ = goes live</div>`;
+    h += months.map(x => `<div class="w27-mon" style="grid-column:${x.a + 2} / ${x.b + 3}"><b>${x.m === 10 ? "November" : "December"} 2026</b><small>${x.m === 10 ? "Pune total ₹28.00 L" : "Pune total ₹30.15 L"}</small></div>`).join("");
+    h += weeks.map((x, i) => `<button type="button" class="w27-wk ${i === now ? "now" : ""}" style="grid-column:${i + 2}" data-i="${i}" aria-pressed="${i === week}"><b>W${x.w}</b><small>${fd(x.mon)}</small>${i === now ? "<em>We are here</em>" : ""}</button>`).join("");
+    LANES.forEach(([id, name]) => {
+      const its = ITEMS.filter(x => x.l === id).map(it => ({ it, sp: span(it) })).filter(x => x.sp).sort((a, b) => a.sp[0] - b.sp[0]);
+      const rows = [];
+      const chips = its.map(({ it, sp: [a, b] }) => {
+        let r = rows.findIndex(e => e < a); if (r < 0) { rows.push(-1); r = rows.length - 1; } rows[r] = b;
+        return `<span class="pl-chip ${it.k} ${it.go ? "go" : ""} ${week >= a && week <= b ? "" : "dim"}" style="grid-column:${a + 1} / ${b + 2};grid-row:${r + 1}" title="${esc(it.t)} (${fd(d(it.s))}${it.e !== it.s ? " to " + fd(d(it.e)) : ""}; ${SRC[it.n] || ""})">${it.go ? "★ " : ""}${esc(it.t)}</span>`;
+      }).join("");
+      h += `<div class="pl-lane-name">${name}</div><div class="pl-lane">${chips}</div>`;
+    });
+    g.innerHTML = h;
+    $$(".w27-wk", g).forEach(b => b.addEventListener("click", () => { week = +b.dataset.i; runway(); weekPanel(); }));
+  }
+  function weekPanel() {
+    const x = weeks[week], el = $("#ndWeek"); if (!el) return;
+    const live = LANES.map(([id, name]) => { const its = ITEMS.filter(it => it.l === id && d(it.s) <= x.sun && d(it.e) >= x.mon); return its.length ? `<div class="w27-wl"><h4>${name}</h4><ul>${its.map(it => `<li class="${it.go ? "go" : ""}">${it.go ? "★ " : ""}${esc(it.t)}<small>${fd(d(it.s))}${it.e !== it.s ? " to " + fd(d(it.e)) : ""}; ${SRC[it.n] || ""}</small></li>`).join("")}</ul></div>` : ""; }).join("");
+    el.innerHTML = `<div class="y27-mhead"><h3 class="display-s">Week ${x.w}<span class="lt">: ${fd(x.mon)} to ${fd(x.sun)}</span></h3><div class="y27-mnav"><button type="button" data-d="-1" aria-label="Previous week">‹</button><button type="button" data-d="1" aria-label="Next week">›</button></div></div><div class="w27-wgrid">${live}</div>`;
+    $$("#ndWeek .y27-mnav button").forEach(b => b.addEventListener("click", () => { week = (week + +b.dataset.d + NW) % NW; runway(); weekPanel(); }));
+  }
+
+  /* ---------- AOPs, November and December, every store ---------- */
+  function aops() {
+    const el = $("#ndAops"); if (!el) return;
+    const A = window.AOP_PLAN || [], ST = ["Pune", "Gujarat", "MP"], C = { Pune: "var(--pune)", Gujarat: "var(--guj)", MP: "var(--mp)" };
+    el.innerHTML = `<table class="y27-table aop27"><thead><tr><th>Store</th><th>Live now</th><th>November</th><th>December</th><th>Nov + Dec</th><th>Cost per AOP</th><th>Nov + Dec cost</th></tr></thead><tbody>${ST.map(st => {
+      const ss = A.filter(a => a.state === st);
+      const rows = ss.map(a => `<tr><td><b>${a.store}</b></td><td>${a.live ?? "-"}</td><td class="n">${a.months[0]}</td><td class="n">${a.months[1]}</td><td class="n"><b>${a.months[0] + a.months[1]}</b></td><td class="n">${inr(a.cost)}</td><td class="n"><b>${inr((a.months[0] + a.months[1]) * a.cost)}</b></td></tr>`).join("");
+      const n = ss.reduce((t, a) => t + a.months[0] + a.months[1], 0), c = ss.reduce((t, a) => t + (a.months[0] + a.months[1]) * a.cost, 0);
+      return `<tr class="grp"><td colspan="7" style="--c:${C[st]}">${st}</td></tr>${rows}<tr class="tot"><td><b>${st}</b></td><td>${ss.reduce((t, a) => t + (a.live || 0), 0)}</td><td class="n">${ss.reduce((t, a) => t + a.months[0], 0)}</td><td class="n">${ss.reduce((t, a) => t + a.months[1], 0)}</td><td class="n"><b>${n}</b></td><td></td><td class="n"><b>${inr(c)}</b></td></tr>`;
+    }).join("")}</tbody></table>`;
+  }
+
+  runway(); weekPanel(); aops();
+  window.renderPunePlan?.($("#ndPune"), [0, 1]);
+  window.renderPuneAops?.($("#ndPuneAops"), [0, 1]);
+  window.renderInfluencers?.($("#ndInfl"), "2026-11-01", "2026-12-31", false);
+  window.renderPyramid?.($("#mktPyramid"));
+})();

@@ -7,7 +7,7 @@
   const FULLM = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const STATES = ["Pune", "Gujarat", "MP"], CODE = { Pune: "P", Gujarat: "G", MP: "M" }, NAME = { P: "Pune", G: "Gujarat", M: "MP" };
   const SC = { Pune: "var(--pune)", Gujarat: "var(--guj)", MP: "var(--mp)" };
-  const SRC = { pune: "Pune water plan", guj: "Gujarat water plan", gisp: "Great Indian Swim Project", india: "India swimming plan", part: "Pune partnerships sheet", plan: "2027 planner", ours: "our proposal" };
+  const SRC = { pp: "Pune spend plan", pune: "Pune water plan", guj: "Gujarat water plan", gisp: "Great Indian Swim Project", india: "India swimming plan", part: "Pune partnerships sheet", plan: "2027 planner", ours: "our proposal" };
   const TODAY = new Date(Date.UTC(2026, 10, 9));
 
   const d = s => { const [y, m, dd] = s.split("-").map(Number); return new Date(Date.UTC(y, m - 1, dd)); };
@@ -272,4 +272,7 @@
   if (h) view = h;
   week = defWeek();
   hero(); legend(); money(); range(); render();
+  // films: load and play only when on screen
+  const gate = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else v.pause(); }), { rootMargin: "120px" });
+  $$("video[data-src]").forEach(v => { v.muted = true; gate.observe(v); });
 })();

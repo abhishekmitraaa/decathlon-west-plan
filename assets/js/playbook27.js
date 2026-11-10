@@ -78,8 +78,10 @@
           ${sportRows.map(r => `<div class="pb27-sp"><span><i style="--c:${r.s.color}"></i>${r.s.name}</span><div><i class="b" style="--w:${r.bs / maxS * 100}%;--c:${r.s.color}"></i><i class="t" style="--w:${r.ts / maxS * 100}%"></i></div><b>${L(r.bud)}</b><em>${r.bs.toFixed(0)}% / ${r.ts.toFixed(0)}%</em></div>`).join("")}
           <p class="pb27-note"><i class="b"></i>Budget share <i class="t"></i>Turnover share, Q1 2026 (in-store + online). Fitness gets more than it sells on purpose: January is its month. Swimming and running are paid ahead of their season (April and May are their big months), mountain is carried by what it already sells. Not credited to a sport: clearance sale and local moments, ${L(notSport)}.</p></div>
         <div><h4>Where the money goes</h4>
-          ${B.channels.map(([k, n]) => { const v = A.channel[k], p = v / A.total * 100; return `<div class="pb27-ch"><span>${n}</span><div><i style="--w:${p / 36 * 100}%"></i></div><b>${L(v)}</b><em>${p.toFixed(0)}%</em></div>`; }).join("")}
-          <p class="pb27-note">The sheet splits every month the same way (digital 30%, hoardings and AOPs 30%, in-store 20%, mall, events and influencers 5% each, free products 3%, flyers 2%). Our split moves money to where each campaign works: events for Women's Day and running, hoardings for water, digital for travel and the sale.</p></div>
+          ${(() => { const PP = window.PUNE_PLAN, q = PP ? PP.lines.filter(x => x.m >= 2) : [], qt = q.reduce((a, b) => a + b.v, 0);
+            const pune = k => qt ? q.filter(x => x.ch === k).reduce((a, b) => a + b.v, 0) / qt * 100 : 0;
+            return B.channels.map(([k, n]) => { const v = A.channel[k], p = v / A.total * 100, pp = pune(k); return `<div class="pb27-ch"><span>${n}</span><div><i style="--w:${p / 40 * 100}%"></i><i class="pp" style="--w:${pp / 40 * 100}%"></i></div><b>${L(v)}</b><em>${p.toFixed(0)}% / ${pp.toFixed(0)}%</em></div>`; }).join(""); })()}
+          <p class="pb27-note"><i class="b"></i>Our campaign split <i class="t pp"></i>Pune's real Q1 plan (spend plan, January to March: AOPs 29%, hoardings 21%, in-store 21%, influencers 18%, events 6%, reels 4%, in-mall 2%). The Pune plan has no paid digital line: MarCom runs paid digital centrally.</p></div>
       </div>`;
     $$("#pb27Over [data-ps]").forEach(b => b.addEventListener("click", () => { pst = b.dataset.ps; overview(); panel(); }));
   }
@@ -113,6 +115,7 @@
         </div></div>
       <div class="sp-stats">${[["West", WA], ...STATES.map(s => [s, B.alloc(s)])].map(([n, X]) => `<div><b>${L(X.camp[c.id].reduce((a, b) => a + b, 0))}</b><span>${n}${n === "West" ? `, ${(X.camp[c.id].reduce((a, b) => a + b, 0) / X.total * 100).toFixed(0)}% of Q1` : ""}</span></div>`).join("")}</div>
       <div class="pb27-plan">
+        ${c.pune ? `<div class="pb27-pune"><b>Pune, from the spend plan</b><p>${esc(c.pune)}</p></div>` : ""}
         <div class="pb27-blocks">
           <div><h4><i class="ic h"></i>On the hoardings</h4><p>${esc(c.hoard)}</p></div>
           <div><h4><i class="ic i"></i>Influencers</h4><p>${esc(c.inf)}</p></div>
@@ -158,7 +161,20 @@
   }
 
   document.addEventListener("y27view", e => { view = e.detail; season(); });
+  // Sports Utsav 2026 (Sports Utsav 26 master deck, slide 81): participants planned (piloting) vs realised, per store
+  const SU = [["Wagholi", "Pune", 910, 2935], ["Indore", "MP", 860, 2169], ["Bhopal", "MP", 680, 1934], ["Dumas Road", "Gujarat", 700, 1782], ["Motera", "Gujarat", 1480, 1337],
+    ["NIBM", "Pune", 550, 1146], ["Wakad", "Pune", 1060, 1064], ["Nexus", "Gujarat", 2200, 958], ["Baroda", "Gujarat", 1790, 956], ["Amanora", "Pune", 1030, 711],
+    ["SGS Mall", "Pune", 950, 668], ["Rajkot", "Gujarat", 380, 311], ["Gwalior", "MP", 300, 275]];
+  if ($("#suStores")) {
+    const mx = Math.max(...SU.map(r => r[3]));
+    $("#suKpis").innerHTML = [["16,246", "people played in our 13 stores"], ["126%", "of the 12,890 we planned"], ["55", "activations: 12 runs, 12 rides, 12 tournaments, 6 experiences, 13 challenges"], ["323%", "Wagholi: 2,935 against 910 planned"]].map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join("");
+    $("#suStores").innerHTML = `<table class="y27-table su-t"><thead><tr><th>Store</th><th>Planned</th><th>Played</th><th></th><th>Hit</th></tr></thead><tbody>${SU.map(r => `<tr><td><b>${r[0]}</b><small>${r[1]}</small></td><td>${r[2].toLocaleString("en-IN")}</td><td><b>${r[3].toLocaleString("en-IN")}</b></td><td class="bar"><i style="--w:${r[3] / mx * 100}%;--c:${SC[r[1]]}"></i><i class="p" style="left:${r[2] / mx * 100}%"></i></td><td class="${r[3] >= r[2] ? "up" : "dn"}">${Math.round(r[3] / r[2] * 100)}%</td></tr>`).join("")}</tbody></table>`;
+  }
   season(); overview(); panel(); aops(); inspire();
+  window.renderPyramid?.($("#mktPyramid"));
+  window.renderPunePlan?.($("#pb27Pune"), [2, 3, 4]);
+  window.renderPuneAops?.($("#pb27PuneAops"), [2, 3, 4, 5]);
+  window.renderInfluencers?.($("#pb27Infl"), "2026-11-01", "2027-05-31", true);
   $("#pb27Tabs").addEventListener("keydown", e => {
     if (!["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) return;
     e.preventDefault();
