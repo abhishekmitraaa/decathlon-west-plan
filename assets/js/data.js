@@ -185,7 +185,7 @@ window.RUNWAY = {
       { t: "Diwali: Gift a Sport", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
       { t: "Children's Day: back-to-school colouring books", s: "2026-11-14", e: "2026-11-14", k: "local", star: true },
       { t: "Decathlon CSR initiatives", s: "2026-11-01", e: "2026-11-30", k: "local", approx: true },
-      { t: "Christmas: Gift a Sport", s: "2026-12-01", e: "2026-12-31", k: "local", approx: true },
+      { t: "Christmas: Gift a Sport", s: "2026-12-17", e: "2026-12-25", k: "local" },
       { t: "Adajan, Surat: grand launch 27 Dec", s: "2026-12-01", e: "2027-01-01", k: "open", star: true },
       { t: "Uttarayan", s: "2027-01-14", e: "2027-01-15", k: "local" },
       { t: "Summer launch", s: "2027-03-01", e: "2027-03-31", k: "local", approx: true },

@@ -35,7 +35,7 @@
   const MN = ["Jan", "Feb", "Mar"];
   function moments() {
     const el = $("#mom27"); if (!el) return;
-    const A = B.alloc(region), sts = region === "West" ? ["Pune", "Gujarat", "MP"] : [region], AS = Object.fromEntries(sts.map(st => [st, B.alloc(st)]));
+    const A = B.alloc("Pune");
     const q = (X, m) => m.ids.reduce((t, id) => t + X.camp[id].reduce((a, b) => a + b, 0), 0);
     el.innerHTML = MOM.map(m => {
       const q1 = q(A, m), pm = [0, 1, 2].map(i => m.ids.reduce((t, id) => t + A.camp[id][i], 0));
@@ -43,11 +43,11 @@
       const film = m.video ? `<div class="pb27-film"><video muted loop playsinline preload="none" poster="assets/posters/${m.video}.jpg" data-src="assets/videos/${m.video}.mp4" aria-label="${esc(m.n)} film"></video></div>` : "";
       const pics = m.wide && m.video ? "" : [m.img, m.img2].filter(Boolean).map(f => `<img class="${m.contain ? "contain" : ""}" src="assets/img/${f}" alt="" loading="lazy">`).join("");
       const stores = m.wide ? `<div class="mo-stores">${(region === "West" ? ["Pune", "Gujarat", "MP"] : [region]).map(st => `<div><h5>${st === "MP" ? "Madhya Pradesh" : st}</h5><ul>${WD[st].map(([s, t]) => `<li><b>${s}</b>${esc(t)}</li>`).join("")}</ul></div>`).join("")}</div>` : "";
-      const split = sts.length > 1 ? `<span><b>${sts.map(st => `${st} ${L(q(AS[st], m))}`).join(" · ")}</b>Pune = spend plan; Gujarat and MP = estimate (no campaign split in our files)</span>` : "";
-      const src = region === "Pune" ? "Pune spend plan" : region === "West" ? "West" : `${region}, estimate`;
+      const split = region !== "Pune" ? `<span><b>${region === "West" ? "Gujarat, MP: not in our files" : "No " + region + " campaign plan yet"}</b>only month totals; the budget shown is Pune's</span>` : "";
+      const src = "Pune spend plan";
       return `<article class="mo27 ${m.wide ? "wide" : ""}" style="--c:${m.c}"><div class="mo-media ${(film && pics) || (m.img && m.img2) ? "two" : ""}">${film}${pics}</div>
         <div class="mo-body"><span class="mo-when">${esc(m.when)}</span><h3>${esc(m.n)}<span class="lt">: ${esc(m.lt)}</span></h3><p>${esc(m.p)}</p>
-          <div class="mo-nums"><span><b>${L(q1)}</b>Q1 budget, ${src}</span><span><b>${pm.map((v, i) => v ? `${MN[i]} ${L(v)}` : "").filter(Boolean).join(" · ")}</b>by month</span>${split}<span><b>${esc(m.sports)}</b>sports it serves</span></div>
+          <div class="mo-nums"><span><b>${L(q1)}</b>spent on it, ${src}</span><span><b>${pm.map((v, i) => v ? `${MN[i]} ${L(v)}` : "").filter(Boolean).join(" · ")}</b>in its month</span>${split}<span><b>${esc(m.sports)}</b>sports it serves</span></div>
           ${ls.length ? `<div class="mo-pune"><h4>Pune, from the spend plan</h4><ul>${ls.map(x => `<li><span>${esc(x.t.replace("Influencer campaign: ", "Influencers: "))}<small>${PP.months[x.m]}${x.q ? ", " + esc(x.q) : ""}${x.d ? ", " + esc(x.d) : ""}${x.n ? " (" + esc(x.n) + ")" : ""}</small></span><b>${inr(x.v)}</b></li>`).join("")}</ul><p>Pune total <b>${inr(ls.reduce((a, x) => a + x.v, 0))}</b></p></div>` : ""}
           ${stores}</div></article>`;
     }).join("");

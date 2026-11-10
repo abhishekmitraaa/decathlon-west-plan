@@ -19,7 +19,6 @@
   ];
   // n: source. plan = Pune spend plan (BFS PUNE); rw = Q4 runway on the main site; web = public race listings (to confirm); ours = our suggestion
   const ITEMS = [
-    { l: "moments", t: "Winter and travel season", s: "2026-11-02", e: "2027-01-03", k: "season" },
     { l: "moments", t: "Diwali 8 Nov", s: "2026-11-08", e: "2026-11-08", k: "hol" },
     { l: "moments", t: "Children's Day 14 Nov", s: "2026-11-14", e: "2026-11-14", k: "hol" },
     { l: "moments", t: "Christmas 25 Dec", s: "2026-12-25", e: "2026-12-25", k: "hol" },
@@ -27,8 +26,8 @@
     { l: "sales", t: "Black Friday, 27 to 30 Nov", s: "2026-11-27", e: "2026-11-30", k: "sale", go: 1, n: "plan" },
     { l: "sales", t: "Christmas Sale, 19 to 31 Dec", s: "2026-12-19", e: "2026-12-31", k: "sale", go: 1, n: "plan" },
     { l: "camp", t: "Diwali: Gift a Sport", s: "2026-11-02", e: "2026-11-15", k: "local", n: "rw" },
-    { l: "camp", t: "Winter & Travel", s: "2026-11-02", e: "2027-01-03", k: "nat", n: "rw" },
-    { l: "camp", t: "Christmas gifting videos: Gift a Sport continues", s: "2026-12-01", e: "2026-12-25", k: "launch", n: "user" },
+    { l: "camp", t: "Winter, Trek & Travel: 1 to 15 Dec", s: "2026-12-01", e: "2026-12-15", k: "nat", n: "user" },
+    { l: "camp", t: "Christmas gifting videos: 17 to 25 Dec", s: "2026-12-17", e: "2026-12-25", k: "launch", n: "user" },
     { l: "camp", t: "MH500 backpack", s: "2026-11-02", e: "2026-11-30", k: "tech", n: "rw" },
     { l: "inf", t: "Black Friday: 40 influencers, ₹4 L", s: "2026-11-21", e: "2026-11-28", k: "evt", n: "plan" },
     { l: "inf", t: "Winter & Travel: 10 influencers (₹1 L)", s: "2026-11-15", e: "2026-11-21", k: "eco", n: "plan" },
@@ -38,7 +37,7 @@
     { l: "ins", t: "Black Friday comms live, whole city", s: "2026-11-23", e: "2026-11-30", k: "nat", go: 1, n: "plan" },
     { l: "ins", t: "Christmas comms live, whole city", s: "2026-12-19", e: "2026-12-31", k: "nat", go: 1, n: "plan" },
     { l: "ins", t: "In-mall: NIBM, Amanora, SGS (₹1.70 L Nov, ₹1.65 L Dec)", s: "2026-11-02", e: "2026-12-31", k: "tbd", n: "plan" },
-    { l: "ooh", t: "7 hoardings live: Winter & Travel (₹9.35 L a month)", s: "2026-11-02", e: "2026-12-31", k: "sale", n: "plan" },
+    { l: "ooh", t: "7 Pune hoardings (₹9.35 L a month): new creative live by 15 Nov at the latest (vendor away)", s: "2026-11-15", e: "2026-12-31", k: "sale", n: "user" },
     { l: "aop", t: "22 AOPs: Wakad 5, Wagholi 5, SGS 4, NIBM 4, Amanora 4 (₹6.25 L)", s: "2026-11-02", e: "2026-11-30", k: "eco", n: "plan" },
     { l: "aop", t: "27 AOPs: Wakad 6, Wagholi 6, SGS 5, NIBM 5, Amanora 5 (₹7.65 L)", s: "2026-12-01", e: "2026-12-31", k: "eco", n: "plan" },
     { l: "evt", t: "Children's Day: colouring books", s: "2026-11-14", e: "2026-11-14", k: "local", n: "rw" },
@@ -62,7 +61,7 @@
     const months = [{ m: 10, a: 0, b: 3 }, { m: 11, a: 4, b: 8 }];
     const now = weeks.findIndex(x => TODAY >= x.mon && TODAY <= x.sun);
     let h = `<div class="pl-corner w27-corner">Pune only. Weeks start on Monday. ★ = goes live</div>`;
-    h += months.map(x => `<div class="w27-mon" style="grid-column:${x.a + 2} / ${x.b + 3}"><b>${x.m === 10 ? "November" : "December"} 2026</b><small>${x.m === 10 ? "Pune total ₹28.00 L" : "Pune total ₹30.15 L"}</small></div>`).join("");
+    h += months.map(x => `<div class="w27-mon" style="grid-column:${x.a + 2} / ${x.b + 3}"><b>${x.m === 10 ? "November" : "December"} 2026</b><small>${x.m === 10 ? "Pune total ₹28.47 L" : "Pune total ₹29.62 L"}</small></div>`).join("");
     h += weeks.map((x, i) => `<button type="button" class="w27-wk ${i === now ? "now" : ""}" style="grid-column:${i + 2}" data-i="${i}" aria-pressed="${i === week}"><b>W${x.w}</b><small>${fd(x.mon)}</small>${i === now ? "<em>We are here</em>" : ""}</button>`).join("");
     LANES.forEach(([id, name]) => {
       const its = ITEMS.filter(x => x.l === id).map(it => ({ it, sp: span(it) })).filter(x => x.sp).sort((a, b) => a.sp[0] - b.sp[0]);
@@ -111,11 +110,11 @@
     { id: "bf", sec: "blackfriday", n: "Black Friday", d: "27 to 30 Nov", c: ["Black Friday"], col: "#111", goal: [4, 5],
       what: "A four-day sale. Coupon cards from 17 Nov, in-store and in-mall live on 23 Nov, a countdown on social, creators from 21 Nov.",
       inf: "Pune 40 (₹4 L); Gujarat 67+ (₹7.4 L); MP 40 (₹2.02 L)", west: "Gujarat ₹7.4 L and MP ₹2.02 L of influencers" },
-    { id: "winter", sec: "winter", n: "Winter, Trek & Travel", d: "All of Nov and Dec", c: ["Winter & Travel"], col: "#2E7D32",
-      what: "The season under both sales: 7 Pune hoardings for two months, trek and travel reels, 20 creators (10 from 15 to 21 Nov, 10 from 1 to 15 Dec), the MH500 backpack and a winter wall in store.",
-      inf: "Pune 20 (₹2 L): 10 from 15 to 21 Nov, 10 from 1 to 15 Dec; + 7 on barter (₹50,000) and 10 reels recycled as boosts (₹10,000), outside the total", west: "Not planned separately for Gujarat and MP" },
-    { id: "xmas", sec: "december", n: "Christmas: gifting and the sale", d: "Gifting 1 to 25 Dec; sale 19 to 31 Dec", c: ["Christmas sale"], col: "#C8102E", goal: [6, 7],
-      what: "The Diwali gifting videos continue as Christmas gifting; the Christmas Sale from 19 Dec with in-store live, a countdown and boosts.",
+    { id: "winter", sec: "winter", n: "Winter, Trek & Travel", d: "1 to 15 Dec", c: ["Winter & Travel"], col: "#2E7D32",
+      what: "Winter only: 1 to 15 December. Trek and travel reels, creators, the winter wall in store; the 7 Pune hoardings carry it (the sheet books them for Winter & Travel in Nov and Dec).",
+      inf: "Pune 20 (₹2 L) in the sheet: 10 from 15 to 21 Nov, 10 from 1 to 15 Dec; + 7 on barter (₹50,000) and 10 reels recycled as boosts (₹10,000), outside the total", west: "Not planned separately for Gujarat and MP" },
+    { id: "xmas", sec: "december", n: "Christmas: gifting and the sale", d: "Gifting 17 to 25 Dec; sale 19 to 31 Dec", c: ["Christmas sale"], col: "#C8102E", goal: [6, 7],
+      what: "Christmas gifting videos 17 to 25 Dec; the Christmas Sale 19 to 31 Dec with in-store comms live from 19 Dec, 35 creators 19 to 23 Dec, a countdown and boosts.",
       inf: "Pune 35 (₹3.5 L), 19 to 23 Dec", west: "Gujarat and MP Christmas budgets not in our files yet" }
   ];
   FR.forEach(f => { f.ls = camp(f.c); f.v = sum(f.ls); });
@@ -153,17 +152,13 @@
     const pt = pu.reduce((a, h) => a + h.cost, 0), bt = ba.reduce((a, h) => a + h.cost, 0);
     const shots = [["baroda-subhanpura-live", "Subhanpura, 10 Nov: Kiprun Kipride, “Visit Decathlon Vadodara, just 10 mins away”"], ["baroda-fatehgunj-live", "Fatehgunj, 10 Nov: the Kiprun board in a row of eight"], ["baroda-akota-live", "Akota, over the DMart car park: “just 15 mins away”"]];
     el.innerHTML = `<div class="nd-hu-grid">
-      <article class="nd-hu-c wait"><header><span class="st">Not updated yet</span><h4>Pune: ${pu.length} boards</h4><b>${Lk(pt)} a month</b></header>
-        <figure><img src="assets/img/hpgm/pune-wagholi.jpg" alt="Pune hoarding at Wagholi still showing the festive cycle creative, 10 October" loading="lazy"><figcaption>Wagholi, 10 Oct: still the festive “Your Festive Upgrade” cycle creative. The latest photo we have.</figcaption></figure>
+      <article class="nd-hu-c wait"><header><span class="st">Live by 15 Nov</span><h4>Pune: ${pu.length} boards</h4><b>${Lk(pt)} a month</b></header>
+        <figure><img src="assets/img/hpgm/pune-wagholi.jpg" alt="Pune hoarding at Wagholi still showing the festive cycle creative, 10 October" loading="lazy"><figcaption>Wagholi, 10 Oct: still the festive “Your Festive Upgrade” cycle creative. The vendor is away; once back, the new creative goes live on all 7 boards by 15 November at the latest.</figcaption></figure>
         <ul>${pu.map(h => `<li><span>${esc(h.loc)}</span><small>${esc(h.size)}</small><b>${Lk(h.cost)}</b></li>`).join("")}</ul></article>
-      <article class="nd-hu-c up"><header><span class="st">Up</span><h4>Baroda: ${ba.length} boards</h4><b>${Lk(bt)} a month</b></header>
-        <div class="nd-hu-pics">${shots.map(([f, c]) => `<figure><img src="assets/img/hoard/${f}.jpg" alt="Baroda hoarding: ${esc(c)}" loading="lazy"><figcaption>${esc(c)}</figcaption></figure>`).join("")}</div>
+      <article class="nd-hu-c up"><header><span class="st">Live: Kiprun</span><h4>Baroda: ${ba.length} boards</h4><b>${Lk(bt)} a month</b></header>
+        <p class="nd-hu-p">Kiprun Kipride stays up for now; the boards switch to Winter in December.</p><div class="nd-hu-pics">${shots.map(([f, c]) => `<figure><img src="assets/img/hoard/${f}.jpg" alt="Baroda hoarding: ${esc(c)}" loading="lazy"><figcaption>${esc(c)}</figcaption></figure>`).join("")}</div>
         <ul>${ba.map(h => `<li><span>${esc(h.loc)}</span><small>${esc(h.size)}</small><b>${Lk(h.cost)}</b></li>`).join("")}</ul></article>
-      <article class="nd-hu-c learn"><h4>What Pune can take from Baroda</h4><ol>
-        <li><b>Up on day one, with proof.</b> Baroda's boards were photographed live on 10 Nov, GPS-stamped. Pune pays ${Lk(pt)} a month whether the new creative is up or not: ask the vendor for the same dated photos.</li>
-        <li><b>One product, one line, on every board.</b> Kiprun Kipride on all of them, and the line that does the work: “Visit Decathlon Vadodara, just 10 mins away”. Pune's Winter &amp; Travel boards should name the nearest store and the minutes to it.</li>
-        <li><b>Smaller boards where people already shop.</b> ${Lk(Math.round(bt / ba.length))} a board in Baroda (20 x 20 ft, over a DMart car park, on a university circle) against ${Lk(Math.round(pt / pu.length))} in Pune (30 x 20 to 45 x 30 ft on the main roads). Worth testing one smaller board near a Pune DMart or society gate.</li>
-        <li><b>Stand out in a crowd.</b> At Fatehgunj ours is one of eight boards: a single shoe on a dark background is the one you notice.</li></ol></article></div>`;
+      </div>`;
   }
 
   /* ---------- summary, November and December ---------- */
@@ -179,7 +174,7 @@
       <div class="sb-wrap"><table class="y27-table nd-sum-t"><thead><tr><th>Campaign</th><th>When</th><th>What we do</th><th>Pune budget</th><th>Share</th><th>Influencers</th><th>Gujarat and MP</th><th>What it brings</th></tr></thead><tbody>
       ${rows.map((r, i) => `<tr><td><b class="y27-dot" style="--c:${r.col || "#9AA2C8"}">${esc(r.n)}</b></td><td>${esc(r.d || "Nov and Dec")}</td><td>${esc(r.what)}</td><td class="n"><b>${r.v ? inr(r.v) : "-"}</b></td><td class="n">${r.v ? Math.round(r.v / PL * 100) + "%" : "-"}</td><td>${esc(r.inf || "-")}</td><td>${esc(r.west || "-")}</td><td>${esc(r.brings || "Practice places and running events that bring players back to the store.")}</td></tr>`).join("")}
       <tr class="tot"><td><b>Pune, Nov + Dec</b></td><td></td><td></td><td class="n"><b>${inr(PT)}</b></td><td class="n">100%</td><td>95 + 7 on barter</td><td></td><td><b>${cr(gsum(5) + gsum(7))}</b> of sale goals (West)</td></tr></tbody></table></div>
-      <p class="w27-note">Pune money: the Pune spend plan (BFS PUNE), every line counted once under its campaign. Budget: ₹28,00,000 in November and ₹30,15,000 in December (user, 10 Nov), ${inr(PT)} together; the sheet's lines add to ${inr(sum(PP.lines.filter(x => x.m < 2)))} (in-store comms ₹4,97,282 a month in the latest sheet). Shares are of the lines. Lines the sheet lists outside the month totals (Black Friday countdown ₹40,000, Winter barter ₹50,000, recycle boosts ₹10,000) are not counted. Goals: the SD piloting sheet (Black Friday 27 to 30 Nov, Christmas 18 to 25 Dec). Gujarat and MP: the influencer budgets shared on 5 to 9 Nov.</p>`;
+      <p class="w27-note">Pune money: the Pune spend plan (BFS PUNE), every line counted once under its campaign. Budget = the sheet's total advertising and marketing budget: ₹28,47,282 in November and ₹29,62,282 in December, ${inr(PT)} together; the lines add exactly to it. Lines the sheet lists outside the month totals (Black Friday countdown ₹40,000, Winter barter ₹50,000, recycle boosts ₹10,000) are not counted. Goals: the SD piloting sheet (Black Friday 27 to 30 Nov, Christmas 18 to 25 Dec). Gujarat and MP: the influencer budgets shared on 5 to 9 Nov.</p>`;
   }
 
   frames(); hoardings(); summary();

@@ -3,9 +3,9 @@
    Also: the 2026 influencer tracker (user screenshot, 10 Nov 2026), and the marketing pyramid (the user's vision). */
 window.PUNE_PLAN = {
   months: ["Nov 2026", "Dec 2026", "Jan 2027", "Feb 2027", "Mar 2027"],
-  // month budgets: Nov and Dec as the user set them (10 Nov 2026: ₹28 L and ₹30.15 L); Jan to Mar = the sheet's "Total Budget" rows.
-  // The second copy of the sheet (10 Nov) has line items adding to ₹28,47,282 (Nov) and ₹29,62,282 (Dec): shown as "lines add to".
-  totals: [2800000, 3015000, 3054000, 1989000, 2939000],
+  // month budgets = the sheet's "Total Budget" rows (user, 10 Nov 2026, fourth brief: Pune Nov ₹28,47,282 and Dec ₹29,62,282 are the total
+  // advertising and marketing budget; the earlier ₹28 L / ₹30.15 L are superseded). Jan to Mar: ₹30,54,000 / ₹19,89,000 / ₹29,39,000.
+  totals: [2847282, 2962282, 3054000, 1989000, 2939000],
   channels: { ooh: ["Hoardings", "#3643BA"], aop: ["AOPs and free products", "#12A150"], ins: ["In-store comms", "#E0A100"], mall: ["In-mall", "#9AA2C8"],
     inf: ["Influencers", "#C2185B"], evt: ["Events", "#E8590C"], cont: ["Content: media vendor reels", "#0096C7"], boost: ["Social boost", "#6B4FBB"], fly: ["Flyers and coupon cards", "#5D6D7E"] },
   lines: [
@@ -21,12 +21,12 @@ window.PUNE_PLAN = {
     { m: 0, ch: "evt", camp: "Kiprun", t: "Kiprun event", v: 20000 },
     // December 2026: Winter & Travel, Christmas sale 19-31 Dec
     { m: 1, ch: "ooh", camp: "Winter & Travel", t: "Hoardings live", v: 935000, q: "7 hoardings" },
-    { m: 1, ch: "mall", camp: "Christmas sale", t: "In-mall comms", v: 165000, n: "NIBM 45,000, Amanora 45,000, SGS 75,000" },
-    { m: 1, ch: "ins", camp: "Christmas sale", t: "In-store comms, visible to customers", v: 497282, d: "whole city live from 19 Dec", n: "same store split as November" },
+    { m: 1, ch: "mall", camp: "Christmas sale", t: "In-mall comms", v: 165000, n: "NIBM 45,000, Amanora 45,000, SGS 75,000; December in-mall, credited to Christmas" },
+    { m: 1, ch: "ins", camp: "Christmas sale", t: "In-store comms, visible to customers", v: 497282, d: "whole city live from 19 Dec", n: "Amanora 83,000, SGS 1,44,283, Wakad 1,10,000, NIBM 50,000, Wagholi 1,50,000 (these add to 5,37,283)" },
     { m: 1, ch: "aop", camp: "AOPs", t: "AOPs, free products and IC", v: 765000, q: "27 AOPs", n: "Wakad 6 x 40,000, Wagholi 6, SGS 5, NIBM 5, Amanora 5 x 25,000" },
     { m: 1, ch: "inf", camp: "Christmas sale", t: "Instagram influencers", v: 350000, q: "35 influencers", d: "19 to 23 Dec" },
     { m: 1, ch: "inf", camp: "Winter & Travel", t: "Instagram influencers", v: 100000, q: "10 influencers", d: "1 to 15 Dec", n: "second half of the 20; plus 7 on barter (₹50,000) and 10 influencer reels recycled as boosts (₹10,000): not in the month total" },
-    { m: 1, ch: "boost", camp: "Christmas sale", t: "Social media boost", v: 30000, q: "10 posts around Christmas and Winter & Travel", n: "the Christmas table lists a ₹35,000 boost, 19 to 23 Dec" },
+    { m: 1, ch: "boost", camp: "Christmas sale", t: "Social media boost", v: 30000, q: "10 posts around Christmas and Winter & Travel", n: "the Christmas table also writes 35,000 for the boost (in its quantity column, 19 to 23 Dec); the December total uses 30,000" },
     { m: 1, ch: "evt", camp: "Kiprun", t: "Kiprun event", v: 20000 },
     { m: 1, ch: "cont", camp: "Winter & Travel", t: "Media vendor", v: 100000 },
     // January 2027: Movement for All, clearance sale
@@ -38,14 +38,14 @@ window.PUNE_PLAN = {
     { m: 2, ch: "inf", camp: "Clearance sale", t: "Influencer campaign: clearance sale", v: 500000, q: "50 influencers", d: "dates TBD" },
     { m: 2, ch: "inf", camp: "Movement for All", t: "Influencer campaign: New Year, New Moves", v: 149000, q: "17 influencers", d: "2 to 17 Jan" },
     { m: 2, ch: "cont", camp: "Movement for All", t: "Media vendor", v: 100000, q: "17 reels on the Let's Play Pune page" },
-    { m: 2, ch: "ins", camp: "Clearance sale", t: "In-store communication", v: 550000 },
+    { m: 2, ch: "ins", camp: "Clearance sale", t: "In-store communication", v: 550000, n: "Amanora 83,000, SGS 1,44,283, Wakad 1,50,000, NIBM 50,000, Wagholi 1,50,000 (these add to 5,77,283, not 5,50,000)" },
     { m: 2, ch: "mall", camp: "Clearance sale", t: "In-mall comms", v: 165000 },
     // February 2027: new arrivals
     { m: 3, ch: "ooh", camp: "New arrivals", t: "Hoardings", v: 425000, q: "4 hoardings" },
     { m: 3, ch: "aop", camp: "AOPs", t: "AOPs", v: 765000, q: "27 AOPs" },
     { m: 3, ch: "inf", camp: "New arrivals", t: "Influencer campaign: new arrivals", v: 149000, q: "15 influencers", d: "24 Feb to 6 Mar" },
     { m: 3, ch: "cont", camp: "New arrivals", t: "Media vendor", v: 100000, q: "20 reels on the Let's Play Pune page" },
-    { m: 3, ch: "ins", camp: "New arrivals", t: "In-store communication", v: 550000 },
+    { m: 3, ch: "ins", camp: "New arrivals", t: "In-store communication", v: 550000, n: "Amanora 83,000, SGS 1,44,283, Wakad 1,50,000, NIBM 50,000, Wagholi 1,50,000 (these add to 5,77,283, not 5,50,000)" },
     // March 2027: Women's Day, summer
     { m: 4, ch: "evt", camp: "Women's Day", t: "Women's Day weekend event", v: 150000, q: "800 walk-ins expected" },
     { m: 4, ch: "ooh", camp: "Summer", t: "Hoardings", v: 725000, q: "7 hoardings" },
@@ -53,7 +53,7 @@ window.PUNE_PLAN = {
     { m: 4, ch: "inf", camp: "Summer", t: "Influencer campaign: summer + summer camp", v: 500000, q: "50 influencers", d: "March to May" },
     { m: 4, ch: "inf", camp: "Movement for All", t: "Influencer campaign: \"New Year, New Moves\" (as written in the March table)", v: 149000, q: "17 influencers", d: "2 to 17 Jan", n: "looks copied from January: confirm" },
     { m: 4, ch: "cont", camp: "Summer", t: "Media vendor", v: 100000, q: "17 reels on the Let's Play Pune page" },
-    { m: 4, ch: "ins", camp: "Summer", t: "In-store communication", v: 550000 }
+    { m: 4, ch: "ins", camp: "Summer", t: "In-store communication", v: 550000, n: "Amanora 83,000, SGS 1,44,283, Wakad 1,50,000, NIBM 50,000, Wagholi 1,50,000 (these add to 5,77,283, not 5,50,000)" }
   ],
   aopStores: { // monthly AOP budget per store (₹), Nov 2026 to Apr 2027
     head: ["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"],
@@ -100,7 +100,7 @@ window.MKT_PYRAMID = {
 (() => {
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const inr = v => "₹" + Math.round(v).toLocaleString("en-IN");
-  const L = r => { const l = r / 1e5; return l >= 100 ? `₹${(l / 100).toFixed(2)} Cr` : `₹${l >= 10 ? l.toFixed(1) : l.toFixed(2)} L`; };
+  const L = r => { const l = r / 1e5; return l >= 100 ? `₹${(l / 100).toFixed(2)} Cr` : `₹${l.toFixed(2)} L`; };
   const P = window.PUNE_PLAN, MP = window.MKT_PYRAMID;
 
   // the pyramid
@@ -128,7 +128,7 @@ window.MKT_PYRAMID = {
     const cards = months.map(m => {
       const ls = P.lines.filter(x => x.m === m), sum = ls.reduce((a, b) => a + b.v, 0);
       const byCh = Object.keys(ch).map(k => [k, ls.filter(x => x.ch === k).reduce((a, b) => a + b.v, 0)]).filter(x => x[1]);
-      return `<article class="pp-month"><header><h4>${P.months[m]}</h4><b>${L(P.totals[m])}</b>${sum !== P.totals[m] ? `<small>budget; the sheet's lines add to ${inr(sum)} (${sum > P.totals[m] ? "over" : "under"} by ${inr(Math.abs(sum - P.totals[m]))})</small>` : ""}</header>
+      return `<article class="pp-month"><header><h4>${P.months[m]}</h4><b>${inr(P.totals[m])}</b>${sum !== P.totals[m] ? `<small>the lines add to ${inr(sum)}</small>` : ""}</header>
         <div class="pp-bar">${byCh.map(([k, v]) => `<span style="flex:${v};--c:${ch[k][1]}" title="${ch[k][0]}: ${inr(v)}"></span>`).join("")}</div>
         <ul>${ls.map(x => `<li><i style="--c:${ch[x.ch][1]}"></i><div><b>${esc(x.t)}</b><small>${esc(x.camp)}${x.q ? ", " + esc(x.q) : ""}${x.d ? ", " + esc(x.d) : ""}</small>${x.n ? `<em>${esc(x.n)}</em>` : ""}</div><span>${inr(x.v)}</span></li>`).join("")}</ul></article>`;
     }).join("");

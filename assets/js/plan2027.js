@@ -24,7 +24,7 @@
   const qOf = m => (m < 3 ? "q1" : "q2");
 
   // money: lakh in, "₹x L" or "₹x Cr" out
-  const L = v => v >= 100 ? `₹${(v / 100).toFixed(2)} Cr` : `₹${v >= 10 ? v.toFixed(1) : v.toFixed(2)} L`;
+  const L = v => v >= 100 ? `₹${(v / 100).toFixed(2)} Cr` : `₹${v.toFixed(2)} L`;
   const rupeesL = r => r / 1e5;
 
   // 2027 ad budget per state and month (lakh), AOPs per state and month (AOP_PLAN index 0 = Nov 2026, so Jan 2027 = 2)
@@ -69,7 +69,7 @@
     const year = STATES.reduce((t, st) => t + D.spend[st].y27.reduce((a, b) => a + b, 0), 0), n = SPS().length;
     $("#y27Kpis").innerHTML = [
       [L(total), `${region} ad budget, ${Q[view].label} 2027 (all of 2027: ${L(year)})`],
-      [L(sportBudget), `of it led by our ${n} sports (${Math.round(sportBudget / total * 100)}%)`],
+      [sportBudget > 0 ? L(sportBudget) : "-", sportBudget > 0 ? `of it led by our ${n} sports (${Math.round(sportBudget / total * 100)}%)` : `led by our ${n} sports: no sport split for ${region} in our files`],
       [aops, "AOPs (practice places) planned"],
       [L(goal), `turnover goal for the ${n} sports, in-store + online, +${Math.round((goal / base - 1) * 100)}% on 2026`]
     ].map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join("");
@@ -146,7 +146,7 @@
       ${rows.map(({ s, n }) => `<tr><td><b class="y27-dot" style="--c:${s.color}">${s.name}</b></td><td>${s.where.join(", ")}</td>
         <td><div class="y27-bar"><i style="--w:${n.base / maxGoal * 100}%;--c:${s.color}"></i><i class="g" style="--w:${n.goal / maxGoal * 100}%;--c:${s.color}"></i></div><span class="y27-bv">${L(n.base)} → <b>${L(n.goal)}</b></span></td>
         <td><b>${(n.share * 100).toFixed(1)}%</b></td><td><span class="y27-bv">${L(n.offline)} / ${L(n.online)}<br>${Math.round(n.offline / n.base * 100)}% / ${Math.round(n.online / n.base * 100)}%</span></td>
-        <td><b>+${Math.round(n.growth * 100)}%</b></td><td>${L(n.budget)}</td><td>${n.aops}</td></tr>`).join("")}
+        <td><b>+${Math.round(n.growth * 100)}%</b></td><td>${n.budget > 0 ? L(n.budget) : "-"}</td><td>${n.aops}</td></tr>`).join("")}
       <tr class="tot"><td><b>${rows.length} sports</b></td><td></td><td><span class="y27-bv">${L(tot.base)} → <b>${L(tot.goal)}</b></span></td><td><b>${(tot.share * 100).toFixed(1)}%</b></td><td><span class="y27-bv">${L(tot.base - tot.online)} / ${L(tot.online)}</span></td><td><b>+${Math.round((tot.goal / tot.base - 1) * 100)}%</b></td><td><b>${L(tot.budget)}</b></td><td><b>${tot.aops}</b></td></tr>
       </tbody></table><p class="y27-key"><i class="a"></i>2026, same months <i class="b"></i>2027 goal. Share: of all West turnover in those months (every sport). In-store is offline, online is out of store.</p>`;
 
@@ -158,11 +158,11 @@
       const moves = Q[view].qs.map(q => `<div><h4>${q.toUpperCase()}: what we do</h4><ul>${RF(s.moves[q]).map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
       const perState = STATES.filter(st => Q[view].qs.some(q => s.aop[q][st] || sb(s, q, st))).map(st => {
         const b = Q[view].qs.reduce((t, q) => t + sb(s, q, st), 0), a = Q[view].qs.reduce((t, q) => t + (s.aop[q][st] || 0), 0);
-        return `<span style="--c:${SC[st]}"><b>${st}</b>${L(b)}, ${a} AOPs</span>`;
+        return `<span style="--c:${SC[st]}"><b>${st}</b>${b > 0 ? L(b) : "budget not split by sport"}, ${a} AOPs</span>`;
       }).join("");
       return `<article class="y27-card" style="--c:${s.color};--tx:${s.ink}" id="sport-${s.id}">
         <header><h3>${s.name}</h3><span>${s.where.join(", ")}</span><p>${esc(s.idea)}</p></header>
-        <div class="y27-cnums"><div><b>${L(n.base)}</b><span>${Q[view].label} 2026, in-store + online (${(n.share * 100).toFixed(1)}% of all turnover)</span></div><div><b>${L(n.goal)}</b><span>2027 goal, +${Math.round(n.growth * 100)}%</span></div><div><b>${L(n.budget)}</b><span>budget</span></div><div><b>${n.aops}</b><span>AOPs: ${esc(s.aopKind)}</span></div></div>
+        <div class="y27-cnums"><div><b>${L(n.base)}</b><span>${Q[view].label} 2026, in-store + online (${(n.share * 100).toFixed(1)}% of all turnover)</span></div><div><b>${L(n.goal)}</b><span>2027 goal, +${Math.round(n.growth * 100)}%</span></div><div><b>${n.budget > 0 ? L(n.budget) : "-"}</b><span>${n.budget > 0 ? "budget" : "budget: no sport split in our files"}</span></div><div><b>${n.aops}</b><span>AOPs: ${esc(s.aopKind)}</span></div></div>
         <div class="y27-cmid"><div><h4>2026 turnover by state, ${Q[view].label}: in-store (offline) and online</h4>${STATES.map(st => `<div class="y27-st y27-st2"><span>${st}</span><i style="--w:${(n.byState[st] || 0) / maxSt * 100}%;--c:${SC[st]};--o:${(n.byStateOn[st] || 0) / (n.byState[st] || 1) * 100}%" title="In-store ${L((n.byState[st] || 0) - (n.byStateOn[st] || 0))}, online ${L(n.byStateOn[st] || 0)}"></i><b>${L(n.byState[st] || 0)}</b></div>`).join("")}
             <p class="y27-chkey"><i class="a" style="--c:${s.color}"></i>In-store <i class="b" style="--c:${s.color}"></i>Online: ${Math.round(n.online / n.base * 100)}%</p></div>
           <div><h4>2026 turnover, month by month (in-store + online)</h4>${spark}</div></div>

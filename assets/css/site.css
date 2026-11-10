@@ -3147,3 +3147,37 @@ body[data-region="Gujarat"] .not-pune, body[data-region="MP"] .not-pune { displa
 @media (max-width: 1000px) { .ph-city, .ph-tap, .ph-sum { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .ph-city, .ph-tap, .ph-sum { grid-template-columns: 1fr; } .ph-l li em { white-space: normal; } }
 @media (max-width: 860px) { .mo-media.two { display: block; } .mo-media.two > * + * { display: none; } }
+.nd-hu-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); }
+.nd-hu-p { margin: 0 0 8px; font-size: 13px; font-weight: 600; color: var(--ink); }
+@media (max-width: 860px) { .nd-hu-grid { grid-template-columns: 1fr; } }
+
+/* Travel agencies block (hotspots) and Schools (plan2027 #schools) */
+.ph-trav { margin-top: 18px; background: #fff; border: 1.5px solid var(--line); border-top: 4px solid #6B4FBB; border-radius: var(--r-md); padding: 16px; }
+.ph-trav h3 { margin: 0 0 10px; color: var(--ink); }
+.ph-tk { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.ph-tk div { background: #F3F0FB; border-radius: var(--r-sm); padding: 10px 12px; }
+.ph-tk h4 { margin: 0 0 4px; font-size: 13.5px; color: var(--ink); } .ph-tk p { margin: 0 0 4px; font-size: 12.5px; color: var(--text-2); } .ph-tk small { font-size: 12px; color: #4A3A8A; font-weight: 600; }
+.ph-tg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.ph-tg h4 { margin: 0 0 4px; font-size: 13.5px; color: var(--ink); } .ph-tg ul { margin: 0; padding-left: 18px; font-size: 13px; color: var(--text-2); }
+.ph-ask { margin: 10px 0 0; font-weight: 700; font-size: 13.5px; color: var(--ink); }
+.sc-kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.sc-kpis div { background: var(--mist); border-radius: var(--r-md); padding: 10px 14px; }
+.sc-kpis div.t { background: #10135A; color: #fff; } .sc-kpis div.t span { color: #fff; opacity: .88; }
+.sc-kpis b { display: block; font-size: 24px; } .sc-kpis span { font-size: 12.5px; color: var(--text-2); }
+.sc-ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
+.sc-ways div { border-left: 4px solid #E0A100; background: #fff; border-radius: var(--r-sm); padding: 8px 12px; box-shadow: 0 0 0 1.5px var(--line) inset; }
+.sc-ways h4 { margin: 0 0 4px; font-size: 14px; color: var(--ink); } .sc-ways p { margin: 0; font-size: 13px; color: var(--text-2); }
+.sc-steps { list-style: none; margin: 0 0 14px; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; counter-reset: sc; }
+.sc-steps li { background: #fff; border: 1.5px solid var(--line); border-radius: var(--r-sm); padding: 8px 10px; font-size: 12.5px; color: var(--text-2); }
+.sc-steps b { display: block; color: #3643BA; font-size: 13px; }
+.sc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 10px; }
+.sc-st { background: #fff; border: 1.5px solid var(--line); border-radius: var(--r-md); padding: 12px 14px; }
+.sc-st header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.sc-st h3 { margin: 0; font-size: 18px; color: var(--ink); } .sc-st header span { font-size: 12px; font-weight: 700; color: var(--text-3); }
+.sc-bar { height: 8px; background: #EEF0F5; border-radius: 99px; margin: 8px 0 6px; overflow: hidden; } .sc-bar i { display: block; height: 100%; width: var(--w); background: #E0A100; }
+.sc-need { margin: 0 0 6px; font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.sc-st summary { cursor: pointer; font-size: 12.5px; font-weight: 700; color: var(--ink); }
+.sc-l { list-style: none; margin: 6px 0 0; padding: 0; } .sc-l li { font-size: 12px; padding: 4px 0; border-bottom: 1px solid var(--line); color: var(--text-3); }
+.sc-l li b { display: block; color: var(--text-2); } .sc-l li.on b { color: #0B6B33; }
+@media (max-width: 1000px) { .ph-tk { grid-template-columns: 1fr 1fr; } .sc-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } .sc-steps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .ph-tk, .ph-tg, .sc-kpis, .sc-ways, .sc-steps { grid-template-columns: 1fr; } }

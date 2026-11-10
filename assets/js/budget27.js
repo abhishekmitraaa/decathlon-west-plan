@@ -2,7 +2,8 @@
    Pune: the Pune spend plan (data_recent_marketing_spends_pune_plan___1.xlsx, BFS PUNE), line by line: Jan ₹30,54,000, Feb ₹19,89,000,
    Mar ₹29,39,000 (PUNE_PLAN in puneplan.js). Every line is credited to the campaign it serves (camp below = PUNE_PLAN camp names).
    Gujarat and MP: only month totals exist (ultimate_data_sheet_1.xlsx, DATA.spend.*.y27); there is no campaign split in our files,
-   so their campaign figures are an ESTIMATE that applies Pune's real split of that month, and every place that shows them says so.
+   so their money stays UNSPLIT (out.unsplit): no campaign, sport or channel figure is made up for them (user, 10 Nov 2026: show what we
+   actually spend on each campaign in its month).
    sport: how a campaign's money is credited to sports ("rev" = by each sport's 2026 turnover that month and state; null = not a sport). */
 window.BUDGET27 = {
   // channels follow the Pune spend plan (BFS PUNE, 10 Nov 2026): the lines Pune actually buys
@@ -118,7 +119,7 @@ window.SEASON27 = {
 };
 
 /* Q1 allocation for one state (or "West" = all three): lakh by campaign and month, by sport, by channel.
-   Pune = the real spend plan lines; Gujarat and MP = their 2027 month totals split like Pune's real plan that month (estimate). */
+   Pune = the real spend plan lines; Gujarat and MP = their 2027 month totals, not split (out.unsplit). */
 window.BUDGET27.month = function (st, m) { // Q1 month budget in lakh (m: 0 = Jan)
   const PP = window.PUNE_PLAN;
   return st === "Pune" && PP ? PP.totals[m + 2] / 1e5 : window.DATA.spend[st].y27[m];
@@ -126,7 +127,7 @@ window.BUDGET27.month = function (st, m) { // Q1 month budget in lakh (m: 0 = Ja
 window.BUDGET27.alloc = function (st) {
   const B = window.BUDGET27, TO = window.SPORT_TO_2026, SP = window.SPORTS27, PP = window.PUNE_PLAN;
   const states = st === "West" ? ["Pune", "Gujarat", "MP"] : [st];
-  const out = { camp: {}, sport: {}, sportM: {}, campSport: {}, channel: {}, campCh: {}, month: [0, 0, 0], total: 0, est: states.some(s => s !== "Pune") };
+  const out = { camp: {}, sport: {}, sportM: {}, campSport: {}, channel: {}, campCh: {}, month: [0, 0, 0], total: 0, unsplit: [0, 0, 0], split: 0 };
   B.campaigns.forEach(c => { out.camp[c.id] = [0, 0, 0]; out.campSport[c.id] = {}; out.campCh[c.id] = {}; });
   SP.sports.forEach(s => { out.sport[s.id] = 0; out.sportM[s.id] = [0, 0, 0]; });
   B.channels.forEach(([k]) => { out.channel[k] = 0; });
@@ -134,9 +135,11 @@ window.BUDGET27.alloc = function (st) {
   states.forEach(s => [0, 1, 2].forEach(m => {
     const month = B.month(s, m), ls = PP.lines.filter(x => x.m === m + 2), lt = ls.reduce((a, x) => a + x.v, 0);
     out.month[m] += month; out.total += month;
+    if (s !== "Pune") { out.unsplit[m] += month; return; }
+    out.split += month;
     ls.forEach(x => {
       const c = byCamp[x.camp]; if (!c) return;
-      const v = s === "Pune" ? x.v / 1e5 : month * x.v / lt;
+      const v = x.v / 1e5;
       out.camp[c.id][m] += v; out.channel[x.ch] = (out.channel[x.ch] || 0) + v; out.campCh[c.id][x.ch] = (out.campCh[c.id][x.ch] || 0) + v;
       const credit = (id, w) => { out.sport[id] += w; out.sportM[id][m] += w; out.campSport[c.id][id] = (out.campSport[c.id][id] || 0) + w; };
       if (c.sport === "rev") {

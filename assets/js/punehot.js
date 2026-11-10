@@ -16,6 +16,18 @@ window.PUNE_HOT = {
     trav: "Affiliates for Winter & Travel and summer treks: an agency code, our packing list in every booking, a trek kit edit. The Q4 deck's target is 50 agencies for the city, about 10 a store.",
     soc: "Weekend society events (Workshop Mela in 10 apartments in the Q1 plan), society WhatsApp groups, and learn-to-swim in society pools: NIBM's Ganga Dhaam Society Pool is already a partner."
   },
+  // travel agencies as AOPs: who they are, what they have, what we offer, what we get (our exploration, user ask 10 Nov 2026)
+  travel: {
+    kinds: [
+      { h: "Trek and adventure organisers", w: "Weekend Sahyadri treks, night treks, Himalayan departures", have: "Groups every weekend, a fixed gear list sent before every trek, trek leaders people trust" },
+      { h: "Holiday and tour agencies", w: "Family holidays, snow trips to Kashmir, Manali, Sikkim in winter", have: "Customers who have booked and still need jackets, thermals and shoes" },
+      { h: "Corporate offsite organisers", w: "IT teams in Hinjewadi, Kharadi, Magarpatta", have: "Team outings with a budget: T-shirts, bags, team kits (B2B)" },
+      { h: "School and college trip operators", w: "Study tours and camps", have: "Students and parents with a packing list: links to the schools plan" }
+    ],
+    give: ["Their gear list on our page, with a QR to the kit in store or online", "A code for their customers (and a commission or kit credit for the agency)", "A pre-trek briefing or meetup at the store, with a try-on", "Their leaders as ambassadors: kit, content on our city pages"],
+    get: ["Customers at the moment they buy: days before the trip", "Groups, not one-by-one: one agency, many buyers", "Repeat every season: winter, summer, monsoon treks", "Content: real trips in our kit for Winter, Trek & Travel and summer"],
+    ask: "Start with 2 agencies per store in December (Winter, Trek & Travel, 1 to 15 Dec), then 10 per store by the summer: the Q4 deck's target is 50 for the city."
+  },
   stores: [
     { s: "Wakad", areas: ["Wakad", "Hinjewadi", "Baner", "Balewadi", "Pimple Saudagar", "Ravet", "Punawale", "Tathawade"],
       hot: ["Hinjewadi IT Park, Phases 1 to 3: Pune's biggest IT hub", "Balewadi sports complex", "High-rise societies on the Wakad-Hinjewadi road", "Pimpri-Chinchwad: the PCMC pools"],
@@ -82,6 +94,10 @@ window.PUNE_HOT = {
     const renew = all.filter(r => ["pool", "gym"].includes(cat(r[1])) && status(r[3])[0] === "renew").length;
     el.innerHTML = city + `<div class="ph-sum"><div><b>${tp}<small>/50</small></b><span>pools tied up across the 5 stores (target 10 a store by 20 Feb; Wagholi has 3 more signed from 2027)</span></div><div><b>${tg}</b><span>gyms, yoga and fitness tied up</span></div><div><b>${renew}</b><span>pool and gym tie-ups that end in 2026: renew before Movement for All</span></div><div><b>0<small>/50</small></b><span>travel agency affiliates in our files (deck target 50)</span></div></div>
       <div class="ph-grid">${cards}</div>
+      <div class="ph-trav"><h3 class="display-s">Travel agencies<span class="lt">: a new kind of AOP</span></h3>
+        <div class="ph-tk">${H.travel.kinds.map(k => `<div><h4>${esc(k.h)}</h4><p>${esc(k.w)}</p><small>${esc(k.have)}</small></div>`).join("")}</div>
+        <div class="ph-tg"><div><h4>What we give them</h4><ul>${H.travel.give.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div><div><h4>What we get</h4><ul>${H.travel.get.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div></div>
+        <p class="ph-ask">${esc(H.travel.ask)}</p></div>
       <p class="w27-note">Tied up: Pune partnerships sheet (practice place, sport, area, timeline; contacts left out). Status from the timeline as written: "ends in 2026" means the sheet's end date is in 2026. City numbers: public reports and directories (approximate, checked 10 Nov 2026). Catchment areas and hotspots: our reading of each store's surroundings, to confirm with the store teams. Store-level counts of gyms, pools, agencies and societies are not in our files.</p>`;
   };
   if (document.readyState !== "loading") window.renderPuneHot(document.getElementById("puneHot"));
