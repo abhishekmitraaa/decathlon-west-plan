@@ -1361,9 +1361,9 @@ window.HOARDINGS = [
   "size": "20 x 20 ft",
   "dur": "Nov-Dec 2026",
   "cost": 40000,
-  "status": "nov",
+  "status": "live",
   "why": "Above a DMart car park: families doing their weekly shop, already in a planned-purchase mood.",
-  "img": "hpgm/baroda-akota.jpg",
+  "img": "hoard/baroda-akota-live.jpg",
   "lat": 22.2968,
   "lon": 73.1663,
   "exact": false
@@ -1374,12 +1374,12 @@ window.HOARDINGS = [
   "size": "20 x 20 ft",
   "dur": "Nov-Dec 2026",
   "cost": 35000,
-  "status": "nov",
+  "status": "live",
   "why": "One of the city's busiest circles, close to MS University: students and first-job buyers.",
-  "img": "hpgm/baroda-fatehgunj.jpg",
-  "lat": 22.3195,
-  "lon": 73.1855,
-  "exact": false
+  "img": "hoard/baroda-fatehgunj-live.jpg",
+  "lat": 22.318606,
+  "lon": 73.187013,
+  "exact": true
  },
  {
   "city": "Baroda",
@@ -1387,7 +1387,7 @@ window.HOARDINGS = [
   "size": "20 x 20 ft",
   "dur": "Nov-Dec 2026",
   "cost": 50000,
-  "status": "nov",
+  "status": "live",
   "why": "West Vadodara's growing residential belt, with heavy evening traffic towards Natubhai Circle.",
   "img": "hpgm/baroda-gotri.jpg",
   "lat": 22.312,
@@ -1400,12 +1400,12 @@ window.HOARDINGS = [
   "size": "25 x 15 ft",
   "dur": "Nov-Dec 2026",
   "cost": 40000,
-  "status": "nov",
+  "status": "live",
   "why": "Settled residential neighbourhoods with schools and coaching classes around: parents and teenagers.",
-  "img": "hpgm/baroda-subhanpura.jpg",
-  "lat": 22.32,
-  "lon": 73.16,
-  "exact": false
+  "img": "hoard/baroda-subhanpura-live.jpg",
+  "lat": 22.319359,
+  "lon": 73.160338,
+  "exact": true
  },
  {
   "city": "Rajkot",

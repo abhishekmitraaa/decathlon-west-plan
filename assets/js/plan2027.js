@@ -7,7 +7,16 @@
   const SP = window.SPORTS27, TO = window.SPORT_TO_2026;
   // turnover in rupees for a sport id (or "all"), state and month; ch = "in" (in-store, offline), "on" (online) or both
   const tov = (id, st, m, ch) => { const r = TO[id]?.[st]; if (!r) return 0; return ch ? (r[ch][m] || 0) : (r.in[m] || 0) + (r.on[m] || 0); };
-  const STATES = ["Pune", "Gujarat", "MP"], SC = { Pune: "var(--pune)", Gujarat: "var(--guj)", MP: "var(--mp)" };
+  // region: West (all three) or one state. STATES is the live list of states in view (changed in place on a region switch)
+  const ALLST = ["Pune", "Gujarat", "MP"], STATES = [...ALLST], SC = { Pune: "var(--pune)", Gujarat: "var(--guj)", MP: "var(--mp)" };
+  let region = "West";
+  const SPS = () => SP.sports.filter(s => region === "West" || s.where.includes(region));
+  const isPune = () => region === "West" || region === "Pune";
+  // keep a line unless it names only places in the other states (place names from our store cities and plans)
+  const PLACES = { Pune: /Pune|Wakad|Wagholi|NIBM|Amanora|SGS|Sahyadri|Pimpri|Lonavala|Maharashtra|Gudi Padwa/i,
+    Gujarat: /Gujarat|Ahmedabad|Surat|Vadodara|Baroda|Rajkot|Motera|Nexus|Dumas|Adajan|Saputara|Kutch/i, MP: /\bMP\b|Madhya|Indore|Bhopal|Gwalior|Pachmarhi/i };
+  const fit = t => { if (region === "West") return true; const hit = Object.keys(PLACES).filter(k => PLACES[k].test(t)); return !hit.length || hit.includes(region); };
+  const RF = a => a.filter(fit);
   const MONTHS = PL.months, FULL = ["January", "February", "March", "April", "May", "June"];
   const Q = { q1: { months: [0, 1, 2], label: "Q1", long: "Q1: January to March", qs: ["q1"] },
               q2: { months: [3, 4, 5], label: "Q2", long: "Q2: April to June", qs: ["q2"] },
@@ -53,14 +62,15 @@
   function kpis() {
     const ms = Q[view].months;
     const total = STATES.reduce((t, st) => t + ms.reduce((a, m) => a + spend(st, m), 0), 0);
-    const sportBudget = SP.sports.reduce((t, s) => t + nums(s, view).budget, 0);
+    const sportBudget = SPS().reduce((t, s) => t + nums(s, view).budget, 0);
     const aops = STATES.reduce((t, st) => t + ms.reduce((a, m) => a + aopMonth(st, m), 0), 0);
-    const base = SP.sports.reduce((t, s) => t + nums(s, view).base, 0), goal = SP.sports.reduce((t, s) => t + nums(s, view).goal, 0);
+    const base = SPS().reduce((t, s) => t + nums(s, view).base, 0), goal = SPS().reduce((t, s) => t + nums(s, view).goal, 0);
+    const year = STATES.reduce((t, st) => t + D.spend[st].y27.reduce((a, b) => a + b, 0), 0), n = SPS().length;
     $("#y27Kpis").innerHTML = [
-      [L(total), `West ad budget, ${Q[view].label} 2027`],
-      [L(sportBudget), `of it led by the 7 sports (${Math.round(sportBudget / total * 100)}%)`],
+      [L(total), `${region} ad budget, ${Q[view].label} 2027 (all of 2027: ${L(year)})`],
+      [L(sportBudget), `of it led by our ${n} sports (${Math.round(sportBudget / total * 100)}%)`],
       [aops, "AOPs (practice places) planned"],
-      [L(goal), `turnover goal for the 7 sports, in-store + online, +${Math.round((goal / base - 1) * 100)}% on 2026`]
+      [L(goal), `turnover goal for the ${n} sports, in-store + online, +${Math.round((goal / base - 1) * 100)}% on 2026`]
     ].map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join("");
   }
 
@@ -70,11 +80,12 @@
     const grid = $("#y27Grid");
     grid.style.setProperty("--n", n);
     const west = m => STATES.reduce((t, st) => t + spend(st, m), 0), maxW = Math.max(...ms.map(west));
-    let html = `<div class="pl-corner">Bar under each month: West ad budget, ${Q[view].label}</div>`;
+    let html = `<div class="pl-corner">Bar under each month: ${region} ad budget, ${Q[view].label}</div>`;
     html += ms.map(i => `<button type="button" class="pl-month ${qOf(i)}" data-m="${i}" aria-pressed="${i === month}">
         <b>${MONTHS[i]}</b><small>${PD.seasonality[i].toLowerCase().replace(/^./, c => c.toUpperCase())}<br>${PD.weather[i] || "&nbsp;"}</small><i class="pl-spend" style="--w:${west(i) / maxW * 100}%"></i><em class="y27-mm">${L(west(i))}, ${STATES.reduce((t, st) => t + aopMonth(st, i), 0)} AOPs</em></button>`).join("");
     PL.lanes.forEach(lane => {
-      const items = lane.items.filter(it => it.b >= a0 && it.a <= a1);
+      if (/Pune/.test(lane.name) && !isPune()) return;
+      const items = lane.items.filter(it => it.b >= a0 && it.a <= a1 && RF(it.t.split("\n")).length);
       if (!items.length) return;
       const rows = [];
       const chips = items.map(it => {
@@ -83,14 +94,14 @@
         if (r < 0) { rows.push(-1); r = rows.length - 1; }
         rows[r] = b;
         const on = month >= it.a && month <= it.b;
-        return `<span class="pl-chip ${it.k} ${on ? "" : "dim"}" style="grid-column:${a + 1} / ${b + 2};grid-row:${r + 1}">${it.star ? "★ " : ""}${it.t.split("\n").map(esc).join("<br>")}</span>`;
+        return `<span class="pl-chip ${it.k} ${on ? "" : "dim"}" style="grid-column:${a + 1} / ${b + 2};grid-row:${r + 1}">${it.star ? "★ " : ""}${RF(it.t.split("\n")).map(esc).join("<br>")}</span>`;
       }).join("");
       html += `<div class="pl-lane-name">${lane.name}</div><div class="pl-lane">${chips}</div>`;
     });
-    html += `<div class="pl-lane-name">Sport of the month (Pune)</div><div class="pl-sport">${ms.map(i => `<span class="${i === month ? "on" : ""}">${D.puneSportOfMonth[i]}</span>`).join("")}</div>`;
+    if (isPune()) html += `<div class="pl-lane-name">Sport of the month (Pune)</div><div class="pl-sport">${ms.map(i => `<span class="${i === month ? "on" : ""}">${D.puneSportOfMonth[i]}</span>`).join("")}</div>`;
     // Pune plan lane: events and influencers by month (Pune spend plan, BFS PUNE; Jan to Mar 2027 = months 2 to 4 there)
     const PP = window.PUNE_PLAN;
-    if (PP) {
+    if (PP && isPune()) {
       const cell = m => {
         if (m <= 2) return PP.lines.filter(x => x.m === m + 2 && (x.ch === "evt" || x.ch === "inf")).map(x => `${x.t.replace("Influencer campaign: ", "Influencers: ").replace("Partner event: ", "Event: ")}${x.q ? " (" + x.q.replace(" expected", "") + ")" : ""}${x.d ? ", " + x.d : ""}`);
         if (m <= 4) return ["Summer + summer camp: 50 influencers continue (March to May)"];
@@ -99,10 +110,10 @@
       html += `<div class="pl-lane-name y27-lane-name" style="--c:#C2185B"><i></i><span>Pune plan<small>events and influencers</small></span></div><div class="pl-lane y27-lane">${ms.map((m, k) =>
         `<span class="pl-chip y27-chip ${m === month ? "" : "dim"}" style="grid-column:${k + 1};--c:#C2185B">${cell(m).map(esc).join("<br>")}</span>`).join("")}</div>`;
     }
-    html += `<div class="y27-band">Our 7 sports</div>`;
-    SP.sports.forEach(s => {
+    html += `<div class="y27-band">Our ${SPS().length} sports${region === "West" ? "" : ", " + region}</div>`;
+    SPS().forEach(s => {
       html += `<div class="pl-lane-name y27-lane-name" style="--c:${s.color}"><i></i><span>${s.name}<small>${s.where.join(", ")}</small></span></div><div class="pl-lane y27-lane">${ms.map((m, k) =>
-        `<span class="pl-chip y27-chip ${m === month ? "" : "dim"}" style="grid-column:${k + 1};--c:${s.color}">${s.months[m].map(esc).join("<br>")}</span>`).join("")}</div>`;
+        `<span class="pl-chip y27-chip ${m === month ? "" : "dim"}" style="grid-column:${k + 1};--c:${s.color}">${RF(s.months[m]).map(esc).join("<br>")}</span>`).join("")}</div>`;
     });
     grid.innerHTML = html;
     $$(".pl-month", grid).forEach(b => b.addEventListener("click", () => { month = +b.dataset.m; calendar(); monthPanel(); }));
@@ -116,8 +127,8 @@
     $("#y27Month").innerHTML = `<div class="y27-mhead"><h3 class="display-s">${FULL[m]} 2027<span class="lt">: ${esc(st.title)}</span></h3>
         <div class="y27-mnav"><button type="button" data-d="-1" aria-label="Previous month">‹</button><button type="button" data-d="1" aria-label="Next month">›</button></div></div>
       <div class="y27-mnums"><div><h4>Ad budget</h4><div class="y27-pills">${budget}</div></div><div><h4>AOPs</h4><div class="y27-pills">${aops}</div></div></div>
-      <ul class="y27-mmoves">${st.moves.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
-      <div class="y27-msports">${SP.sports.map(s => `<div style="--c:${s.color}"><b>${s.name}</b>${s.months[m].map(esc).join("<br>")}</div>`).join("")}</div>`;
+      <ul class="y27-mmoves">${RF(st.moves).map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+      <div class="y27-msports">${SPS().map(s => `<div style="--c:${s.color}"><b>${s.name}</b>${RF(s.months[m]).map(esc).join("<br>")}</div>`).join("")}</div>`;
     $$(".y27-mnav button").forEach(b => b.addEventListener("click", () => {
       const ms = Q[view].months, k = ms.indexOf(month);
       month = ms[(k + +b.dataset.d + ms.length) % ms.length]; calendar(); monthPanel();
@@ -127,7 +138,7 @@
 
   /* ---------- sports at a glance and the sport cards ---------- */
   function sports() {
-    const rows = SP.sports.map(s => ({ s, n: nums(s, view) }));
+    const rows = SPS().map(s => ({ s, n: nums(s, view) }));
     const maxGoal = Math.max(...rows.map(r => r.n.goal));
     const tot = rows.reduce((t, { n }) => ({ base: t.base + n.base, online: t.online + n.online, share: t.share + n.share, goal: t.goal + n.goal, budget: t.budget + n.budget, aops: t.aops + n.aops }), { base: 0, online: 0, share: 0, goal: 0, budget: 0, aops: 0 });
     $("#y27Glance").innerHTML = `<table class="y27-table"><thead><tr><th>Sport</th><th>Where</th><th>Turnover, ${Q[view].label} 2026 (in-store + online), and the 2027 goal</th><th>Share of all turnover</th><th>In-store / online</th><th>Growth</th><th>Budget</th><th>AOPs</th></tr></thead><tbody>
@@ -135,7 +146,7 @@
         <td><div class="y27-bar"><i style="--w:${n.base / maxGoal * 100}%;--c:${s.color}"></i><i class="g" style="--w:${n.goal / maxGoal * 100}%;--c:${s.color}"></i></div><span class="y27-bv">${L(n.base)} → <b>${L(n.goal)}</b></span></td>
         <td><b>${(n.share * 100).toFixed(1)}%</b></td><td><span class="y27-bv">${L(n.offline)} / ${L(n.online)}<br>${Math.round(n.offline / n.base * 100)}% / ${Math.round(n.online / n.base * 100)}%</span></td>
         <td><b>+${Math.round(n.growth * 100)}%</b></td><td>${L(n.budget)}</td><td>${n.aops}</td></tr>`).join("")}
-      <tr class="tot"><td><b>7 sports</b></td><td></td><td><span class="y27-bv">${L(tot.base)} → <b>${L(tot.goal)}</b></span></td><td><b>${(tot.share * 100).toFixed(1)}%</b></td><td><span class="y27-bv">${L(tot.base - tot.online)} / ${L(tot.online)}</span></td><td><b>+${Math.round((tot.goal / tot.base - 1) * 100)}%</b></td><td><b>${L(tot.budget)}</b></td><td><b>${tot.aops}</b></td></tr>
+      <tr class="tot"><td><b>${rows.length} sports</b></td><td></td><td><span class="y27-bv">${L(tot.base)} → <b>${L(tot.goal)}</b></span></td><td><b>${(tot.share * 100).toFixed(1)}%</b></td><td><span class="y27-bv">${L(tot.base - tot.online)} / ${L(tot.online)}</span></td><td><b>+${Math.round((tot.goal / tot.base - 1) * 100)}%</b></td><td><b>${L(tot.budget)}</b></td><td><b>${tot.aops}</b></td></tr>
       </tbody></table><p class="y27-key"><i class="a"></i>2026, same months <i class="b"></i>2027 goal. Share: of all West turnover in those months (every sport). In-store is offline, online is out of store.</p>`;
 
     $("#y27Cards").innerHTML = rows.map(({ s, n }) => {
@@ -143,7 +154,7 @@
       const series = Array.from({ length: 10 }, (_, i) => ({ v: STATES.reduce((t, st) => t + tov(s.id, st, i), 0), o: STATES.reduce((t, st) => t + tov(s.id, st, i, "on"), 0) }));
       const maxM = Math.max(...series.map(x => x.v));
       const spark = `<div class="y27-spark" aria-label="Turnover by month, January to October 2026, in-store and online">${series.map((x, i) => `<span class="${Q[view].months.includes(i) ? "on" : ""}" style="--h:${x.v / maxM * 100}%;--c:${s.color};--o:${x.o / x.v * 100}%" title="${MONTHS[i]} 2026: ${L(rupeesL(x.v))} (in-store ${L(rupeesL(x.v - x.o))}, online ${L(rupeesL(x.o))})"><em>${MONTHS[i][0]}</em></span>`).join("")}</div>`;
-      const moves = Q[view].qs.map(q => `<div><h4>${q.toUpperCase()}: what we do</h4><ul>${s.moves[q].map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
+      const moves = Q[view].qs.map(q => `<div><h4>${q.toUpperCase()}: what we do</h4><ul>${RF(s.moves[q]).map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
       const perState = STATES.filter(st => Q[view].qs.some(q => s.aop[q][st] || sb(s, q, st))).map(st => {
         const b = Q[view].qs.reduce((t, q) => t + sb(s, q, st), 0), a = Q[view].qs.reduce((t, q) => t + (s.aop[q][st] || 0), 0);
         return `<span style="--c:${SC[st]}"><b>${st}</b>${L(b)}, ${a} AOPs</span>`;
@@ -165,22 +176,22 @@
     const ms = Q[view].months;
     $("#y27Goals").innerHTML = Q[view].qs.map(q => q === "q1"
       ? `<div class="y27-goal"><h4>Q1 goals (Q1 2027 plan)</h4><div><span><b>12.1%</b>turnover growth</span><span><b>₹8.3 Cr</b>incremental turnover</span><span><b>3.7 L</b>bills, +10%</span><span><b>33%</b>conversion</span></div><p>Traffic: customers +10%. Retention: returning customers +15%. Conversion: bills +10%.</p></div>`
-      : `<div class="y27-goal q2"><h4>Q2 goals</h4><p>The Q2 turnover, bills and conversion targets are not in our files yet. The sport goals below add up to <b>${L(SP.sports.reduce((t, s) => t + nums(s, "q2").goal, 0))}</b> of turnover (in-store + online) for the 7 sports.</p></div>`).join("");
+      : `<div class="y27-goal q2"><h4>Q2 goals</h4><p>The Q2 turnover, bills and conversion targets are not in our files yet. The sport goals below add up to <b>${L(SPS().reduce((t, s) => t + nums(s, "q2").goal, 0))}</b> of turnover (in-store + online) for the 7 sports.</p></div>`).join("");
     $("#y27Strat").innerHTML = ms.map(m => {
       const st = SP.months[m];
       const budget = STATES.reduce((t, s) => t + spend(s, m), 0), aops = STATES.reduce((t, s) => t + aopMonth(s, m), 0);
       return `<article class="y27-scol"><span class="oct-when">${FULL[m]}</span><h3>${esc(st.title)}</h3>
-        <div class="y27-snums"><span><b>${L(budget)}</b>ad budget</span><span><b>${aops}</b>AOPs</span><span><b>${esc(D.puneSportOfMonth[m])}</b>Pune sport of the month</span></div>
-        <ul>${st.moves.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
-        <div class="y27-ssports">${SP.sports.map(s => `<p style="--c:${s.color}"><b>${s.name}</b>${s.months[m].map(esc).join("; ")}</p>`).join("")}</div></article>`;
+        <div class="y27-snums"><span><b>${L(budget)}</b>ad budget, ${region}</span><span><b>${aops}</b>AOPs</span>${isPune() ? `<span><b>${esc(D.puneSportOfMonth[m])}</b>Pune sport of the month</span>` : ""}</div>
+        <ul>${RF(st.moves).map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+        <div class="y27-ssports">${SPS().map(s => `<p style="--c:${s.color}"><b>${s.name}</b>${RF(s.months[m]).map(esc).join("; ")}</p>`).join("")}</div></article>`;
     }).join("");
   }
 
   /* ---------- the 7 sports: turnover and share of turnover, month by month (2026, in-store + online) ---------- */
-  let tosSt = "West", tosCh = "";
-  const ORDER = ["mountain", "fitness", "running", "swimming", "cycling", "cricket", "pickleball"];
+  let tosCh = "";
+  const ORD0 = ["mountain", "fitness", "running", "swimming", "cycling", "cricket", "pickleball"];
   const ALLM = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const sts = () => tosSt === "West" ? STATES : [tosSt];
+  const sts = () => STATES;
   const tm = (id, m) => sts().reduce((t, st) => t + tov(id, st, m, tosCh || undefined), 0);
   const cr = r => r >= 1e7 ? `₹${(r / 1e7).toFixed(2)} Cr` : `₹${(r / 1e5).toFixed(1)} L`;
   function lineRow(label, vals, fmt, cls, peakNote) {
@@ -191,21 +202,21 @@
       ${vals.map((v, i) => v == null ? "" : `<span class="tos-pt ${i === pk ? "pk" : ""} ${Q[view].months.includes(i) ? "inq" : ""}" style="left:${(i + 0.5) / 12 * 100}%;top:${y(v)}%"><i></i><b>${fmt(v)}</b>${i === pk && peakNote ? `<em>${peakNote}</em>` : ""}</span>`).join("")}</div>`;
   }
   function toShare() {
-    const ms = [...Array(12).keys()], SPI = Object.fromEntries(SP.sports.map(s => [s.id, s]));
+    const ORDER = ORD0.filter(id => SPS().some(s => s.id === id));
+    const ms = [...Array(12).keys()], SPI = Object.fromEntries(SPS().map(s => [s.id, s]));
     const tot = ms.map(m => m < 11 ? tm("all", m) : null);
     const val = ms.map(m => m < 11 ? Object.fromEntries(ORDER.map(id => [id, tm(id, m)])) : null);
     const spendM = ms.map(m => sts().reduce((t, st) => t + (D.spend[st].y27[m] || 0), 0));
     const chName = tosCh === "in" ? "in-store (offline)" : tosCh === "on" ? "online" : "in-store + online";
-    let h = `<div class="tos-head"><h3 class="display-s">What the 7 sports sell<span class="lt">, month by month</span></h3>
-      <div class="tos-ctl"><div class="seg" role="group" aria-label="State">${["West", ...STATES].map(s => `<button type="button" data-ts="${s}" aria-pressed="${s === tosSt}">${s}</button>`).join("")}</div>
-      <div class="seg" role="group" aria-label="Channel">${[["", "In-store + online"], ["in", "In-store (offline)"], ["on", "Online"]].map(([k, n]) => `<button type="button" data-tc="${k}" aria-pressed="${k === tosCh}">${n}</button>`).join("")}</div></div></div>
-      <p class="tos-lede">2026 turnover, ${chName}, ${tosSt === "West" ? "all West stores" : tosSt}. Each column is one month; the colours are each sport's share of everything we sold that month, the grey is all other sports. Months of ${Q[view].label} are highlighted. 2027 follows this rhythm; 2027 targets by sport are not in our files.</p>
+    let h = `<div class="tos-head"><h3 class="display-s">What our ${SPS().length} sports sell<span class="lt">, month by month</span></h3>
+      <div class="tos-ctl"><div class="seg" role="group" aria-label="Channel">${[["", "In-store + online"], ["in", "In-store (offline)"], ["on", "Online"]].map(([k, n]) => `<button type="button" data-tc="${k}" aria-pressed="${k === tosCh}">${n}</button>`).join("")}</div></div></div>
+      <p class="tos-lede">2026 turnover, ${chName}, ${region === "West" ? "all West stores" : region}. Each column is one month; the colours are each sport's share of everything we sold that month, the grey is all other sports. Months of ${Q[view].label} are highlighted. 2027 follows this rhythm; 2027 targets by sport are not in our files.</p>
       <div class="tos-key">${ORDER.map(id => `<span><i style="--c:${SPI[id].color}"></i>${SPI[id].name}</span>`).join("")}<span><i style="--c:#C9CDD9"></i>Other sports</span></div>
       <div class="tos-scroll"><div class="tos-grid">
       <div class="tos-lab"></div>${ALLM.map((m, i) => `<div class="tos-mh ${Q[view].months.includes(i) ? "inq" : ""}">${m}${i === 10 ? "<small>to 8 Nov</small>" : ""}</div>`).join("")}`;
     h += lineRow(`Turnover, all sports<small>2026, ${chName}</small>`, tot, cr, "to", "Money time");
     h += lineRow(`Ad budget<small>2027 plan</small>`, spendM, v => L(v), "ad");
-    h += `<div class="tos-lab">Share of turnover<small>7 sports + other</small></div>${ms.map(m => {
+    h += `<div class="tos-lab">Share of turnover<small>${ORDER.length} sports + other</small></div>${ms.map(m => {
       if (m > 10) return `<div class="tos-col na"><span>No 2026 data yet</span></div>`;
       const t = tot[m], seven = ORDER.reduce((a, id) => a + val[m][id], 0);
       const segs = ORDER.map(id => ({ id, v: val[m][id], c: SPI[id].color, n: SPI[id].name, ink: SPI[id].ink })).concat([{ id: "oth", v: t - seven, c: "#C9CDD9", n: "Other sports", ink: "var(--ink)" }]);
@@ -213,11 +224,10 @@
         return `<span style="height:${p}%;--c:${x.c};--tx:${x.ink}" title="${ALLM[m]} 2026, ${x.n}: ${cr(x.v)}, ${p.toFixed(1)}% of turnover">${p >= 5 ? Math.round(p) + "%" : ""}</span>`; }).join("")}</div></div>`;
     }).join("")}`;
     h += ORDER.map(id => `<div class="tos-lab tos-sp"><i style="--c:${SPI[id].color}"></i>${SPI[id].name}</div>${ms.map(m => m > 10 ? `<div class="tos-c na">-</div>` : `<div class="tos-c ${Q[view].months.includes(m) ? "inq" : ""}">${cr(val[m][id])}<small>${(val[m][id] / tot[m] * 100).toFixed(1)}%</small></div>`).join("")}`).join("");
-    h += `<div class="tos-lab tos-sp tot"><b>7 sports</b></div>${ms.map(m => { if (m > 10) return `<div class="tos-c na tot">-</div>`; const s7 = ORDER.reduce((a, id) => a + val[m][id], 0); return `<div class="tos-c tot ${Q[view].months.includes(m) ? "inq" : ""}"><b>${cr(s7)}</b><small>${(s7 / tot[m] * 100).toFixed(1)}%</small></div>`; }).join("")}`;
+    h += `<div class="tos-lab tos-sp tot"><b>${ORDER.length} sports</b></div>${ms.map(m => { if (m > 10) return `<div class="tos-c na tot">-</div>`; const s7 = ORDER.reduce((a, id) => a + val[m][id], 0); return `<div class="tos-c tot ${Q[view].months.includes(m) ? "inq" : ""}"><b>${cr(s7)}</b><small>${(s7 / tot[m] * 100).toFixed(1)}%</small></div>`; }).join("")}`;
     h += `<div class="tos-lab tos-sp"><b>All sports</b></div>${ms.map(m => `<div class="tos-c ${m > 10 ? "na" : ""}">${m > 10 ? "-" : `<b>${cr(tot[m])}</b>`}</div>`).join("")}`;
     h += `</div></div><p class="tos-note">Source: Tableau sport-wise YTD 2026 (1 Jan to 8 Nov 2026). In-store is what we sell in the store (offline); online is everything out of store: decathlon.in, marketplaces, B2B, quick commerce. Mountain is hiking, trekking and climbing and camping; fitness is outfit and equipment; cycling is sport bikes, commuting and repairs (kids' bikes and skates are in "other"); pickleball is the padel, pickleball and beach tennis line. Ad budget: 2027 plan by month (lakh), drawn as its own line, not on the turnover scale.</p>`;
     $("#y27Tos").innerHTML = h;
-    $$("#y27Tos [data-ts]").forEach(b => b.addEventListener("click", () => { tosSt = b.dataset.ts; toShare(); }));
     $$("#y27Tos [data-tc]").forEach(b => b.addEventListener("click", () => { tosCh = b.dataset.tc; toShare(); }));
   }
 
@@ -228,11 +238,23 @@
     $("#y27StratTitle").innerHTML = `Strategies<span class="lt">, ${lab} month by month</span>`;
     $("#y27Strat").style.setProperty("--n", Q[view].months.length);
     $$("#y27Seg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.q === view));
+    $$("#y27Reg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.r === region));
+    document.body.dataset.region = region;
+    $("#y27Key").innerHTML = SPS().map(s => `<a href="#sport-${s.id}" style="--c:${s.color}">${s.name}</a>`).join("");
     kpis(); calendar(); monthPanel(); toShare(); sports(); strategies();
     window.Y27VIEW = view; document.dispatchEvent(new CustomEvent("y27view", { detail: view }));
   }
+  function setRegion(r) {
+    region = r; STATES.splice(0, STATES.length, ...(r === "West" ? ALLST : [r]));
+    window.Y27REGION = r; render();
+    document.dispatchEvent(new CustomEvent("y27region", { detail: r }));
+  }
+  $$("#y27Reg button").forEach(b => b.addEventListener("click", () => {
+    setRegion(b.dataset.r);
+    try { history.replaceState(null, "", "#" + b.dataset.r.toLowerCase()); } catch (e) {}
+  }));
 
-  $("#y27Key").innerHTML = SP.sports.map(s => `<a href="#sport-${s.id}" style="--c:${s.color}">${s.name}</a>`).join("");
+  $("#y27Key").innerHTML = SPS().map(s => `<a href="#sport-${s.id}" style="--c:${s.color}">${s.name}</a>`).join("");
   $$("#y27Seg button").forEach(b => b.addEventListener("click", () => {
     view = b.dataset.q;
     if (!Q[view].months.includes(month)) month = Q[view].months[0];
@@ -240,5 +262,7 @@
   }));
   const fromHash = (location.hash.match(/^#(q1|q2|h1)$/) || [])[1];
   if (fromHash) { view = fromHash; month = Q[view].months[0]; }
+  const regHash = { "#pune": "Pune", "#west": "West", "#mp": "MP", "#gujarat": "Gujarat" }[location.hash.toLowerCase()];
   render();
+  if (regHash && regHash !== "West") setRegion(regHash);
 })();

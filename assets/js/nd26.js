@@ -94,6 +94,94 @@
     }).join("")}</tbody></table>`;
   }
 
+  /* ---------- the four campaigns (frames): money from the Pune plan by campaign, goals from the SD piloting sheet ---------- */
+  const PP = window.PUNE_PLAN, G = window.NOV_GOALS || [], T = window.SPORT_TO_2026;
+  const Lk = r => { const l = r / 1e5; return r < 1e5 ? `₹${Math.round(r / 1000)}K` : `₹${l.toFixed(2)} L`; };
+  const camp = (c, ms = [0, 1]) => PP.lines.filter(x => ms.includes(x.m) && c.includes(x.camp));
+  const sum = ls => ls.reduce((a, x) => a + x.v, 0);
+  const PT = PP.totals[0] + PP.totals[1];
+  const gsum = i => G.reduce((a, g) => a + (g[i] || 0), 0), Q4 = gsum(2);
+  const cr = n => "₹" + n.toFixed(2) + " Cr", pc = (a, b) => (a >= b ? "+" : "") + Math.round((a / b - 1) * 100) + "%";
+  const FR = [
+    { id: "diwali", sec: "diwali", n: "Diwali: Gift a Sport", d: "6 to 11 Nov", c: [], col: "#FFC21A",
+      what: "Gift a Sport, no sale. In-store comms in Bhopal, Motera and Surat; Diwali reels on all 8 city pages; content recycled across the cluster.",
+      inf: "Pune: none in the plan. Gujarat 13 (₹1.3 L), Indore 4 on barter, Bhopal 4, Gwalior 2 (gift cards)", west: "Gujarat influencers ₹1.3 L",
+      brings: "No sale and no turnover goal: a brand moment. About 1.9 lakh views on the 10 creator reels by 5 Nov." },
+    { id: "bf", sec: "blackfriday", n: "Black Friday", d: "27 to 30 Nov", c: ["Black Friday"], col: "#111", goal: [4, 5],
+      what: "A four-day sale. Coupon cards from 17 Nov, in-store and in-mall live on 23 Nov, a countdown on social, creators from 21 Nov.",
+      inf: "Pune 40 (₹4 L); Gujarat 67+ (₹7.4 L); MP 40 (₹2.02 L)", west: "Gujarat ₹7.4 L and MP ₹2.02 L of influencers" },
+    { id: "winter", sec: "winter", n: "Winter, Trek & Travel", d: "All of Nov and Dec", c: ["Winter & Travel"], col: "#2E7D32",
+      what: "The season under both sales: 7 Pune hoardings for two months, trek and travel reels, creators in December, the MH500 backpack and a winter wall in store.",
+      inf: "Pune 10 (₹1 L) + 7 on barter (₹50,000, outside the total)", west: "Not planned separately for Gujarat and MP" },
+    { id: "xmas", sec: "december", n: "Christmas: gifting and the sale", d: "Gifting 1 to 25 Dec; sale 19 to 31 Dec", c: ["Christmas sale"], col: "#C8102E", goal: [6, 7],
+      what: "The Diwali gifting videos continue as Christmas gifting; the Christmas Sale from 19 Dec with in-store live, a countdown and boosts.",
+      inf: "Pune 35 (₹3.5 L), 19 to 23 Dec", west: "Gujarat and MP Christmas budgets not in our files yet" }
+  ];
+  FR.forEach(f => { f.ls = camp(f.c); f.v = sum(f.ls); });
+  const ALW = { n: "Always on: AOPs and Kiprun events", ls: camp(["AOPs", "Kiprun"]), what: "22 AOPs in November and 27 in December across the 5 stores; a Kiprun event each month (₹20,000)." };
+  ALW.v = sum(ALW.ls);
+  const goalTxt = f => f.goal ? `${cr(gsum(f.goal[1]))}, ${pc(gsum(f.goal[1]), gsum(f.goal[0]))} on 2025` : "";
+  const mtn = m => ["Pune", "Gujarat", "MP"].reduce((a, s) => a + T.mountain[s].in[m] + T.mountain[s].on[m], 0), allT = m => ["Pune", "Gujarat", "MP"].reduce((a, s) => a + T.all[s].in[m] + T.all[s].on[m], 0);
+  FR[2].brings = T ? `No goal of its own. Its sport, mountain (hiking, trekking, camping), sold ${cr(mtn(9) / 1e7)} in October 2026, ${(mtn(9) / allT(9) * 100).toFixed(1)}% of West turnover, and ${(mtn(10) / allT(10) * 100).toFixed(1)}% in 1 to 8 November.` : "No goal of its own.";
+  FR[1].brings = `Turnover goal ${goalTxt(FR[1])}: ${(gsum(5) / Q4 * 100).toFixed(1)}% of the ${cr(Q4)} Q4 store challenge in 4 days.`;
+  FR[3].brings = `Turnover goal ${goalTxt(FR[3])}: ${(gsum(7) / Q4 * 100).toFixed(1)}% of the Q4 store challenge.`;
+  const share = v => v ? `${Math.round(v / PT * 100)}% of Pune's Nov + Dec` : "Not in the Pune plan";
+
+  function frames() {
+    const ov = $("#ndFrames");
+    if (ov) ov.innerHTML = FR.map((f, i) => `<a class="fr-card" href="#${f.sec}" style="--c:${f.col}"><em>${i + 1}</em><b>${esc(f.n)}</b><span>${esc(f.d)}</span><strong>${f.v ? Lk(f.v) : "₹1.30 L"}<small>${f.v ? share(f.v) : "Gujarat influencers"}</small></strong></a>`).join("") +
+      `<a class="fr-card alw" href="#aops"><em>+</em><b>Always on</b><span>AOPs and Kiprun events</span><strong>${Lk(ALW.v)}<small>${share(ALW.v)}</small></strong></a>`;
+    $$(".fr-tag").forEach(el => {
+      const i = FR.findIndex(f => f.id === el.dataset.fr), f = FR[i]; if (!f) return;
+      el.innerHTML = `<em>${i + 1} of 4</em><b>${esc(f.n)}</b><span>${esc(f.d)}</span><span>Pune <b>${f.v ? Lk(f.v) : "₹0"}</b>${f.v ? ", " + share(f.v) : ", not in the Pune plan"}</span>${f.goal ? `<span>Goal <b>${cr(gsum(f.goal[1]))}</b></span>` : ""}`;
+    });
+    const lines = (el, f, title) => { if (!el) return;
+      el.innerHTML = `<h3>${title}</h3><ul class="fr-ls">${f.ls.map(x => `<li><div><b>${esc(x.t)}</b><small>${PP.months[x.m]}${x.q ? ", " + esc(x.q) : ""}${x.d ? ", " + esc(x.d) : ""}</small>${x.n ? `<em>${esc(x.n)}</em>` : ""}</div><span>${inr(x.v)}</span></li>`).join("")}</ul>
+        <div class="fr-tot"><span>Pune total</span><b>${inr(f.v)}</b><small>${share(f.v)} (${Lk(PT)})</small></div><p class="fr-brings"><b>What it brings</b>${esc(f.brings)}</p>`; };
+    lines($("#ndBfPune"), FR[1], "Pune's Black Friday, line by line");
+    lines($("#ndWinterLines"), FR[2], "Pune's Winter, Trek &amp; Travel, line by line");
+    lines($("#ndXmasLines"), FR[3], "Pune's Christmas, line by line");
+    if ($("#ndWinterTo")) $("#ndWinterTo").textContent = FR[2].brings;
+    if ($("#ndXmasGoal")) $("#ndXmasGoal").innerHTML = `<b>${cr(gsum(7))}</b><span>Christmas sale turnover goal (West), ${pc(gsum(7), gsum(6))} on 2025</span>`;
+  }
+
+  /* ---------- hoardings: Pune not updated yet; Baroda up (photos 10 Nov 2026) ---------- */
+  function hoardings() {
+    const el = $("#ndHoard"); if (!el) return;
+    const H = window.HOARDINGS || [], pu = H.filter(h => h.city === "Pune"), ba = H.filter(h => h.city === "Baroda");
+    const pt = pu.reduce((a, h) => a + h.cost, 0), bt = ba.reduce((a, h) => a + h.cost, 0);
+    const shots = [["baroda-subhanpura-live", "Subhanpura, 10 Nov: Kiprun Kipride, “Visit Decathlon Vadodara, just 10 mins away”"], ["baroda-fatehgunj-live", "Fatehgunj, 10 Nov: the Kiprun board in a row of eight"], ["baroda-akota-live", "Akota, over the DMart car park: “just 15 mins away”"]];
+    el.innerHTML = `<div class="nd-hu-grid">
+      <article class="nd-hu-c wait"><header><span class="st">Not updated yet</span><h4>Pune: ${pu.length} boards</h4><b>${Lk(pt)} a month</b></header>
+        <figure><img src="assets/img/hpgm/pune-wagholi.jpg" alt="Pune hoarding at Wagholi still showing the festive cycle creative, 10 October" loading="lazy"><figcaption>Wagholi, 10 Oct: still the festive “Your Festive Upgrade” cycle creative. The latest photo we have.</figcaption></figure>
+        <ul>${pu.map(h => `<li><span>${esc(h.loc)}</span><small>${esc(h.size)}</small><b>${Lk(h.cost)}</b></li>`).join("")}</ul></article>
+      <article class="nd-hu-c up"><header><span class="st">Up</span><h4>Baroda: ${ba.length} boards</h4><b>${Lk(bt)} a month</b></header>
+        <div class="nd-hu-pics">${shots.map(([f, c]) => `<figure><img src="assets/img/hoard/${f}.jpg" alt="Baroda hoarding: ${esc(c)}" loading="lazy"><figcaption>${esc(c)}</figcaption></figure>`).join("")}</div>
+        <ul>${ba.map(h => `<li><span>${esc(h.loc)}</span><small>${esc(h.size)}</small><b>${Lk(h.cost)}</b></li>`).join("")}</ul></article>
+      <article class="nd-hu-c learn"><h4>What Pune can take from Baroda</h4><ol>
+        <li><b>Up on day one, with proof.</b> Baroda's boards were photographed live on 10 Nov, GPS-stamped. Pune pays ${Lk(pt)} a month whether the new creative is up or not: ask the vendor for the same dated photos.</li>
+        <li><b>One product, one line, on every board.</b> Kiprun Kipride on all of them, and the line that does the work: “Visit Decathlon Vadodara, just 10 mins away”. Pune's Winter &amp; Travel boards should name the nearest store and the minutes to it.</li>
+        <li><b>Smaller boards where people already shop.</b> ${Lk(Math.round(bt / ba.length))} a board in Baroda (20 x 20 ft, over a DMart car park, on a university circle) against ${Lk(Math.round(pt / pu.length))} in Pune (30 x 20 to 45 x 30 ft on the main roads). Worth testing one smaller board near a Pune DMart or society gate.</li>
+        <li><b>Stand out in a crowd.</b> At Fatehgunj ours is one of eight boards: a single shoe on a dark background is the one you notice.</li></ol></article></div>`;
+  }
+
+  /* ---------- summary, November and December ---------- */
+  function summary() {
+    const el = $("#ndSummary"); if (!el) return;
+    const rows = [...FR, ALW];
+    const bar = rows.filter(r => r.v).map(r => `<span style="flex:${r.v};--c:${r.col || "#9AA2C8"}" title="${esc(r.n)}: ${inr(r.v)}"><b>${esc(r.n.split(":")[0])}</b><em>${Lk(r.v)}, ${Math.round(r.v / PT * 100)}%</em></span>`).join("");
+    el.innerHTML = `<div class="nd-sum-top"><div><b>${Lk(PT)}</b><span>Pune, November (${Lk(PP.totals[0])}) and December (${Lk(PP.totals[1])})</span></div>
+        <div><b>${cr(gsum(5) + gsum(7))}</b><span>sale goals, West: Black Friday ${cr(gsum(5))} + Christmas ${cr(gsum(7))}</span></div>
+        <div><b>${40 + 10 + 35}</b><span>Pune influencers in the plan (+7 on barter)</span></div>
+        <div><b>${22 + 27}</b><span>Pune AOPs, 22 in Nov and 27 in Dec</span></div></div>
+      <div class="nd-sum-bar">${bar}</div>
+      <div class="sb-wrap"><table class="y27-table nd-sum-t"><thead><tr><th>Campaign</th><th>When</th><th>What we do</th><th>Pune budget</th><th>Share</th><th>Influencers</th><th>Gujarat and MP</th><th>What it brings</th></tr></thead><tbody>
+      ${rows.map((r, i) => `<tr><td><b class="y27-dot" style="--c:${r.col || "#9AA2C8"}">${esc(r.n)}</b></td><td>${esc(r.d || "Nov and Dec")}</td><td>${esc(r.what)}</td><td class="n"><b>${r.v ? inr(r.v) : "-"}</b></td><td class="n">${r.v ? Math.round(r.v / PT * 100) + "%" : "-"}</td><td>${esc(r.inf || "-")}</td><td>${esc(r.west || "-")}</td><td>${esc(r.brings || "Practice places and running events that bring players back to the store.")}</td></tr>`).join("")}
+      <tr class="tot"><td><b>Pune, Nov + Dec</b></td><td></td><td></td><td class="n"><b>${inr(PT)}</b></td><td class="n">100%</td><td>85 + 7 on barter</td><td></td><td><b>${cr(gsum(5) + gsum(7))}</b> of sale goals (West)</td></tr></tbody></table></div>
+      <p class="w27-note">Pune money: the Pune spend plan (BFS PUNE), every line counted once under its campaign; the lines add exactly to ${inr(PT)}. Lines the sheet lists outside the month totals (Black Friday countdown ₹40,000, Winter barter ₹50,000, recycle boosts ₹10,000) are not counted. Goals: the SD piloting sheet (Black Friday 27 to 30 Nov, Christmas 18 to 25 Dec). Gujarat and MP: the influencer budgets shared on 5 to 9 Nov.</p>`;
+  }
+
+  frames(); hoardings(); summary();
   runway(); weekPanel(); aops();
   window.renderPunePlan?.($("#ndPune"), [0, 1]);
   window.renderPuneAops?.($("#ndPuneAops"), [0, 1]);

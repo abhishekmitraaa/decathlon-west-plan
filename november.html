@@ -9,34 +9,38 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=20261110c">
+<link rel="stylesheet" href="assets/css/site.css?v=20261110d">
 </head>
 <body class="nov-page">
 
 <header class="topbar solid" id="topbar">
   <a class="wordmark" href="index.html" aria-label="Back to the West plan">DECATHLON <span>West</span></a>
-  <nav class="nav" aria-label="November update sections">
+  <nav class="pg-tabs" aria-label="Pages">
+    <a href="index.html"><span class="l">West plan</span><span class="s">Plan</span></a>
+    <a href="november.html" aria-current="page"><span class="l">Nov &amp; Dec 2026</span><span class="s">Nov-Dec</span></a>
+    <a href="plan2027.html"><span class="l">2027 plan</span><span class="s">2027</span></a>
+    <a href="water2027.html"><span class="l">Water 2027</span><span class="s">Water</span></a>
+  </nav>
+  <nav class="nav" aria-label="November and December sections">
     <a href="#diwali">Diwali</a>
-    <a href="#social">Social media</a>
-    <a href="#influencers">Influencers</a>
-    <a href="#instore">In-store comms</a>
     <a href="#blackfriday">Black Friday</a>
-    <a href="#december">December</a>
+    <a href="#winter">Winter, Trek &amp; Travel</a>
+    <a href="#december">Christmas</a>
     <a href="#runway">Pune runway</a>
-    <a href="#pune">Pune plan</a>
+    <a href="#pune">Pune money</a>
     <a href="#aops">AOPs</a>
     <a href="#marketing">Our marketing</a>
     <a href="#budget">Budget and goals</a>
+    <a href="#summary">Summary</a>
   </nav>
-  <a class="present-btn nov-back" href="index.html">Back to the plan</a>
 </header>
 
 <section class="sec sec-blue nov-hero" id="top">
   <div class="wrap">
     <span class="oct-when nov-when">Update, 10 November 2026</span>
     <h1 class="display">November and December<span class="lt"> 2026</span></h1>
-    <p class="sec-lede">Diwali week and Black Friday (27 to 30 November), then Winter &amp; Travel, the Christmas gifting videos and the Christmas Sale (19 to 31 December). Pune's runway week by week, the AOPs for both months, Pune's money line by line, and how we do marketing.</p>
-    <div class="nov-jump" id="novJump"></div>
+    <p class="sec-lede">Two months, four campaigns. Each one below has what we do, the money and what it brings in; the summary at the end puts them side by side.</p>
+    <div class="fr-over" id="ndFrames"></div>
   </div>
 </section>
 
@@ -47,6 +51,7 @@
       <div class="dw-lanterns"><i style="--x:4%;--h:120px;--d:0s"></i><i style="--x:10%;--h:70px;--d:.6s"></i><i style="--x:16%;--h:150px;--d:1.2s"></i><i style="--x:84%;--h:140px;--d:.3s"></i><i style="--x:90%;--h:80px;--d:.9s"></i><i style="--x:96%;--h:160px;--d:1.5s"></i></div>
     </div>
   <div class="wrap">
+    <div class="fr-tag" data-fr="diwali"></div>
     <header class="sec-head dw-head"><img class="dw-logo" src="assets/img/nov/decathlon-wordmark-white.svg" alt="Decathlon"><h2 class="dw-title"><span class="dw-gold">Diwali</span> Gift a Sport</h2>
       <p class="sec-lede">6 to 11 November. Diwali is on Sunday 8 November. The five days, and what has been live so far.</p></header>
     <div class="nov-days" id="novDays"></div>
@@ -100,6 +105,7 @@
 <section class="sec nov-black" id="blackfriday">
   <svg class="nov-swoosh" viewBox="0 0 1440 420" preserveAspectRatio="none" aria-hidden="true"><path d="M0 330 C 380 250, 760 120, 1440 40 L 1440 120 C 800 190, 420 320, 0 420 Z" fill="#2E5BFF"/></svg>
   <div class="wrap">
+    <div class="fr-tag" data-fr="bf"></div>
     <header class="sec-head"><span class="nov-bf-date">27 - 30 November</span><h2 class="display">Black Friday<span class="lt"> influencers</span></h2>
       <p class="sec-lede">Our first move for Black Friday. Gujarat and MP are finalised by Monday 9 November; Pune is being cross-checked with the vendor and should be done by Tuesday 10 November.</p></header>
     <div class="nov-kpis cq-kpis nov-bf-kpis" id="novBfKpis"></div>
@@ -113,26 +119,47 @@
           <li><b>Membership points</b> on eligible purchases, and “visit your nearest Decathlon store”.</li></ul>
         <p class="nov-hold"><b>We are not communicating 40% yet.</b> We are waiting for the brief from the Marcom team. Once it is here we will check with them whether to show a percentage at all, or say something else, and only then finalise the copy. The drafts above show 40% as a placeholder.</p></div>
     </div>
+    <div class="panel nov-bf fr-lines" id="ndBfPune"></div>
+    <details class="panel nov-bf nov-walk-d" id="walkins">
+      <summary><b>Walk-in events: a suggestion for Black Friday morning</b><span>For the stores that need footfall: a partner event that ends at the store as the sale opens, with at least 1,000 walk-ins. Open for how it works and the budget.</span></summary>
+      <p class="nov-walk-lede">Walk-ins are not the problem in Ahmedabad. For the stores that need footfall, we partner with an event partner on the morning the sale opens, and the partner commits to at least 1,000 walk-ins into the store.</p>
+      <div class="nov-two">
+        <div><h3>How it works</h3>
+          <div class="sp-flow nov-steps"><span>Partner runs a cycling, running, yoga or school-kids event</span><i></i><span>The route or finish is at the store</span><i></i><span>At least 1,000 walk-ins in the morning</span><i></i><span>The sale is on when they arrive</span></div>
+          <p class="nov-note">Only where the store team is okay with it. The partner is paid against walk-ins delivered.</p></div>
+        <div><h3>Budget, if the stores agree</h3><div class="sb-wrap" id="novWalk"></div></div>
+      </div>
+    </details>
   </div>
 </section>
 
-<section class="sec sec-paper" id="walkins">
+<section class="sec nd-winter" id="winter">
+  <svg class="nd-ridge" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true"><path d="M0 220 L0 150 L120 96 L210 132 L330 54 L450 120 L560 80 L690 140 L820 40 L940 112 L1060 70 L1180 128 L1300 60 L1440 118 L1440 220 Z" fill="rgba(255,255,255,.07)"/><path d="M0 220 L0 182 L160 140 L300 170 L470 118 L640 168 L800 120 L980 172 L1150 132 L1320 166 L1440 140 L1440 220 Z" fill="rgba(255,255,255,.06)"/></svg>
   <div class="wrap">
-    <header class="sec-head"><h2 class="display">Walk-in events<span class="lt">: a suggestion for Black Friday morning</span></h2>
-      <p class="sec-lede">Walk-ins are not the problem in Ahmedabad. For the stores that need footfall, we partner with an event partner on the morning the sale opens, and the partner commits to at least 1,000 walk-ins into the store.</p></header>
-    <div class="nov-two">
-      <div class="panel"><h3>How it works</h3>
-        <div class="sp-flow nov-steps"><span>Partner runs a cycling, running, yoga or school-kids event</span><i></i><span>The route or finish is at the store</span><i></i><span>At least 1,000 walk-ins in the morning</span><i></i><span>The sale is on when they arrive</span></div>
-        <p class="nov-note">Only where the store team is okay with it. The partner is paid against walk-ins delivered.</p></div>
-      <div class="panel"><h3>Budget, if the stores agree</h3><div class="sb-wrap" id="novWalk"></div></div>
+    <div class="fr-tag" data-fr="winter"></div>
+    <header class="sec-head"><span class="nd-kick nd-kick-w">November and December</span><h2 class="display">Winter, Trek<span class="lt"> &amp; Travel</span></h2>
+      <p class="sec-lede">From the first cold mornings to the New Year trip, people go out: Sahyadri night treks, family holidays, the coldest mornings of the year in Gwalior and Bhopal. Winter &amp; Travel runs under both sales, all two months, and the hoardings carry it.</p></header>
+    <div class="nd-w-grid">
+      <div class="nd-w-plan">
+        <div><h4>On the road</h4><p>Pune: 7 hoardings on Winter &amp; Travel, ₹9.35 L a month, November and December. The creative changes with the season, never with the sale.</p></div>
+        <div><h4>Influencers</h4><p>Pune, December: 10 paid creators (₹1 L) and 7 on barter (₹50,000). The best reels are recycled as boosts (₹10,000).</p></div>
+        <div><h4>Content</h4><p>Media vendor reels in December (₹1 L): pack with me for a Sahyadri night trek; one jacket, three layers; the New Year trip in one backpack.</p></div>
+        <div><h4>In the store</h4><p>The MH500 backpack leads in November (Q4 runway). A winter wall at the entrance: padded jackets from ₹1,999, gloves and caps, the way Surat set it up for Diwali.</p></div>
+        <div><h4>Out of the store</h4><p>SRT Ultra, the 53 km Sahyadri trail, on Saturday 12 December: be at the start with a hydration and headlamp stand. Trek groups as AOPs: every group that starts at our store is a practice place.</p></div>
+        <div><h4>What it brings</h4><p id="ndWinterTo">Winter &amp; Travel has no turnover goal of its own: it carries the season under both sales.</p></div>
+      </div>
+      <div class="panel fr-lines" id="ndWinterLines"></div>
     </div>
+    <h3 class="display-s nd-w-sub">Hoardings<span class="lt">: where we stand</span></h3>
+    <div class="nd-hu" id="ndHoard"></div>
   </div>
 </section>
 
 <section class="sec nd-xmas" id="december">
   <div class="wrap">
-    <header class="sec-head"><span class="nd-kick">December 2026</span><h2 class="display">Winter &amp; Travel, Christmas gifting<span class="lt"> and the Christmas Sale</span></h2>
-      <p class="sec-lede">The Diwali Gift a Sport videos don't stop: they become Christmas gifting videos through December, the hoardings stay on Winter &amp; Travel, and the Christmas Sale runs from Saturday 19 to Thursday 31 December.</p></header>
+    <div class="fr-tag" data-fr="xmas"></div>
+    <header class="sec-head"><span class="nd-kick">December 2026</span><h2 class="display">Christmas<span class="lt">: the gifting videos and the Christmas Sale</span></h2>
+      <p class="sec-lede">The Diwali Gift a Sport videos don't stop: they become Christmas gifting videos through December, and the Christmas Sale runs from Saturday 19 to Thursday 31 December. December's content is Christmas, Winter and Trek &amp; Travel together.</p></header>
     <div class="nd-x-grid">
       <figure class="nd-x-sale"><img src="assets/img/dec/christmas-sale.jpg" alt="Decathlon Christmas Sale, 19th to 31st December" loading="lazy"><figcaption>Christmas Sale creative: 19 to 31 December</figcaption></figure>
       <div class="nd-x-gift">
@@ -147,11 +174,19 @@
       </div>
       <div class="nd-x-facts">
         <div><b>19 to 31 Dec</b><span>Christmas Sale; whole-city in-store comms live from 19 Dec</span></div>
-        <div><b>35</b><span>Pune influencers for the sale, 19 to 23 Dec (₹3.5 L), plus a 4 post + 4 story countdown and boosts</span></div>
-        <div><b>7 + 10</b><span>Winter &amp; Travel: 7 hoardings live; 10 influencers (₹1 L) + 7 on barter, the best reels recycled as boosts</span></div>
-        <div><b>27</b><span>Pune AOPs in December (₹7.65 L), up from 22 in November</span></div>
+        <div><b>35</b><span>Pune influencers for the sale, 19 to 23 Dec (₹3.5 L), plus a 4 post + 4 story countdown</span></div>
+        <div><b>10 posts</b><span>Boosted around Christmas and Winter &amp; Travel (₹30,000)</span></div>
+        <div id="ndXmasGoal"><b>Goal</b><span>Christmas sale turnover</span></div>
       </div>
     </div>
+    <h3 class="display-s nd-x-sub">December content<span class="lt">: Christmas, Winter, Trek &amp; Travel</span></h3>
+    <div class="nd-dc">
+      <article style="--c:#C8102E"><span>1 to 25 December</span><h4>Christmas gifting</h4><ul><li>The gifting videos: a parent adds up the gifts out loud, the total is on screen</li><li>Secret Santa under ₹999 and stocking fillers for kids</li><li>Gift cards for the person who has everything</li></ul></article>
+      <article style="--c:#1D6FA3"><span>All month</span><h4>Winter</h4><ul><li>One jacket, three layers: base layer, fleece, padded jacket</li><li>The winter-gear film on every city page</li><li>MP first: Gwalior and Bhopal get the coldest mornings in the cluster</li></ul></article>
+      <article style="--c:#2E7D32"><span>From 14 December, the holidays</span><h4>Trek &amp; Travel</h4><ul><li>Pack with me: a Sahyadri night trek, the New Year trip, the Rann of Kutch</li><li>SRT Ultra trail (12 Dec) and the Pune races as live content</li><li>The best creator reels recycled as boosts</li></ul></article>
+      <article style="--c:#10135A"><span>19 to 31 December</span><h4>The sale takes over</h4><ul><li>Countdown: 4 posts and 4 stories, then boosts on 10 posts</li><li>35 Pune creators post between 19 and 23 Dec</li><li>Same three themes, now with the sale price</li></ul></article>
+    </div>
+    <div class="panel fr-lines nd-x-lines" id="ndXmasLines"></div>
   </div>
 </section>
 
@@ -211,6 +246,14 @@
   </div>
 </section>
 
+<section class="sec sec-paper" id="summary">
+  <div class="wrap">
+    <header class="sec-head"><h2 class="display">November and December<span class="lt">, in one view</span></h2>
+      <p class="sec-lede">The four campaigns side by side: when, what, the money (Pune's plan line by line, plus what we know for Gujarat and MP) and what each brings in.</p></header>
+    <div id="ndSummary"></div>
+  </div>
+</section>
+
 <footer class="nov-foot"><div class="wrap">Instagram follower and post counts, and reel views, read from each page's public profile on 5 November 2026. Views show only for a page's latest 12 reels. Shares and saves are not public: they are in each page's Insights, so the page admins can send them. Diwali dates as observed in India. <a href="index.html">Back to the West plan</a></div></footer>
 <div class="exp-bar" id="expBar" data-html2canvas-ignore>
   <div class="exp-in"><span class="exp-t">Download this page</span>
@@ -221,10 +264,11 @@
 
 
 <script>window.DATA = window.DATA || {};</script>
-<script src="assets/js/data.js?v=20261110a"></script>
-<script src="assets/js/november.js?v=20261110a"></script>
+<script src="assets/js/data.js?v=20261110b"></script>
+<script src="assets/js/sports27.js?v=20261110a"></script>
+<script src="assets/js/november.js?v=20261110b"></script>
 <script src="assets/js/puneplan.js?v=20261110a"></script>
-<script src="assets/js/nd26.js?v=20261110a"></script>
+<script src="assets/js/nd26.js?v=20261110b"></script>
 <script src="assets/js/export.js?v=20261110a"></script>
 </body>
 </html>

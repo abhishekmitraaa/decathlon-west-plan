@@ -6,7 +6,7 @@
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const B = window.BUDGET27, SE = window.SEASON27, V = window.VIDEOS27, AOP = window.AOP_PLAN || [], AN = window.AOP_NAMES || {};
   const SP = window.SPORTS27, TO = window.SPORT_TO_2026, D = window.DATA;
-  const STATES = ["Pune", "Gujarat", "MP"], SC = { Pune: "var(--pune)", Gujarat: "var(--guj)", MP: "var(--mp)" };
+  const ALLST = ["Pune", "Gujarat", "MP"], STATES = [...ALLST], SC = { Pune: "var(--pune)", Gujarat: "var(--guj)", MP: "var(--mp)" };
   const FULL = ["January", "February", "March", "April", "May", "June"], MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
   const L = v => v >= 100 ? `₹${(v / 100).toFixed(2)} Cr` : `₹${v >= 10 ? v.toFixed(1) : v.toFixed(2)} L`;
   const inr = v => "₹" + Math.round(v).toLocaleString("en-IN");
@@ -50,7 +50,7 @@
   }
 
   /* ---------- Q1 playbook ---------- */
-  let pst = "West", tab = 0;
+  let pst = window.Y27REGION || "West", tab = 0;
   function overview() {
     const A = B.alloc(pst);
     const segs = m => B.campaigns.filter(c => A.camp[c.id][m] > 0).map(c => {
@@ -58,7 +58,7 @@
       return `<span style="width:${p}%;--c:${c.color};--tx:${c.ink}" title="${FULL[m]}: ${esc(c.name)}, ${L(v)} (${Math.round(p)}%)"><b>${p >= 14 ? esc(c.name.split(":")[0]) : ""}</b>${p >= 9 ? `<em>${L(v)}</em>` : ""}</span>`;
     }).join("");
     const used = B.campaigns;
-    const sportRows = SP.sports.map(s => {
+    const sportRows = SP.sports.filter(s => pst === "West" || s.where.includes(pst)).map(s => {
       const bud = A.sport[s.id] || 0;
       const sts = pst === "West" ? STATES : [pst];
       const sale = [0, 1, 2].reduce((t, m) => t + sts.reduce((a, x) => a + (TO[s.id][x].in[m] || 0) + (TO[s.id][x].on[m] || 0), 0), 0);
@@ -69,8 +69,7 @@
     const maxS = Math.max(...sportRows.map(r => Math.max(r.bs, r.ts)));
     $("#pb27Over").innerHTML = `
       <div class="pb27-ohead"><div><h3 class="display-s">${L(A.total)}<span class="lt"> for Q1, ${pst === "West" ? "all three states" : pst}</span></h3>
-        <p>The 2027 ad budget for January to March (ultimate data sheet), split by our proposal below. ${pst === "West" ? "Each state's budget is split the same way." : ""}</p></div>
-        <div class="seg" role="group" aria-label="State">${["West", ...STATES].map(s => `<button type="button" data-ps="${s}" aria-pressed="${s === pst}">${s}</button>`).join("")}</div></div>
+        <p>The 2027 ad budget for January to March (ultimate data sheet), split by our proposal below. ${pst === "West" ? "Each state's budget is split the same way." : ""}</p></div></div>
       <div class="pb27-months">${[0, 1, 2].map(m => `<div class="pb27-mrow"><div class="pb27-mlab"><b>${FULL[m]}</b><span>${L(A.month[m])}</span></div><div class="pb27-bar">${segs(m)}</div></div>`).join("")}</div>
       <div class="pb27-key">${used.map(c => `<span><i style="--c:${c.color}"></i>${esc(c.name)} <b>${L(A.camp[c.id].reduce((a, b) => a + b, 0))}</b></span>`).join("")}</div>
       <div class="pb27-two">
@@ -83,7 +82,6 @@
             return B.channels.map(([k, n]) => { const v = A.channel[k], p = v / A.total * 100, pp = pune(k); return `<div class="pb27-ch"><span>${n}</span><div><i style="--w:${p / 40 * 100}%"></i><i class="pp" style="--w:${pp / 40 * 100}%"></i></div><b>${L(v)}</b><em>${p.toFixed(0)}% / ${pp.toFixed(0)}%</em></div>`; }).join(""); })()}
           <p class="pb27-note"><i class="b"></i>Our campaign split <i class="t pp"></i>Pune's real Q1 plan (spend plan, January to March: AOPs 29%, hoardings 21%, in-store 21%, influencers 18%, events 6%, reels 4%, in-mall 2%). The Pune plan has no paid digital line: MarCom runs paid digital centrally.</p></div>
       </div>`;
-    $$("#pb27Over [data-ps]").forEach(b => b.addEventListener("click", () => { pst = b.dataset.ps; overview(); panel(); }));
   }
   function panel() {
     const A = B.alloc(pst), WA = B.alloc("West");
@@ -113,7 +111,7 @@
           <div class="pb27-pm">${[0, 1, 2].map(m => `<span class="${A.camp[c.id][m] ? "" : "off"}"><b>${A.camp[c.id][m] ? L(A.camp[c.id][m]) : "-"}</b>${MON[m]}${A.camp[c.id][m] ? `, ${c.pct[m]}% of the month` : ""}</span>`).join("")}</div>
           ${cr.length ? `<div class="pb27-cr"><h4>Money credited to</h4>${cr.map(r => `<span style="--c:${r.s.color}"><i></i>${r.s.name} <b>${L(r.v)}</b></span>`).join("")}</div>` : `<div class="pb27-cr"><h4>Not a sport</h4><span>${c.id === "clr" ? "Commercial moment: every sport sells in it" : "Brand and local goodwill"}</span></div>`}
         </div></div>
-      <div class="sp-stats">${[["West", WA], ...STATES.map(s => [s, B.alloc(s)])].map(([n, X]) => `<div><b>${L(X.camp[c.id].reduce((a, b) => a + b, 0))}</b><span>${n}${n === "West" ? `, ${(X.camp[c.id].reduce((a, b) => a + b, 0) / X.total * 100).toFixed(0)}% of Q1` : ""}</span></div>`).join("")}</div>
+      <div class="sp-stats">${(pst === "West" ? [["West", WA], ...STATES.map(s => [s, B.alloc(s)])] : [[pst, A]]).map(([n, X]) => `<div><b>${L(X.camp[c.id].reduce((a, b) => a + b, 0))}</b><span>${n}${n === "West" ? `, ${(X.camp[c.id].reduce((a, b) => a + b, 0) / X.total * 100).toFixed(0)}% of Q1` : ""}</span></div>`).join("")}</div>
       <div class="pb27-plan">
         ${c.pune ? `<div class="pb27-pune"><b>Pune, from the spend plan</b><p>${esc(c.pune)}</p></div>` : ""}
         <div class="pb27-blocks">
@@ -165,16 +163,24 @@
   const SU = [["Wagholi", "Pune", 910, 2935], ["Indore", "MP", 860, 2169], ["Bhopal", "MP", 680, 1934], ["Dumas Road", "Gujarat", 700, 1782], ["Motera", "Gujarat", 1480, 1337],
     ["NIBM", "Pune", 550, 1146], ["Wakad", "Pune", 1060, 1064], ["Nexus", "Gujarat", 2200, 958], ["Baroda", "Gujarat", 1790, 956], ["Amanora", "Pune", 1030, 711],
     ["SGS Mall", "Pune", 950, 668], ["Rajkot", "Gujarat", 380, 311], ["Gwalior", "MP", 300, 275]];
-  if ($("#suStores")) {
-    const mx = Math.max(...SU.map(r => r[3]));
-    $("#suKpis").innerHTML = [["16,246", "people played in our 13 stores"], ["126%", "of the 12,890 we planned"], ["55", "activations: 12 runs, 12 rides, 12 tournaments, 6 experiences, 13 challenges"], ["323%", "Wagholi: 2,935 against 910 planned"]].map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join("");
-    $("#suStores").innerHTML = `<table class="y27-table su-t"><thead><tr><th>Store</th><th>Planned</th><th>Played</th><th></th><th>Hit</th></tr></thead><tbody>${SU.map(r => `<tr><td><b>${r[0]}</b><small>${r[1]}</small></td><td>${r[2].toLocaleString("en-IN")}</td><td><b>${r[3].toLocaleString("en-IN")}</b></td><td class="bar"><i style="--w:${r[3] / mx * 100}%;--c:${SC[r[1]]}"></i><i class="p" style="left:${r[2] / mx * 100}%"></i></td><td class="${r[3] >= r[2] ? "up" : "dn"}">${Math.round(r[3] / r[2] * 100)}%</td></tr>`).join("")}</tbody></table>`;
+  function utsav() {
+    if (!$("#suStores")) return;
+    const SR = SU.filter(r => STATES.includes(r[1]));
+    const mx = Math.max(...SR.map(r => r[3])), pl = SR.reduce((a, r) => a + r[2], 0), pd = SR.reduce((a, r) => a + r[3], 0), best = [...SR].sort((a, b) => b[3] / b[2] - a[3] / a[2])[0];
+    const nf = n => n.toLocaleString("en-IN");
+    $("#suKpis").innerHTML = [[nf(pd), `people played in our ${SR.length} stores${pst === "West" ? "" : ", " + pst}`], [Math.round(pd / pl * 100) + "%", `of the ${nf(pl)} we planned`], ...(pst === "West" ? [["55", "activations: 12 runs, 12 rides, 12 tournaments, 6 experiences, 13 challenges"]] : []), [Math.round(best[3] / best[2] * 100) + "%", `${best[0]}: ${nf(best[3])} against ${nf(best[2])} planned`]].map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join("");
+    $("#suStores").innerHTML = `<table class="y27-table su-t"><thead><tr><th>Store</th><th>Planned</th><th>Played</th><th></th><th>Hit</th></tr></thead><tbody>${SR.map(r => `<tr><td><b>${r[0]}</b><small>${r[1]}</small></td><td>${r[2].toLocaleString("en-IN")}</td><td><b>${r[3].toLocaleString("en-IN")}</b></td><td class="bar"><i style="--w:${r[3] / mx * 100}%;--c:${SC[r[1]]}"></i><i class="p" style="left:${r[2] / mx * 100}%"></i></td><td class="${r[3] >= r[2] ? "up" : "dn"}">${Math.round(r[3] / r[2] * 100)}%</td></tr>`).join("")}</tbody></table>`;
   }
-  season(); overview(); panel(); aops(); inspire();
+  document.addEventListener("y27region", e => {
+    pst = e.detail; STATES.splice(0, STATES.length, ...(pst === "West" ? ALLST : [pst]));
+    season(); overview(); panel(); aops(); utsav();
+  });
+  if (pst !== "West") STATES.splice(0, STATES.length, pst);
+  utsav(); season(); overview(); panel(); aops(); inspire();
   window.renderPyramid?.($("#mktPyramid"));
   window.renderPunePlan?.($("#pb27Pune"), [2, 3, 4]);
   window.renderPuneAops?.($("#pb27PuneAops"), [2, 3, 4, 5]);
-  window.renderInfluencers?.($("#pb27Infl"), "2026-11-01", "2027-05-31", true);
+  window.renderInfluencers?.($("#pb27Infl"), "2026-11-01", "2027-05-31", false);
   $("#pb27Tabs").addEventListener("keydown", e => {
     if (!["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"].includes(e.key)) return;
     e.preventDefault();

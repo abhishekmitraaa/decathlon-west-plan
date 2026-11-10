@@ -9,22 +9,29 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=20261110c">
+<link rel="stylesheet" href="assets/css/site.css?v=20261110d">
 </head>
 <body class="nov-page y27-page">
 
 <header class="topbar solid" id="topbar">
   <a class="wordmark" href="index.html" aria-label="Back to the West plan">DECATHLON <span>West</span></a>
+  <nav class="pg-tabs" aria-label="Pages">
+    <a href="index.html"><span class="l">West plan</span><span class="s">Plan</span></a>
+    <a href="november.html"><span class="l">Nov &amp; Dec 2026</span><span class="s">Nov-Dec</span></a>
+    <a href="plan2027.html" aria-current="page"><span class="l">2027 plan</span><span class="s">2027</span></a>
+    <a href="water2027.html"><span class="l">Water 2027</span><span class="s">Water</span></a>
+  </nav>
   <nav class="nav" aria-label="2027 plan sections">
     <a href="#season">Season</a>
     <a href="#calendar">Calendar</a>
+    <a href="#moments">Q1 moments</a>
     <a href="#playbook">Playbook</a>
+    <a href="#influencers">Influencers</a>
     <a href="#aops">AOPs</a>
     <a href="#utsav">Flagship</a>
     <a href="#sports">Sports</a>
     <a href="#films">Films</a>
   </nav>
-  <a class="present-btn nov-back" href="index.html">Back to the plan</a>
 </header>
 
 <section class="sec sec-blue nov-hero y27-hero" id="top">
@@ -39,6 +46,13 @@
 
 <div class="y27-qbar" id="y27Qbar">
   <div class="wrap">
+    <span>Region</span>
+    <div class="seg y27-reg" role="group" aria-label="Choose region" id="y27Reg">
+      <button type="button" data-r="Pune" aria-pressed="false">Pune</button>
+      <button type="button" data-r="West" aria-pressed="true">West</button>
+      <button type="button" data-r="MP" aria-pressed="false">MP</button>
+      <button type="button" data-r="Gujarat" aria-pressed="false">Gujarat</button>
+    </div>
     <span>Show</span>
     <div class="seg" role="group" aria-label="Choose quarter" id="y27Seg">
       <button type="button" data-q="q1" aria-pressed="true">Q1: Jan to Mar</button>
@@ -72,6 +86,16 @@
   </div>
 </section>
 
+<section class="sec sec-paper" id="moments">
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 class="display">Q1 moments<span class="lt">: Movement for All, the clearance sale, Women's Day</span></h2>
+      <p class="sec-lede">The spaces we made on the main plan, now with their money: what each moment is, when, the Q1 budget it gets for the region you picked, what Pune's spend plan puts behind it, and for Women's Day what every store does.</p>
+    </header>
+    <div class="mo27-grid" id="mom27"></div>
+  </div>
+</section>
+
 <section class="sec sec-blue" id="playbook">
   <div class="wrap">
     <header class="sec-head">
@@ -84,12 +108,26 @@
       <div class="switch-list" role="tablist" aria-label="Q1 campaigns" id="pb27Tabs"></div>
       <div class="switch-panel pb27-panel" id="pb27Panel" role="tabpanel"></div>
     </div>
+    <div class="pune-only">
     <h3 class="display-s pb27-sub">Pune: the real plan<span class="lt">, January to March, line by line</span></h3>
     <div class="pb27-light" id="pb27Pune"></div>
-    <h3 class="display-s pb27-sub">Influencers<span class="lt">, planned with dates, November to May</span></h3>
+    <h3 class="display-s pb27-sub">Pune influencers in the spend plan<span class="lt">, with dates, November to May</span></h3>
     <div class="panel pi-panel" id="pb27Infl"></div>
     <h3 class="display-s pb27-sub">AOP money<span class="lt">, Pune store by store, January to April</span></h3>
     <div class="panel"><div class="sb-wrap" id="pb27PuneAops"></div></div>
+    </div>
+    <p class="not-pune pb27-np">Pune's line-by-line spend plan, its influencer timeline and its AOP money sit under Pune and West. The Gujarat and MP spend plans are not in our files yet.</p>
+  </div>
+</section>
+
+<section class="sec sec-paper" id="influencers">
+  <div class="wrap">
+    <header class="sec-head">
+      <h2 class="display">Influencers 2027<span class="lt">, campaign by campaign</span></h2>
+      <p class="sec-lede">Every influencer campaign in the 2027 sheet: how many creators, what it costs, and when it runs. The quarters are coloured; campaigns without a date in the sheet sit across the year.</p>
+    </header>
+    <div class="pune-only" id="infl27"></div>
+    <p class="not-pune pb27-np dark">This influencer sheet is Pune's. Gujarat and MP 2027 influencer plans are not in our files yet: send them and they go here.</p>
   </div>
 </section>
 
@@ -101,8 +139,8 @@
     </header>
     <div class="panel"><div class="sb-wrap" id="aop27Table"></div></div>
     <p class="w27-note">AOP plan by store and month (Nov 2026 to Oct 2027) and cost per AOP. "Live now" from the same plan. The mix per store (travel, gym, yoga, racket) is from the 2027 AOP slide. Named places: Pune partnerships sheet; Gujarat and MP lists are not in our files yet.</p>
-    <h3 class="display-s w27-sub">Pune: the places we already work with</h3>
-    <div class="aop27-names" id="aop27Names"></div>
+    <div class="pune-only"><h3 class="display-s w27-sub">Pune: the places we already work with</h3>
+    <div class="aop27-names" id="aop27Names"></div></div>
   </div>
 </section>
 
@@ -161,13 +199,14 @@
 </div>
 
 <script>window.DATA = window.DATA || {};</script>
-<script src="assets/js/data.js?v=20261110a"></script>
+<script src="assets/js/data.js?v=20261110b"></script>
 <script src="assets/js/sports27.js?v=20261110a"></script>
 <script src="assets/js/budget27.js?v=20261110c"></script>
 <script src="assets/js/aopnames.js?v=20261110a"></script>
 <script src="assets/js/puneplan.js?v=20261110a"></script>
-<script src="assets/js/plan2027.js?v=20261110a"></script>
-<script src="assets/js/playbook27.js?v=20261110c"></script>
+<script src="assets/js/plan2027.js?v=20261110b"></script>
+<script src="assets/js/playbook27.js?v=20261110d"></script>
+<script src="assets/js/moments27.js?v=20261110a"></script>
 <script src="assets/js/export.js?v=20261110a"></script>
 </body>
 </html>

@@ -2,7 +2,8 @@
 (() => {
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const L$ = n => "₹" + (n / 1e5).toFixed(n % 1e5 ? 2 : 1).replace(/\.0$/, "") + " L";
+  // under a lakh in thousands (₹32K), otherwise in lakh (₹1.5 L)
+  const L$ = n => n < 1e5 ? "₹" + Math.round(n / 1000) + "K" : "₹" + (n / 1e5).toFixed(n % 1e5 ? 2 : 1).replace(/\.0$/, "") + " L";
 
   // Diwali 2026 as observed in India
   const DAYS = [["Fri 6 Nov", "Dhanteras"], ["Sat 7 Nov", "Choti Diwali"], ["Sun 8 Nov", "Diwali, Lakshmi Puja"], ["Tue 10 Nov", "Govardhan Puja and Gujarati New Year"], ["Wed 11 Nov", "Bhai Dooj"]];
@@ -125,6 +126,7 @@
     ["Motera", "Gujarat", 14.5, 15.0, 1.27, 1.5, 1.68, 2.0, 2200000, 0], ["Nexus", "Gujarat", 13.19, 13.27, 1.01, 1.26, 1.5, 1.8, 1630000, 0], ["Surat", "Gujarat", 10.66, null, 0.73, 1.02, 1.27, 1.31, 1320000, 120000],
     ["Baroda", "Gujarat", 10.45, 11.0, 0.71, 0.9, 1.14, 1.27, 1200000, 400000], ["Rajkot", "Gujarat", 2.69, 2.69, 0.17, 0.18, 0.36, 0.37, 50000, 50000],
     ["Indore", "MP", 11.92, null, 0.66, 0.71, 1.32, 1.25, 400000, 100000], ["Bhopal", "MP", 12.21, null, 0.58, 0.69, 1.1, 1.23, 100000, 150000], ["Gwalior", "MP", 3.6, 3.48, 0.19, 0.19, 0.47, 0.35, 30000, 40000]];
+  window.NOV_GOALS = G;
   const gs = (bu, i) => G.filter(g => !bu || g[1] === bu).reduce((a, g) => a + (g[i] || 0), 0);
   const pct = (a, b) => (a >= b ? "+" : "") + Math.round((a / b - 1) * 100) + "%";
   const cr = n => "₹" + n.toFixed(2) + " Cr";
@@ -201,7 +203,7 @@
   });
 
   // section jump links
-  $("#novJump").innerHTML = $$(".nav a").map(a => `<a href="${a.getAttribute("href")}">${a.textContent}</a>`).join("");
+  if ($("#novJump")) $("#novJump").innerHTML = $$(".nav a").map(a => `<a href="${a.getAttribute("href")}">${a.textContent}</a>`).join("");
 
   // videos: play the few most in view, one sound at a time
   const ratio = new Map(), CAP = innerWidth < 700 ? 2 : 3;
