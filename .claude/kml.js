@@ -1,5 +1,5 @@
 // builds assets/kml/pune-aops.kml and pune-catchments.kml from the site data (same points as the page map)
-const fs = require('fs'), R = '/home/user/decathlon-west-plan/';
+const fs = require('fs'), R = require('path').join(__dirname, '..') + '/';
 global.window = {}; global.document = { readyState: 'loading', addEventListener() {}, getElementById() { return null; } };
 require(R + 'assets/js/aopnames.js'); require(R + 'assets/js/punehot.js');
 const pts = window.puneAopPoints(), ST = window.PUNE_STORES_AT;
