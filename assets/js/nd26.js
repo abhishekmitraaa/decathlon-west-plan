@@ -122,7 +122,7 @@
   ALW.v = sum(ALW.ls);
   const goalTxt = f => f.goal ? `${cr(gsum(f.goal[1]))}, ${pc(gsum(f.goal[1]), gsum(f.goal[0]))} on 2025` : "";
   const mtn = m => ["Pune", "Gujarat", "MP"].reduce((a, s) => a + T.mountain[s].in[m] + T.mountain[s].on[m], 0), allT = m => ["Pune", "Gujarat", "MP"].reduce((a, s) => a + T.all[s].in[m] + T.all[s].on[m], 0);
-  FR[2].brings = T ? `No goal of its own. Its sport, mountain (hiking, trekking, camping), sold ${cr(mtn(9) / 1e7)} in October 2026, ${(mtn(9) / allT(9) * 100).toFixed(1)}% of West turnover, and ${(mtn(10) / allT(10) * 100).toFixed(1)}% in 1 to 8 November.` : "No goal of its own.";
+  FR[2].brings = "-";
   FR[1].brings = `Turnover goal ${goalTxt(FR[1])}: ${(gsum(5) / Q4 * 100).toFixed(1)}% of the ${cr(Q4)} Q4 store challenge in 4 days.`;
   FR[3].brings = `Turnover goal ${goalTxt(FR[3])}: ${(gsum(7) / Q4 * 100).toFixed(1)}% of the Q4 store challenge.`;
   const share = v => v ? `${Math.round(v / PL * 100)}% of Pune's Nov + Dec` : "Not in the Pune plan";
@@ -137,11 +137,10 @@
     });
     const lines = (el, f, title) => { if (!el) return;
       el.innerHTML = `<h3>${title}</h3><ul class="fr-ls">${f.ls.map(x => `<li><div><b>${esc(x.t)}</b><small>${PP.months[x.m]}${x.q ? ", " + esc(x.q) : ""}${x.d ? ", " + esc(x.d) : ""}</small>${x.n ? `<em>${esc(x.n)}</em>` : ""}</div><span>${inr(x.v)}</span></li>`).join("")}</ul>
-        <div class="fr-tot"><span>Pune total</span><b>${inr(f.v)}</b><small>${share(f.v)} (lines ${Lk(PL)})</small></div><p class="fr-brings"><b>What it brings</b>${esc(f.brings)}</p>`; };
+        <div class="fr-tot"><span>Pune total</span><b>${inr(f.v)}</b><small>${share(f.v)} (lines ${Lk(PL)})</small></div>${f.brings && f.brings !== "-" ? `<p class="fr-brings"><b>What it brings</b>${esc(f.brings)}</p>` : ""}`; };
     lines($("#ndBfPune"), FR[1], "Pune's Black Friday, line by line");
     lines($("#ndWinterLines"), FR[2], "Pune's Winter, Trek &amp; Travel, line by line");
     lines($("#ndXmasLines"), FR[3], "Pune's Christmas, line by line");
-    if ($("#ndWinterTo")) $("#ndWinterTo").textContent = FR[2].brings;
     if ($("#ndXmasGoal")) $("#ndXmasGoal").innerHTML = `<b>${cr(gsum(7))}</b><span>Christmas sale turnover goal (West), ${pc(gsum(7), gsum(6))} on 2025</span>`;
   }
 
