@@ -4,7 +4,7 @@ Single source of truth for this project. Read it before any work. Update it at t
 (see CLAUDE.md): add every new number, file, decision, preference and open question. Never delete
 history; mark superseded facts as superseded.
 
-Last updated: 2026-11-10 (eighteenth brief)
+Last updated: 2026-11-10 (nineteenth brief)
 
 ---
 
@@ -574,6 +574,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-11-10: local test server (port 8777) stopped at its time limit after testing; no site change.
 - 2026-11-10 (seventeenth brief): plan2027 Q1 moments: Women's Day is a normal half-width card beside New arrivals (was full width); its store formats are in a "What every store does" dropdown; shorter copy. Removed an internal "(user, 10 Nov 2026)" tag from the March swimming hoardings note. moments27.js 20261110g, puneplan.js 20261110h, site.css 20261110q.
 - 2026-11-10 (eighteenth brief): Pune hotspots map: dashed 5, 10 and 15 km catchment rings around each store with switches (5 and 10 on by default); tabs "AOP map" and "Google My Maps" (embeds the user's My Map, mid 18_xYhuA0Ko2KhXAZF9IsmEGSownW8yk); buttons to download two KML layers for My Maps (assets/kml/pune-aops.kml, 111 placemarks in 5 type folders with colours and 2027 starts faded; assets/kml/pune-catchments.kml, 5 stores and 15 ring polygons) and to open the My Map; import steps on the page. Store points now match DATA.stores. punehot.js 20261110e, site.css 20261110r. Checked: rings toggle, tab switch, no console errors, no horizontal scroll at 1440 and 390.
+- 2026-11-10 (nineteenth brief, user: "add Decathlon store's name"): store names now always visible on the maps ("Decathlon Wakad", etc.: permanent labels on the Pune hotspots AOP map and the Nov page hoardings map; SGS Mall and NIBM labels to the left so they do not overlap); KML: stores with a blue label style added to pune-aops.kml too (so one import shows them), label style on pune-catchments.kml. punehot.js 20261110f, nd26.js 20261110n.
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 

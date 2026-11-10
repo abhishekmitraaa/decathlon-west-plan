@@ -2,7 +2,7 @@
 <kml xmlns="http://www.opengis.net/kml/2.2">
 <Document>
   <name>Decathlon Pune: stores and 5, 10, 15 km catchments</name>
-  <Style id="store"><IconStyle><scale>1.2</scale><Icon><href>https://decathlon-west-plan.vercel.app/assets/img/deca-pin.png</href></Icon></IconStyle></Style>
+  <Style id="store"><IconStyle><scale>1.2</scale><Icon><href>https://decathlon-west-plan.vercel.app/assets/img/deca-pin.png</href></Icon></IconStyle><LabelStyle><color>ffba4336</color><scale>1.1</scale></LabelStyle></Style>
   <Style id="r5"><LineStyle><color>ffBA4336</color><width>2</width></LineStyle><PolyStyle><color>22BA4336</color></PolyStyle></Style>
   <Style id="r10"><LineStyle><color>ffBB4F6B</color><width>2</width></LineStyle><PolyStyle><color>14BB4F6B</color></PolyStyle></Style>
   <Style id="r15"><LineStyle><color>ffC8A29A</color><width>2</width></LineStyle><PolyStyle><color>0cC8A29A</color></PolyStyle></Style>

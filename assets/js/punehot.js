@@ -90,7 +90,7 @@ window.PUNE_HOT = {
     const map = L.map(m, { scrollWheelZoom: false });
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
     const pts = [], rings = {};
-    Object.entries(STORE_AT).forEach(([st, p]) => { L.marker(p, { icon: L.icon({ iconUrl: "assets/img/deca-pin.png", iconSize: [26, 26], iconAnchor: [13, 13], className: "map-store" }), zIndexOffset: 2000 }).addTo(map).bindTooltip("Decathlon " + st, { direction: "right", offset: [14, 0], className: "map-tip map-tip-store" }); pts.push(p); });
+    Object.entries(STORE_AT).forEach(([st, p]) => { L.marker(p, { icon: L.icon({ iconUrl: "assets/img/deca-pin.png", iconSize: [26, 26], iconAnchor: [13, 13], className: "map-store" }), zIndexOffset: 2000 }).addTo(map).bindTooltip("Decathlon " + st, { permanent: true, direction: st === "SGS Mall" || st === "NIBM" ? "left" : "right", offset: [st === "SGS Mall" || st === "NIBM" ? -14 : 14, 0], className: "map-tip map-tip-store" }); pts.push(p); });
     RINGS.forEach(([km, c]) => { rings[km] = L.layerGroup(Object.values(STORE_AT).map(p => L.circle(p, { radius: km * 1000, color: c, weight: 1.5, dashArray: "6 6", fill: km === 5, fillColor: c, fillOpacity: 0.05, interactive: false }))); });
     window.puneAopPoints().forEach(a => {
       const ll = [a.lat, a.lon];

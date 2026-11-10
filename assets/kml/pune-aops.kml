@@ -13,6 +13,14 @@
   <Style id="team-new"><IconStyle><color>8850A112</color><scale>0.8</scale><Icon><href>https://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href></Icon></IconStyle></Style>
   <Style id="other"><IconStyle><color>ffC8A29A</color><scale>1.0</scale><Icon><href>https://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href></Icon></IconStyle></Style>
   <Style id="other-new"><IconStyle><color>88C8A29A</color><scale>0.8</scale><Icon><href>https://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href></Icon></IconStyle></Style>
+  <Style id="store"><IconStyle><scale>1.2</scale><Icon><href>https://decathlon-west-plan.vercel.app/assets/img/deca-pin.png</href></Icon></IconStyle><LabelStyle><color>ffba4336</color><scale>1.1</scale></LabelStyle></Style>
+  <Folder><name>Decathlon stores</name>
+    <Placemark><name>Decathlon Wakad</name><styleUrl>#store</styleUrl><Point><coordinates>73.763,18.598,0</coordinates></Point></Placemark>
+    <Placemark><name>Decathlon Wagholi</name><styleUrl>#store</styleUrl><Point><coordinates>73.986,18.58,0</coordinates></Point></Placemark>
+    <Placemark><name>Decathlon SGS Mall</name><styleUrl>#store</styleUrl><Point><coordinates>73.877,18.518,0</coordinates></Point></Placemark>
+    <Placemark><name>Decathlon NIBM</name><styleUrl>#store</styleUrl><Point><coordinates>73.902,18.475,0</coordinates></Point></Placemark>
+    <Placemark><name>Decathlon Amanora</name><styleUrl>#store</styleUrl><Point><coordinates>73.934,18.519,0</coordinates></Point></Placemark>
+  </Folder>
   <Folder><name>Swimming pools (18)</name>
     <Placemark><name>AKV Swimming Pool</name><description>Swimming, Godbole vasti,Manjnri 412307. Store: Amanora. ends in 2026: renew for Q1 (December 2025 to December 2026).</description><styleUrl>#pool</styleUrl><ExtendedData><Data name="Store"><value>Amanora</value></Data><Data name="Sport"><value>Swimming</value></Data><Data name="Type"><value>Swimming pools</value></Data><Data name="Status"><value>ends in 2026: renew for Q1</value></Data></ExtendedData><Point><coordinates>73.97969,18.51116,0</coordinates></Point></Placemark>
     <Placemark><name>Infinity swimming pool</name><description>Swimming, Hadapsar. Store: Amanora. ends in 2026: renew for Q1 (December 2025 to December 2026).</description><styleUrl>#pool</styleUrl><ExtendedData><Data name="Store"><value>Amanora</value></Data><Data name="Sport"><value>Swimming</value></Data><Data name="Type"><value>Swimming pools</value></Data><Data name="Status"><value>ends in 2026: renew for Q1</value></Data></ExtendedData><Point><coordinates>73.92218,18.50211,0</coordinates></Point></Placemark>

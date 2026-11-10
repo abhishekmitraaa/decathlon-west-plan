@@ -174,7 +174,7 @@
     const map = L.map(m, { scrollWheelZoom: false });
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
     const pts = [], icon = L.icon({ iconUrl: "assets/img/deca-pin.png", iconSize: [26, 26], iconAnchor: [13, 13], className: "map-store" });
-    ((window.DATA || {}).stores || []).filter(x => x.state === "Pune" && x.lat).forEach(x => { L.marker([x.lat, x.lon], { icon, title: "Decathlon " + x.name }).addTo(map).bindTooltip("Decathlon " + x.name, { direction: "right", offset: [14, 0], className: "map-tip map-tip-store" }); pts.push([x.lat, x.lon]); });
+    ((window.DATA || {}).stores || []).filter(x => x.state === "Pune" && x.lat).forEach(x => { L.marker([x.lat, x.lon], { icon, title: "Decathlon " + x.name }).addTo(map).bindTooltip("Decathlon " + x.name, { permanent: true, direction: x.name === "SGS Mall" ? "left" : "right", offset: [x.name === "SGS Mall" ? -14 : 14, 0], className: "map-tip map-tip-store" }); pts.push([x.lat, x.lon]); });
     pu.forEach((h, i) => { if (!h.lat) return; L.marker([h.lat, h.lon], { icon: L.divIcon({ className: "map-board", html: `<i>${i + 1}</i>`, iconSize: [20, 20], iconAnchor: [24, 24] }), zIndexOffset: 1000 }).addTo(map).on("click", () => show(i)).bindPopup(`${h.img ? `<img src="assets/img/${h.img}" alt="" style="width:200px;border-radius:6px;display:block;margin-bottom:6px">` : ""}<b>${i + 1}. ${esc(h.loc)}</b><br>${esc(h.size)}, ${Lk(h.cost)} a month`); pts.push([h.lat, h.lon]); });
     if (pts.length) map.fitBounds(pts, { padding: [30, 30] });
   }
