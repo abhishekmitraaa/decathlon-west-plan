@@ -169,6 +169,12 @@
     return out;
   };
   async function toPPT() {
+    // pages with a native deck (deck.js) get real text, tables and charts instead of pictures of the page
+    if (window.buildNativeDeck) {
+      await load("ppt"); say("PowerPoint: building the slides");
+      const pptx = new window.PptxGenJS();
+      if (await window.buildNativeDeck(pptx)) { say("PowerPoint: saving"); save(await pptx.write({ outputType: "blob", compression: true }), name("pptx")); return; }
+    }
     // 1. lay the page out again at a slide-friendly width in a hidden frame, so text is big and charts reflow
     const CSSW = 1100, SCALE = 2, RATIO = 9 / 16, t = CSSW * RATIO; // one slide = 1100 x 619 CSS px, drawn at 2x
     const fr = document.createElement("iframe");

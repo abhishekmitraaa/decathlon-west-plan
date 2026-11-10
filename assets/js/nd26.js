@@ -247,6 +247,7 @@
   }
 
   frames(); hoardings(); summary(); puneKpis(); aopKpis(); inflNovDec(); puneCharts();
+  window.ND_DECK = { FR, ALW, PT, PL, ITEMS, LANES }; // read by deck.js (native PowerPoint)
   const sc = $("#ndSumCards");
   if (sc) sc.innerHTML = [...FR.filter(f => f.v), ALW].map((f, i) => `<a class="fr-card ${f === ALW ? "alw" : ""}" href="#${f.sec || "pune"}" style="--c:${f.col || "#9AA2C8"}"><em>${f === ALW ? "+" : i + 1}</em><b>${esc(f.n)}</b><span>${esc(f.d || "November and December")}</span><strong>${inr(f.v)}<small>${Math.round(f.v / PL * 100)}% of Pune's Nov + Dec</small></strong></a>`).join("");
   runway(); weekPanel(); aops();

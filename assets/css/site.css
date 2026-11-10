@@ -3389,3 +3389,22 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 @media (max-width: 860px) { .ph-mapk { grid-template-columns: 1fr 1fr; } .ph-mapk div.t { grid-column: 1 / -1; } .ph-map { height: 300px; } }
 .nb-svg { width: 190px; height: 190px; display: block; margin: 4px auto 14px; }
 .nb-svg text { font-family: var(--body); }
+
+/* Black Friday: view toggle and the Pune line-by-line panel in black with a blue ribbon (user, 10 Nov 2026) */
+.bf-seg { background: #1a1a1a; margin: 4px 0 14px; flex-wrap: wrap; }
+.bf-seg button { color: rgba(255,255,255,.75); font-size: 14px; padding: 8px 16px; }
+.bf-seg button[aria-pressed="true"] { background: #2E5BFF; color: #fff; }
+.bf-seg button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.nov-black #ndBfPune { position: relative; overflow: hidden; isolation: isolate; background: #000; color: #fff; border: 1px solid #2a2a2a; padding: 18px 20px; }
+.nov-black #ndBfPune::before { content: ""; position: absolute; z-index: -1; left: -10%; right: -10%; top: 38%; height: 120px; background: linear-gradient(90deg, rgba(46,91,255,0) 0%, rgba(46,91,255,.55) 35%, rgba(46,91,255,.55) 65%, rgba(46,91,255,0) 100%); transform: rotate(-7deg); }
+.nov-black #ndBfPune::after { content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: 0; height: 5px; background: #2E5BFF; }
+.nov-black #ndBfPune h3 { color: #fff; font-size: 19px; }
+.nov-black #ndBfPune .fr-share { color: rgba(255,255,255,.85); } .nov-black #ndBfPune .fr-share b { color: #7FA0FF; }
+.nov-black #ndBfPune .fr-ls li { border-color: rgba(255,255,255,.16); }
+.nov-black #ndBfPune .fr-ls li b, .nov-black #ndBfPune .fr-ls li > span { color: #fff; font-size: 15px; }
+.nov-black #ndBfPune .fr-ls li small { color: rgba(255,255,255,.75); }
+.nov-black #ndBfPune .fr-ls li > span .fr-pc { color: #9DB4FF; font-size: 12px; }
+.nov-black #ndBfPune .fr-ls li em { color: #FFB4B8; }
+.nov-black #ndBfPune .fr-bar { background: rgba(255,255,255,.14); } .nov-black #ndBfPune .fr-bar > i { background: #2E5BFF; }
+.nov-black #ndBfPune .fr-tot b { color: #fff; font-size: 26px; } .nov-black #ndBfPune .fr-tot span, .nov-black #ndBfPune .fr-tot small { color: rgba(255,255,255,.8); }
+.nov-black #ndBfPune .fr-brings { background: rgba(46,91,255,.18); color: #fff; } .nov-black #ndBfPune .fr-brings b { color: #9DB4FF; }

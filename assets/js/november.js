@@ -83,11 +83,35 @@
   ];
   const tot = bu => BF.filter(r => r[0] === bu).reduce((a, r) => a + (r[2] || 0), 0);
   const all = BF.reduce((a, r) => a + (r[2] || 0), 0);
-  $("#novBfKpis").innerHTML = `<div style="--c:var(--guj)"><b>${tot("Gujarat")}+</b><span>Gujarat influencers, ₹7.4 L</span></div><div style="--c:var(--pune)"><b>${tot("Pune")}</b><span>Pune influencers, ₹4 L</span></div><div style="--c:var(--mp)"><b>${tot("MP")}</b><span>MP influencers, ₹2.02 L</span></div><div class="tot"><b>${all}+</b><span>influencers for Black Friday</span></div>`;
-  $("#novBf").innerHTML = `<table class="sb-table"><thead><tr><th scope="col">City</th><th scope="col">Influencers</th><th scope="col">Budget</th><th scope="col">Status</th></tr></thead><tbody>
-    ${["Gujarat", "Pune", "MP"].map(bu => BF.filter(r => r[0] === bu).map(r => `<tr><th scope="row">${r[1]}</th><td>${r[2] ?? "-"}</td><td>${r[3] ? L$(r[3]) : "-"}</td><td style="text-align:left">${r[4]}</td></tr>`).join("") +
-      `<tr class="sb-total"><th scope="row">${bu === "MP" ? "Madhya Pradesh" : bu} total</th><td>${tot(bu)}${bu === "Gujarat" ? "+" : ""}</td><td>${bu === "Gujarat" ? "₹7.4 L" : bu === "Pune" ? "₹4 L" : "₹2.02 L"}</td><td></td></tr>`).join("")}
-    <tr class="sb-total"><th scope="row">All Black Friday</th><td>${all}+</td><td>₹13.42 L</td><td style="text-align:left"></td></tr></tbody></table>`;
+  // one view at a time (user, 10 Nov 2026): Pune, Ahmedabad, Gujarat, or the whole West
+  const BUDG = { Gujarat: "₹7.4 L", Pune: "₹4 L", MP: "₹2.02 L" }, BUC = { Gujarat: "var(--guj)", Pune: "var(--pune)", MP: "var(--mp)" };
+  const bfRow = r => `<tr><th scope="row">${r[1]}</th><td>${r[2] ?? "-"}</td><td>${r[3] ? L$(r[3]) : "-"}</td><td style="text-align:left">${r[4]}</td></tr>`;
+  const bfTot = bu => `<tr class="sb-total"><th scope="row">${bu === "MP" ? "Madhya Pradesh" : bu} total</th><td>${tot(bu)}${bu === "Gujarat" ? "+" : ""}</td><td>${BUDG[bu]}</td><td></td></tr>`;
+  const bfHead = `<table class="sb-table"><thead><tr><th scope="col">City</th><th scope="col">Influencers</th><th scope="col">Budget</th><th scope="col">Status</th></tr></thead><tbody>`;
+  function bfView(v) {
+    let k = "", t = "";
+    if (v === "West") {
+      k = ["Gujarat", "Pune", "MP"].map(bu => `<div style="--c:${BUC[bu]}"><b>${tot(bu)}${bu === "Gujarat" ? "+" : ""}</b><span>${bu === "MP" ? "MP" : bu} influencers, ${BUDG[bu]}</span></div>`).join("") + `<div class="tot"><b>${all}+</b><span>influencers for Black Friday, ₹13.42 L</span></div>`;
+      t = ["Gujarat", "Pune", "MP"].map(bu => BF.filter(r => r[0] === bu).map(bfRow).join("") + bfTot(bu)).join("") + `<tr class="sb-total"><th scope="row">All Black Friday</th><td>${all}+</td><td>₹13.42 L</td><td></td></tr>`;
+    } else if (v === "Gujarat") {
+      k = BF.filter(r => r[0] === "Gujarat").map(r => `<div style="--c:var(--guj)"><b>${r[2] ?? "-"}</b><span>${r[1]} influencers</span></div>`).join("") + `<div class="tot"><b>${tot("Gujarat")}+</b><span>Gujarat, ${BUDG.Gujarat}</span></div>`;
+      t = BF.filter(r => r[0] === "Gujarat").map(bfRow).join("") + bfTot("Gujarat");
+    } else if (v === "Ahmedabad") {
+      const r = BF.find(x => x[1] === "Ahmedabad");
+      k = `<div style="--c:var(--guj)"><b>${r[2]}</b><span>Ahmedabad influencers (Motera and Nexus)</span></div><div style="--c:var(--guj)"><b>${BUDG.Gujarat}</b><span>Gujarat's Black Friday influencer budget (not split by city yet)</span></div><div class="tot"><b>27 to 30 Nov</b><span>the sale</span></div>`;
+      t = bfRow(r);
+    } else {
+      const r = BF.find(x => x[0] === "Pune");
+      k = `<div style="--c:var(--pune)"><b>${r[2]}</b><span>Pune influencers, 21 to 28 Nov</span></div><div style="--c:var(--pune)"><b>${BUDG.Pune}</b><span>Pune influencer budget</span></div><div class="tot"><b>27 to 30 Nov</b><span>the sale</span></div>`;
+      t = bfRow(r);
+    }
+    $("#novBfKpis").innerHTML = k;
+    $("#novBf").innerHTML = bfHead + t + `</tbody></table>`;
+    document.querySelectorAll(".bf-pune-only").forEach(el => { el.hidden = !(v === "Pune" || v === "West"); });
+    document.querySelectorAll(".bf-seg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.bf === v)));
+  }
+  document.querySelectorAll(".bf-seg button").forEach(b => b.addEventListener("click", () => bfView(b.dataset.bf)));
+  bfView("Pune");
 
   const BUN = { Gujarat: "Gujarat", MP: "Madhya Pradesh", Pune: "Pune" };
   // November budget, Pune, line by line (user, 10 Nov 2026: "there's nothing left to plan", Pune ₹28,47,282 is fully planned; Gujarat and MP not needed now).
