@@ -3411,3 +3411,6 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 .aop-nd { padding: 14px 18px; } .aop-nd .aop27 { min-width: 900px; } .aop-nd .aop27 th:last-child { text-align: right; } .aop-nd .aop27 tr.tot td { font-weight: 800; }
 .aop-nd .aop27 td:nth-child(2) { text-align: right; } .aop-nd .aop27 th:nth-child(2) { text-align: right; }
 .mo-nums span.mo-goal { background: #FFF4D6; box-shadow: inset 3px 0 0 #E0A100; } .mo-nums span.mo-goal b { color: #8A5A00; }
+.mo-st-d { margin-top: 8px; border: 1.5px solid var(--line); border-radius: var(--r-sm); padding: 8px 12px; }
+.mo-st-d > summary { cursor: pointer; font-weight: 700; font-size: 13px; color: var(--ink); }
+.mo-st-d .mo-stores { grid-template-columns: 1fr; margin-top: 8px; }

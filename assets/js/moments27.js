@@ -26,8 +26,8 @@
       p: "In all 13 stores: the end-of-season sale, animated in store, not just discounted. The biggest influencer push of Q1.", camps: ["Clearance sale"], ms: [2], sports: "Every sport: clears the winter range" },
     { ids: ["na"], n: "New arrivals", lt: "SS27", when: "February; creators 24 Feb to 6 Mar", img: "u-kiprun.jpg", c: "#6B4FBB",
       p: "The new summer range runs alongside the sale: shoes first (new arrivals: shoes 1 in the planner), then swimwear.", camps: ["New arrivals"], ms: [3], sports: "Running, swimming, fitness" },
-    { ids: ["wd"], n: "Women's Day", lt: "one weekend, all 13 stores", when: "Sat 6 and Sun 7 March (Women's Day is Mon 8 March)", video: "womens-day", c: "#C2185B", wide: true,
-      p: "Women-only mornings on the weekend before Women's Day: pilates or yoga first, then a sport to try, then shopping with a Women's Day offer, and a women's club that keeps meeting.",
+    { ids: ["wd"], n: "Women's Day", lt: "one weekend, all 13 stores", when: "Sat 6 and Sun 7 March (Women's Day is Mon 8 March)", video: "womens-day", c: "#C2185B", stores: true,
+      p: "Women-only mornings on the weekend before Women's Day: pilates or yoga, a sport to try, shopping with the day's offer, and a women's club that keeps meeting.",
       camps: ["Women's Day"], ms: [4], sports: "Fitness, running, swimming" },
     { ids: ["sum"], n: "Summer", lt: "water sports first", when: "March to May", img: "water/water-women-pool.jpg", c: "#0096C7",
       p: "Summer goes strong on water: all 7 Pune hoardings on swimming in March, learn-to-swim with our partner pools before they fill up, and 50 summer + summer camp creators from March to May. Running and summer treks follow.", camps: ["Summer"], ms: [4], sports: "Swimming first, then running and mountain" }
@@ -43,7 +43,7 @@
       const ls = isPune() && PP ? PP.lines.filter(x => m.ms.includes(x.m) && m.camps.includes(x.camp)) : [];
       const film = m.video ? `<div class="pb27-film"><video muted loop playsinline preload="none" poster="assets/posters/${m.video}.jpg" data-src="assets/videos/${m.video}.mp4" aria-label="${esc(m.n)} film"></video></div>` : "";
       const pics = m.wide && m.video ? "" : [m.img, m.img2].filter(Boolean).map(f => `<img class="${m.contain ? "contain" : ""}" src="assets/img/${f}" alt="" loading="lazy">`).join("");
-      const stores = m.wide ? `<div class="mo-stores">${(region === "West" ? ["Pune", "Gujarat", "MP"] : [region]).map(st => `<div><h5>${st === "MP" ? "Madhya Pradesh" : st}</h5><ul>${WD[st].map(([s, t]) => `<li><b>${s}</b>${esc(t)}</li>`).join("")}</ul></div>`).join("")}</div>` : "";
+      const stores = m.stores ? `<details class="mo-st-d"><summary>What every store does</summary><div class="mo-stores">${(region === "West" ? ["Pune", "Gujarat", "MP"] : [region]).map(st => `<div><h5>${st === "MP" ? "Madhya Pradesh" : st}</h5><ul>${WD[st].map(([s, t]) => `<li><b>${s}</b>${esc(t)}</li>`).join("")}</ul></div>`).join("")}</div></details>` : "";
       const split = region !== "Pune" ? `<span><b>${region === "West" ? "Gujarat, MP: not in our files" : "No " + region + " campaign plan yet"}</b>only month totals; the budget shown is Pune's</span>` : "";
       const src = "Pune spend plan";
       return `<article class="mo27 ${m.wide ? "wide" : ""}" style="--c:${m.c}"><div class="mo-media ${(film && pics) || (m.img && m.img2) ? "two" : ""}">${film}${pics}</div>

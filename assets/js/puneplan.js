@@ -50,7 +50,7 @@ window.PUNE_PLAN = {
     { m: 3, ch: "ins", camp: "New arrivals", t: "In-store communication", v: 550000, n: "Amanora 83,000, SGS 1,44,283, Wakad 1,50,000, NIBM 50,000, Wagholi 1,50,000 (these add to 5,77,283, not 5,50,000)" },
     // March 2027: Women's Day, summer
     { m: 4, ch: "evt", camp: "Women's Day", t: "Women's Day weekend event", v: 150000, q: "800 walk-ins expected" },
-    { m: 4, ch: "ooh", camp: "Summer", t: "Swimming hoardings: learn to swim, summer water", v: 725000, q: "7 hoardings", n: "summer goes strong on water sports (user, 10 Nov 2026)" },
+    { m: 4, ch: "ooh", camp: "Summer", t: "Swimming hoardings: learn to swim, summer water", v: 725000, q: "7 hoardings", n: "summer goes strong on water sports" },
     { m: 4, ch: "aop", camp: "AOPs", t: "AOPs", v: 765000, q: "27 AOPs" },
     { m: 4, ch: "inf", camp: "Summer", t: "Influencer campaign: summer + summer camp", v: 500000, q: "50 influencers", d: "March to May" },
     { m: 4, ch: "cont", camp: "Summer", t: "Media vendor", v: 100000, q: "17 reels on the Let's Play Pune page" },

@@ -4,7 +4,7 @@ Single source of truth for this project. Read it before any work. Update it at t
 (see CLAUDE.md): add every new number, file, decision, preference and open question. Never delete
 history; mark superseded facts as superseded.
 
-Last updated: 2026-11-10 (sixteenth brief)
+Last updated: 2026-11-10 (seventeenth brief)
 
 ---
 
@@ -92,6 +92,7 @@ Hero → People ("Who we sell to": Pune, Gujarat, MP state stories with films) �
 - **Wagholi has done 19 AOPs so far** (user, 10 Nov 2026): live now 15 → 19 in AOP_PLAN.
 - **2027 plan: pickleball in a dropdown** (user, 10 Nov 2026).
 - **Movement for All (Jan 2027) participation goal** (user, 10 Nov 2026): the partner events together (yoga, run, gym and Zumba) target **7,500 participants in Pune, 1,500 per store**. The spend plan's expected walk-ins stay as written (yoga 500, run 400, gym/Zumba 500).
+- **2027 Q1 moments: Women's Day shorter, next to New arrivals** (user, 10 Nov 2026): not a full-width card.
 - **Never estimate a split that is not in the data** (from the fourth brief): Gujarat and MP Q1 money stays unsplit (month totals only) until their campaign plans arrive.
 - **Pune market hotspots, light touch** (user, 10 Nov 2026): store catchments, how many travel agencies, swimming pools, gyms, societies, how to tap them, and mark the AOPs (pools, gyms) already tied up from the partnerships file. "Not very in depth ... normal data" (the user has a lot more work coming).
 
@@ -567,6 +568,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-11-10 (fifteenth brief): plan2027: pickleball taken out of the shared sport lists (calendar lanes, month panel, sport chips, turnover-share chart where it now counts in "other sports", strategies, the sports table and cards, the sports KPI) and given its own dropdown "Pickleball" under The sports, with its full card (Pune and Gujarat; hidden for MP). Ledes no longer say "seven sports". plan2027.js 20261110f. Checked all 4 regions at 1440 and 390: no console errors, no horizontal scroll.
 - 2026-11-10 (sixteenth brief): plan2027 Q1 moments, Movement for All card: two highlighted figures, 7,500 participants across the partner events together and 1,500 per store (Pune and West views); the playbook's Movement for All Pune text adds the goal. moments27.js 20261110f, budget27.js 20261110h, site.css 20261110p.
 - 2026-11-10: local test server (port 8777) stopped at its time limit after testing; no site change.
+- 2026-11-10 (seventeenth brief): plan2027 Q1 moments: Women's Day is a normal half-width card beside New arrivals (was full width); its store formats are in a "What every store does" dropdown; shorter copy. Removed an internal "(user, 10 Nov 2026)" tag from the March swimming hoardings note. moments27.js 20261110g, puneplan.js 20261110h, site.css 20261110q.
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 
