@@ -43,6 +43,7 @@ Hero → People ("Who we sell to": Pune, Gujarat, MP state stories with films) �
 - Events and community plans go only to the end of Q1 2027, not beyond (user, 28 Oct 2026). When adding from a source deck, add only what the user names (e.g. pictures and costing only).
 - Keep source/caveat footnotes off the scoreboard blocks (user removed them 28 Oct 2026); flag discrepancies in replies and in section 5 instead.
 
+- **Never create branches; work only on `main`** (user, 10 Nov 2026, explicit rule: "it's an explicit rule to not make any branches, you only work in the main/origin and make edits there"). Commit and push directly to origin/main; no feature branches or PRs. Also written into CLAUDE.md.
 - **Push to repo after every change** ("push to reco" = push to repo). Commit with the Co-Authored-By trailer, push to `main`, confirm the Vercel deploy is READY.
 - **Look: Decathlon "The Blue Voice"** (Oct 2026 cover): font **Inter** everywhere (deck uses Inter; Decathlon's own font is not public). Headlines: light lead-in word(s) + semibold main word; italic letter as accent ("as **O**ne."). Gradient: green #2BFF88 → teal #01EDC9 → cyan #00C4E1 → cobalt #1932C1 → indigo #2920AD → purple #6C3DB1 → magenta #C03F9C, with fine diagonal hatch. Decathlon blue #3643BA, ink #10135A. State colours: Pune blue, Gujarat teal #00A99D, MP purple #7B3FC4.
 - **Details must be visible without hovering or clicking** (money mix, chart values).
@@ -514,6 +515,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-11-10: discovery: pushing context-only commits to the PR branch makes Vercel rebuild both previews, the PR notifications wake the session and the context hook asks for another commit (a loop). Bot-only rebuild notices now get a context line left uncommitted (it rides the next real push).
 - 2026-11-10: PR #2 head 24da7ad: checks passed, both Vercel previews READY. Nothing new (uncommitted).
 - 2026-11-10: unsubscribed this session from PR #2 activity and cancelled the 08:38 check-in, to stop the Vercel-notification / context-commit loop. PR #2 is ready to merge (checks passed, previews READY).
+- 2026-11-10: PR #2 merged into main (merge commit f939b45) at the user's request; the site deploys from main. New standing rule: no branches, work and push on main only (CLAUDE.md + section 2). The branch claude/winter-data-budget-fixes-c7e41s is no longer used.
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 

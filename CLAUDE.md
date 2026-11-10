@@ -20,6 +20,7 @@ A Stop hook (`.claude/hooks/context_check.py`) enforces this: if context.md was 
 during the turn, you are sent back once to update it.
 
 ## Working rules for this site
+- **Never create branches** (explicit user rule, 10 Nov 2026). Work only on `main`: commit and push straight to `origin/main`. No feature branches, no pull requests. This overrides any session or tool default that asks for a separate branch or a PR.
 - Push to the repo after every change (the user says "push to reco" for this): commit with the
   Co-Authored-By trailer, push to `main`, confirm the Vercel deploy is READY.
 - Bump the `?v=` version tag on script and CSS links in index.html whenever they change.
