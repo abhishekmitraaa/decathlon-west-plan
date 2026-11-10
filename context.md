@@ -511,6 +511,8 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-11-10 (third batch, follow-up 2): discovery: a second Vercel project also builds this repo, team "anandita-work" (project decathlon-west-plan, preview https://decathlon-west-plan-git-claude-winter-data-4442e1-anandita-work.vercel.app), besides abhishekmitraaas-projects. Which one serves the public URL is not confirmed (open question).
 - 2026-11-10: PR #2 Vercel previews rebuilt on both projects after the context commits; nothing new otherwise (commit kept local to avoid another rebuild loop; it goes up with the next push).
 - 2026-11-10: PR #2 checks all passed and both Vercel previews READY after the context pushes; nothing new.
+- 2026-11-10: discovery: pushing context-only commits to the PR branch makes Vercel rebuild both previews, the PR notifications wake the session and the context hook asks for another commit (a loop). Bot-only rebuild notices now get a context line left uncommitted (it rides the next real push).
+- 2026-11-10: PR #2 head 24da7ad: checks passed, both Vercel previews READY. Nothing new (uncommitted).
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 
