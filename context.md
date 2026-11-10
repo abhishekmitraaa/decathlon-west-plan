@@ -500,6 +500,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-11-10: PR abhishekmitraaa/decathlon-west-plan#1 at 6bfcdc3: both Vercel previews rebuilt and READY, all checks passed, no review comments. No new data.
 - 2026-11-10: Vercel bot status updates only on PR #1 (previews for 4713de1 building, earlier ones READY). No new data. This line is committed locally and not pushed on its own: each push triggers new preview builds and new bot notifications; it rides the next real change.
 - 2026-11-10: Vercel bot status only on PR #1 (checks green on 4713de1, previews for ecf0b95 building). Logged the hook / Vercel notification loop in section 5.
+- 2026-11-10: To stop the hook / Vercel loop, unsubscribed this session from PR #1 activity and cancelled the 08:23 check-in. PR #1 checks green, no review comments; it waits for the user to merge.
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 
