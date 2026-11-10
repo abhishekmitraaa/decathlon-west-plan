@@ -3414,3 +3414,16 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 .mo-st-d { margin-top: 8px; border: 1.5px solid var(--line); border-radius: var(--r-sm); padding: 8px 12px; }
 .mo-st-d > summary { cursor: pointer; font-weight: 700; font-size: 13px; color: var(--ink); }
 .mo-st-d .mo-stores { grid-template-columns: 1fr; margin-top: 8px; }
+
+/* Pune hotspots: map tabs, catchment rings, Google My Maps, KML downloads */
+.ph-mtabs { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
+.ph-rings { display: flex; gap: 8px; flex-wrap: wrap; }
+.ph-ring { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--ink); padding: 5px 10px; border-radius: var(--r-pill); border: 1.5px dashed var(--c); cursor: pointer; }
+.ph-ring input { accent-color: var(--c); }
+.ph-mymap iframe { width: 100%; height: 480px; border: 0; border-radius: var(--r-sm); display: block; background: #E3ECF6; }
+.ph-kml { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 10px; font-size: 13px; }
+.ph-kml b { color: var(--ink); }
+.ph-kml a { color: #fff; background: #3643BA; padding: 6px 12px; border-radius: var(--r-pill); text-decoration: none; font-weight: 700; font-size: 12.5px; }
+.ph-kml a:last-of-type { background: #fff; color: #3643BA; box-shadow: inset 0 0 0 1.5px #3643BA; }
+.ph-kml span { flex-basis: 100%; color: var(--text-2); font-size: 12px; }
+@media (max-width: 860px) { .ph-mymap iframe { height: 320px; } }

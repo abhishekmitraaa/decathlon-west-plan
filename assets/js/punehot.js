@@ -73,7 +73,14 @@ window.PUNE_HOT = {
     [/walekarwadi/i, 18.6170, 73.7800], [/mahalunge/i, 18.5790, 73.7470], [/pashan/i, 18.5375, 73.7950], [/wakad/i, 18.5975, 73.7700], [/sainik/i, 18.4880, 73.8990],
     [/wanwadi|wanawadi|wanowrie|salunke/i, 18.4930, 73.9000], [/handewadi/i, 18.4560, 73.9420], [/undri/i, 18.4560, 73.9110], [/moham/i, 18.4730, 73.9220],
     [/kondhwa/i, 18.4630, 73.8870], [/nibm/i, 18.4710, 73.9010], [/ganga/i, 18.4790, 73.8820], [/viman/i, 18.5679, 73.9143], [/loh|loah/i, 18.5940, 73.9190], [/wagholi/i, 18.5793, 73.9787]];
-  const STORE_AT = { Wakad: [18.5975, 73.7700], Wagholi: [18.5793, 73.9787], "SGS Mall": [18.5150, 73.8780], NIBM: [18.4710, 73.9010], Amanora: [18.5190, 73.9350] };
+  const STORE_AT = { Wakad: [18.598, 73.763], Wagholi: [18.58, 73.986], "SGS Mall": [18.518, 73.877], NIBM: [18.475, 73.902], Amanora: [18.519, 73.934] }; // = DATA.stores (approximate)
+  const MYMAP = "18_xYhuA0Ko2KhXAZF9IsmEGSownW8yk"; // the user's Google My Map (10 Nov 2026)
+  const RINGS = [[5, "#3643BA"], [10, "#6B4FBB"], [15, "#9AA2C8"]];
+  // every AOP with its (approximate) map point: the page map and the KML files for Google My Maps use the same points
+  window.puneAopPoints = () => { const seen = {}; return Object.entries(AN).flatMap(([st, l]) => l.map(r => {
+    const p = where(r[2], st), key = p.join(), j = seen[key] = (seen[key] || 0) + 1, ang = j * 2.4, rad = 0.0025 * Math.sqrt(j), k = cat(r[1]);
+    return { name: r[0], sport: r[1], area: r[2], when: r[3], store: st, cat: k, catName: KC[k][0], color: KC[k][1], status: status(r[3])[0], statusText: status(r[3])[1], lat: +(p[0] + rad * Math.cos(ang)).toFixed(5), lon: +(p[1] + rad * Math.sin(ang)).toFixed(5) }; })); };
+  window.PUNE_STORES_AT = STORE_AT;
   const where = (area, store) => { const a = String(area || "").trim(); const hit = a && AREA.find(([re]) => re.test(a)); return hit ? [hit[1], hit[2]] : STORE_AT[store]; };
   const KC = { pool: ["Swimming pools", "#0096C7"], gym: ["Gyms, yoga, fitness", "#E0A100"], racket: ["Racket: badminton, pickleball, padel", "#6B4FBB"], team: ["Turfs and team sports", "#12A150"], other: ["Other", "#9AA2C8"] };
   function aopMap() {
@@ -82,16 +89,18 @@ window.PUNE_HOT = {
     if (!window.L) { m.innerHTML = `<p class="nd-hu-nomap">The map needs an internet connection: the counts are above and every place is listed in the store cards below.</p>`; return; }
     const map = L.map(m, { scrollWheelZoom: false });
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
-    const seen = {}, pts = [];
+    const pts = [], rings = {};
     Object.entries(STORE_AT).forEach(([st, p]) => { L.marker(p, { icon: L.icon({ iconUrl: "assets/img/deca-pin.png", iconSize: [26, 26], iconAnchor: [13, 13], className: "map-store" }), zIndexOffset: 2000 }).addTo(map).bindTooltip("Decathlon " + st, { direction: "right", offset: [14, 0], className: "map-tip map-tip-store" }); pts.push(p); });
-    rows.forEach(({ st, r, k, s }) => {
-      const p = where(r[2], st), key = p.join(), j = seen[key] = (seen[key] || 0) + 1, ang = j * 2.4, rad = 0.0025 * Math.sqrt(j);
-      const ll = [p[0] + rad * Math.cos(ang), p[1] + rad * Math.sin(ang)];
-      L.circleMarker(ll, { radius: k === "pool" || k === "gym" ? 7 : 5, color: "#fff", weight: 1.5, fillColor: KC[k][1], fillOpacity: s === "new" ? 0.35 : 0.95 }).addTo(map)
-        .bindPopup(`<b>${esc(r[0])}</b><br>${esc(r[1])}${r[2] ? ", " + esc(r[2]) : ""}<br>Store: ${esc(st)}<br>${esc(status(r[3])[1])}`);
+    RINGS.forEach(([km, c]) => { rings[km] = L.layerGroup(Object.values(STORE_AT).map(p => L.circle(p, { radius: km * 1000, color: c, weight: 1.5, dashArray: "6 6", fill: km === 5, fillColor: c, fillOpacity: 0.05, interactive: false }))); });
+    window.puneAopPoints().forEach(a => {
+      const ll = [a.lat, a.lon];
+      L.circleMarker(ll, { radius: a.cat === "pool" || a.cat === "gym" ? 7 : 5, color: "#fff", weight: 1.5, fillColor: a.color, fillOpacity: a.status === "new" ? 0.35 : 0.95 }).addTo(map)
+        .bindPopup(`<b>${esc(a.name)}</b><br>${esc(a.sport)}${a.area ? ", " + esc(a.area) : ""}<br>Store: ${esc(a.store)}<br>${esc(a.statusText)}`);
       pts.push(ll);
     });
+    document.querySelectorAll(".ph-ring input").forEach(cb => cb.addEventListener("change", () => { const g = rings[+cb.value]; if (cb.checked) g.addTo(map); else map.removeLayer(g); }));
     map.fitBounds(pts, { padding: [20, 20] });
+    rings[5].addTo(map); rings[10].addTo(map); // after the map has a view
     document.addEventListener("y27region", () => setTimeout(() => map.invalidateSize(), 60));
   }
   window.renderPuneHot = el => {
@@ -100,8 +109,13 @@ window.PUNE_HOT = {
     const cnt = k => allRows.filter(r => cat(r[1]) === k && isLive(r)).length, soonN = allRows.filter(r => !isLive(r)).length;
     const mapBlock = `<div class="ph-mapb"><div class="ph-mapk"><div class="t"><b>${allRows.filter(isLive).length}</b><span>AOPs tied up so far, Pune${soonN ? ` (+${soonN} signed to start in 2027)` : ""}</span></div>
         ${["pool", "gym", "racket", "team"].map(k => `<div style="--c:${KC[k][1]}"><b>${cnt(k)}</b><span>${KC[k][0]}</span></div>`).join("")}</div>
-      <div class="ph-map" id="phMap" role="img" aria-label="Map of the AOPs Pune has tied up, by type"></div>
-      <p class="ph-mapn">Every practice place in the Pune partnerships file, coloured by type; faded dots start in 2027. Pins sit at the centre of their area (the file has addresses, not map points), so they are approximate.</p></div>`;
+      <div class="ph-mtabs"><div class="seg" role="group" aria-label="Map"><button type="button" data-mt="ours" aria-pressed="true">AOP map</button><button type="button" data-mt="mymap" aria-pressed="false">Google My Maps</button></div>
+        <div class="ph-rings" aria-label="Store catchments">${RINGS.map(([km, c]) => `<label class="ph-ring" style="--c:${c}"><input type="checkbox" value="${km}" ${km < 15 ? "checked" : ""}> ${km} km</label>`).join("")}</div></div>
+      <div class="ph-map" id="phMap" role="img" aria-label="Map of the AOPs Pune has tied up, by type, with 5, 10 and 15 km store catchments"></div>
+      <div class="ph-mymap" id="phMyMap" hidden><iframe title="Pune AOPs on Google My Maps" data-src="https://www.google.com/maps/d/embed?mid=${MYMAP}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <p class="ph-mapn">Every practice place in the Pune partnerships file, coloured by type; faded dots start in 2027; dashed rings are 5, 10 and 15 km around each store. Pins sit at the centre of their area (the file has addresses, not map points), so they are approximate.</p>
+      <div class="ph-kml"><b>For Google My Maps</b><a href="assets/kml/pune-aops.kml" download>AOPs, by type (KML)</a><a href="assets/kml/pune-catchments.kml" download>Stores and 5, 10, 15 km catchments (KML)</a><a href="https://www.google.com/maps/d/edit?mid=${MYMAP}" target="_blank" rel="noopener">Open our My Map</a>
+        <span>In the My Map: Add layer, then Import, and choose a file; do it once for each file. The Google My Maps tab shows the map once it is shared as "anyone with the link can view".</span></div></div>`;
     const city = `<div class="ph-city">${H.city.map(c => `<div class="ph-c ${c.k}"><b>${c.v}</b><span>${c.n}, Pune</span><p>${esc(c.s)}</p><small>${esc(c.src)}</small></div>`).join("")}</div>
       <div class="ph-tap">${[["pool", "Swimming pools"], ["gym", "Gyms"], ["trav", "Travel agencies"], ["soc", "Societies"]].map(([k, n]) => `<div class="${k}"><h4>How we tap: ${n.toLowerCase()}</h4><p>${esc(H.tap[k])}</p></div>`).join("")}</div>`;
     const cards = H.stores.map(st => {
@@ -136,6 +150,11 @@ window.PUNE_HOT = {
         <p class="ph-ask">${esc(H.travel.ask)}</p></div>
       <p class="w27-note">Tied up: Pune partnerships sheet (practice place, sport, area, timeline; contacts left out). Status from the timeline as written: "ends in 2026" means the sheet's end date is in 2026. City numbers: public reports and directories (approximate, checked 10 Nov 2026). Catchment areas and hotspots: our reading of each store's surroundings, to confirm with the store teams. Store-level counts of gyms, pools, agencies and societies are not in our files.</p>`;
   };
-  const go = () => { window.renderPuneHot(document.getElementById("puneHot")); aopMap(); };
+  const go = () => { window.renderPuneHot(document.getElementById("puneHot")); aopMap();
+    document.querySelectorAll(".ph-mtabs .seg button").forEach(b => b.addEventListener("click", () => {
+      const my = b.dataset.mt === "mymap", f = document.querySelector("#phMyMap iframe");
+      document.querySelectorAll(".ph-mtabs .seg button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+      document.getElementById("phMap").hidden = my; document.getElementById("phMyMap").hidden = !my; document.querySelector(".ph-rings").style.visibility = my ? "hidden" : "visible";
+      if (my && f && !f.src) f.src = f.dataset.src; })); };
   if (document.readyState !== "loading") go(); else document.addEventListener("DOMContentLoaded", go);
 })();
