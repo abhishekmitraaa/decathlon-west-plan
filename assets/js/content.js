@@ -276,12 +276,6 @@ window.CONTENT.credits = {
   "license": "CC BY 2.0",
   "link": "https://www.flickr.com/photos/21932201@N04/2635903608"
  },
- "shoes": {
-  "title": "Shoes for sale",
-  "creator": "kewl",
-  "license": "CC BY 2.0",
-  "link": "https://www.flickr.com/photos/58411470@N00/13902057323"
- },
  "camping": {
   "title": "Stars Over Everest 2",
   "creator": "SamHawleywood",

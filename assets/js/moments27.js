@@ -21,7 +21,7 @@
     { ids: ["fit"], n: "Movement for All", lt: "New Year, New Moves", when: "January, all 13 stores", video: "circuit-games", img: "cc/fitness.jpg", c: "#E0A100",
       p: "A complete fitness event across all 13 stores: the city moves for the month. Partner yoga, run and gym sessions bring people to the store; creators post the first two weeks.",
       camps: ["Movement for All"], ms: [2, 4], sports: "Fitness, then running and yoga" },
-    { ids: ["clr"], n: "Clearance sale", lt: "animated at the stores", when: "January (2026 ran 10 Jan to 15 Feb)", img: "cc/shoes.jpg", img2: "winter-off.jpg", c: "#D6453D",
+    { ids: ["clr"], n: "Clearance sale", lt: "animated at the stores", when: "January (2026 ran 10 Jan to 15 Feb)", img: "winter-off.jpg", c: "#D6453D", contain: true,
       p: "In all 13 stores: the end-of-season sale, animated in store, not just discounted. The biggest influencer push of Q1.", camps: ["Clearance sale"], ms: [2], sports: "Every sport: clears the winter range" },
     { ids: ["na"], n: "New arrivals", lt: "SS27", when: "February; creators 24 Feb to 6 Mar", img: "u-kiprun.jpg", c: "#6B4FBB",
       p: "The new summer range runs alongside the sale: shoes first (new arrivals: shoes 1 in the planner), then swimwear.", camps: ["New arrivals"], ms: [3], sports: "Running, swimming, fitness" },

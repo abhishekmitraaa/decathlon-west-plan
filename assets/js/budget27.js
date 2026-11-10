@@ -68,7 +68,7 @@ window.BUDGET27 = {
    checked 9 Nov 2026 via YouTube oEmbed: author = the Decathlon country channel). They play only when clicked. */
 window.BUDGET27.media = {
   fit: { video: "circuit-games", img: ["cc/fitness.jpg"], yt: ["OqE_Z5L3RSY", "YrVz4sayHQg"] },
-  clr: { img: ["cc/shoes.jpg", "winter-off.jpg"], yt: ["0EM3JYLbNZE"] },
+  clr: { img: ["winter-off.jpg"], contain: true, yt: ["0EM3JYLbNZE"] },
   aon: { video: "aop-wall", img: ["su/su-pune-ride.jpg"], yt: ["Y3OH-j05aqk"] },
   na: { img: ["u-kiprun.jpg", "water/water-women-cover.jpg"], yt: ["NjveKnMMzD4", "9LeVIZul0ZQ"] },
   sum: { video: "water-armbands", img: ["water/water-women-pool.jpg"], yt: ["9LeVIZul0ZQ", "NjveKnMMzD4", "DtWHQZWxk4c"] },

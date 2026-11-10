@@ -24,7 +24,7 @@
     [/kids|obstacle|summer camp/i, "cc/kids.jpg"], [/first cycle|cycle/i, "u-family-cycle.jpg"],
     [/christmas/i, "cc/christmas.jpg"], [/happy diwali|diwali sale|diwali/i, "cc/diwali.jpg"], [/gift/i, "gifts-1999.jpg"],
     [/sinhagad|fort/i, "pune-fort-trail.jpg"], [/himalayan|manali|winter trek|layer|trek shoes|pack with me|date night|love|valentine|rate the date/i, "u-trek-couple.jpg"],
-    [/trek|saputara|mh500|pack|sunrise/i, "cc/trek-green.jpg"], [/black friday|sale|clearance|new arrivals|haul|shoes drop/i, "cc/shoes.jpg"],
+    [/trek|saputara|mh500|pack|sunrise/i, "cc/trek-green.jpg"], [/clearance/i, "winter-off.jpg"], [/black friday|sale|new arrivals|haul|shoes drop/i, "u-kiprun.jpg"],
     [/hyrox|fitness session|new moves|starter|gym|movement for all/i, "cc/fitness.jpg"], [/kiprun|new shoes|first 5k/i, "u-kiprun.jpg"],
     [/women|she plays|move together|why we play/i, "u-women-football.jpg"],
     [/marathon/i, "cc/marathon.jpg"], [/run|race/i, "u-runclub.jpg"], [/uttarayan|kite|kai po che|terrace|sankranti/i, "cc/kite.jpg"],
