@@ -7,11 +7,11 @@
   <Style id="r10"><LineStyle><color>ffBB4F6B</color><width>2</width></LineStyle><PolyStyle><color>14BB4F6B</color></PolyStyle></Style>
   <Style id="r15"><LineStyle><color>ffC8A29A</color><width>2</width></LineStyle><PolyStyle><color>0cC8A29A</color></PolyStyle></Style>
   <Folder><name>Decathlon stores</name>
-    <Placemark><name>Decathlon Wakad</name><styleUrl>#store</styleUrl><Point><coordinates>73.763,18.598,0</coordinates></Point></Placemark>
-    <Placemark><name>Decathlon Wagholi</name><styleUrl>#store</styleUrl><Point><coordinates>73.986,18.58,0</coordinates></Point></Placemark>
-    <Placemark><name>Decathlon SGS Mall</name><styleUrl>#store</styleUrl><Point><coordinates>73.877,18.518,0</coordinates></Point></Placemark>
-    <Placemark><name>Decathlon NIBM</name><styleUrl>#store</styleUrl><Point><coordinates>73.902,18.475,0</coordinates></Point></Placemark>
-    <Placemark><name>Decathlon Amanora</name><styleUrl>#store</styleUrl><Point><coordinates>73.934,18.519,0</coordinates></Point></Placemark>
+    <Placemark><name>Wakad</name><styleUrl>#store</styleUrl><Point><coordinates>73.763,18.598,0</coordinates></Point></Placemark>
+    <Placemark><name>Wagholi</name><styleUrl>#store</styleUrl><Point><coordinates>73.986,18.58,0</coordinates></Point></Placemark>
+    <Placemark><name>SGS</name><styleUrl>#store</styleUrl><Point><coordinates>73.877,18.518,0</coordinates></Point></Placemark>
+    <Placemark><name>NIBM</name><styleUrl>#store</styleUrl><Point><coordinates>73.902,18.475,0</coordinates></Point></Placemark>
+    <Placemark><name>Amanora</name><styleUrl>#store</styleUrl><Point><coordinates>73.934,18.519,0</coordinates></Point></Placemark>
   </Folder>
   <Folder><name>5 km catchment</name>
     <Placemark><name>Wakad: 5 km</name><styleUrl>#r5</styleUrl><Polygon><outerBoundaryIs><LinearRing><coordinates>73.81039,18.59800,0 73.81016,18.60240,0 73.80948,18.60676,0 73.80835,18.61104,0 73.80678,18.61519,0 73.80479,18.61917,0 73.80240,18.62295,0 73.79963,18.62649,0 73.79651,18.62976,0 73.79306,18.63272,0 73.78933,18.63535,0 73.78534,18.63761,0 73.78114,18.63950,0 73.77676,18.64098,0 73.77225,18.64205,0 73.76765,18.64270,0 73.76300,18.64292,0 73.75835,18.64270,0 73.75375,18.64205,0 73.74924,18.64098,0 73.74486,18.63950,0 73.74066,18.63761,0 73.73667,18.63535,0 73.73294,18.63272,0 73.72949,18.62976,0 73.72637,18.62649,0 73.72360,18.62295,0 73.72121,18.61917,0 73.71922,18.61519,0 73.71765,18.61104,0 73.71652,18.60676,0 73.71584,18.60240,0 73.71561,18.59800,0 73.71584,18.59360,0 73.71652,18.58924,0 73.71765,18.58496,0 73.71922,18.58081,0 73.72121,18.57683,0 73.72360,18.57305,0 73.72637,18.56951,0 73.72949,18.56624,0 73.73294,18.56328,0 73.73667,18.56065,0 73.74066,18.55839,0 73.74486,18.55650,0 73.74924,18.55502,0 73.75375,18.55395,0 73.75835,18.55330,0 73.76300,18.55308,0 73.76765,18.55330,0 73.77225,18.55395,0 73.77676,18.55502,0 73.78114,18.55650,0 73.78534,18.55839,0 73.78933,18.56065,0 73.79306,18.56328,0 73.79651,18.56624,0 73.79963,18.56951,0 73.80240,18.57305,0 73.80479,18.57683,0 73.80678,18.58081,0 73.80835,18.58496,0 73.80948,18.58924,0 73.81016,18.59360,0 73.81039,18.59800,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>

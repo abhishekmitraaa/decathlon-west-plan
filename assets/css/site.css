@@ -3427,3 +3427,4 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 .ph-kml a:last-of-type { background: #fff; color: #3643BA; box-shadow: inset 0 0 0 1.5px #3643BA; }
 .ph-kml span { flex-basis: 100%; color: var(--text-2); font-size: 12px; }
 @media (max-width: 860px) { .ph-mymap iframe { height: 320px; } }
+.leaflet-tooltip.map-tip-short { font-size: 10.5px; font-weight: 700; padding: 1px 6px; line-height: 1.4; }
