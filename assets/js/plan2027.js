@@ -10,7 +10,8 @@
   // region: West (all three) or one state. STATES is the live list of states in view (changed in place on a region switch)
   const ALLST = ["Pune", "Gujarat", "MP"], STATES = [...ALLST], SC = { Pune: "var(--pune)", Gujarat: "var(--guj)", MP: "var(--mp)" };
   let region = "West";
-  const SPS = () => SP.sports.filter(s => region === "West" || s.where.includes(region));
+  const SPS = () => SP.sports.filter(s => s.id !== "pickleball" && (region === "West" || s.where.includes(region)));
+  const PK = () => SP.sports.filter(s => s.id === "pickleball" && (region === "West" || s.where.includes(region)));
   const isPune = () => region === "West" || region === "Pune";
   // keep a line unless it names only places in the other states (place names from our store cities and plans)
   const PLACES = { Pune: /Pune|Wakad|Wagholi|NIBM|Amanora|SGS|Sahyadri|Pimpri|Lonavala|Maharashtra|Gudi Padwa/i,
@@ -150,7 +151,7 @@
       <tr class="tot"><td><b>${rows.length} sports</b></td><td></td><td><span class="y27-bv">${L(tot.base)} → <b>${L(tot.goal)}</b></span></td><td><b>${(tot.share * 100).toFixed(1)}%</b></td><td><span class="y27-bv">${L(tot.base - tot.online)} / ${L(tot.online)}</span></td><td><b>+${Math.round((tot.goal / tot.base - 1) * 100)}%</b></td><td><b>${L(tot.budget)}</b></td><td><b>${tot.aops}</b></td></tr>
       </tbody></table><p class="y27-key"><i class="a"></i>2026, same months <i class="b"></i>2027 goal. Share: of all West turnover in those months (every sport). In-store is offline, online is out of store.</p>`;
 
-    $("#y27Cards").innerHTML = rows.map(({ s, n }) => {
+    const cardFn = ({ s, n }) => {
       const maxSt = Math.max(...STATES.map(st => n.byState[st] || 0)) || 1;
       const series = Array.from({ length: 10 }, (_, i) => ({ v: STATES.reduce((t, st) => t + tov(s.id, st, i), 0), o: STATES.reduce((t, st) => t + tov(s.id, st, i, "on"), 0) }));
       const maxM = Math.max(...series.map(x => x.v));
@@ -169,7 +170,11 @@
         <div class="y27-split">${perState}</div>
         <div class="y27-moves ${Q[view].qs.length > 1 ? "two" : ""}">${moves}</div>
       </article>`;
-    }).join("");
+    };
+    $("#y27Cards").innerHTML = rows.map(cardFn).join("");
+    // pickleball sits in its own dropdown (user, 10 Nov 2026)
+    const pk = PK(), pd = $("#y27PickleD");
+    if (pd) { pd.hidden = !pk.length; $("#y27Pickle").innerHTML = pk.map(s => cardFn({ s, n: nums(s, view) })).join(""); }
   }
 
   /* ---------- strategies, month by month ---------- */
