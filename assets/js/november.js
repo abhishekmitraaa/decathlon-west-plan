@@ -14,7 +14,7 @@
     ["Influencers", "23 so far: Gujarat 13 (₹1.3 L, with Akshat), Indore 4 on barter, Bhopal 4, Gwalior 2 with a gift card each. The 10 reels below have about 1.9 lakh views"],
     ["City pages", "Diwali reels on all 8 Let's Play pages, e.g. Gwalior's “why gift mithai? When you have Decathlon”"],
     ["Recycling", "Gujarat content reused in MP, the best of MP reused in Gujarat, the same with Pune"],
-    ["On the road", "7 hoardings live in Pune; 114 practice-place AOPs live in 6 stores"],
+    ["On the road", "7 hoardings live in Pune; 118 practice-place AOPs live in 6 stores"],
     ["Next", "Black Friday influencers finalised by Mon 9 Nov (Pune by Tue 10 Nov)"]
   ];
   $("#novLive").innerHTML = LIVE.map(([w, t]) => `<li><b>${w}</b>${esc(t)}</li>`).join("");
