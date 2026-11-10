@@ -89,36 +89,25 @@
       `<tr class="sb-total"><th scope="row">${bu === "MP" ? "Madhya Pradesh" : bu} total</th><td>${tot(bu)}${bu === "Gujarat" ? "+" : ""}</td><td>${bu === "Gujarat" ? "₹7.4 L" : bu === "Pune" ? "₹4 L" : "₹2.02 L"}</td><td></td></tr>`).join("")}
     <tr class="sb-total"><th scope="row">All Black Friday</th><td>${all}+</td><td>₹13.42 L</td><td style="text-align:left"></td></tr></tbody></table>`;
 
-  // November budget (user, 5-6 Nov 2026), rupees. Committed: hoardings (booked sites, a month, from the winter hoarding programme;
-  // Ahmedabad's two boards ₹3.5 L; the planned Surat board is not booked), Black Friday influencers, in-store comms ₹50,000 a store.
-  // Pune: ₹28,47,282 for November = the Pune sheet's total advertising and marketing budget (user, 10 Nov 2026; superseded: ₹17,98,000, then ₹28,00,000)
-  const BUD = { Gujarat: 2000000, MP: 986000, Pune: 2847282 };
-  const STORES_N = { Gujarat: 5, MP: 3, Pune: 5 };
-  const CITY_BU = { Pune: "Pune", Ahmedabad: "Gujarat", Baroda: "Gujarat", Rajkot: "Gujarat", Surat: "Gujarat", Bhopal: "MP", Indore: "MP", Gwalior: "MP" };
-  const HOARD = { Gujarat: 0, MP: 0, Pune: 0 };
-  (window.HOARDINGS || []).filter(x => x.status !== "plan").forEach(x => { HOARD[CITY_BU[x.city]] += x.cost; });
-  const INF = { Gujarat: 740000, MP: 70000 + 100000 + 32000, Pune: 400000 + 100000 }; // Pune: Black Friday ₹4 L + Winter & Travel ₹1 L (10 creators, 15 to 21 Nov)
-  const WALK = { Gujarat: 30000, MP: 30000, Pune: 140000 };
   const BUN = { Gujarat: "Gujarat", MP: "Madhya Pradesh", Pune: "Pune" };
-  const PARTS = [["ho", "Hoardings", "#1F2A8A"], ["inf", "Influencers", "#E0457B"], ["ins", "In-store comms", "#14A38B"], ["left", "Left to plan", "#FFC21A"]];
-  const brow = ["Gujarat", "MP", "Pune"].map(bu => { const b = BUD[bu], ho = HOARD[bu], inf = INF[bu], ins = bu === "Pune" ? 497282 : STORES_N[bu] * 50000; return { bu, b, ho, inf, ins, left: b - ho - inf - ins }; });
-  const btot = k => brow.reduce((a, r) => a + r[k], 0);
-  $("#novBudgetKpis").innerHTML = `<div class="tot"><b>${L$(btot("b"))}</b><span>total budget, November</span></div>${brow.map(r => `<div style="--c:${BU[r.bu]}"><b>${L$(r.b)}</b><span>${BUN[r.bu]}</span></div>`).join("")}<div class="nov-left"><b>${L$(btot("left"))}</b><span>left to plan, after ${L$(btot("b") - btot("left"))} committed</span></div>`;
-  // donut for the West
-  let acc = 0; const B = btot("b");
-  const stops = PARTS.map(([k, , c]) => { const from = acc / B * 360; acc += btot(k); return `${c} ${from}deg ${acc / B * 360}deg`; }).join(", ");
-  $("#nbDonut").innerHTML = `<div class="nb-ring" style="background:conic-gradient(${stops})"><div><b>${L$(btot("left"))}</b><span>left to plan of ${L$(B)}</span></div></div>`;
-  $("#nbLegend").innerHTML = PARTS.map(([k, n, c]) => `<li><i style="background:${c}"></i>${n}<b>${L$(btot(k))}</b><small>${Math.round(btot(k) / B * 100)}%</small></li>`).join("");
-  // one bar per business unit, the amount written on each part
-  const bmax = Math.max(...brow.map(r => r.b));
-  $("#nbBars").innerHTML = brow.map(r => `<div class="nb-bu"><div class="nb-bu-head"><b>${BUN[r.bu]}</b><span>${L$(r.b)}</span></div>
-      <div class="nb-bar" style="width:${r.b / bmax * 100}%">${PARTS.map(([k, n, c]) => r[k] > 0 ? `<i style="flex:${r[k]} 1 0;background:${c}" title="${n}: ${L$(r[k])}"><em>${r[k] / r.b > 0.09 ? L$(r[k]) : ""}</em></i>` : "").join("")}</div>
-      <div class="nb-left">Left to plan <b>${L$(r.left)}</b></div></div>`).join("") +
-    `<div class="nb-key">${PARTS.map(([, n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join("")}</div>`;
-  $("#novBudgetTable").innerHTML = `<table class="sb-table"><thead><tr><th scope="col">November</th><th scope="col">Budget</th><th scope="col">Hoardings</th><th scope="col">Influencers</th><th scope="col">In-store comms</th><th scope="col" class="nov-left-col">Left to plan</th></tr></thead><tbody>
-    ${brow.map(r => `<tr><th scope="row">${BUN[r.bu]}</th><td>${L$(r.b)}</td><td>${L$(r.ho)}</td><td>${L$(r.inf)}</td><td>${L$(r.ins)}</td><td class="nov-left-col"><b>${L$(r.left)}</b></td></tr>`).join("")}
-    <tr class="sb-total"><th scope="row">West</th><td>${L$(btot("b"))}</td><td>${L$(btot("ho"))}</td><td>${L$(btot("inf"))}</td><td>${L$(btot("ins"))}</td><td class="nov-left-col"><b>${L$(btot("left"))}</b></td></tr></tbody></table>`;
-  $("#novBudgetNote").innerHTML = `Hoardings: booked sites, a month (Pune 7, Ahmedabad 2, Baroda 4, Rajkot 2, Bhopal 2); the planned Surat board is not booked. Influencers: Black Friday (Gujarat ₹7.4 L, Pune ₹4 L, MP ₹2.02 L) and Pune's Winter &amp; Travel ₹1 L (10 creators, 15 to 21 Nov). In-store comms: ₹50,000 a store; Pune ₹4,97,282 (Pune spend plan). Pune's November budget is ₹28,47,282 (Pune spend plan, total budget). If the walk-in events go ahead, left to plan falls by ${L$(WALK.Pune)} in Pune, ${L$(WALK.Gujarat)} in Gujarat and ${L$(WALK.MP)} in MP.`;
+  // November budget, Pune, line by line (user, 10 Nov 2026: "there's nothing left to plan", Pune ₹28,47,282 is fully planned; Gujarat and MP not needed now).
+  // Lines and channels: PUNE_PLAN (puneplan.js, the Pune spend plan, BFS PUNE).
+  document.addEventListener("DOMContentLoaded", () => {
+    const PP = window.PUNE_PLAN; if (!PP || !$("#novBudgetKpis")) return;
+    const ls = PP.lines.filter(x => x.m === 0), T = PP.totals[0], CH = PP.channels;
+    const inr = v => "₹" + Math.round(v).toLocaleString("en-IN"), pc = v => (v / T * 100).toFixed(1) + "%";
+    const byCamp = c => ls.filter(x => x.camp === c).reduce((a, x) => a + x.v, 0);
+    const camps = [["Black Friday", "#111"], ["Winter & Travel", "#2E7D32"], ["AOPs", "#12A150"], ["Kiprun", "#E8590C"]];
+    $("#novBudgetKpis").innerHTML = `<div class="tot"><b>${inr(T)}</b><span>Pune, November: all planned</span></div>` +
+      camps.map(([c, col]) => `<div style="--c:${col}"><b>${inr(byCamp(c))}</b><span>${c === "Winter & Travel" ? "Winter, Trek & Travel" : c === "AOPs" ? "AOPs and free products" : c === "Kiprun" ? "Kiprun event" : c}: ${pc(byCamp(c))}</span></div>`).join("");
+    const chs = Object.keys(CH).map(k => [k, ls.filter(x => x.ch === k).reduce((a, x) => a + x.v, 0)]).filter(x => x[1]).sort((a, b) => b[1] - a[1]);
+    let acc = 0;
+    const stops = chs.map(([k, v]) => { const f = acc / T * 360; acc += v; return `${CH[k][1]} ${f}deg ${acc / T * 360}deg`; }).join(", ");
+    $("#nbDonut").innerHTML = `<div class="nb-ring" style="background:conic-gradient(${stops})"><div><b>${inr(T)}</b><span>Pune, November</span></div></div>`;
+    $("#nbLegend").innerHTML = chs.map(([k, v]) => `<li><i style="background:${CH[k][1]}"></i>${CH[k][0]}<b>${inr(v)}</b><small>${pc(v)}</small></li>`).join("");
+    const mx = Math.max(...ls.map(x => x.v));
+    $("#nbBars").innerHTML = `<ul class="nb-lines">${ls.slice().sort((a, b) => b.v - a.v).map(x => `<li><div class="nb-l-t"><b>${esc(x.t)}</b><small>${esc(x.camp === "Winter & Travel" ? "Winter, Trek & Travel" : x.camp)}${x.q ? ", " + esc(x.q) : ""}${x.d ? ", " + esc(x.d) : ""}</small></div><div class="nb-l-bar"><i style="--w:${x.v / mx * 100}%;--c:${CH[x.ch][1]}"></i></div><span class="nb-l-v"><b>${inr(x.v)}</b><em>${pc(x.v)}</em></span></li>`).join("")}</ul>`;
+  });
 
   // Q4 campaign turnover goals, SD piloting sheet (Q4_CAMPAIGN_WISE_TURONVER_GOAL_.xlsx, 6 Nov 2026). ₹ Cr except Kiprun and Kids Utsav (₹).
   // [store, BU, Q4'26 challenge, Q4'26 piloting, BFS 2025, BF 2026 goal, Christmas 2025, Christmas 2026 goal, Kiprun shoes incremental, Kids Utsav]

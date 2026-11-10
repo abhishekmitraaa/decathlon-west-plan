@@ -9,7 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=20261110h">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="assets/css/site.css?v=20261110i">
 </head>
 <body class="nov-page">
 
@@ -23,14 +24,13 @@
   </nav>
   <nav class="nav" aria-label="November and December sections">
     <a href="#diwali">Diwali</a>
+    <a href="#runway">Pune runway</a>
+    <a href="#pune">Pune money</a>
     <a href="#blackfriday">Black Friday</a>
     <a href="#winter">Winter, Trek &amp; Travel</a>
     <a href="#december">Christmas</a>
-    <a href="#runway">Pune runway</a>
-    <a href="#pune">Pune money</a>
-    <a href="#aops">AOPs</a>
     <a href="#marketing">Our marketing</a>
-    <a href="#budget">Budget and goals</a>
+    <a href="#budget">November budget</a>
     <a href="#summary">Summary</a>
   </nav>
 </header>
@@ -102,6 +102,29 @@
   </div>
 </section>
 
+<section class="sec sec-mist" id="runway">
+  <div class="wrap">
+    <header class="sec-head"><h2 class="display">Pune runway<span class="lt">, November and December, week by week</span></h2>
+      <p class="sec-lede">Only Pune: Black Friday and the Christmas Sale, Winter &amp; Travel, the influencers, in-store and mall, hoardings, AOPs, the city's own events and our content. Pick a week to see everything in it.</p></header>
+    <div class="planner-scroll"><div class="planner y27-planner w27-planner" id="ndGrid"></div></div>
+    <div class="y27-month w27-week" id="ndWeek" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="sec sec-paper" id="pune">
+  <div class="wrap">
+    <header class="sec-head"><h2 class="display">Pune's money<span class="lt">, November and December</span></h2>
+      <p class="sec-lede">Every line of Pune's advertising and marketing budget, and the AOPs it pays for. November ₹28,47,282 and December ₹29,62,282: all of it is planned.</p></header>
+    <div class="cq-kpis nov-kpis pm-kpis" id="ndPuneKpis"></div>
+    <div id="ndPune"></div>
+    <h3 class="display-s w27-sub" id="aops">AOPs<span class="lt">, November and December</span></h3>
+    <div class="panel"><div class="sb-wrap" id="ndPuneAops"></div></div>
+    <details class="panel pm-d"><summary><b>AOPs store by store</b><span>Live now, added in November and December, cost per AOP</span></summary><div class="sb-wrap" id="ndAops"></div></details>
+    <h3 class="display-s w27-sub">Influencers<span class="lt">, November and December</span></h3>
+    <div class="panel pi-panel" id="ndInfl"></div>
+  </div>
+</section>
+
 <section class="sec nov-black" id="blackfriday">
   <svg class="nov-swoosh" viewBox="0 0 1440 420" preserveAspectRatio="none" aria-hidden="true"><path d="M0 330 C 380 250, 760 120, 1440 40 L 1440 120 C 800 190, 420 320, 0 420 Z" fill="#2E5BFF"/></svg>
   <div class="wrap">
@@ -146,7 +169,7 @@
     </div>
     <div class="nd-w-grid">
       <div class="nd-w-plan">
-        <div class="road"><h4><i aria-hidden="true">⛰</i>On the road</h4><p>Pune: 7 hoardings, ₹9.35 L a month (booked under Winter &amp; Travel in the sheet for November and December). The vendor is away: the new creative goes live by 15 November at the latest. Baroda keeps Kiprun up for now and switches to Winter in December.</p></div>
+        <div class="road"><h4><i aria-hidden="true">⛰</i>On the road</h4><p>Pune: 7 hoardings, ₹9.35 L a month (booked under Winter &amp; Travel in the sheet for November and December). The vendor is away: the boards will have the winter comms up by 15 November at the latest.</p></div>
         <div class="inf"><h4><i aria-hidden="true">✦</i>Influencers</h4><p>Pune, as the sheet has it: 20 paid Instagram creators, ₹2,00,000: 10 from 15 to 21 November and 10 from 1 to 15 December. Plus 7 on barter (₹50,000) and the best 10 reels recycled as boosts (₹10,000).</p></div>
         <div class="cont"><h4><i aria-hidden="true">▶</i>Content</h4><p>Media vendor reels in December (₹1 L): pack with me for a Sahyadri night trek; one jacket, three layers; the New Year trip in one backpack.</p></div>
         <div class="store"><h4><i aria-hidden="true">❄</i>In the store</h4><p>A winter wall at the entrance: padded jackets from ₹1,999, gloves and caps, base layers, the MH500 backpack, the way Surat set it up for Diwali.</p></div>
@@ -194,36 +217,8 @@
   </div>
 </section>
 
-<section class="sec sec-mist" id="runway">
-  <div class="wrap">
-    <header class="sec-head"><h2 class="display">Pune runway<span class="lt">, November and December, week by week</span></h2>
-      <p class="sec-lede">Only Pune: Black Friday and the Christmas Sale, Winter &amp; Travel, the influencers, in-store and mall, hoardings, AOPs, the city's own events and our content. Pick a week to see everything in it.</p></header>
-    <div class="planner-scroll"><div class="planner y27-planner w27-planner" id="ndGrid"></div></div>
-    <div class="y27-month w27-week" id="ndWeek" aria-live="polite"></div>
-    <p class="w27-note">Sources: the Pune spend plan (BFS PUNE sheet), the Q4 runway on the main site, and public race listings for the city events (Pune International Marathon 6 Dec; SRT Ultra 12 Dec; Bajaj Pune Marathon 13 Dec, to confirm; Pimpri Chinchwad Half Marathon 20 Dec).</p>
-  </div>
-</section>
 
-<section class="sec sec-paper" id="pune">
-  <div class="wrap">
-    <header class="sec-head"><h2 class="display">Pune's money<span class="lt">, line by line</span></h2>
-      <p class="sec-lede">November ₹28,47,282 and December ₹29,62,282, the total advertising and marketing budget in the Pune plan: hoardings, in-mall, in-store, AOPs and free products, influencers, boosts, coupon cards, events and the media vendor.</p></header>
-    <div id="ndPune"></div>
-    <h3 class="display-s w27-sub">Influencers, November and December</h3>
-    <div class="panel pi-panel" id="ndInfl"></div>
-    <h3 class="display-s w27-sub">AOP money, store by store</h3>
-    <div class="panel"><div class="sb-wrap" id="ndPuneAops"></div></div>
-  </div>
-</section>
 
-<section class="sec sec-mist" id="aops">
-  <div class="wrap">
-    <header class="sec-head"><h2 class="display">AOPs<span class="lt">, November and December, every store</span></h2>
-      <p class="sec-lede">The practice places each store adds in November and December, from the AOP plan, and what they cost.</p></header>
-    <div class="panel"><div class="sb-wrap" id="ndAops"></div></div>
-    <p class="w27-note">Pune's counts match the Pune spend plan (22 in November, 27 in December). Live now: from the same AOP plan.</p>
-  </div>
-</section>
 
 <section class="sec sec-paper" id="marketing">
   <div class="wrap">
@@ -235,14 +230,13 @@
 
 <section class="sec sec-mist" id="budget">
   <div class="wrap">
-    <header class="sec-head"><h2 class="display">November budget<span class="lt"> and Q4 goals</span></h2>
-      <p class="sec-lede">What each business unit has for November, what is already committed, what is left to plan, and the turnover each campaign has to deliver.</p></header>
+    <header class="sec-head"><h2 class="display">November budget<span class="lt">, Pune, line by line</span></h2>
+      <p class="sec-lede">₹28,47,282: Pune's total advertising and marketing budget for November, every rupee already planned. Each line, what it is for, and its share of the month.</p></header>
     <div class="cq-kpis nov-kpis nb-kpis" id="novBudgetKpis"></div>
     <div class="nb-top">
-      <div class="panel nb-donut-card"><h3>West, November</h3><div class="nb-donut" id="nbDonut"></div><ul class="nb-legend" id="nbLegend"></ul></div>
-      <div class="panel nb-bars-card"><h3>By business unit</h3><div id="nbBars"></div><p class="nov-note" id="novBudgetNote"></p></div>
+      <div class="panel nb-donut-card"><h3>Pune, November, by channel</h3><div class="nb-donut" id="nbDonut"></div><ul class="nb-legend" id="nbLegend"></ul></div>
+      <div class="panel nb-bars-card"><h3>Line by line</h3><div id="nbBars"></div></div>
     </div>
-    <div class="panel nov-bud-table"><div class="sb-wrap" id="novBudgetTable"></div></div>
     <h3 class="nb-sub" id="goals">Q4 turnover goals, campaign by campaign</h3>
     <div class="cq-kpis nov-kpis" id="novGoalKpis"></div>
     <div class="panel nb-goal-chart"><h3>Black Friday and Christmas sale: 2025 against the 2026 goal</h3><div id="nbGoalChart"></div></div>
@@ -254,7 +248,7 @@
   <div class="wrap">
     <header class="sec-head"><h2 class="display">November and December<span class="lt">, in one view</span></h2>
       <p class="sec-lede">The four campaigns side by side: when, what, the money (Pune's plan line by line, plus what we know for Gujarat and MP) and what each brings in.</p></header>
-    <div id="ndSummary"></div>
+    <details class="panel nd-sum-d"><summary><b>Open: November and December in one view</b><span>The four campaigns side by side, the Pune money and what each brings in</span></summary><div id="ndSummary"></div></details>
   </div>
 </section>
 
@@ -268,11 +262,12 @@
 
 
 <script>window.DATA = window.DATA || {};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="assets/js/data.js?v=20261110c"></script>
 <script src="assets/js/sports27.js?v=20261110a"></script>
-<script src="assets/js/november.js?v=20261110d"></script>
-<script src="assets/js/puneplan.js?v=20261110d"></script>
-<script src="assets/js/nd26.js?v=20261110e"></script>
+<script src="assets/js/november.js?v=20261110e"></script>
+<script src="assets/js/puneplan.js?v=20261110e"></script>
+<script src="assets/js/nd26.js?v=20261110f"></script>
 <script src="assets/js/export.js?v=20261110a"></script>
 </body>
 </html>

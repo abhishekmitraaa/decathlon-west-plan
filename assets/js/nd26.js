@@ -37,7 +37,7 @@
     { l: "ins", t: "Black Friday comms live, whole city", s: "2026-11-23", e: "2026-11-30", k: "nat", go: 1, n: "plan" },
     { l: "ins", t: "Christmas comms live, whole city", s: "2026-12-19", e: "2026-12-31", k: "nat", go: 1, n: "plan" },
     { l: "ins", t: "In-mall: NIBM, Amanora, SGS (₹1.70 L Nov, ₹1.65 L Dec)", s: "2026-11-02", e: "2026-12-31", k: "tbd", n: "plan" },
-    { l: "ooh", t: "7 Pune hoardings (₹9.35 L a month): new creative live by 15 Nov at the latest (vendor away)", s: "2026-11-15", e: "2026-12-31", k: "sale", n: "user" },
+    { l: "ooh", t: "7 Pune hoardings (₹9.35 L a month): winter comms up by 15 Nov", s: "2026-11-15", e: "2026-12-31", k: "sale", n: "user" },
     { l: "aop", t: "22 AOPs: Wakad 5, Wagholi 5, SGS 4, NIBM 4, Amanora 4 (₹6.25 L)", s: "2026-11-02", e: "2026-11-30", k: "eco", n: "plan" },
     { l: "aop", t: "27 AOPs: Wakad 6, Wagholi 6, SGS 5, NIBM 5, Amanora 5 (₹7.65 L)", s: "2026-12-01", e: "2026-12-31", k: "eco", n: "plan" },
     { l: "evt", t: "Children's Day: colouring books", s: "2026-11-14", e: "2026-11-14", k: "local", n: "rw" },
@@ -68,7 +68,7 @@
       const rows = [];
       const chips = its.map(({ it, sp: [a, b] }) => {
         let r = rows.findIndex(e => e < a); if (r < 0) { rows.push(-1); r = rows.length - 1; } rows[r] = b;
-        return `<span class="pl-chip ${it.k} ${it.go ? "go" : ""} ${week >= a && week <= b ? "" : "dim"}" style="grid-column:${a + 1} / ${b + 2};grid-row:${r + 1}" title="${esc(it.t)} (${fd(d(it.s))}${it.e !== it.s ? " to " + fd(d(it.e)) : ""}; ${SRC[it.n] || ""})">${it.go ? "★ " : ""}${esc(it.t)}</span>`;
+        return `<span class="pl-chip ${it.k} ${it.go ? "go" : ""} ${week >= a && week <= b ? "" : "dim"}" style="grid-column:${a + 1} / ${b + 2};grid-row:${r + 1}" title="${esc(it.t)} (${fd(d(it.s))}${it.e !== it.s ? " to " + fd(d(it.e)) : ""})">${it.go ? "★ " : ""}${esc(it.t)}</span>`;
       }).join("");
       h += `<div class="pl-lane-name">${name}</div><div class="pl-lane">${chips}</div>`;
     });
@@ -77,7 +77,7 @@
   }
   function weekPanel() {
     const x = weeks[week], el = $("#ndWeek"); if (!el) return;
-    const live = LANES.map(([id, name]) => { const its = ITEMS.filter(it => it.l === id && d(it.s) <= x.sun && d(it.e) >= x.mon); return its.length ? `<div class="w27-wl"><h4>${name}</h4><ul>${its.map(it => `<li class="${it.go ? "go" : ""}">${it.go ? "★ " : ""}${esc(it.t)}<small>${fd(d(it.s))}${it.e !== it.s ? " to " + fd(d(it.e)) : ""}; ${SRC[it.n] || ""}</small></li>`).join("")}</ul></div>` : ""; }).join("");
+    const live = LANES.map(([id, name]) => { const its = ITEMS.filter(it => it.l === id && d(it.s) <= x.sun && d(it.e) >= x.mon); return its.length ? `<div class="w27-wl"><h4>${name}</h4><ul>${its.map(it => `<li class="${it.go ? "go" : ""}">${it.go ? "★ " : ""}${esc(it.t)}<small>${fd(d(it.s))}${it.e !== it.s ? " to " + fd(d(it.e)) : ""}</small></li>`).join("")}</ul></div>` : ""; }).join("");
     el.innerHTML = `<div class="y27-mhead"><h3 class="display-s">Week ${x.w}<span class="lt">: ${fd(x.mon)} to ${fd(x.sun)}</span></h3><div class="y27-mnav"><button type="button" data-d="-1" aria-label="Previous week">‹</button><button type="button" data-d="1" aria-label="Next week">›</button></div></div><div class="w27-wgrid">${live}</div>`;
     $$("#ndWeek .y27-mnav button").forEach(b => b.addEventListener("click", () => { week = (week + +b.dataset.d + NW) % NW; runway(); weekPanel(); }));
   }
@@ -85,13 +85,13 @@
   /* ---------- AOPs, November and December, every store ---------- */
   function aops() {
     const el = $("#ndAops"); if (!el) return;
-    const A = window.AOP_PLAN || [], ST = ["Pune", "Gujarat", "MP"], C = { Pune: "var(--pune)", Gujarat: "var(--guj)", MP: "var(--mp)" };
-    el.innerHTML = `<table class="y27-table aop27"><thead><tr><th>Store</th><th>Live now</th><th>November</th><th>December</th><th>Nov + Dec</th><th>Cost per AOP</th><th>Nov + Dec cost</th></tr></thead><tbody>${ST.map(st => {
-      const ss = A.filter(a => a.state === st);
-      const rows = ss.map(a => `<tr><td><b>${a.store}</b></td><td>${a.live ?? "-"}</td><td class="n">${a.months[0]}</td><td class="n">${a.months[1]}</td><td class="n"><b>${a.months[0] + a.months[1]}</b></td><td class="n">${inr(a.cost)}</td><td class="n"><b>${inr((a.months[0] + a.months[1]) * a.cost)}</b></td></tr>`).join("");
-      const n = ss.reduce((t, a) => t + a.months[0] + a.months[1], 0), c = ss.reduce((t, a) => t + (a.months[0] + a.months[1]) * a.cost, 0);
-      return `<tr class="grp"><td colspan="7" style="--c:${C[st]}">${st}</td></tr>${rows}<tr class="tot"><td><b>${st}</b></td><td>${ss.reduce((t, a) => t + (a.live || 0), 0)}</td><td class="n">${ss.reduce((t, a) => t + a.months[0], 0)}</td><td class="n">${ss.reduce((t, a) => t + a.months[1], 0)}</td><td class="n"><b>${n}</b></td><td></td><td class="n"><b>${inr(c)}</b></td></tr>`;
-    }).join("")}</tbody></table>`;
+    // counts and "live now": AOP_PLAN; money: the Pune spend plan (PUNE_PLAN.aopStores), which is what the budget pays
+    const A = (window.AOP_PLAN || []).filter(a => a.state === "Pune"), M = Object.fromEntries((window.PUNE_PLAN.aopStores.rows || []).map(r => [r[0], [r[1], r[2]]]));
+    const rows = A.map(a => { const n = a.months[0] + a.months[1], v = (M[a.store] || [0, 0]); const c = v[0] + v[1];
+      return `<tr><td><b>${a.store}</b></td><td>${a.live ?? "-"}</td><td class="n">${a.months[0]}</td><td class="n">${a.months[1]}</td><td class="n"><b>${n}</b></td><td class="n">${inr(v[0] / (a.months[0] || 1))}</td><td class="n">${inr(v[0])}</td><td class="n">${inr(v[1])}</td><td class="n"><b>${inr(c)}</b></td></tr>`; }).join("");
+    const tN = i => A.reduce((t, a) => t + a.months[i], 0), tV = i => A.reduce((t, a) => t + ((M[a.store] || [0, 0])[i]), 0);
+    el.innerHTML = `<table class="y27-table aop27"><thead><tr><th>Store</th><th>Live now</th><th>Added Nov</th><th>Added Dec</th><th>Nov + Dec</th><th>Per AOP</th><th>Nov money</th><th>Dec money</th><th>Nov + Dec money</th></tr></thead><tbody>${rows}
+      <tr class="tot"><td><b>Pune</b></td><td>${A.reduce((t, a) => t + (a.live || 0), 0)}</td><td class="n">${tN(0)}</td><td class="n">${tN(1)}</td><td class="n"><b>${tN(0) + tN(1)}</b></td><td></td><td class="n">${inr(tV(0))}</td><td class="n">${inr(tV(1))}</td><td class="n"><b>${inr(tV(0) + tV(1))}</b></td></tr></tbody></table>`;
   }
 
   /* ---------- the four campaigns (frames): money from the Pune plan by campaign, goals from the SD piloting sheet ---------- */
@@ -136,7 +136,7 @@
       el.innerHTML = `<em>${i + 1} of 4</em><b>${esc(f.n)}</b><span>${esc(f.d)}</span><span>Pune <b>${f.v ? Lk(f.v) : "₹0"}</b>${f.v ? ", " + share(f.v) : ", not in the Pune plan"}</span>${f.goal ? `<span>Goal <b>${cr(gsum(f.goal[1]))}</b></span>` : ""}`;
     });
     const lines = (el, f, title) => { if (!el) return;
-      el.innerHTML = `<h3>${title}</h3><ul class="fr-ls">${f.ls.map(x => `<li><div><b>${esc(x.t)}</b><small>${PP.months[x.m]}${x.q ? ", " + esc(x.q) : ""}${x.d ? ", " + esc(x.d) : ""}</small>${x.n ? `<em>${esc(x.n)}</em>` : ""}</div><span>${inr(x.v)}</span></li>`).join("")}</ul>
+      el.innerHTML = `<h3>${title}</h3><p class="fr-share">${esc(f.n.split(":")[0])} takes <b>${Math.round(f.v / PL * 100)}%</b> of Pune's November and December money (${inr(f.v)} of ${inr(PL)}). Each line's share of the campaign:</p><ul class="fr-ls">${f.ls.map(x => `<li><div><b>${esc(x.t)}</b><small>${PP.months[x.m]}${x.q ? ", " + esc(x.q) : ""}${x.d ? ", " + esc(x.d) : ""}</small>${x.n ? `<em>${esc(x.n)}</em>` : ""}<i class="fr-bar"><i style="--w:${x.v / f.v * 100}%"></i></i></div><span>${inr(x.v)}<small class="fr-pc">${(x.v / f.v * 100).toFixed(1)}% of the campaign</small></span></li>`).join("")}</ul>
         <div class="fr-tot"><span>Pune total</span><b>${inr(f.v)}</b><small>${share(f.v)} (lines ${Lk(PL)})</small></div>${f.brings && f.brings !== "-" ? `<p class="fr-brings"><b>What it brings</b>${esc(f.brings)}</p>` : ""}`; };
     lines($("#ndBfPune"), FR[1], "Pune's Black Friday, line by line");
     lines($("#ndWinterLines"), FR[2], "Pune's Winter, Trek &amp; Travel, line by line");
@@ -150,14 +150,36 @@
     const H = window.HOARDINGS || [], pu = H.filter(h => h.city === "Pune"), ba = H.filter(h => h.city === "Baroda");
     const pt = pu.reduce((a, h) => a + h.cost, 0), bt = ba.reduce((a, h) => a + h.cost, 0);
     const shots = [["baroda-subhanpura-live", "Subhanpura, 10 Nov: Kiprun Kipride, “Visit Decathlon Vadodara, just 10 mins away”"], ["baroda-fatehgunj-live", "Fatehgunj, 10 Nov: the Kiprun board in a row of eight"], ["baroda-akota-live", "Akota, over the DMart car park: “just 15 mins away”"]];
-    el.innerHTML = `<div class="nd-hu-grid">
-      <article class="nd-hu-c wait"><header><span class="st">Live by 15 Nov</span><h4>Pune: ${pu.length} boards</h4><b>${Lk(pt)} a month</b></header>
-        <figure><img src="assets/img/hpgm/pune-wagholi.jpg" alt="Pune hoarding at Wagholi still showing the festive cycle creative, 10 October" loading="lazy"><figcaption>Wagholi, 10 Oct: still the festive “Your Festive Upgrade” cycle creative. The vendor is away; once back, the new creative goes live on all 7 boards by 15 November at the latest.</figcaption></figure>
-        <ul>${pu.map(h => `<li><span>${esc(h.loc)}</span><small>${esc(h.size)}</small><b>${Lk(h.cost)}</b></li>`).join("")}</ul></article>
-      <article class="nd-hu-c up"><header><span class="st">Live: Kiprun</span><h4>Baroda: ${ba.length} boards</h4><b>${Lk(bt)} a month</b></header>
+    el.innerHTML = `<article class="nd-hu-pune"><header><span class="st">Winter comms up by 15 Nov</span><h4>Pune: ${pu.length} boards</h4><b>${Lk(pt)} a month</b></header>
+        <div class="nd-hu-two"><div class="nd-hu-map" id="ndHoardMap" role="img" aria-label="Map of Pune's ${pu.length} hoardings and our 5 stores"></div>
+          <ol class="nd-hu-list">${pu.map((h, i) => `<li><i>${i + 1}</i><span>${esc(h.loc)}<small>${esc(h.size)}${h.why ? ". " + esc(h.why) : ""}</small></span><b>${Lk(h.cost)}</b></li>`).join("")}</ol></div>
+        <details class="nd-hu-d"><summary>Site photos of the ${pu.filter(h => h.img).length} boards</summary><div class="nd-hu-ph">${pu.filter(h => h.img).map((h, i) => `<figure><img src="assets/img/${h.img}" alt="Hoarding site: ${esc(h.loc)}" loading="lazy"><figcaption>${pu.indexOf(h) + 1}. ${esc(h.loc)}</figcaption></figure>`).join("")}</div></details></article>
+      <button type="button" class="nd-hu-tg" aria-expanded="false" aria-controls="ndHoardGuj">Gujarat: show the Baroda boards</button>
+      <div id="ndHoardGuj" hidden><article class="nd-hu-c up"><header><span class="st">Live: Kiprun</span><h4>Baroda: ${ba.length} boards</h4><b>${Lk(bt)} a month</b></header>
         <p class="nd-hu-p">Kiprun Kipride stays up for now; the boards switch to Winter in December.</p><div class="nd-hu-pics">${shots.map(([f, c]) => `<figure><img src="assets/img/hoard/${f}.jpg" alt="Baroda hoarding: ${esc(c)}" loading="lazy"><figcaption>${esc(c)}</figcaption></figure>`).join("")}</div>
-        <ul>${ba.map(h => `<li><span>${esc(h.loc)}</span><small>${esc(h.size)}</small><b>${Lk(h.cost)}</b></li>`).join("")}</ul></article>
-      </div>`;
+        <ul>${ba.map(h => `<li><span>${esc(h.loc)}</span><small>${esc(h.size)}</small><b>${Lk(h.cost)}</b></li>`).join("")}</ul></article></div>`;
+    const tg = $(".nd-hu-tg", el), gj = $("#ndHoardGuj");
+    tg.addEventListener("click", () => { const open = gj.hidden; gj.hidden = !open; tg.setAttribute("aria-expanded", String(open)); tg.textContent = open ? "Gujarat: hide the Baroda boards" : "Gujarat: show the Baroda boards"; });
+    // the map: our stores and the numbered boards (Leaflet, as on the main page)
+    const m = $("#ndHoardMap"); if (!m) return;
+    if (!window.L) { m.innerHTML = `<p class="nd-hu-nomap">The map needs an internet connection; the boards are listed alongside.</p>`; return; }
+    const map = L.map(m, { scrollWheelZoom: false });
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
+    const pts = [], icon = L.icon({ iconUrl: "assets/img/deca-pin.png", iconSize: [26, 26], iconAnchor: [13, 13], className: "map-store" });
+    ((window.DATA || {}).stores || []).filter(x => x.state === "Pune" && x.lat).forEach(x => { L.marker([x.lat, x.lon], { icon, title: "Decathlon " + x.name }).addTo(map).bindTooltip("Decathlon " + x.name, { direction: "right", offset: [14, 0], className: "map-tip map-tip-store" }); pts.push([x.lat, x.lon]); });
+    pu.forEach((h, i) => { if (!h.lat) return; L.marker([h.lat, h.lon], { icon: L.divIcon({ className: "map-board", html: `<i>${i + 1}</i>`, iconSize: [20, 20], iconAnchor: [24, 24] }), zIndexOffset: 1000 }).addTo(map).bindPopup(`<b>${i + 1}. ${esc(h.loc)}</b><br>${esc(h.size)}, ${Lk(h.cost)} a month`); pts.push([h.lat, h.lon]); });
+    if (pts.length) map.fitBounds(pts, { padding: [30, 30] });
+  }
+
+  /* ---------- Pune money: the KPIs, with the AOPs ---------- */
+  function puneKpis() {
+    const el = $("#ndPuneKpis"); if (!el) return;
+    const aop = m => PP.lines.filter(x => x.m === m && x.ch === "aop"), aopV = m => aop(m).reduce((a, x) => a + x.v, 0);
+    const aopN = m => (window.AOP_PLAN || []).filter(a => a.state === "Pune").reduce((t, a) => t + (a.months[m] || 0), 0);
+    el.innerHTML = [["tot", inr(PP.totals[0]), "November, all planned"], ["tot", inr(PP.totals[1]), "December, all planned"], ["tot", inr(PT), "November + December"],
+      ["", `${aopN(0)} + ${aopN(1)}`, `AOPs added: ${aopN(0)} in November, ${aopN(1)} in December (${aopN(0) + aopN(1)})`],
+      ["", inr(aopV(0) + aopV(1)), `AOP money: ${inr(aopV(0))} Nov + ${inr(aopV(1))} Dec, ${Math.round((aopV(0) + aopV(1)) / PT * 100)}% of the two months`]]
+      .map(([c, b, t]) => `<div class="${c}"><b>${b}</b><span>${t}</span></div>`).join("");
   }
 
   /* ---------- summary, November and December ---------- */
@@ -176,7 +198,7 @@
       <p class="w27-note">Pune money: the Pune spend plan (BFS PUNE), every line counted once under its campaign. Budget = the sheet's total advertising and marketing budget: ₹28,47,282 in November and ₹29,62,282 in December, ${inr(PT)} together; the lines add exactly to it. Lines the sheet lists outside the month totals (Black Friday countdown ₹40,000, Winter barter ₹50,000, recycle boosts ₹10,000) are not counted. Goals: the SD piloting sheet (Black Friday 27 to 30 Nov, Christmas 18 to 25 Dec). Gujarat and MP: the influencer budgets shared on 5 to 9 Nov.</p>`;
   }
 
-  frames(); hoardings(); summary();
+  frames(); hoardings(); summary(); puneKpis();
   runway(); weekPanel(); aops();
   window.renderPunePlan?.($("#ndPune"), [0, 1]);
   window.renderPuneAops?.($("#ndPuneAops"), [0, 1]);
