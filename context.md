@@ -513,6 +513,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-11-10: PR #2 checks all passed and both Vercel previews READY after the context pushes; nothing new.
 - 2026-11-10: discovery: pushing context-only commits to the PR branch makes Vercel rebuild both previews, the PR notifications wake the session and the context hook asks for another commit (a loop). Bot-only rebuild notices now get a context line left uncommitted (it rides the next real push).
 - 2026-11-10: PR #2 head 24da7ad: checks passed, both Vercel previews READY. Nothing new (uncommitted).
+- 2026-11-10: unsubscribed this session from PR #2 activity and cancelled the 08:38 check-in, to stop the Vercel-notification / context-commit loop. PR #2 is ready to merge (checks passed, previews READY).
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 
