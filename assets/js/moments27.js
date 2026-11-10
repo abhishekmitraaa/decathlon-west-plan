@@ -20,7 +20,8 @@
   const MOM = [
     { ids: ["fit"], n: "Movement for All", lt: "New Year, New Moves", when: "January, all 13 stores", video: "circuit-games", img: "cc/fitness.jpg", c: "#E0A100",
       p: "A complete fitness event across all 13 stores: the city moves for the month. Partner yoga, run and gym sessions bring people to the store; creators post the first two weeks.",
-      camps: ["Movement for All"], ms: [2], sports: "Fitness, then running and yoga" },
+      camps: ["Movement for All"], ms: [2], sports: "Fitness, then running and yoga",
+      goal: ["7,500", "participants across the partner events (yoga, run, gym and Zumba), together", "1,500", "participants per store, all 5 Pune stores"] },
     { ids: ["clr"], n: "Clearance sale", lt: "animated at the stores", when: "January (2026 ran 10 Jan to 15 Feb)", img: "winter-off.jpg", c: "#D6453D", contain: true,
       p: "In all 13 stores: the end-of-season sale, animated in store, not just discounted. The biggest influencer push of Q1.", camps: ["Clearance sale"], ms: [2], sports: "Every sport: clears the winter range" },
     { ids: ["na"], n: "New arrivals", lt: "SS27", when: "February; creators 24 Feb to 6 Mar", img: "u-kiprun.jpg", c: "#6B4FBB",
@@ -47,7 +48,7 @@
       const src = "Pune spend plan";
       return `<article class="mo27 ${m.wide ? "wide" : ""}" style="--c:${m.c}"><div class="mo-media ${(film && pics) || (m.img && m.img2) ? "two" : ""}">${film}${pics}</div>
         <div class="mo-body"><span class="mo-when">${esc(m.when)}</span><h3>${esc(m.n)}<span class="lt">: ${esc(m.lt)}</span></h3><p>${esc(m.p)}</p>
-          <div class="mo-nums"><span><b>${L(q1)}</b>spent on it, ${src}</span><span><b>${pm.map((v, i) => v ? `${MN[i]} ${L(v)}` : "").filter(Boolean).join(" · ")}</b>in its month</span>${split}<span><b>${esc(m.sports)}</b>sports it serves</span></div>
+          <div class="mo-nums"><span><b>${L(q1)}</b>spent on it, ${src}</span><span><b>${pm.map((v, i) => v ? `${MN[i]} ${L(v)}` : "").filter(Boolean).join(" · ")}</b>in its month</span>${split}<span><b>${esc(m.sports)}</b>sports it serves</span>${m.goal && isPune() ? `<span class="mo-goal"><b>${m.goal[0]}</b>${esc(m.goal[1])}</span><span class="mo-goal"><b>${m.goal[2]}</b>${esc(m.goal[3])}</span>` : ""}</div>
           ${ls.length ? `<div class="mo-pune"><h4>Pune, from the spend plan</h4><ul>${ls.map(x => `<li><span>${esc(x.t.replace("Influencer campaign: ", "Influencers: "))}<small>${PP.months[x.m]}${x.q ? ", " + esc(x.q) : ""}${x.d ? ", " + esc(x.d) : ""}${x.n ? " (" + esc(x.n) + ")" : ""}</small></span><b>${inr(x.v)}</b></li>`).join("")}</ul><p>Pune total <b>${inr(ls.reduce((a, x) => a + x.v, 0))}</b></p></div>` : ""}
           ${stores}</div></article>`;
     }).join("");

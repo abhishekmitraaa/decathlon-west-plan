@@ -15,7 +15,7 @@ window.BUDGET27 = {
     { id: "fit", camp: "Movement for All", name: "Movement for All: New Year, New Moves", color: "#E0A100", ink: "#1C1E33", sport: { fitness: 1 },
       when: "January (influencers 2 to 17 Jan); partner events: yoga, run, gym and Zumba",
       hoard: "\"New Year, New Moves\": one hero kit and its price (mat, dumbbells, bands) and the distance to the store. Pune sport of the month: fitness.",
-      pune: "Pune plan, January: partner events yoga ₹75,000 (500 walk-ins), run ₹75,000 (400), gym, fitness and Zumba ₹1,50,000 (500); 5 hoardings ₹5,25,000; 17 influencers 2 to 17 Jan ₹1,49,000; 17 reels on Let's Play Pune ₹1,00,000. January total ₹10,74,000.",
+      pune: "Pune plan, January: partner events yoga ₹75,000 (500 walk-ins), run ₹75,000 (400), gym, fitness and Zumba ₹1,50,000 (500); 5 hoardings ₹5,25,000; 17 influencers 2 to 17 Jan ₹1,49,000; 17 reels on Let's Play Pune ₹1,00,000. January total ₹10,74,000. Participation goal for the partner events together: 7,500 people, 1,500 per store.",
       inf: "Pune: 17 influencers, 2 to 17 Jan. In 2026 the same campaign got 14 lakh views at ₹0.11 a view.",
       social: "30-day challenge reels, \"kit under ₹999\" carousels, teammates training in store, gym AOP members' stories. Four posts a week.",
       boost: "Boost the two best reels each week, 5 km around each store, fitness interests, 18 to 40. Retarget video viewers with the store offer." },
