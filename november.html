@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-<link rel="stylesheet" href="assets/css/site.css?v=20261110i">
+<link rel="stylesheet" href="assets/css/site.css?v=20261110j">
 </head>
 <body class="nov-page">
 
@@ -104,10 +104,10 @@
 
 <section class="sec sec-mist" id="runway">
   <div class="wrap">
-    <header class="sec-head"><h2 class="display">Pune runway<span class="lt">, November and December, week by week</span></h2>
+    <header class="sec-head sec-head-s"><h2 class="display">Pune runway<span class="lt">, November and December, week by week</span></h2>
       <p class="sec-lede">Only Pune: Black Friday and the Christmas Sale, Winter &amp; Travel, the influencers, in-store and mall, hoardings, AOPs, the city's own events and our content. Pick a week to see everything in it.</p></header>
     <div class="planner-scroll"><div class="planner y27-planner w27-planner" id="ndGrid"></div></div>
-    <div class="y27-month w27-week" id="ndWeek" aria-live="polite"></div>
+    <details class="panel nd-wk-d" id="ndWeekD"><summary><b id="ndWeekSum">This week</b><span>Everything in the week, lane by lane</span><i class="nd-chev" aria-hidden="true"></i></summary><div class="y27-month w27-week" id="ndWeek" aria-live="polite"></div></details>
   </div>
 </section>
 
@@ -117,11 +117,11 @@
       <p class="sec-lede">Every line of Pune's advertising and marketing budget, and the AOPs it pays for. November ₹28,47,282 and December ₹29,62,282: all of it is planned.</p></header>
     <div class="cq-kpis nov-kpis pm-kpis" id="ndPuneKpis"></div>
     <div id="ndPune"></div>
-    <h3 class="display-s w27-sub" id="aops">AOPs<span class="lt">, November and December</span></h3>
-    <div class="panel"><div class="sb-wrap" id="ndPuneAops"></div></div>
-    <details class="panel pm-d"><summary><b>AOPs store by store</b><span>Live now, added in November and December, cost per AOP</span></summary><div class="sb-wrap" id="ndAops"></div></details>
+    <h3 class="display-s w27-sub" id="aops">AOP cost<span class="lt">, November and December</span></h3>
+    <div class="cq-kpis nov-kpis pm-aop" id="ndAopKpis"></div>
+    <details class="panel pm-d"><summary><b>Store by store</b><span>Wakad, Wagholi, SGS Mall, NIBM, Amanora: AOPs and money each month</span><i class="nd-chev" aria-hidden="true"></i></summary><div class="sb-wrap" id="ndPuneAops"></div></details>
     <h3 class="display-s w27-sub">Influencers<span class="lt">, November and December</span></h3>
-    <div class="panel pi-panel" id="ndInfl"></div>
+    <div class="panel ndi" id="ndInfl"></div>
   </div>
 </section>
 
@@ -247,12 +247,13 @@
 <section class="sec sec-paper" id="summary">
   <div class="wrap">
     <header class="sec-head"><h2 class="display">November and December<span class="lt">, in one view</span></h2>
-      <p class="sec-lede">The four campaigns side by side: when, what, the money (Pune's plan line by line, plus what we know for Gujarat and MP) and what each brings in.</p></header>
-    <details class="panel nd-sum-d"><summary><b>Open: November and December in one view</b><span>The four campaigns side by side, the Pune money and what each brings in</span></summary><div id="ndSummary"></div></details>
+      <p class="sec-lede">Pune's three campaigns and the always-on money, with each one's share of November and December. Open the panel for everything side by side.</p></header>
+    <div class="fr-over nd-sum-cards" id="ndSumCards"></div>
+    <details class="panel nd-sum-d"><summary><b>November and December in one view</b><span>Every campaign side by side: what we do, the Pune money, its share, the influencers and what it brings in</span><i class="nd-chev" aria-hidden="true"></i></summary><div id="ndSummary"></div></details>
   </div>
 </section>
 
-<footer class="nov-foot"><div class="wrap">Instagram follower and post counts, and reel views, read from each page's public profile on 5 November 2026. Views show only for a page's latest 12 reels. Shares and saves are not public: they are in each page's Insights, so the page admins can send them. Diwali dates as observed in India. <a href="index.html">Back to the West plan</a></div></footer>
+<footer class="nov-foot"><div class="wrap"><a href="index.html">Back to the West plan</a></div></footer>
 <div class="exp-bar" id="expBar" data-html2canvas-ignore>
   <div class="exp-in"><span class="exp-t">Download this page</span>
     <button type="button" id="expPdf"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3v11.2l4-4 1.4 1.4L12 17l-5.4-5.4L8 10.2l4 4V3h0zM5 19h14v2H5z"/></svg>Download PDF</button>
@@ -267,7 +268,7 @@
 <script src="assets/js/sports27.js?v=20261110a"></script>
 <script src="assets/js/november.js?v=20261110e"></script>
 <script src="assets/js/puneplan.js?v=20261110e"></script>
-<script src="assets/js/nd26.js?v=20261110f"></script>
+<script src="assets/js/nd26.js?v=20261110g"></script>
 <script src="assets/js/export.js?v=20261110a"></script>
 </body>
 </html>

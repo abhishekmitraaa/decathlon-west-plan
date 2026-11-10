@@ -73,10 +73,11 @@
       h += `<div class="pl-lane-name">${name}</div><div class="pl-lane">${chips}</div>`;
     });
     g.innerHTML = h;
-    $$(".w27-wk", g).forEach(b => b.addEventListener("click", () => { week = +b.dataset.i; runway(); weekPanel(); }));
+    $$(".w27-wk", g).forEach(b => b.addEventListener("click", () => { week = +b.dataset.i; runway(); weekPanel(); const dd = $("#ndWeekD"); if (dd) dd.open = true; }));
   }
   function weekPanel() {
     const x = weeks[week], el = $("#ndWeek"); if (!el) return;
+    if ($("#ndWeekSum")) $("#ndWeekSum").textContent = `Week ${x.w}: ${fd(x.mon)} to ${fd(x.sun)}`;
     const live = LANES.map(([id, name]) => { const its = ITEMS.filter(it => it.l === id && d(it.s) <= x.sun && d(it.e) >= x.mon); return its.length ? `<div class="w27-wl"><h4>${name}</h4><ul>${its.map(it => `<li class="${it.go ? "go" : ""}">${it.go ? "★ " : ""}${esc(it.t)}<small>${fd(d(it.s))}${it.e !== it.s ? " to " + fd(d(it.e)) : ""}</small></li>`).join("")}</ul></div>` : ""; }).join("");
     el.innerHTML = `<div class="y27-mhead"><h3 class="display-s">Week ${x.w}<span class="lt">: ${fd(x.mon)} to ${fd(x.sun)}</span></h3><div class="y27-mnav"><button type="button" data-d="-1" aria-label="Previous week">‹</button><button type="button" data-d="1" aria-label="Next week">›</button></div></div><div class="w27-wgrid">${live}</div>`;
     $$("#ndWeek .y27-mnav button").forEach(b => b.addEventListener("click", () => { week = (week + +b.dataset.d + NW) % NW; runway(); weekPanel(); }));
@@ -152,12 +153,19 @@
     const shots = [["baroda-subhanpura-live", "Subhanpura, 10 Nov: Kiprun Kipride, “Visit Decathlon Vadodara, just 10 mins away”"], ["baroda-fatehgunj-live", "Fatehgunj, 10 Nov: the Kiprun board in a row of eight"], ["baroda-akota-live", "Akota, over the DMart car park: “just 15 mins away”"]];
     el.innerHTML = `<article class="nd-hu-pune"><header><span class="st">Winter comms up by 15 Nov</span><h4>Pune: ${pu.length} boards</h4><b>${Lk(pt)} a month</b></header>
         <div class="nd-hu-two"><div class="nd-hu-map" id="ndHoardMap" role="img" aria-label="Map of Pune's ${pu.length} hoardings and our 5 stores"></div>
-          <ol class="nd-hu-list">${pu.map((h, i) => `<li><i>${i + 1}</i><span>${esc(h.loc)}<small>${esc(h.size)}${h.why ? ". " + esc(h.why) : ""}</small></span><b>${Lk(h.cost)}</b></li>`).join("")}</ol></div>
-        <details class="nd-hu-d"><summary>Site photos of the ${pu.filter(h => h.img).length} boards</summary><div class="nd-hu-ph">${pu.filter(h => h.img).map((h, i) => `<figure><img src="assets/img/${h.img}" alt="Hoarding site: ${esc(h.loc)}" loading="lazy"><figcaption>${pu.indexOf(h) + 1}. ${esc(h.loc)}</figcaption></figure>`).join("")}</div></details></article>
+          <div class="nd-hu-side"><figure class="nd-hu-prev" id="ndHuPrev"></figure>
+          <ol class="nd-hu-list">${pu.map((h, i) => `<li><button type="button" data-i="${i}" aria-pressed="${i === 0}"><i>${i + 1}</i><span>${esc(h.loc)}<small>${esc(h.size)}</small></span><b>${Lk(h.cost)}</b></button></li>`).join("")}</ol></div></div>
+        <p class="nd-hu-hint">Click a board's number, on the list or on the map, to see its photo.</p></article>
       <button type="button" class="nd-hu-tg" aria-expanded="false" aria-controls="ndHoardGuj">Gujarat: show the Baroda boards</button>
       <div id="ndHoardGuj" hidden><article class="nd-hu-c up"><header><span class="st">Live: Kiprun</span><h4>Baroda: ${ba.length} boards</h4><b>${Lk(bt)} a month</b></header>
         <p class="nd-hu-p">Kiprun Kipride stays up for now; the boards switch to Winter in December.</p><div class="nd-hu-pics">${shots.map(([f, c]) => `<figure><img src="assets/img/hoard/${f}.jpg" alt="Baroda hoarding: ${esc(c)}" loading="lazy"><figcaption>${esc(c)}</figcaption></figure>`).join("")}</div>
         <ul>${ba.map(h => `<li><span>${esc(h.loc)}</span><small>${esc(h.size)}</small><b>${Lk(h.cost)}</b></li>`).join("")}</ul></article></div>`;
+    const show = i => { const h = pu[i], f = $("#ndHuPrev"); if (!h || !f) return;
+      f.innerHTML = h.img ? `<img src="assets/img/${h.img}" alt="Hoarding site ${i + 1}: ${esc(h.loc)}"><figcaption><b>${i + 1}. ${esc(h.loc)}</b>${esc(h.size)}, ${Lk(h.cost)} a month${h.why ? ". " + esc(h.why) : ""}</figcaption>` : `<figcaption><b>${i + 1}. ${esc(h.loc)}</b>No photo of this board yet.</figcaption>`;
+      $$(".nd-hu-list button", el).forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.i === i))); };
+    window.ndHoardShow = show;
+    $$(".nd-hu-list button", el).forEach(b => b.addEventListener("click", () => show(+b.dataset.i)));
+    show(0);
     const tg = $(".nd-hu-tg", el), gj = $("#ndHoardGuj");
     tg.addEventListener("click", () => { const open = gj.hidden; gj.hidden = !open; tg.setAttribute("aria-expanded", String(open)); tg.textContent = open ? "Gujarat: hide the Baroda boards" : "Gujarat: show the Baroda boards"; });
     // the map: our stores and the numbered boards (Leaflet, as on the main page)
@@ -167,8 +175,34 @@
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
     const pts = [], icon = L.icon({ iconUrl: "assets/img/deca-pin.png", iconSize: [26, 26], iconAnchor: [13, 13], className: "map-store" });
     ((window.DATA || {}).stores || []).filter(x => x.state === "Pune" && x.lat).forEach(x => { L.marker([x.lat, x.lon], { icon, title: "Decathlon " + x.name }).addTo(map).bindTooltip("Decathlon " + x.name, { direction: "right", offset: [14, 0], className: "map-tip map-tip-store" }); pts.push([x.lat, x.lon]); });
-    pu.forEach((h, i) => { if (!h.lat) return; L.marker([h.lat, h.lon], { icon: L.divIcon({ className: "map-board", html: `<i>${i + 1}</i>`, iconSize: [20, 20], iconAnchor: [24, 24] }), zIndexOffset: 1000 }).addTo(map).bindPopup(`<b>${i + 1}. ${esc(h.loc)}</b><br>${esc(h.size)}, ${Lk(h.cost)} a month`); pts.push([h.lat, h.lon]); });
+    pu.forEach((h, i) => { if (!h.lat) return; L.marker([h.lat, h.lon], { icon: L.divIcon({ className: "map-board", html: `<i>${i + 1}</i>`, iconSize: [20, 20], iconAnchor: [24, 24] }), zIndexOffset: 1000 }).addTo(map).on("click", () => show(i)).bindPopup(`${h.img ? `<img src="assets/img/${h.img}" alt="" style="width:200px;border-radius:6px;display:block;margin-bottom:6px">` : ""}<b>${i + 1}. ${esc(h.loc)}</b><br>${esc(h.size)}, ${Lk(h.cost)} a month`); pts.push([h.lat, h.lon]); });
     if (pts.length) map.fitBounds(pts, { padding: [30, 30] });
+  }
+
+  /* ---------- AOP cost, November and December (Pune spend plan) ---------- */
+  function aopKpis() {
+    const el = $("#ndAopKpis"); if (!el) return;
+    const v = m => PP.lines.filter(x => x.m === m && x.ch === "aop").reduce((a, x) => a + x.v, 0);
+    const n = m => (window.AOP_PLAN || []).filter(a => a.state === "Pune").reduce((t, a) => t + (a.months[m] || 0), 0);
+    el.innerHTML = [["", inr(v(0)), `Pune, November: ${n(0)} AOPs`], ["", inr(v(1)), `Pune, December: ${n(1)} AOPs`], ["tot", inr(v(0) + v(1)), `Pune, November + December: ${n(0) + n(1)} AOPs`]]
+      .map(([c, b, t]) => `<div class="${c}"><b>${b}</b><span>${t}</span></div>`).join("");
+  }
+
+  /* ---------- influencers, November and December: a clear timeline ---------- */
+  function inflNovDec() {
+    const el = $("#ndInfl"); if (!el) return;
+    const a = d("2026-11-01").getTime(), b = d("2026-12-31").getTime() + DAY, span = b - a;
+    const rows = PP.influencers.filter(r => d(r.e) >= d("2026-11-01") && d(r.s) <= d("2026-12-31"));
+    const n = rows.reduce((t, r) => t + r.n, 0), v = rows.reduce((t, r) => t + r.v, 0);
+    const pos = t => (t - a) / span * 100;
+    const ticks = []; for (let t = d("2026-11-02").getTime(); t < b; t += 7 * DAY) ticks.push(t);
+    const fdd = t => fd(new Date(t));
+    el.innerHTML = `<div class="ndi-kpis"><div><b>${n}</b><span>paid influencers, Pune</span></div><div><b>${inr(v)}</b><span>influencer money, November + December</span></div><div><b>${rows.length}</b><span>bursts, one per campaign</span></div><div><b>+7</b><span>on barter for Winter, Trek &amp; Travel (₹50,000, outside the budget)</span></div></div>
+      <div class="ndi-tl"><div class="ndi-axis"><span class="ndi-mo" style="left:0">November</span><span class="ndi-mo" style="left:${pos(d("2026-12-01").getTime())}%">December</span>${ticks.map(t => `<span class="ndi-tk" style="left:${pos(t)}%">${fdd(t)}</span>`).join("")}</div>
+        ${rows.map(r => { const s0 = d(r.s).getTime(), e0 = d(r.e).getTime() + DAY;
+          return `<div class="ndi-row"><div class="ndi-lab"><i style="--c:${r.c}"></i><b>${esc(r.t.replace(/ \(.*\)$/, ""))}${/first|next/.test(r.t) ? ` <small>${/first/.test(r.t) ? "part 1" : "part 2"}</small>` : ""}</b><span>${r.n} influencers · ${inr(r.v)} · ${inr(r.v / r.n)} each</span></div>
+            <div class="ndi-track">${ticks.map(t => `<i style="left:${pos(t)}%"></i>`).join("")}<i class="mo" style="left:${pos(d("2026-12-01").getTime())}%"></i><span class="ndi-bar" style="left:${pos(s0)}%;width:${Math.max(pos(e0) - pos(s0), 2.2)}%;--c:${r.c}"></span><em class="ndi-dt ${pos(e0) > 60 ? "l" : ""}" style="${pos(e0) > 60 ? `right:${100 - pos(s0)}%` : `left:${pos(e0)}%`}">${fd(d(r.s))} to ${fd(d(r.e))}</em></div></div>`; }).join("")}
+      </div>`;
   }
 
   /* ---------- Pune money: the KPIs, with the AOPs ---------- */
@@ -198,10 +232,11 @@
       <p class="w27-note">Pune money: the Pune spend plan (BFS PUNE), every line counted once under its campaign. Budget = the sheet's total advertising and marketing budget: ₹28,47,282 in November and ₹29,62,282 in December, ${inr(PT)} together; the lines add exactly to it. Lines the sheet lists outside the month totals (Black Friday countdown ₹40,000, Winter barter ₹50,000, recycle boosts ₹10,000) are not counted. Goals: the SD piloting sheet (Black Friday 27 to 30 Nov, Christmas 18 to 25 Dec). Gujarat and MP: the influencer budgets shared on 5 to 9 Nov.</p>`;
   }
 
-  frames(); hoardings(); summary(); puneKpis();
+  frames(); hoardings(); summary(); puneKpis(); aopKpis(); inflNovDec();
+  const sc = $("#ndSumCards");
+  if (sc) sc.innerHTML = [...FR.filter(f => f.v), ALW].map((f, i) => `<a class="fr-card ${f === ALW ? "alw" : ""}" href="#${f.sec || "pune"}" style="--c:${f.col || "#9AA2C8"}"><em>${f === ALW ? "+" : i + 1}</em><b>${esc(f.n)}</b><span>${esc(f.d || "November and December")}</span><strong>${inr(f.v)}<small>${Math.round(f.v / PL * 100)}% of Pune's Nov + Dec</small></strong></a>`).join("");
   runway(); weekPanel(); aops();
   window.renderPunePlan?.($("#ndPune"), [0, 1]);
   window.renderPuneAops?.($("#ndPuneAops"), [0, 1]);
-  window.renderInfluencers?.($("#ndInfl"), "2026-11-01", "2026-12-31", false);
   window.renderPyramid?.($("#mktPyramid"));
 })();
