@@ -9,7 +9,8 @@
     h2c: ["https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js", "sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H"],
     pdf: ["https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js", "sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk"],
     gif: ["https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js", "sha384-4RMW82CWFobXY+HRHXe5go/V5acBhiIVGCT+2k7TEoxi7AiWKw8WoWb9qMU+FAFu"],
-    gifw: ["https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js", "sha384-uL0SwIQSos1DfQU2KzlDbPuSz7Jwo+hmNPIhe86VJ+MWwyj0DvjngnAgWrkNi9eQ"]
+    gifw: ["https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js", "sha384-uL0SwIQSos1DfQU2KzlDbPuSz7Jwo+hmNPIhe86VJ+MWwyj0DvjngnAgWrkNi9eQ"],
+    ppt: ["https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js", "sha384-Cck14aA9cifjYolcnjebXRfWGkz5ltHMBiG4px/j8GS+xQcb7OhNQWZYyWjQ+UwQ"]
   };
   const loaded = {};
   const load = k => loaded[k] || (loaded[k] = new Promise((ok, no) => {
@@ -40,7 +41,7 @@
   // (it waits for the posters, because html2canvas skips a picture that has not loaded yet)
   const onclone = async doc => {
     const st = doc.createElement("style");
-    st.textContent = "*,*::before,*::after{animation:none!important;transition:none!important}.dg-col>b{opacity:1!important}";
+    st.textContent = "*,*::before,*::after{animation:none!important;transition:none!important}.dg-col>b{opacity:1!important}.display{line-height:1.18!important;padding-bottom:.06em}.sec-head .sec-lede{margin-top:.5em}";
     doc.head.append(st);
     const waits = [];
     // html2canvas turns each video into a bare canvas of its current frame (blank before it plays): swap it for the poster,
@@ -76,7 +77,7 @@
       say(`${label}: capturing part ${i + 1} of ${list.length}`);
       const el = list[i], r = el.getBoundingClientRect(), s = Math.min(scale, 30000 / Math.max(el.scrollHeight, 1));
       const c = await window.html2canvas(el, { scale: s, useCORS: true, backgroundColor: bg, logging: false, windowWidth: document.documentElement.clientWidth, onclone });
-      out.push({ c, top: r.top + scrollY, left: r.left + scrollX, w: r.width, h: r.height });
+      out.push({ c, el, top: r.top + scrollY, left: r.left + scrollX, w: r.width, h: r.height });
     }
     const y0 = Math.min(...out.map(o => o.top)), y1 = Math.max(...out.map(o => o.top + o.h));
     out.forEach(o => { o.top -= y0; });
@@ -146,6 +147,69 @@
     });
   }
 
+  // PowerPoint: 16:9 slides at 10 x 5.625 in, the Google Slides default size. A title slide, then every block of the page
+  // as one or more slides, cut at the gaps between its parts (never through a line of text) and fitted on its own background.
+  const cuts = (el, h, t) => {
+    const top = el.getBoundingClientRect().top, cand = new Set([h]);
+    el.querySelectorAll(":scope > *, :scope > .wrap > *, :scope > .wrap > * > *, :scope > .wrap > * > * > *").forEach(c => {
+      const r = c.getBoundingClientRect(); if (r.height > 0) cand.add(Math.min(h, Math.round(r.bottom - top + 10)));
+    });
+    const cs = [...cand].filter(v => v > 0).sort((a, b) => a - b), out = [0];
+    let st = 0;
+    while (h - st > t * 1.15) {
+      let best = null;
+      for (const v of cs) if (v > st + t * 0.45 && v <= st + t * 1.15) best = v;
+      st = best ?? Math.min(h, st + t); out.push(st);
+    }
+    if (out[out.length - 1] !== h) out.push(h);
+    return out;
+  };
+  async function toPPT() {
+    const ds = [...document.querySelectorAll("details")], was = ds.map(d => d.open);
+    ds.forEach(d => { d.open = true; });
+    await new Promise(r => setTimeout(r, 300));
+    try {
+      const cap = await capture(1.5, "PowerPoint");
+      await load("ppt"); say("PowerPoint: building the slides");
+      const pptx = new window.PptxGenJS();
+      pptx.layout = "LAYOUT_16x9"; // 10 x 5.625 in = Google Slides 16:9
+      pptx.title = document.title; pptx.company = "Decathlon";
+      const W = 10, H = 5.625, R = H / W;
+      const t = pptx.addSlide(); t.background = { color: "3643BA" };
+      t.addShape(pptx.ShapeType.rect, { x: 0, y: 4.9, w: W, h: 0.725, fill: { color: "10135A" } });
+      t.addText(document.title.replace(/\s*[|·-]\s*Decathlon.*$/i, ""), { x: 0.6, y: 1.55, w: 8.8, h: 1.3, fontFace: "Arial", fontSize: 34, bold: true, color: "FFFFFF", valign: "bottom" });
+      t.addText("Decathlon West", { x: 0.6, y: 2.95, w: 8.8, h: 0.5, fontFace: "Arial", fontSize: 18, color: "7AFFA6", bold: true });
+      t.addText(new Date().toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }), { x: 0.6, y: 5.0, w: 8.8, h: 0.5, fontFace: "Arial", fontSize: 12, color: "D9DEFF" });
+      const tmp = document.createElement("canvas"), ctx = tmp.getContext("2d", { willReadFrequently: true });
+      const hex = d => [d[0], d[1], d[2]].map(v => v.toString(16).padStart(2, "0")).join("").toUpperCase();
+      let n = 0;
+      for (const o of cap.items) {
+        if (o.h < 80) continue; // thin bars and dividers are not slides
+        const br = cuts(o.el, o.h, o.w * R), f = o.c.height / o.h;
+        for (let i = 0; i < br.length - 1; i++) {
+          const y0 = Math.round(br[i] * f), sh = Math.round((br[i + 1] - br[i]) * f);
+          if (sh < 24) continue;
+          tmp.width = o.c.width; tmp.height = sh;
+          ctx.drawImage(o.c, 0, y0, o.c.width, sh, 0, 0, o.c.width, sh);
+          // skip a slice that is one flat colour (empty space at the end of a block)
+          const sm = document.createElement("canvas"); sm.width = 48; sm.height = Math.max(8, Math.round(48 * sh / o.c.width));
+          const sx = sm.getContext("2d", { willReadFrequently: true }); sx.drawImage(tmp, 0, 0, sm.width, sm.height);
+          const px = sx.getImageData(0, 0, sm.width, sm.height).data; let mu = 0, m2 = 0, k = 0;
+          for (let q = 0; q < px.length; q += 4) { const l = 0.3 * px[q] + 0.59 * px[q + 1] + 0.11 * px[q + 2]; k++; const dd = l - mu; mu += dd / k; m2 += dd * (l - mu); }
+          if (Math.sqrt(m2 / k) < 3) continue;
+          const sl = pptx.addSlide(); sl.background = { color: hex(ctx.getImageData(3, 3, 1, 1).data) };
+          const ar = sh / o.c.width; let w = W, h = W * ar; if (h > H) { h = H; w = H / ar; }
+          sl.addImage({ data: tmp.toDataURL("image/jpeg", 0.9), x: (W - w) / 2, y: (H - h) / 2, w, h });
+          sl.slideNumber = { x: 9.35, y: 5.25, w: 0.5, h: 0.3, fontFace: "Arial", fontSize: 9, color: "8A92BC" };
+          n++; say(`PowerPoint: slide ${n}`);
+          await new Promise(r => setTimeout(r));
+        }
+      }
+      say("PowerPoint: saving");
+      save(await pptx.write({ outputType: "blob" }), name("pptx"));
+    } finally { ds.forEach((d, i) => { d.open = was[i]; }); }
+  }
+
   const run = fn => async () => {
     busy(true);
     try { await fn(); say("Done. Your download has started."); }
@@ -154,4 +218,5 @@
   };
   $("#expPdf").addEventListener("click", run(toPDF));
   $("#expGif").addEventListener("click", run(toGIF));
+  if ($("#expPpt")) $("#expPpt").addEventListener("click", run(toPPT));
 })();

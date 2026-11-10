@@ -64,8 +64,44 @@ window.PUNE_HOT = {
     if (y >= 2027) return ["live", "live into 2027"];
     return ["renew", "ends in 2026: renew for Q1"];
   };
+  // locality centres (approximate, our general knowledge of Pune): AOP pins sit at their area, not at the exact gate
+  const AREA = [[/ghorpadi/i, 18.5300, 73.9150], [/mundhwa/i, 18.5330, 73.9310], [/godbole|manj/i, 18.5130, 73.9780], [/bhekrai/i, 18.4800, 73.9620], [/tukai/i, 18.4880, 73.9450],
+    [/phursungi/i, 18.4720, 73.9690], [/dp road , hadapsar/i, 18.5050, 73.9300], [/hadapsar/i, 18.5018, 73.9257], [/keshav/i, 18.5440, 73.9480], [/upper kharadi/i, 18.5600, 73.9550],
+    [/kharadi/i, 18.5515, 73.9408], [/amanora/i, 18.5190, 73.9350], [/eradwane|erandwane/i, 18.5080, 73.8330], [/narayan peth/i, 18.5140, 73.8510], [/law c/i, 18.5150, 73.8290],
+    [/swargate/i, 18.5018, 73.8636], [/^dp road$/i, 18.5030, 73.8250], [/balewadi/i, 18.5770, 73.7790], [/kaspate/i, 18.5960, 73.7730], [/hinjewadi/i, 18.5913, 73.7389],
+    [/dehu/i, 18.6800, 73.7300], [/punawale/i, 18.6300, 73.7350], [/pimpri|chinchwad/i, 18.6298, 73.7997], [/baner/i, 18.5590, 73.7868], [/ravet/i, 18.6460, 73.7440],
+    [/walekarwadi/i, 18.6170, 73.7800], [/mahalunge/i, 18.5790, 73.7470], [/pashan/i, 18.5375, 73.7950], [/wakad/i, 18.5975, 73.7700], [/sainik/i, 18.4880, 73.8990],
+    [/wanwadi|wanawadi|wanowrie|salunke/i, 18.4930, 73.9000], [/handewadi/i, 18.4560, 73.9420], [/undri/i, 18.4560, 73.9110], [/moham/i, 18.4730, 73.9220],
+    [/kondhwa/i, 18.4630, 73.8870], [/nibm/i, 18.4710, 73.9010], [/ganga/i, 18.4790, 73.8820], [/viman/i, 18.5679, 73.9143], [/loh|loah/i, 18.5940, 73.9190], [/wagholi/i, 18.5793, 73.9787]];
+  const STORE_AT = { Wakad: [18.5975, 73.7700], Wagholi: [18.5793, 73.9787], "SGS Mall": [18.5150, 73.8780], NIBM: [18.4710, 73.9010], Amanora: [18.5190, 73.9350] };
+  const where = (area, store) => { const a = String(area || "").trim(); const hit = a && AREA.find(([re]) => re.test(a)); return hit ? [hit[1], hit[2]] : STORE_AT[store]; };
+  const KC = { pool: ["Swimming pools", "#0096C7"], gym: ["Gyms, yoga, fitness", "#E0A100"], racket: ["Racket: badminton, pickleball, padel", "#6B4FBB"], team: ["Turfs and team sports", "#12A150"], other: ["Other", "#9AA2C8"] };
+  function aopMap() {
+    const m = document.getElementById("phMap"); if (!m) return;
+    const rows = Object.entries(AN).flatMap(([st, l]) => l.map(r => ({ st, r, k: cat(r[1]), s: status(r[3])[0] })));
+    if (!window.L) { m.innerHTML = `<p class="nd-hu-nomap">The map needs an internet connection: the counts are above and every place is listed in the store cards below.</p>`; return; }
+    const map = L.map(m, { scrollWheelZoom: false });
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
+    const seen = {}, pts = [];
+    Object.entries(STORE_AT).forEach(([st, p]) => { L.marker(p, { icon: L.icon({ iconUrl: "assets/img/deca-pin.png", iconSize: [26, 26], iconAnchor: [13, 13], className: "map-store" }), zIndexOffset: 2000 }).addTo(map).bindTooltip("Decathlon " + st, { direction: "right", offset: [14, 0], className: "map-tip map-tip-store" }); pts.push(p); });
+    rows.forEach(({ st, r, k, s }) => {
+      const p = where(r[2], st), key = p.join(), j = seen[key] = (seen[key] || 0) + 1, ang = j * 2.4, rad = 0.0025 * Math.sqrt(j);
+      const ll = [p[0] + rad * Math.cos(ang), p[1] + rad * Math.sin(ang)];
+      L.circleMarker(ll, { radius: k === "pool" || k === "gym" ? 7 : 5, color: "#fff", weight: 1.5, fillColor: KC[k][1], fillOpacity: s === "new" ? 0.35 : 0.95 }).addTo(map)
+        .bindPopup(`<b>${esc(r[0])}</b><br>${esc(r[1])}${r[2] ? ", " + esc(r[2]) : ""}<br>Store: ${esc(st)}<br>${esc(status(r[3])[1])}`);
+      pts.push(ll);
+    });
+    map.fitBounds(pts, { padding: [20, 20] });
+    document.addEventListener("y27region", () => setTimeout(() => map.invalidateSize(), 60));
+  }
   window.renderPuneHot = el => {
     if (!el) return;
+    const allRows = Object.values(AN).flat(), isLive = r => status(r[3])[0] !== "new";
+    const cnt = k => allRows.filter(r => cat(r[1]) === k && isLive(r)).length, soonN = allRows.filter(r => !isLive(r)).length;
+    const mapBlock = `<div class="ph-mapb"><div class="ph-mapk"><div class="t"><b>${allRows.filter(isLive).length}</b><span>AOPs tied up so far, Pune${soonN ? ` (+${soonN} signed to start in 2027)` : ""}</span></div>
+        ${["pool", "gym", "racket", "team"].map(k => `<div style="--c:${KC[k][1]}"><b>${cnt(k)}</b><span>${KC[k][0]}</span></div>`).join("")}</div>
+      <div class="ph-map" id="phMap" role="img" aria-label="Map of the AOPs Pune has tied up, by type"></div>
+      <p class="ph-mapn">Every practice place in the Pune partnerships file, coloured by type; faded dots start in 2027. Pins sit at the centre of their area (the file has addresses, not map points), so they are approximate.</p></div>`;
     const city = `<div class="ph-city">${H.city.map(c => `<div class="ph-c ${c.k}"><b>${c.v}</b><span>${c.n}, Pune</span><p>${esc(c.s)}</p><small>${esc(c.src)}</small></div>`).join("")}</div>
       <div class="ph-tap">${[["pool", "Swimming pools"], ["gym", "Gyms"], ["trav", "Travel agencies"], ["soc", "Societies"]].map(([k, n]) => `<div class="${k}"><h4>How we tap: ${n.toLowerCase()}</h4><p>${esc(H.tap[k])}</p></div>`).join("")}</div>`;
     const cards = H.stores.map(st => {
@@ -92,7 +128,7 @@ window.PUNE_HOT = {
     const live = r => status(r[3])[0] !== "new";
     const tp = all.filter(r => cat(r[1]) === "pool" && live(r)).length, tg = all.filter(r => cat(r[1]) === "gym" && live(r)).length;
     const renew = all.filter(r => ["pool", "gym"].includes(cat(r[1])) && status(r[3])[0] === "renew").length;
-    el.innerHTML = city + `<div class="ph-sum"><div><b>${tp}<small>/50</small></b><span>pools tied up across the 5 stores (target 10 a store by 20 Feb; Wagholi has 3 more signed from 2027)</span></div><div><b>${tg}</b><span>gyms, yoga and fitness tied up</span></div><div><b>${renew}</b><span>pool and gym tie-ups that end in 2026: renew before Movement for All</span></div><div><b>0<small>/50</small></b><span>travel agency affiliates in our files (deck target 50)</span></div></div>
+    el.innerHTML = mapBlock + city + `<div class="ph-sum"><div><b>${tp}<small>/50</small></b><span>pools tied up across the 5 stores (target 10 a store by 20 Feb; Wagholi has 3 more signed from 2027)</span></div><div><b>${tg}</b><span>gyms, yoga and fitness tied up</span></div><div><b>${renew}</b><span>pool and gym tie-ups that end in 2026: renew before Movement for All</span></div><div><b>0<small>/50</small></b><span>travel agency affiliates in our files (deck target 50)</span></div></div>
       <div class="ph-grid">${cards}</div>
       <div class="ph-trav"><h3 class="display-s">Travel agencies<span class="lt">: a new kind of AOP</span></h3>
         <div class="ph-tk">${H.travel.kinds.map(k => `<div><h4>${esc(k.h)}</h4><p>${esc(k.w)}</p><small>${esc(k.have)}</small></div>`).join("")}</div>
@@ -100,6 +136,6 @@ window.PUNE_HOT = {
         <p class="ph-ask">${esc(H.travel.ask)}</p></div>
       <p class="w27-note">Tied up: Pune partnerships sheet (practice place, sport, area, timeline; contacts left out). Status from the timeline as written: "ends in 2026" means the sheet's end date is in 2026. City numbers: public reports and directories (approximate, checked 10 Nov 2026). Catchment areas and hotspots: our reading of each store's surroundings, to confirm with the store teams. Store-level counts of gyms, pools, agencies and societies are not in our files.</p>`;
   };
-  if (document.readyState !== "loading") window.renderPuneHot(document.getElementById("puneHot"));
-  else document.addEventListener("DOMContentLoaded", () => window.renderPuneHot(document.getElementById("puneHot")));
+  const go = () => { window.renderPuneHot(document.getElementById("puneHot")); aopMap(); };
+  if (document.readyState !== "loading") go(); else document.addEventListener("DOMContentLoaded", go);
 })();

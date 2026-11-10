@@ -179,6 +179,20 @@
     if (pts.length) map.fitBounds(pts, { padding: [30, 30] });
   }
 
+  /* ---------- Pune money as charts: November, December (by channel) and the two months by campaign ---------- */
+  function puneCharts() {
+    const el = $("#ndPuneCharts"); if (!el) return;
+    const CH = PP.channels, CC = { "Black Friday": ["Black Friday", "#111"], "Winter & Travel": ["Winter, Trek & Travel", "#2E7D32"], "Christmas sale": ["Christmas", "#C8102E"], "AOPs": ["AOPs and free products", "#12A150"], "Kiprun": ["Kiprun events", "#E8590C"] };
+    const svgDonut = (parts, total, big, small) => { const R = 70, C = 2 * Math.PI * R; let off = 0;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="380" height="380" viewBox="0 0 200 200"><circle cx="100" cy="100" r="${R}" fill="none" stroke="#EEF0F5" stroke-width="34"/>${parts.map(([, v, c]) => { const l = v / total * C, el = `<circle cx="100" cy="100" r="${R}" fill="none" stroke="${c}" stroke-width="34" stroke-dasharray="${l.toFixed(2)} ${(C - l).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 100 100)"/>`; off += l; return el; }).join("")}<text x="100" y="99" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="800" fill="#10135A">${big}</text><text x="100" y="119" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#5A6080">${small}</text></svg>`;
+    return `<img class="nb-svg" width="190" height="190" alt="${small}: ${big}" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}">`; };
+    const donut = (title, total, parts) => `<div class="panel pm-chart"><h3>${title}</h3><div class="nb-donut">${svgDonut(parts, total, inr(total), title.replace(", by campaign", ""))}</div>
+        <ul class="nb-legend">${parts.map(([n, v, c]) => `<li><i style="background:${c}"></i>${esc(n)}<b>${inr(v)}</b><small>${(v / total * 100).toFixed(1)}%</small></li>`).join("")}</ul></div>`;
+    const byCh = ms => Object.keys(CH).map(k => [CH[k][0], PP.lines.filter(x => ms.includes(x.m) && x.ch === k).reduce((a, x) => a + x.v, 0), CH[k][1]]).filter(x => x[1]).sort((a, b) => b[1] - a[1]);
+    const byCamp = Object.keys(CC).map(k => [CC[k][0], PP.lines.filter(x => x.m < 2 && x.camp === k).reduce((a, x) => a + x.v, 0), CC[k][1]]).filter(x => x[1]).sort((a, b) => b[1] - a[1]);
+    el.innerHTML = donut("November", PP.totals[0], byCh([0])) + donut("December", PP.totals[1], byCh([1])) + donut("Nov + Dec, by campaign", PL, byCamp);
+  }
+
   /* ---------- AOP cost, November and December (Pune spend plan) ---------- */
   function aopKpis() {
     const el = $("#ndAopKpis"); if (!el) return;
@@ -232,7 +246,7 @@
       <p class="w27-note">Pune money: the Pune spend plan (BFS PUNE), every line counted once under its campaign. Budget = the sheet's total advertising and marketing budget: ₹28,47,282 in November and ₹29,62,282 in December, ${inr(PT)} together; the lines add exactly to it. Lines the sheet lists outside the month totals (Black Friday countdown ₹40,000, Winter barter ₹50,000, recycle boosts ₹10,000) are not counted. Goals: the SD piloting sheet (Black Friday 27 to 30 Nov, Christmas 18 to 25 Dec). Gujarat and MP: the influencer budgets shared on 5 to 9 Nov.</p>`;
   }
 
-  frames(); hoardings(); summary(); puneKpis(); aopKpis(); inflNovDec();
+  frames(); hoardings(); summary(); puneKpis(); aopKpis(); inflNovDec(); puneCharts();
   const sc = $("#ndSumCards");
   if (sc) sc.innerHTML = [...FR.filter(f => f.v), ALW].map((f, i) => `<a class="fr-card ${f === ALW ? "alw" : ""}" href="#${f.sec || "pune"}" style="--c:${f.col || "#9AA2C8"}"><em>${f === ALW ? "+" : i + 1}</em><b>${esc(f.n)}</b><span>${esc(f.d || "November and December")}</span><strong>${inr(f.v)}<small>${Math.round(f.v / PL * 100)}% of Pune's Nov + Dec</small></strong></a>`).join("");
   runway(); weekPanel(); aops();

@@ -13,14 +13,14 @@
 
   // Women's Day store formats (main site, Q1 2027 chapter)
   const WD = {
-    Pune: [["Wakad", "Pilates and core on the forecourt, then a women's 5K club run"], ["Wagholi", "Playground morning: pilates, then a women-only pickleball slot"], ["SGS Mall", "In-mall studio: pilates and strength taster classes"], ["Amanora", "Mall-atrium yoga flow and a She Plays try-a-sport zone"], ["NIBM", "Mothers and daughters: yoga and skipping challenges"]],
+    Pune: [["Wakad", "Pilates and core on the forecourt, then a women's 5K club run"], ["Wagholi", "Playground morning: pilates, then a women-only pickleball slot"], ["SGS Mall", "Pilates and strength taster classes in the store"], ["Amanora", "Yoga flow on the store's small playground, then a She Plays try-a-sport zone"], ["NIBM", "Mothers and daughters: yoga and skipping challenges"]],
     Gujarat: [["Motera", "Rooftop-style pilates on the playground"], ["Nexus", "In-mall pilates and a women's run group launch"], ["Baroda", "Court morning: pilates, then women's box cricket"], ["Dumas, Surat", "Sunrise yoga and a women-only pickleball slot"], ["Rajkot", "Garba-fit cardio and a women's walking group"]],
     MP: [["Indore", "Playground pilates, then a women's 5K"], ["Bhopal", "Lakeside yoga by the Upper Lake, back to DB Mall"], ["Gwalior", "Morning walk and yoga, with a self-defence basics class"]]
   };
   const MOM = [
     { ids: ["fit"], n: "Movement for All", lt: "New Year, New Moves", when: "January, all 13 stores", video: "circuit-games", img: "cc/fitness.jpg", c: "#E0A100",
       p: "A complete fitness event across all 13 stores: the city moves for the month. Partner yoga, run and gym sessions bring people to the store; creators post the first two weeks.",
-      camps: ["Movement for All"], ms: [2, 4], sports: "Fitness, then running and yoga" },
+      camps: ["Movement for All"], ms: [2], sports: "Fitness, then running and yoga" },
     { ids: ["clr"], n: "Clearance sale", lt: "animated at the stores", when: "January (2026 ran 10 Jan to 15 Feb)", img: "winter-off.jpg", c: "#D6453D", contain: true,
       p: "In all 13 stores: the end-of-season sale, animated in store, not just discounted. The biggest influencer push of Q1.", camps: ["Clearance sale"], ms: [2], sports: "Every sport: clears the winter range" },
     { ids: ["na"], n: "New arrivals", lt: "SS27", when: "February; creators 24 Feb to 6 Mar", img: "u-kiprun.jpg", c: "#6B4FBB",
@@ -28,8 +28,8 @@
     { ids: ["wd"], n: "Women's Day", lt: "one weekend, all 13 stores", when: "Sat 6 and Sun 7 March (Women's Day is Mon 8 March)", video: "womens-day", c: "#C2185B", wide: true,
       p: "Women-only mornings on the weekend before Women's Day: pilates or yoga first, then a sport to try, then shopping with a Women's Day offer, and a women's club that keeps meeting.",
       camps: ["Women's Day"], ms: [4], sports: "Fitness, running, swimming" },
-    { ids: ["sum"], n: "Summer", lt: "water, running and travel", when: "March to May", img: "water/water-women-pool.jpg", c: "#0096C7",
-      p: "Learn to swim before the pools fill up, the Kiprun Challenger (₹9,999) for the race season, and summer treks. Summer camp creators run from March to May.", camps: ["Summer"], ms: [4], sports: "Swimming, running, mountain" }
+    { ids: ["sum"], n: "Summer", lt: "water sports first", when: "March to May", img: "water/water-women-pool.jpg", c: "#0096C7",
+      p: "Summer goes strong on water: all 7 Pune hoardings on swimming in March, learn-to-swim with our partner pools before they fill up, and 50 summer + summer camp creators from March to May. Running and summer treks follow.", camps: ["Summer"], ms: [4], sports: "Swimming first, then running and mountain" }
   ];
 
   const MN = ["Jan", "Feb", "Mar"];
@@ -70,6 +70,20 @@
   ];
   const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const QC = ["#E0A100", "#0096C7", "#12A150", "#C2185B"];
+  let qSel = 0;
+  // one quarter, month by month: the 2027 influencer sheet (by start month) and, for Q1, Pune's spend plan influencer lines
+  function qPanel(k) {
+    const ms = [k * 3, k * 3 + 1, k * 3 + 2];
+    const spend = m => (PP ? PP.lines.filter(x => x.ch === "inf" && x.m === m + 2) : []); // PUNE_PLAN m: 2 = Jan 2027
+    const cols = ms.map(m => { const rs = INF.filter(r => r[2] === m), c = rs.reduce((a, r) => a + r[6], 0), n = rs.reduce((a, r) => a + r[4], 0), sp = k === 0 ? spend(m) : [];
+      return `<div class="if27-m"><h4>${FULLM[m]} 2027</h4><div class="if27-mt"><b>${Lr(c)}</b><span>${n} influencers in the 2027 sheet</span></div>
+        <ul>${rs.length ? rs.map(r => `<li><b>${esc(r[0])}</b><span>${r[4]} influencers, ${esc(r[1])}</span><em>${inr(r[6])}</em></li>`).join("") : "<li class=\"none\"><span>No influencer campaign starts this month</span></li>"}</ul>
+        ${sp.length ? `<div class="if27-sp"><h5>Pune spend plan: ${inr(sp.reduce((a, x) => a + x.v, 0))}</h5>${sp.map(x => `<p>${esc(x.t.replace("Influencer campaign: ", ""))}<span>${esc(x.q || "")}${x.d ? ", " + esc(x.d) : ""}</span><em>${inr(x.v)}</em></p>`).join("")}</div>` : ""}</div>`; }).join("");
+    const tot = INF.filter(r => r[2] != null && Math.floor(r[2] / 3) === k).reduce((a, r) => a + r[6], 0);
+    return `<div class="if27-qh"><h3>Q${k + 1} 2027: what we spend on influencers, month by month</h3><b>${inr(tot)}</b></div><div class="if27-ms">${cols}</div>
+      ${k === 0 ? `<p class="if27-qn">Two sources: the 2027 influencer sheet (campaigns by the month they start) and Pune's spend plan (the influencer lines in each month's budget). Q1 in the spend plan: ${inr([0, 1, 2].reduce((a, m) => a + spend(m).reduce((b, x) => b + x.v, 0), 0))}.</p>` : ""}`;
+  }
+  const FULLM = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   function influencers() {
     const el = $("#infl27"); if (!el) return;
     const n = INF.reduce((a, r) => a + r[4], 0), c = INF.reduce((a, r) => a + r[6], 0);
@@ -78,8 +92,9 @@
     const und = INF.filter(r => r[2] == null);
     const maxc = Math.max(...INF.map(r => r[6]));
     el.innerHTML = `<div class="if27-kpis"><div class="tot"><b>${n}</b><span>influencers in ${INF.length} campaigns</span></div><div class="tot"><b>${Lr(c)}</b><span>total cost, ${inr(c)}</span></div>
-        ${qs.map(x => `<div style="--c:${QC[x.k]}"><b>${x.n}</b><span>Q${x.k + 1}: ${x.rows} campaigns, ${Lr(x.c)}</span></div>`).join("")}
+        ${qs.map(x => `<button type="button" class="if27-q" data-q="${x.k}" aria-pressed="${x.k === qSel}" style="--c:${QC[x.k]}"><b>${x.n}</b><span>Q${x.k + 1}: ${x.rows} campaigns, ${Lr(x.c)}</span><em>Click for month by month</em></button>`).join("")}
         <div style="--c:#9AA2C8"><b>${und.reduce((a, r) => a + r[4], 0)}</b><span>no date yet: ${und.length} campaigns, ${Lr(und.reduce((a, r) => a + r[6], 0))}</span></div></div>
+      <div class="if27-qp" id="if27Qp" style="--c:${QC[qSel]}">${qPanel(qSel)}</div>
       <div class="if27-tl"><div class="if27-axis"><span></span>${MON.map((m, i) => `<span class="${Math.floor(i / 3) % 2 ? "alt" : ""}">${m}</span>`).join("")}</div>
         ${INF.map(r => `<div class="if27-row"><div class="if27-lab"><b>${esc(r[0])}</b><small>${esc(r[1])}</small></div><div class="if27-track">${MON.map((m, i) => `<i class="${Math.floor(i / 3) % 2 ? "alt" : ""}"></i>`).join("")}
           ${r[2] != null ? `<span class="${r[2] >= 9 ? "r" : ""}" style="grid-column:${r[2] + 1} / ${r[3] + 2};--c:${QC[Math.floor(r[2] / 3)]}"><b>${r[4]}</b> influencers, ${Lr(r[6])}</span>` : `<span class="nd" style="grid-column:1 / 13"><b>${r[4]}</b> influencers, ${Lr(r[6])}: no date in the sheet</span>`}</div></div>`).join("")}</div>
@@ -90,6 +105,9 @@
       <p class="w27-note">Source: the influencer sheet shared on 10 Nov 2026 (Campaign Name, Campaign Dates, Content Link, Go Live Date, Total Views, Total Cost, CPV). "Influencers" is the Content Link count. The July and October rows still carry 2026 dates in the sheet, and the views look like 2026 results; 2027 has its 51st anniversary in July and Black Friday on 26 to 29 Nov in the planner. Q1 here differs from the Pune spend plan in three places: new arrivals ₹1.60 L here vs ₹1.49 L; summer 35 + 40 + 40 creators here vs 50 for ₹5 L there; Gudi Padwa (6, ₹60,000) is only here.</p>`;
   }
 
+  document.addEventListener("click", e => { const b = e.target.closest(".if27-q"); if (!b) return; qSel = +b.dataset.q;
+    document.querySelectorAll(".if27-q").forEach(x => x.setAttribute("aria-pressed", String(+x.dataset.q === qSel)));
+    const p = document.getElementById("if27Qp"); if (p) { p.style.setProperty("--c", QC[qSel]); p.innerHTML = qPanel(qSel); } });
   document.addEventListener("y27region", e => { region = e.detail; moments(); });
   moments(); influencers();
 })();

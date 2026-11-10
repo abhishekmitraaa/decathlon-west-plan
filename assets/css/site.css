@@ -3347,3 +3347,45 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 .y27-page .sec-head .display { font-size: clamp(28px, 3.1vw, 42px); }
 .y27-page .sec-head .display .lt { font-size: .82em; }
 .y27-page .display-s { font-size: clamp(20px, 2vw, 26px); }
+
+/* Pune money charts (Nov page) */
+.pm-charts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.pm-chart { padding: 18px 20px; }
+.pm-chart h3 { font-size: 16px; font-weight: 750; color: var(--ink); margin: 0 0 10px; }
+.pm-chart .nb-ring { width: 180px; height: 180px; }
+.pm-lines { padding: 0 14px 14px; }
+@media (max-width: 1000px) { .pm-charts { grid-template-columns: 1fr; } }
+
+/* Influencers 2027: clickable quarters */
+.if27-kpis .if27-q { all: unset; box-sizing: border-box; cursor: pointer; display: block; background: #fff; border: 1.5px solid var(--line); border-top: 4px solid var(--c); border-radius: var(--r-md); padding: 10px 14px; }
+.if27-kpis .if27-q b { display: block; font-size: 24px; color: var(--ink); } .if27-kpis .if27-q span { font-size: 12.5px; color: var(--text-2); }
+.if27-kpis .if27-q em { display: block; font-style: normal; font-size: 11.5px; font-weight: 700; color: var(--c); margin-top: 4px; }
+.if27-kpis .if27-q[aria-pressed="true"] { background: color-mix(in srgb, var(--c) 10%, #fff); box-shadow: 0 0 0 2px var(--c) inset; }
+.if27-kpis .if27-q:focus-visible { outline: 2px solid #3643BA; outline-offset: 2px; }
+.if27-qp { background: #fff; border: 1.5px solid var(--line); border-left: 5px solid var(--c); border-radius: var(--r-md); padding: 16px 18px; margin: 12px 0 16px; }
+.if27-qh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin-bottom: 10px; } .if27-qh h3 { margin: 0; font-size: 17px; color: var(--ink); } .if27-qh b { font-size: 20px; color: var(--ink); }
+.if27-ms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.if27-m { background: var(--mist); border-radius: var(--r-sm); padding: 12px 14px; }
+.if27-m h4 { margin: 0 0 6px; font-size: 14px; color: var(--ink); }
+.if27-mt b { font-size: 22px; color: var(--ink); display: block; } .if27-mt span { font-size: 12px; color: var(--text-2); }
+.if27-m ul { list-style: none; margin: 8px 0 0; padding: 0; }
+.if27-m li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 8px; padding: 6px 0; border-top: 1px solid #DDE1EC; font-size: 12.5px; }
+.if27-m li b { color: var(--ink); } .if27-m li span { grid-column: 1; color: var(--text-2); font-size: 12px; } .if27-m li em { grid-column: 2; grid-row: 1 / 3; align-self: center; font-style: normal; font-weight: 800; color: var(--ink); }
+.if27-m li.none span { color: var(--text-3); }
+.if27-sp { margin-top: 8px; background: #fff; border-radius: 8px; padding: 8px 10px; } .if27-sp h5 { margin: 0 0 4px; font-size: 12.5px; color: #3643BA; }
+.if27-sp p { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 8px; font-size: 12px; color: var(--ink); padding: 3px 0; } .if27-sp p span { grid-column: 1; color: var(--text-2); } .if27-sp p em { grid-column: 2; grid-row: 1 / 3; font-style: normal; font-weight: 700; }
+.if27-qn { margin: 10px 0 0; font-size: 12.5px; color: var(--text-2); }
+@media (max-width: 860px) { .if27-ms { grid-template-columns: 1fr; } }
+
+/* Pune hotspots: AOP map */
+.ph-mapb { background: #fff; border: 1.5px solid var(--line); border-radius: var(--r-md); padding: 14px; margin-bottom: 14px; }
+.ph-mapk { display: grid; grid-template-columns: 1.4fr repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px; }
+.ph-mapk div { border-radius: var(--r-sm); padding: 8px 12px; background: color-mix(in srgb, var(--c, #3643BA) 10%, #fff); border-left: 4px solid var(--c, #3643BA); }
+.ph-mapk div.t { background: #10135A; color: #fff; border-left-color: #7AFFA6; } .ph-mapk div.t span { color: #fff; opacity: .9; }
+.ph-mapk b { display: block; font-size: 22px; } .ph-mapk span { font-size: 12px; color: var(--text-2); }
+.ph-map { height: 440px; border-radius: var(--r-sm); background: #E3ECF6; overflow: hidden; }
+.ph-mapn { margin: 8px 0 0; font-size: 12px; color: var(--text-2); }
+.y27-sports-in { padding: 0 14px 14px; }
+@media (max-width: 860px) { .ph-mapk { grid-template-columns: 1fr 1fr; } .ph-mapk div.t { grid-column: 1 / -1; } .ph-map { height: 300px; } }
+.nb-svg { width: 190px; height: 190px; display: block; margin: 4px auto 14px; }
+.nb-svg text { font-family: var(--body); }

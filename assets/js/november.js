@@ -101,9 +101,10 @@
     $("#novBudgetKpis").innerHTML = `<div class="tot"><b>${inr(T)}</b><span>Pune, November: all planned</span></div>` +
       camps.map(([c, col]) => `<div style="--c:${col}"><b>${inr(byCamp(c))}</b><span>${c === "Winter & Travel" ? "Winter, Trek & Travel" : c === "AOPs" ? "AOPs and free products" : c === "Kiprun" ? "Kiprun event" : c}: ${pc(byCamp(c))}</span></div>`).join("");
     const chs = Object.keys(CH).map(k => [k, ls.filter(x => x.ch === k).reduce((a, x) => a + x.v, 0)]).filter(x => x[1]).sort((a, b) => b[1] - a[1]);
-    let acc = 0;
-    const stops = chs.map(([k, v]) => { const f = acc / T * 360; acc += v; return `${CH[k][1]} ${f}deg ${acc / T * 360}deg`; }).join(", ");
-    $("#nbDonut").innerHTML = `<div class="nb-ring" style="background:conic-gradient(${stops})"><div><b>${inr(T)}</b><span>Pune, November</span></div></div>`;
+    const svgDonut = (parts, total, big, small) => { const R = 70, C = 2 * Math.PI * R; let off = 0;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="380" height="380" viewBox="0 0 200 200"><circle cx="100" cy="100" r="${R}" fill="none" stroke="#EEF0F5" stroke-width="34"/>${parts.map(([, v, c]) => { const l = v / total * C, el = `<circle cx="100" cy="100" r="${R}" fill="none" stroke="${c}" stroke-width="34" stroke-dasharray="${l.toFixed(2)} ${(C - l).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 100 100)"/>`; off += l; return el; }).join("")}<text x="100" y="99" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="800" fill="#10135A">${big}</text><text x="100" y="119" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="11" fill="#5A6080">${small}</text></svg>`;
+    return `<img class="nb-svg" width="190" height="190" alt="${small}: ${big}" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}">`; };
+    $("#nbDonut").innerHTML = svgDonut(chs.map(([k, v]) => [k, v, CH[k][1]]), T, inr(T), "Pune, November");
     $("#nbLegend").innerHTML = chs.map(([k, v]) => `<li><i style="background:${CH[k][1]}"></i>${CH[k][0]}<b>${inr(v)}</b><small>${pc(v)}</small></li>`).join("");
     const mx = Math.max(...ls.map(x => x.v));
     $("#nbBars").innerHTML = `<ul class="nb-lines">${ls.slice().sort((a, b) => b.v - a.v).map(x => `<li><div class="nb-l-t"><b>${esc(x.t)}</b><small>${esc(x.camp === "Winter & Travel" ? "Winter, Trek & Travel" : x.camp)}${x.q ? ", " + esc(x.q) : ""}${x.d ? ", " + esc(x.d) : ""}</small></div><div class="nb-l-bar"><i style="--w:${x.v / mx * 100}%;--c:${CH[x.ch][1]}"></i></div><span class="nb-l-v"><b>${inr(x.v)}</b><em>${pc(x.v)}</em></span></li>`).join("")}</ul>`;

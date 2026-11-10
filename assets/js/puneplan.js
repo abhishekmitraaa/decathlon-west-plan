@@ -4,8 +4,10 @@
 window.PUNE_PLAN = {
   months: ["Nov 2026", "Dec 2026", "Jan 2027", "Feb 2027", "Mar 2027"],
   // month budgets = the sheet's "Total Budget" rows (user, 10 Nov 2026, fourth brief: Pune Nov ₹28,47,282 and Dec ₹29,62,282 are the total
-  // advertising and marketing budget; the earlier ₹28 L / ₹30.15 L are superseded). Jan to Mar: ₹30,54,000 / ₹19,89,000 / ₹29,39,000.
-  totals: [2847282, 2962282, 3054000, 1989000, 2939000],
+  // advertising and marketing budget; the earlier ₹28 L / ₹30.15 L are superseded). Jan to Mar: ₹30,54,000 / ₹19,89,000 / ₹27,90,000.
+  // March: the sheet's total is ₹29,39,000, but it includes a "New Year, New Moves" influencer line (17, ₹1,49,000, "2 to 17 Jan") copied
+  // from January; the user removed it (10 Nov 2026), so March = the remaining lines, ₹27,90,000.
+  totals: [2847282, 2962282, 3054000, 1989000, 2790000],
   channels: { ooh: ["Hoardings", "#3643BA"], aop: ["AOPs and free products", "#12A150"], ins: ["In-store comms", "#E0A100"], mall: ["In-mall", "#9AA2C8"],
     inf: ["Influencers", "#C2185B"], evt: ["Events", "#E8590C"], cont: ["Content: media vendor reels", "#0096C7"], boost: ["Social boost", "#6B4FBB"], fly: ["Flyers and coupon cards", "#5D6D7E"] },
   lines: [
@@ -48,10 +50,9 @@ window.PUNE_PLAN = {
     { m: 3, ch: "ins", camp: "New arrivals", t: "In-store communication", v: 550000, n: "Amanora 83,000, SGS 1,44,283, Wakad 1,50,000, NIBM 50,000, Wagholi 1,50,000 (these add to 5,77,283, not 5,50,000)" },
     // March 2027: Women's Day, summer
     { m: 4, ch: "evt", camp: "Women's Day", t: "Women's Day weekend event", v: 150000, q: "800 walk-ins expected" },
-    { m: 4, ch: "ooh", camp: "Summer", t: "Hoardings", v: 725000, q: "7 hoardings" },
+    { m: 4, ch: "ooh", camp: "Summer", t: "Swimming hoardings: learn to swim, summer water", v: 725000, q: "7 hoardings", n: "summer goes strong on water sports (user, 10 Nov 2026)" },
     { m: 4, ch: "aop", camp: "AOPs", t: "AOPs", v: 765000, q: "27 AOPs" },
     { m: 4, ch: "inf", camp: "Summer", t: "Influencer campaign: summer + summer camp", v: 500000, q: "50 influencers", d: "March to May" },
-    { m: 4, ch: "inf", camp: "Movement for All", t: "Influencer campaign: \"New Year, New Moves\" (as written in the March table)", v: 149000, q: "17 influencers", d: "2 to 17 Jan", n: "looks copied from January: confirm" },
     { m: 4, ch: "cont", camp: "Summer", t: "Media vendor", v: 100000, q: "17 reels on the Let's Play Pune page" },
     { m: 4, ch: "ins", camp: "Summer", t: "In-store communication", v: 550000, n: "Amanora 83,000, SGS 1,44,283, Wakad 1,50,000, NIBM 50,000, Wagholi 1,50,000 (these add to 5,77,283, not 5,50,000)" }
   ],

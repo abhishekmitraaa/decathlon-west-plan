@@ -1,6 +1,6 @@
 /* Q1 2027 budget. REAL NUMBERS (fixed 10 Nov 2026, the user rejected the earlier % proposal, e.g. "Movement for All ₹37.72 L"):
    Pune: the Pune spend plan (data_recent_marketing_spends_pune_plan___1.xlsx, BFS PUNE), line by line: Jan ₹30,54,000, Feb ₹19,89,000,
-   Mar ₹29,39,000 (PUNE_PLAN in puneplan.js). Every line is credited to the campaign it serves (camp below = PUNE_PLAN camp names).
+   Mar ₹27,90,000 (PUNE_PLAN in puneplan.js; the sheet's March ₹29,39,000 held a copied January influencer line, removed). Every line is credited to the campaign it serves (camp below = PUNE_PLAN camp names).
    Gujarat and MP: only month totals exist (ultimate_data_sheet_1.xlsx, DATA.spend.*.y27); there is no campaign split in our files,
    so their money stays UNSPLIT (out.unsplit): no campaign, sport or channel figure is made up for them (user, 10 Nov 2026: show what we
    actually spend on each campaign in its month).
@@ -15,7 +15,7 @@ window.BUDGET27 = {
     { id: "fit", camp: "Movement for All", name: "Movement for All: New Year, New Moves", color: "#E0A100", ink: "#1C1E33", sport: { fitness: 1 },
       when: "January (influencers 2 to 17 Jan); partner events: yoga, run, gym and Zumba",
       hoard: "\"New Year, New Moves\": one hero kit and its price (mat, dumbbells, bands) and the distance to the store. Pune sport of the month: fitness.",
-      pune: "Pune plan, January: partner events yoga ₹75,000 (500 walk-ins), run ₹75,000 (400), gym, fitness and Zumba ₹1,50,000 (500); 5 hoardings ₹5,25,000; 17 influencers 2 to 17 Jan ₹1,49,000; 17 reels on Let's Play Pune ₹1,00,000. January total ₹10,74,000. The March table repeats the New Year, New Moves influencer line (17, ₹1,49,000, \"2 to 17 Jan\"): counted in March as the sheet has it, to confirm.",
+      pune: "Pune plan, January: partner events yoga ₹75,000 (500 walk-ins), run ₹75,000 (400), gym, fitness and Zumba ₹1,50,000 (500); 5 hoardings ₹5,25,000; 17 influencers 2 to 17 Jan ₹1,49,000; 17 reels on Let's Play Pune ₹1,00,000. January total ₹10,74,000.",
       inf: "Pune: 17 influencers, 2 to 17 Jan. In 2026 the same campaign got 14 lakh views at ₹0.11 a view.",
       social: "30-day challenge reels, \"kit under ₹999\" carousels, teammates training in store, gym AOP members' stories. Four posts a week.",
       boost: "Boost the two best reels each week, 5 km around each store, fitness interests, 18 to 40. Retarget video viewers with the store offer." },
@@ -47,11 +47,11 @@ window.BUDGET27 = {
       inf: "Women creators in fitness, running and swimming; a women's run and a Women Who Swim session.",
       social: "Real women customers and teammates, their sport and their kit; women-only events.",
       boost: "Women 22 to 45, 5 km; event sign-ups first, then products." },
-    { id: "sum", camp: "Summer", name: "Summer: water, running and travel", color: "#0096C7", ink: "#fff", sport: { swimming: 0.4, running: 0.3, mountain: 0.3 },
+    { id: "sum", camp: "Summer", name: "Summer: water sports first", color: "#0096C7", ink: "#fff", sport: { swimming: 0.6, running: 0.2, mountain: 0.2 },
       when: "March (summer + summer camp influencers March to May); swimming in store from 15 Feb, outside from 15 Mar",
-      hoard: "\"Summer fun with water\": a family in the pool, the starter-kit price and the nearest partner pool; the Kiprun Challenger at ₹9,999; \"Pack for summer\" treks.",
-      pune: "Pune plan, March: 7 hoardings ₹7,25,000; summer + summer camp influencers, 50 from March to May ₹5,00,000; 17 reels ₹1,00,000; in-store ₹5,50,000. Total ₹18,75,000. At least 10 swimming academies in every catchment by 20 Feb.",
-      inf: "Swim coaches and parents, runners and run-club leaders, trek and travel creators: the 50 summer influencers.",
+      hoard: "All 7 Pune boards on swimming in March: \"Summer fun with water\", a family in the pool, the starter-kit price and the nearest partner pool.",
+      pune: "Pune plan, March: 7 swimming hoardings ₹7,25,000; summer + summer camp influencers, 50 from March to May ₹5,00,000; 17 reels ₹1,00,000; in-store ₹5,50,000. Total ₹18,75,000. At least 10 swimming academies in every catchment by 20 Feb.",
+      inf: "Water first: swim coaches, parents and beginner swimmers, then runners and summer-trek creators. Pune spend plan: 50 summer + summer camp influencers (₹5 L, March to May). Influencer sheet 2027: Summer 6 to 15 Mar, 35 (₹3.5 L); April summer 40 (₹4.5 L); May summer 40 (₹4.5 L).",
       social: "First-swim videos from partner pools, run club Saturdays, packing lists for summer treks.",
       boost: "Parents 28 to 45 near stores and partner pools; runners 8 km; travel interests 10 km." }
   ],

@@ -9,7 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=20261110k">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="assets/css/site.css?v=20261110m">
 </head>
 <body class="nov-page y27-page">
 
@@ -102,7 +103,7 @@
   <div class="wrap">
     <header class="sec-head">
       <h2 class="display"><span class="lt">Q1</span> marketing playbook</h2>
-      <p class="sec-lede">January is Movement for All and the clearance sale, February is new arrivals, March is Women's Day and summer: water, running and travel; AOPs run every month. The money is Pune's spend plan, line by line: January ₹30.54 L, February ₹19.89 L, March ₹29.39 L (₹79.82 L). Every campaign shows only what is spent on it, in its month. Gujarat and MP have only month totals in our files, so they are not split by campaign.</p>
+      <p class="sec-lede">January is Movement for All and the clearance sale, February is new arrivals, March is Women's Day and summer, water sports first; AOPs run every month. The money is Pune's spend plan, line by line: January ₹30.54 L, February ₹19.89 L, March ₹27.90 L (₹78.33 L). Every campaign shows only what is spent on it, in its month. Gujarat and MP have only month totals in our files, so they are not split by campaign.</p>
     </header>
     <div class="panel mp-panel"><h3 class="display-s mp-title">How we do marketing<span class="lt">, from the ground up</span></h3><div id="mktPyramid"></div></div>
     <div class="pb27-over" id="pb27Over"></div>
@@ -113,10 +114,8 @@
     <div class="pune-only">
     <h3 class="display-s pb27-sub">Pune: the real plan<span class="lt">, January to March, line by line</span></h3>
     <div class="pb27-light" id="pb27Pune"></div>
-    <h3 class="display-s pb27-sub">Pune influencers in the spend plan<span class="lt">, January to March</span></h3>
-    <div class="panel pi-panel" id="pb27Infl"></div>
     </div>
-    <p class="not-pune pb27-np">Pune's line-by-line spend plan and its influencer timeline sit under Pune and West. The Gujarat and MP spend plans are not in our files yet.</p>
+    <p class="not-pune pb27-np">Pune's line-by-line spend plan sits under Pune and West. The Gujarat and MP spend plans are not in our files yet.</p>
   </div>
 </section>
 
@@ -185,8 +184,9 @@
       <p class="sec-lede">Turnover is what each sport sold in the same quarter of 2026, in-store (offline) plus online (out of store), with the split shown, and its share of everything we sold. Growth, budget and AOPs are our proposal, to confirm: the Q1 budget is what the sport gets from the Q1 playbook above; the Q2 budget is a share of each state's 2027 ad budget; the AOPs are each state's planned practice places for the quarter, split by sport.</p>
     </header>
     <a class="y27-open w27-link" href="water2027.html">Water sports in detail: the week-by-week plan for every store</a>
-    <div class="panel y27-glance"><div class="sb-wrap" id="y27Glance"></div></div>
-    <div class="y27-cards" id="y27Cards"></div>
+    <details class="panel pm-d y27-sports-d"><summary><b>Open the sports</b><span>Each sport's turnover, the 2027 goal, budget and AOPs, and its card</span><i class="nd-chev" aria-hidden="true"></i></summary>
+    <div class="y27-sports-in"><div class="panel y27-glance"><div class="sb-wrap" id="y27Glance"></div></div>
+    <div class="y27-cards" id="y27Cards"></div></div></details>
   </div>
 </section>
 
@@ -216,20 +216,22 @@
   <div class="exp-in"><span class="exp-t">Download this page</span>
     <button type="button" id="expPdf"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3v11.2l4-4 1.4 1.4L12 17l-5.4-5.4L8 10.2l4 4V3h0zM5 19h14v2H5z"/></svg>Download PDF</button>
     <button type="button" id="expGif"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3v11.2l4-4 1.4 1.4L12 17l-5.4-5.4L8 10.2l4 4V3h0zM5 19h14v2H5z"/></svg>Download GIF</button>
+    <button type="button" id="expPpt"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3v11.2l4-4 1.4 1.4L12 17l-5.4-5.4L8 10.2l4 4V3h0zM5 19h14v2H5z"/></svg>Download PowerPoint (16:9)</button>
     <span class="exp-s" id="expStatus" role="status" aria-live="polite">The complete page, as you see it.</span></div>
 </div>
 
 <script>window.DATA = window.DATA || {};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="assets/js/data.js?v=20261110c"></script>
 <script src="assets/js/sports27.js?v=20261110a"></script>
-<script src="assets/js/budget27.js?v=20261110f"></script>
+<script src="assets/js/budget27.js?v=20261110g"></script>
 <script src="assets/js/aopnames.js?v=20261110a"></script>
-<script src="assets/js/puneplan.js?v=20261110f"></script>
+<script src="assets/js/puneplan.js?v=20261110g"></script>
 <script src="assets/js/plan2027.js?v=20261110e"></script>
-<script src="assets/js/playbook27.js?v=20261110h"></script>
-<script src="assets/js/moments27.js?v=20261110d"></script>
-<script src="assets/js/punehot.js?v=20261110b"></script>
+<script src="assets/js/playbook27.js?v=20261110i"></script>
+<script src="assets/js/moments27.js?v=20261110e"></script>
+<script src="assets/js/punehot.js?v=20261110c"></script>
 <script src="assets/js/schools27.js?v=20261110a"></script>
-<script src="assets/js/export.js?v=20261110a"></script>
+<script src="assets/js/export.js?v=20261110e"></script>
 </body>
 </html>
