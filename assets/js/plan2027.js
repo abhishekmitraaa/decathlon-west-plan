@@ -28,7 +28,8 @@
   const rupeesL = r => r / 1e5;
 
   // 2027 ad budget per state and month (lakh), AOPs per state and month (AOP_PLAN index 0 = Nov 2026, so Jan 2027 = 2)
-  const spend = (st, m) => D.spend[st].y27[m];
+  // Q1 (Jan to Mar): Pune = its spend plan (BUDGET27.month); otherwise the 2027 sheet
+  const spend = (st, m) => m < 3 && window.BUDGET27 && window.BUDGET27.month ? window.BUDGET27.month(st, m) : D.spend[st].y27[m];
   const aopMonth = (st, m) => AOP.filter(a => a.state === st).reduce((t, a) => t + (a.months[m + 2] || 0), 0);
   const qSpend = (st, q) => Q[q].months.reduce((t, m) => t + spend(st, m), 0);
   const qAop = (st, q) => Q[q].months.reduce((t, m) => t + aopMonth(st, m), 0);
@@ -206,7 +207,7 @@
     const ms = [...Array(12).keys()], SPI = Object.fromEntries(SPS().map(s => [s.id, s]));
     const tot = ms.map(m => m < 11 ? tm("all", m) : null);
     const val = ms.map(m => m < 11 ? Object.fromEntries(ORDER.map(id => [id, tm(id, m)])) : null);
-    const spendM = ms.map(m => sts().reduce((t, st) => t + (D.spend[st].y27[m] || 0), 0));
+    const spendM = ms.map(m => sts().reduce((t, st) => t + (spend(st, m) || 0), 0));
     const chName = tosCh === "in" ? "in-store (offline)" : tosCh === "on" ? "online" : "in-store + online";
     let h = `<div class="tos-head"><h3 class="display-s">What our ${SPS().length} sports sell<span class="lt">, month by month</span></h3>
       <div class="tos-ctl"><div class="seg" role="group" aria-label="Channel">${[["", "In-store + online"], ["in", "In-store (offline)"], ["on", "Online"]].map(([k, n]) => `<button type="button" data-tc="${k}" aria-pressed="${k === tosCh}">${n}</button>`).join("")}</div></div></div>

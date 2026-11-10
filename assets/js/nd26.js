@@ -31,7 +31,8 @@
     { l: "camp", t: "Christmas gifting videos: Gift a Sport continues", s: "2026-12-01", e: "2026-12-25", k: "launch", n: "user" },
     { l: "camp", t: "MH500 backpack", s: "2026-11-02", e: "2026-11-30", k: "tech", n: "rw" },
     { l: "inf", t: "Black Friday: 40 influencers, ₹4 L", s: "2026-11-21", e: "2026-11-28", k: "evt", n: "plan" },
-    { l: "inf", t: "Winter & Travel: 10 influencers (₹1 L) + 7 on barter", s: "2026-12-01", e: "2026-12-31", k: "eco", n: "plan" },
+    { l: "inf", t: "Winter & Travel: 10 influencers (₹1 L)", s: "2026-11-15", e: "2026-11-21", k: "eco", n: "plan" },
+    { l: "inf", t: "Winter & Travel: 10 influencers (₹1 L) + 7 on barter (₹50,000)", s: "2026-12-01", e: "2026-12-15", k: "eco", n: "plan" },
     { l: "inf", t: "Christmas: 35 influencers, ₹3.5 L", s: "2026-12-19", e: "2026-12-23", k: "evt", n: "plan" },
     { l: "ins", t: "Coupon cards: basket over ₹2,799 gets a product free (35,000 cards)", s: "2026-11-17", e: "2026-11-30", k: "local", n: "plan" },
     { l: "ins", t: "Black Friday comms live, whole city", s: "2026-11-23", e: "2026-11-30", k: "nat", go: 1, n: "plan" },
@@ -99,7 +100,7 @@
   const Lk = r => { const l = r / 1e5; return r < 1e5 ? `₹${Math.round(r / 1000)}K` : `₹${l.toFixed(2)} L`; };
   const camp = (c, ms = [0, 1]) => PP.lines.filter(x => ms.includes(x.m) && c.includes(x.camp));
   const sum = ls => ls.reduce((a, x) => a + x.v, 0);
-  const PT = PP.totals[0] + PP.totals[1];
+  const PT = PP.totals[0] + PP.totals[1], PL = PP.lines.filter(x => x.m < 2).reduce((a, x) => a + x.v, 0);
   const gsum = i => G.reduce((a, g) => a + (g[i] || 0), 0), Q4 = gsum(2);
   const cr = n => "₹" + n.toFixed(2) + " Cr", pc = (a, b) => (a >= b ? "+" : "") + Math.round((a / b - 1) * 100) + "%";
   const FR = [
@@ -111,8 +112,8 @@
       what: "A four-day sale. Coupon cards from 17 Nov, in-store and in-mall live on 23 Nov, a countdown on social, creators from 21 Nov.",
       inf: "Pune 40 (₹4 L); Gujarat 67+ (₹7.4 L); MP 40 (₹2.02 L)", west: "Gujarat ₹7.4 L and MP ₹2.02 L of influencers" },
     { id: "winter", sec: "winter", n: "Winter, Trek & Travel", d: "All of Nov and Dec", c: ["Winter & Travel"], col: "#2E7D32",
-      what: "The season under both sales: 7 Pune hoardings for two months, trek and travel reels, creators in December, the MH500 backpack and a winter wall in store.",
-      inf: "Pune 10 (₹1 L) + 7 on barter (₹50,000, outside the total)", west: "Not planned separately for Gujarat and MP" },
+      what: "The season under both sales: 7 Pune hoardings for two months, trek and travel reels, 20 creators (10 from 15 to 21 Nov, 10 from 1 to 15 Dec), the MH500 backpack and a winter wall in store.",
+      inf: "Pune 20 (₹2 L): 10 from 15 to 21 Nov, 10 from 1 to 15 Dec; + 7 on barter (₹50,000) and 10 reels recycled as boosts (₹10,000), outside the total", west: "Not planned separately for Gujarat and MP" },
     { id: "xmas", sec: "december", n: "Christmas: gifting and the sale", d: "Gifting 1 to 25 Dec; sale 19 to 31 Dec", c: ["Christmas sale"], col: "#C8102E", goal: [6, 7],
       what: "The Diwali gifting videos continue as Christmas gifting; the Christmas Sale from 19 Dec with in-store live, a countdown and boosts.",
       inf: "Pune 35 (₹3.5 L), 19 to 23 Dec", west: "Gujarat and MP Christmas budgets not in our files yet" }
@@ -125,7 +126,7 @@
   FR[2].brings = T ? `No goal of its own. Its sport, mountain (hiking, trekking, camping), sold ${cr(mtn(9) / 1e7)} in October 2026, ${(mtn(9) / allT(9) * 100).toFixed(1)}% of West turnover, and ${(mtn(10) / allT(10) * 100).toFixed(1)}% in 1 to 8 November.` : "No goal of its own.";
   FR[1].brings = `Turnover goal ${goalTxt(FR[1])}: ${(gsum(5) / Q4 * 100).toFixed(1)}% of the ${cr(Q4)} Q4 store challenge in 4 days.`;
   FR[3].brings = `Turnover goal ${goalTxt(FR[3])}: ${(gsum(7) / Q4 * 100).toFixed(1)}% of the Q4 store challenge.`;
-  const share = v => v ? `${Math.round(v / PT * 100)}% of Pune's Nov + Dec` : "Not in the Pune plan";
+  const share = v => v ? `${Math.round(v / PL * 100)}% of Pune's Nov + Dec` : "Not in the Pune plan";
 
   function frames() {
     const ov = $("#ndFrames");
@@ -137,7 +138,7 @@
     });
     const lines = (el, f, title) => { if (!el) return;
       el.innerHTML = `<h3>${title}</h3><ul class="fr-ls">${f.ls.map(x => `<li><div><b>${esc(x.t)}</b><small>${PP.months[x.m]}${x.q ? ", " + esc(x.q) : ""}${x.d ? ", " + esc(x.d) : ""}</small>${x.n ? `<em>${esc(x.n)}</em>` : ""}</div><span>${inr(x.v)}</span></li>`).join("")}</ul>
-        <div class="fr-tot"><span>Pune total</span><b>${inr(f.v)}</b><small>${share(f.v)} (${Lk(PT)})</small></div><p class="fr-brings"><b>What it brings</b>${esc(f.brings)}</p>`; };
+        <div class="fr-tot"><span>Pune total</span><b>${inr(f.v)}</b><small>${share(f.v)} (lines ${Lk(PL)})</small></div><p class="fr-brings"><b>What it brings</b>${esc(f.brings)}</p>`; };
     lines($("#ndBfPune"), FR[1], "Pune's Black Friday, line by line");
     lines($("#ndWinterLines"), FR[2], "Pune's Winter, Trek &amp; Travel, line by line");
     lines($("#ndXmasLines"), FR[3], "Pune's Christmas, line by line");
@@ -169,16 +170,16 @@
   function summary() {
     const el = $("#ndSummary"); if (!el) return;
     const rows = [...FR, ALW];
-    const bar = rows.filter(r => r.v).map(r => `<span style="flex:${r.v};--c:${r.col || "#9AA2C8"}" title="${esc(r.n)}: ${inr(r.v)}"><b>${esc(r.n.split(":")[0])}</b><em>${Lk(r.v)}, ${Math.round(r.v / PT * 100)}%</em></span>`).join("");
+    const bar = rows.filter(r => r.v).map(r => `<span style="flex:${r.v};--c:${r.col || "#9AA2C8"}" title="${esc(r.n)}: ${inr(r.v)}"><b>${esc(r.n.split(":")[0])}</b><em>${Lk(r.v)}, ${Math.round(r.v / PL * 100)}%</em></span>`).join("");
     el.innerHTML = `<div class="nd-sum-top"><div><b>${Lk(PT)}</b><span>Pune, November (${Lk(PP.totals[0])}) and December (${Lk(PP.totals[1])})</span></div>
         <div><b>${cr(gsum(5) + gsum(7))}</b><span>sale goals, West: Black Friday ${cr(gsum(5))} + Christmas ${cr(gsum(7))}</span></div>
-        <div><b>${40 + 10 + 35}</b><span>Pune influencers in the plan (+7 on barter)</span></div>
+        <div><b>${40 + 20 + 35}</b><span>Pune influencers in the plan (+7 on barter)</span></div>
         <div><b>${22 + 27}</b><span>Pune AOPs, 22 in Nov and 27 in Dec</span></div></div>
       <div class="nd-sum-bar">${bar}</div>
       <div class="sb-wrap"><table class="y27-table nd-sum-t"><thead><tr><th>Campaign</th><th>When</th><th>What we do</th><th>Pune budget</th><th>Share</th><th>Influencers</th><th>Gujarat and MP</th><th>What it brings</th></tr></thead><tbody>
-      ${rows.map((r, i) => `<tr><td><b class="y27-dot" style="--c:${r.col || "#9AA2C8"}">${esc(r.n)}</b></td><td>${esc(r.d || "Nov and Dec")}</td><td>${esc(r.what)}</td><td class="n"><b>${r.v ? inr(r.v) : "-"}</b></td><td class="n">${r.v ? Math.round(r.v / PT * 100) + "%" : "-"}</td><td>${esc(r.inf || "-")}</td><td>${esc(r.west || "-")}</td><td>${esc(r.brings || "Practice places and running events that bring players back to the store.")}</td></tr>`).join("")}
-      <tr class="tot"><td><b>Pune, Nov + Dec</b></td><td></td><td></td><td class="n"><b>${inr(PT)}</b></td><td class="n">100%</td><td>85 + 7 on barter</td><td></td><td><b>${cr(gsum(5) + gsum(7))}</b> of sale goals (West)</td></tr></tbody></table></div>
-      <p class="w27-note">Pune money: the Pune spend plan (BFS PUNE), every line counted once under its campaign; the lines add exactly to ${inr(PT)}. Lines the sheet lists outside the month totals (Black Friday countdown ₹40,000, Winter barter ₹50,000, recycle boosts ₹10,000) are not counted. Goals: the SD piloting sheet (Black Friday 27 to 30 Nov, Christmas 18 to 25 Dec). Gujarat and MP: the influencer budgets shared on 5 to 9 Nov.</p>`;
+      ${rows.map((r, i) => `<tr><td><b class="y27-dot" style="--c:${r.col || "#9AA2C8"}">${esc(r.n)}</b></td><td>${esc(r.d || "Nov and Dec")}</td><td>${esc(r.what)}</td><td class="n"><b>${r.v ? inr(r.v) : "-"}</b></td><td class="n">${r.v ? Math.round(r.v / PL * 100) + "%" : "-"}</td><td>${esc(r.inf || "-")}</td><td>${esc(r.west || "-")}</td><td>${esc(r.brings || "Practice places and running events that bring players back to the store.")}</td></tr>`).join("")}
+      <tr class="tot"><td><b>Pune, Nov + Dec</b></td><td></td><td></td><td class="n"><b>${inr(PT)}</b></td><td class="n">100%</td><td>95 + 7 on barter</td><td></td><td><b>${cr(gsum(5) + gsum(7))}</b> of sale goals (West)</td></tr></tbody></table></div>
+      <p class="w27-note">Pune money: the Pune spend plan (BFS PUNE), every line counted once under its campaign. Budget: ₹28,00,000 in November and ₹30,15,000 in December (user, 10 Nov), ${inr(PT)} together; the sheet's lines add to ${inr(sum(PP.lines.filter(x => x.m < 2)))} (in-store comms ₹4,97,282 a month in the latest sheet). Shares are of the lines. Lines the sheet lists outside the month totals (Black Friday countdown ₹40,000, Winter barter ₹50,000, recycle boosts ₹10,000) are not counted. Goals: the SD piloting sheet (Black Friday 27 to 30 Nov, Christmas 18 to 25 Dec). Gujarat and MP: the influencer budgets shared on 5 to 9 Nov.</p>`;
   }
 
   frames(); hoardings(); summary();

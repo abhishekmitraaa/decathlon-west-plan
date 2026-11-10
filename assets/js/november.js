@@ -91,16 +91,17 @@
 
   // November budget (user, 5-6 Nov 2026), rupees. Committed: hoardings (booked sites, a month, from the winter hoarding programme;
   // Ahmedabad's two boards ₹3.5 L; the planned Surat board is not booked), Black Friday influencers, in-store comms ₹50,000 a store.
-  const BUD = { Gujarat: 2000000, MP: 986000, Pune: 1798000 };
+  // Pune: ₹28,00,000 for November (user, 10 Nov 2026; was ₹17,98,000, the Q4 store budget row of the sheet: superseded)
+  const BUD = { Gujarat: 2000000, MP: 986000, Pune: 2800000 };
   const STORES_N = { Gujarat: 5, MP: 3, Pune: 5 };
   const CITY_BU = { Pune: "Pune", Ahmedabad: "Gujarat", Baroda: "Gujarat", Rajkot: "Gujarat", Surat: "Gujarat", Bhopal: "MP", Indore: "MP", Gwalior: "MP" };
   const HOARD = { Gujarat: 0, MP: 0, Pune: 0 };
   (window.HOARDINGS || []).filter(x => x.status !== "plan").forEach(x => { HOARD[CITY_BU[x.city]] += x.cost; });
-  const INF = { Gujarat: 740000, MP: 70000 + 100000 + 32000, Pune: 400000 };
+  const INF = { Gujarat: 740000, MP: 70000 + 100000 + 32000, Pune: 400000 + 100000 }; // Pune: Black Friday ₹4 L + Winter & Travel ₹1 L (10 creators, 15 to 21 Nov)
   const WALK = { Gujarat: 30000, MP: 30000, Pune: 140000 };
   const BUN = { Gujarat: "Gujarat", MP: "Madhya Pradesh", Pune: "Pune" };
   const PARTS = [["ho", "Hoardings", "#1F2A8A"], ["inf", "Influencers", "#E0457B"], ["ins", "In-store comms", "#14A38B"], ["left", "Left to plan", "#FFC21A"]];
-  const brow = ["Gujarat", "MP", "Pune"].map(bu => { const b = BUD[bu], ho = HOARD[bu], inf = INF[bu], ins = STORES_N[bu] * 50000; return { bu, b, ho, inf, ins, left: b - ho - inf - ins }; });
+  const brow = ["Gujarat", "MP", "Pune"].map(bu => { const b = BUD[bu], ho = HOARD[bu], inf = INF[bu], ins = bu === "Pune" ? 497282 : STORES_N[bu] * 50000; return { bu, b, ho, inf, ins, left: b - ho - inf - ins }; });
   const btot = k => brow.reduce((a, r) => a + r[k], 0);
   $("#novBudgetKpis").innerHTML = `<div class="tot"><b>${L$(btot("b"))}</b><span>total budget, November</span></div>${brow.map(r => `<div style="--c:${BU[r.bu]}"><b>${L$(r.b)}</b><span>${BUN[r.bu]}</span></div>`).join("")}<div class="nov-left"><b>${L$(btot("left"))}</b><span>left to plan, after ${L$(btot("b") - btot("left"))} committed</span></div>`;
   // donut for the West
@@ -117,7 +118,7 @@
   $("#novBudgetTable").innerHTML = `<table class="sb-table"><thead><tr><th scope="col">November</th><th scope="col">Budget</th><th scope="col">Hoardings</th><th scope="col">Influencers</th><th scope="col">In-store comms</th><th scope="col" class="nov-left-col">Left to plan</th></tr></thead><tbody>
     ${brow.map(r => `<tr><th scope="row">${BUN[r.bu]}</th><td>${L$(r.b)}</td><td>${L$(r.ho)}</td><td>${L$(r.inf)}</td><td>${L$(r.ins)}</td><td class="nov-left-col"><b>${L$(r.left)}</b></td></tr>`).join("")}
     <tr class="sb-total"><th scope="row">West</th><td>${L$(btot("b"))}</td><td>${L$(btot("ho"))}</td><td>${L$(btot("inf"))}</td><td>${L$(btot("ins"))}</td><td class="nov-left-col"><b>${L$(btot("left"))}</b></td></tr></tbody></table>`;
-  $("#novBudgetNote").innerHTML = `Hoardings: booked sites, a month (Pune 7, Ahmedabad 2, Baroda 4, Rajkot 2, Bhopal 2); the planned Surat board is not booked. Influencers: Black Friday (Gujarat ₹7.4 L, Pune ₹4 L, MP ₹2.02 L). In-store comms: ₹50,000 a store. If the walk-in events go ahead, left to plan falls by ${L$(WALK.Pune)} in Pune, ${L$(WALK.Gujarat)} in Gujarat and ${L$(WALK.MP)} in MP.`;
+  $("#novBudgetNote").innerHTML = `Hoardings: booked sites, a month (Pune 7, Ahmedabad 2, Baroda 4, Rajkot 2, Bhopal 2); the planned Surat board is not booked. Influencers: Black Friday (Gujarat ₹7.4 L, Pune ₹4 L, MP ₹2.02 L) and Pune's Winter &amp; Travel ₹1 L (10 creators, 15 to 21 Nov). In-store comms: ₹50,000 a store; Pune ₹4,97,282 (Pune spend plan). Pune's November budget is ₹28 L (user, 10 Nov). If the walk-in events go ahead, left to plan falls by ${L$(WALK.Pune)} in Pune, ${L$(WALK.Gujarat)} in Gujarat and ${L$(WALK.MP)} in MP.`;
 
   // Q4 campaign turnover goals, SD piloting sheet (Q4_CAMPAIGN_WISE_TURONVER_GOAL_.xlsx, 6 Nov 2026). ₹ Cr except Kiprun and Kids Utsav (₹).
   // [store, BU, Q4'26 challenge, Q4'26 piloting, BFS 2025, BF 2026 goal, Christmas 2025, Christmas 2026 goal, Kiprun shoes incremental, Kids Utsav]

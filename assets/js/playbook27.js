@@ -65,22 +65,21 @@
       const all = [0, 1, 2].reduce((t, m) => t + sts.reduce((a, x) => a + (TO.all[x].in[m] || 0) + (TO.all[x].on[m] || 0), 0), 0);
       return { s, bud, bs: bud / A.total * 100, ts: sale / all * 100 };
     }).filter(r => r.bud > 0 || r.ts > 0);
-    const notSport = (A.camp.clr.reduce((a, b) => a + b, 0) + A.camp.loc.reduce((a, b) => a + b, 0));
+    const notSport = A.camp.clr.reduce((a, b) => a + b, 0);
+    const estTxt = pst === "Pune" ? "Pune's spend plan (BFS PUNE), line by line: every rupee below is a line in the sheet." : pst === "West" ? "Pune: its spend plan, line by line. Gujarat and MP: their 2027 month totals (ultimate data sheet); they have no campaign split in our files, so their share of each campaign is an estimate that follows Pune's real split." : `${pst}: the 2027 month totals (ultimate data sheet). There is no ${pst} campaign split in our files, so the campaign figures are an estimate that follows Pune's real split each month.`;
     const maxS = Math.max(...sportRows.map(r => Math.max(r.bs, r.ts)));
     $("#pb27Over").innerHTML = `
       <div class="pb27-ohead"><div><h3 class="display-s">${L(A.total)}<span class="lt"> for Q1, ${pst === "West" ? "all three states" : pst}</span></h3>
-        <p>The 2027 ad budget for January to March (ultimate data sheet), split by our proposal below. ${pst === "West" ? "Each state's budget is split the same way." : ""}</p></div></div>
+        <p>${estTxt}</p></div></div>
       <div class="pb27-months">${[0, 1, 2].map(m => `<div class="pb27-mrow"><div class="pb27-mlab"><b>${FULL[m]}</b><span>${L(A.month[m])}</span></div><div class="pb27-bar">${segs(m)}</div></div>`).join("")}</div>
       <div class="pb27-key">${used.map(c => `<span><i style="--c:${c.color}"></i>${esc(c.name)} <b>${L(A.camp[c.id].reduce((a, b) => a + b, 0))}</b></span>`).join("")}</div>
       <div class="pb27-two">
         <div><h4>Sport by sport: share of the Q1 budget vs share of what we sell</h4>
           ${sportRows.map(r => `<div class="pb27-sp"><span><i style="--c:${r.s.color}"></i>${r.s.name}</span><div><i class="b" style="--w:${r.bs / maxS * 100}%;--c:${r.s.color}"></i><i class="t" style="--w:${r.ts / maxS * 100}%"></i></div><b>${L(r.bud)}</b><em>${r.bs.toFixed(0)}% / ${r.ts.toFixed(0)}%</em></div>`).join("")}
-          <p class="pb27-note"><i class="b"></i>Budget share <i class="t"></i>Turnover share, Q1 2026 (in-store + online). Fitness gets more than it sells on purpose: January is its month. Swimming and running are paid ahead of their season (April and May are their big months), mountain is carried by what it already sells. Not credited to a sport: clearance sale and local moments, ${L(notSport)}.</p></div>
+          <p class="pb27-note"><i class="b"></i>Budget share <i class="t"></i>Turnover share, Q1 2026 (in-store + online). How lines are credited: Movement for All to fitness; AOPs to every sport by its 2026 turnover that month; new arrivals, Women's Day and summer split across their sports. Not credited to a sport: the clearance sale, ${L(notSport)}.</p></div>
         <div><h4>Where the money goes</h4>
-          ${(() => { const PP = window.PUNE_PLAN, q = PP ? PP.lines.filter(x => x.m >= 2) : [], qt = q.reduce((a, b) => a + b.v, 0);
-            const pune = k => qt ? q.filter(x => x.ch === k).reduce((a, b) => a + b.v, 0) / qt * 100 : 0;
-            return B.channels.map(([k, n]) => { const v = A.channel[k], p = v / A.total * 100, pp = pune(k); return `<div class="pb27-ch"><span>${n}</span><div><i style="--w:${p / 40 * 100}%"></i><i class="pp" style="--w:${pp / 40 * 100}%"></i></div><b>${L(v)}</b><em>${p.toFixed(0)}% / ${pp.toFixed(0)}%</em></div>`; }).join(""); })()}
-          <p class="pb27-note"><i class="b"></i>Our campaign split <i class="t pp"></i>Pune's real Q1 plan (spend plan, January to March: AOPs 29%, hoardings 21%, in-store 21%, influencers 18%, events 6%, reels 4%, in-mall 2%). The Pune plan has no paid digital line: MarCom runs paid digital centrally.</p></div>
+          ${B.channels.filter(([k]) => A.channel[k] > 0).sort((x, y) => A.channel[y[0]] - A.channel[x[0]]).map(([k, n]) => { const v = A.channel[k], p = v / A.total * 100; return `<div class="pb27-ch"><span>${n}</span><div><i style="--w:${p / 35 * 100}%"></i></div><b>${L(v)}</b><em>${p.toFixed(0)}%</em></div>`; }).join("")}
+          <p class="pb27-note">${pst === "Pune" ? "Pune's real Q1 lines" : "Pune's real Q1 lines; Gujarat and MP follow Pune's split (estimate)"}. The Pune plan has no paid digital line: MarCom runs paid digital centrally.</p></div>
       </div>`;
   }
   function panel() {
@@ -88,30 +87,17 @@
     const list = $("#pb27Tabs"), pn = $("#pb27Panel");
     list.innerHTML = B.campaigns.map((c, i) => `<button type="button" class="sw-tab pb27-tab" role="tab" id="pbt${i}" aria-selected="${i === tab}" aria-controls="pb27Panel" data-i="${i}" style="--c:${c.color}"><span><i></i>${esc(c.name)}</span><small>${L(A.camp[c.id].reduce((a, b) => a + b, 0))}</small></button>`).join("");
     const c = B.campaigns[tab], M = B.media[c.id] || {}, tot = A.camp[c.id].reduce((a, b) => a + b, 0);
-    const credited = SP.sports.map(s => ({ s, v: 0 }));
-    // sport credit for this campaign (West or state) using the same rules as alloc
-    const sts = pst === "West" ? STATES : [pst];
-    sts.forEach(st => [0, 1, 2].forEach(m => {
-      const v = D.spend[st].y27[m] * c.pct[m] / 100; if (!v) return;
-      if (c.sport === "rev") {
-        const others = SP.sports.filter(x => x.id !== "fitness" && x.where.includes(st));
-        const w = others.map(x => (TO[x.id][st].in[m] || 0) + (TO[x.id][st].on[m] || 0)), tw = w.reduce((a, b) => a + b, 0) || 1;
-        others.forEach((x, i) => { credited.find(r => r.s.id === x.id).v += v * w[i] / tw; });
-      } else if (c.sport) {
-        const ids = Object.keys(c.sport).filter(id => SP.sports.find(x => x.id === id).where.includes(st)), tw = ids.reduce((a, id) => a + c.sport[id], 0) || 1;
-        ids.forEach(id => { credited.find(r => r.s.id === id).v += v * c.sport[id] / tw; });
-      }
-    }));
+    const credited = SP.sports.map(s => ({ s, v: A.campSport[c.id][s.id] || 0 }));
     const cr = credited.filter(r => r.v > 0.005);
     const media = `${M.video ? film(M.video, c.name) : ""}${(M.img || []).slice(0, M.video ? 1 : 2).map(f => `<img src="assets/img/${f}" alt="" loading="lazy">`).join("")}`;
     pn.setAttribute("aria-labelledby", "pbt" + tab);
     pn.style.setProperty("--c", c.color);
     pn.innerHTML = `<div class="sp-hero"><div class="sp-media ${M.contain ? "contain" : ""}">${media}</div>
         <div class="sp-copy"><span class="pb27-when">${esc(c.when)}</span><h3>${esc(c.name)}</h3>
-          <div class="pb27-pm">${[0, 1, 2].map(m => `<span class="${A.camp[c.id][m] ? "" : "off"}"><b>${A.camp[c.id][m] ? L(A.camp[c.id][m]) : "-"}</b>${MON[m]}${A.camp[c.id][m] ? `, ${c.pct[m]}% of the month` : ""}</span>`).join("")}</div>
-          ${cr.length ? `<div class="pb27-cr"><h4>Money credited to</h4>${cr.map(r => `<span style="--c:${r.s.color}"><i></i>${r.s.name} <b>${L(r.v)}</b></span>`).join("")}</div>` : `<div class="pb27-cr"><h4>Not a sport</h4><span>${c.id === "clr" ? "Commercial moment: every sport sells in it" : "Brand and local goodwill"}</span></div>`}
+          <div class="pb27-pm">${[0, 1, 2].map(m => `<span class="${A.camp[c.id][m] ? "" : "off"}"><b>${A.camp[c.id][m] ? L(A.camp[c.id][m]) : "-"}</b>${MON[m]}${A.camp[c.id][m] ? `, ${Math.round(A.camp[c.id][m] / A.month[m] * 100)}% of the month` : ""}</span>`).join("")}</div>
+          ${cr.length ? `<div class="pb27-cr"><h4>Money credited to</h4>${cr.map(r => `<span style="--c:${r.s.color}"><i></i>${r.s.name} <b>${L(r.v)}</b></span>`).join("")}</div>` : `<div class="pb27-cr"><h4>Not a sport</h4><span>Commercial moment: every sport sells in it</span></div>`}
         </div></div>
-      <div class="sp-stats">${(pst === "West" ? [["West", WA], ...STATES.map(s => [s, B.alloc(s)])] : [[pst, A]]).map(([n, X]) => `<div><b>${L(X.camp[c.id].reduce((a, b) => a + b, 0))}</b><span>${n}${n === "West" ? `, ${(X.camp[c.id].reduce((a, b) => a + b, 0) / X.total * 100).toFixed(0)}% of Q1` : ""}</span></div>`).join("")}</div>
+      <div class="sp-stats">${(pst === "West" ? [["West", WA], ...STATES.map(s => [s, B.alloc(s)])] : [[pst, A]]).map(([n, X]) => `<div><b>${L(X.camp[c.id].reduce((a, b) => a + b, 0))}</b><span>${n}${n === "Pune" ? ", spend plan" : n === "West" ? `, ${(X.camp[c.id].reduce((a, b) => a + b, 0) / X.total * 100).toFixed(0)}% of Q1` : ", estimate"}</span></div>`).join("")}</div>
       <div class="pb27-plan">
         ${c.pune ? `<div class="pb27-pune"><b>Pune, from the spend plan</b><p>${esc(c.pune)}</p></div>` : ""}
         <div class="pb27-blocks">
@@ -121,7 +107,7 @@
           <div><h4><i class="ic b"></i>How we boost</h4><p>${esc(c.boost)}</p></div>
         </div>
         <h4 class="pb27-h4">The money by channel${pst === "West" ? "" : ", " + pst}</h4>
-        <div class="pb27-mix">${B.channels.filter(([k]) => c.mix[k]).map(([k, n]) => `<span style="flex:${c.mix[k]}" title="${n}: ${c.mix[k]}%, ${L(tot * c.mix[k] / 100)}"><b>${n.split(":")[0]}</b><em>${c.mix[k]}%, ${L(tot * c.mix[k] / 100)}</em></span>`).join("")}</div>
+        <div class="pb27-mix">${B.channels.filter(([k]) => A.campCh[c.id][k] > 0).map(([k, n]) => { const v = A.campCh[c.id][k], p = Math.round(v / tot * 100); return `<span style="flex:${v}" title="${n}: ${p}%, ${L(v)}"><b>${n.split(":")[0]}</b><em>${p}%, ${L(v)}</em></span>`; }).join("")}</div>
         ${(M.yt || []).length ? `<h4 class="pb27-h4">Seen elsewhere: Decathlon films to borrow from</h4><div class="pb27-yt">${M.yt.map(id => `<div>${yt(id)}<p>${esc((V[id] || {}).w || "")}</p></div>`).join("")}</div>` : ""}
       </div>`;
     $$(".pb27-tab", list).forEach(b => b.addEventListener("click", () => { tab = +b.dataset.i; panel(); }));
