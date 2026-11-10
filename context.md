@@ -385,6 +385,8 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 
 - Two Vercel projects build this repo (2026-11-10): abhishekmitraaas-projects/decathlon-west-plan and anandita-work/decathlon-west-plan. Confirm which one serves the live site and whether the second should stay connected.
 
+- Hook loop (2026-11-10): in cloud sessions that watch a PR, every Vercel bot status update wakes the session; the Stop hooks then require a context.md edit and a push, and each push makes Vercel post new status updates, so the cycle repeats. Suggest the context hook skip turns that only read bot notifications, or turn off Vercel PR comments for one of the two connected projects. Ask the user.
+
 ---
 
 ## 6. Change log (newest last)
@@ -497,6 +499,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-11-10: PR abhishekmitraaa/decathlon-west-plan#1 (branch claude/zen-sagan-uy2cqw, context-only change): Vercel built preview deployments, both READY, from **two** Vercel projects connected to this repo: `decathlon-west-plan` in team abhishekmitraaas-projects (the known one) and a second `decathlon-west-plan` in team **anandita-work** (preview decathlon-west-plan-git-claude-zen-sagan-uy2cqw-anandita-work.vercel.app). Noted in section 5.
 - 2026-11-10: PR abhishekmitraaa/decathlon-west-plan#1 at 6bfcdc3: both Vercel previews rebuilt and READY, all checks passed, no review comments. No new data.
 - 2026-11-10: Vercel bot status updates only on PR #1 (previews for 4713de1 building, earlier ones READY). No new data. This line is committed locally and not pushed on its own: each push triggers new preview builds and new bot notifications; it rides the next real change.
+- 2026-11-10: Vercel bot status only on PR #1 (checks green on 4713de1, previews for ecf0b95 building). Logged the hook / Vercel notification loop in section 5.
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 
