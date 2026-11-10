@@ -510,6 +510,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-11-10 (third batch, follow-up): pushed to branch claude/winter-data-budget-fixes-c7e41s (this cloud session cannot push to main); draft PR #2 opened. Vercel preview READY: https://decathlon-west-plan-git-claude-4442e1-abhishekmitraaas-projects.vercel.app. Production updates only when PR #2 is merged to main. The Vercel MCP returned 403 for deployment listing from this session.
 - 2026-11-10 (third batch, follow-up 2): discovery: a second Vercel project also builds this repo, team "anandita-work" (project decathlon-west-plan, preview https://decathlon-west-plan-git-claude-winter-data-4442e1-anandita-work.vercel.app), besides abhishekmitraaas-projects. Which one serves the public URL is not confirmed (open question).
 - 2026-11-10: PR #2 Vercel previews rebuilt on both projects after the context commits; nothing new otherwise (commit kept local to avoid another rebuild loop; it goes up with the next push).
+- 2026-11-10: PR #2 checks all passed and both Vercel previews READY after the context pushes; nothing new.
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 
