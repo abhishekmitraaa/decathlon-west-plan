@@ -3,26 +3,29 @@
    Also: the 2026 influencer tracker (user screenshot, 10 Nov 2026), and the marketing pyramid (the user's vision). */
 window.PUNE_PLAN = {
   months: ["Nov 2026", "Dec 2026", "Jan 2027", "Feb 2027", "Mar 2027"],
+  // month budgets: Nov and Dec as the user set them (10 Nov 2026: ₹28 L and ₹30.15 L); Jan to Mar = the sheet's "Total Budget" rows.
+  // The second copy of the sheet (10 Nov) has line items adding to ₹28,47,282 (Nov) and ₹29,62,282 (Dec): shown as "lines add to".
   totals: [2800000, 3015000, 3054000, 1989000, 2939000],
   channels: { ooh: ["Hoardings", "#3643BA"], aop: ["AOPs and free products", "#12A150"], ins: ["In-store comms", "#E0A100"], mall: ["In-mall", "#9AA2C8"],
     inf: ["Influencers", "#C2185B"], evt: ["Events", "#E8590C"], cont: ["Content: media vendor reels", "#0096C7"], boost: ["Social boost", "#6B4FBB"], fly: ["Flyers and coupon cards", "#5D6D7E"] },
   lines: [
-    // November 2026: Black Friday (27-30 Nov) and Winter & Travel
+    // November 2026: Black Friday (27-30 Nov) and Winter & Travel. Lines from data_recent_marketing_spends_pune_plan___1.xlsx (BFS PUNE, 10 Nov 2026, second copy)
     { m: 0, ch: "ooh", camp: "Winter & Travel", t: "Hoardings live", v: 935000, q: "7 hoardings" },
     { m: 0, ch: "mall", camp: "Black Friday", t: "In-mall comms", v: 170000, n: "NIBM 45,000, Amanora 45,000, SGS 75,000 (these add to 1,65,000)" },
-    { m: 0, ch: "ins", camp: "Black Friday", t: "In-store comms, visible to customers", v: 550000, d: "whole city live from 23 Nov", n: "Amanora 83,000, SGS 1,44,283, Wakad 1,50,000, NIBM 50,000, Wagholi 1,50,000 (these add to 5,77,283)" },
+    { m: 0, ch: "ins", camp: "Black Friday", t: "In-store comms, visible to customers", v: 497282, d: "whole city live from 23 Nov", n: "Amanora 83,000, SGS 1,44,283, Wakad 1,10,000, NIBM 50,000, Wagholi 1,50,000 (these add to 5,37,283)" },
     { m: 0, ch: "aop", camp: "AOPs", t: "AOPs, free products and IC", v: 625000, q: "22 AOPs", n: "Wakad 5 x 40,000, Wagholi 5 x 25,000, SGS 4, NIBM 4, Amanora 4 x 25,000" },
     { m: 0, ch: "inf", camp: "Black Friday", t: "Instagram influencers", v: 400000, q: "40 influencers", d: "21 to 28 Nov" },
+    { m: 0, ch: "inf", camp: "Winter & Travel", t: "Instagram influencers", v: 100000, q: "10 influencers", d: "15 to 21 Nov", n: "first half of the 20 Winter & Travel influencers (₹2,00,000)" },
     { m: 0, ch: "boost", camp: "Black Friday", t: "Social media boost", v: 30000, q: "5 posts", n: "plus a countdown of 4 posts + 4 stories, 23 to 28 Nov (₹40,000 in the Black Friday table, not in the total)" },
     { m: 0, ch: "fly", camp: "Black Friday", t: "Coupon cards after billing: basket over ₹2,799 gets a product free", v: 70000, q: "35,000 cards", d: "handed out from 17 Nov" },
     { m: 0, ch: "evt", camp: "Kiprun", t: "Kiprun event", v: 20000 },
     // December 2026: Winter & Travel, Christmas sale 19-31 Dec
     { m: 1, ch: "ooh", camp: "Winter & Travel", t: "Hoardings live", v: 935000, q: "7 hoardings" },
     { m: 1, ch: "mall", camp: "Christmas sale", t: "In-mall comms", v: 165000, n: "NIBM 45,000, Amanora 45,000, SGS 75,000" },
-    { m: 1, ch: "ins", camp: "Christmas sale", t: "In-store comms, visible to customers", v: 550000, d: "whole city live from 19 Dec" },
+    { m: 1, ch: "ins", camp: "Christmas sale", t: "In-store comms, visible to customers", v: 497282, d: "whole city live from 19 Dec", n: "same store split as November" },
     { m: 1, ch: "aop", camp: "AOPs", t: "AOPs, free products and IC", v: 765000, q: "27 AOPs", n: "Wakad 6 x 40,000, Wagholi 6, SGS 5, NIBM 5, Amanora 5 x 25,000" },
     { m: 1, ch: "inf", camp: "Christmas sale", t: "Instagram influencers", v: 350000, q: "35 influencers", d: "19 to 23 Dec" },
-    { m: 1, ch: "inf", camp: "Winter & Travel", t: "Instagram influencers", v: 100000, q: "10 influencers", n: "plus 7 on barter (₹50,000) and the best reels recycled as boosts (₹10,000): not in the month total" },
+    { m: 1, ch: "inf", camp: "Winter & Travel", t: "Instagram influencers", v: 100000, q: "10 influencers", d: "1 to 15 Dec", n: "second half of the 20; plus 7 on barter (₹50,000) and 10 influencer reels recycled as boosts (₹10,000): not in the month total" },
     { m: 1, ch: "boost", camp: "Christmas sale", t: "Social media boost", v: 30000, q: "10 posts around Christmas and Winter & Travel", n: "the Christmas table lists a ₹35,000 boost, 19 to 23 Dec" },
     { m: 1, ch: "evt", camp: "Kiprun", t: "Kiprun event", v: 20000 },
     { m: 1, ch: "cont", camp: "Winter & Travel", t: "Media vendor", v: 100000 },
@@ -71,7 +74,8 @@ window.PUNE_PLAN = {
   // influencer campaigns planned, Nov 2026 to May 2027 (Pune plan), for the timeline
   influencers: [
     { t: "Black Friday", s: "2026-11-21", e: "2026-11-28", n: 40, v: 400000, c: "#D6453D" },
-    { t: "Winter & Travel", s: "2026-12-01", e: "2026-12-31", n: 10, v: 100000, c: "#2E7D32", x: "+7 on barter" },
+    { t: "Winter & Travel (first 10)", s: "2026-11-15", e: "2026-11-21", n: 10, v: 100000, c: "#2E7D32" },
+    { t: "Winter & Travel (next 10)", s: "2026-12-01", e: "2026-12-15", n: 10, v: 100000, c: "#2E7D32", x: "+7 on barter" },
     { t: "Christmas sale", s: "2026-12-19", e: "2026-12-23", n: 35, v: 350000, c: "#C2185B" },
     { t: "New Year, New Moves (Movement for All)", s: "2027-01-02", e: "2027-01-17", n: 17, v: 149000, c: "#E0A100" },
     { t: "Clearance sale (dates TBD; 2026 ran 10 Jan to 15 Feb)", s: "2027-01-10", e: "2027-02-15", n: 50, v: 500000, c: "#D6453D", tbd: 1 },
@@ -124,7 +128,7 @@ window.MKT_PYRAMID = {
     const cards = months.map(m => {
       const ls = P.lines.filter(x => x.m === m), sum = ls.reduce((a, b) => a + b.v, 0);
       const byCh = Object.keys(ch).map(k => [k, ls.filter(x => x.ch === k).reduce((a, b) => a + b.v, 0)]).filter(x => x[1]);
-      return `<article class="pp-month"><header><h4>${P.months[m]}</h4><b>${L(P.totals[m])}</b>${sum !== P.totals[m] ? `<small>lines add to ${inr(sum)}</small>` : ""}</header>
+      return `<article class="pp-month"><header><h4>${P.months[m]}</h4><b>${L(P.totals[m])}</b>${sum !== P.totals[m] ? `<small>budget; the sheet's lines add to ${inr(sum)} (${sum > P.totals[m] ? "over" : "under"} by ${inr(Math.abs(sum - P.totals[m]))})</small>` : ""}</header>
         <div class="pp-bar">${byCh.map(([k, v]) => `<span style="flex:${v};--c:${ch[k][1]}" title="${ch[k][0]}: ${inr(v)}"></span>`).join("")}</div>
         <ul>${ls.map(x => `<li><i style="--c:${ch[x.ch][1]}"></i><div><b>${esc(x.t)}</b><small>${esc(x.camp)}${x.q ? ", " + esc(x.q) : ""}${x.d ? ", " + esc(x.d) : ""}</small>${x.n ? `<em>${esc(x.n)}</em>` : ""}</div><span>${inr(x.v)}</span></li>`).join("")}</ul></article>`;
     }).join("");

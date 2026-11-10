@@ -18,32 +18,37 @@
     MP: [["Indore", "Playground pilates, then a women's 5K"], ["Bhopal", "Lakeside yoga by the Upper Lake, back to DB Mall"], ["Gwalior", "Morning walk and yoga, with a self-defence basics class"]]
   };
   const MOM = [
-    { ids: ["fit"], n: "Movement for All", lt: "New Year, New Moves", when: "January, all 13 stores", img: "gym.jpg", c: "#E0A100",
+    { ids: ["fit"], n: "Movement for All", lt: "New Year, New Moves", when: "January, all 13 stores", video: "circuit-games", img: "cc/fitness.jpg", c: "#E0A100",
       p: "A complete fitness event across all 13 stores: the city moves for the month. Partner yoga, run and gym sessions bring people to the store; creators post the first two weeks.",
-      camps: ["Movement for All"], ms: [2], sports: "Fitness, then running and yoga" },
-    { ids: ["clr"], n: "Clearance sale", lt: "animated at the stores", when: "January (2026 ran 10 Jan to 15 Feb)", img: "winter-off.jpg", c: "#D6453D", contain: true,
+      camps: ["Movement for All"], ms: [2, 4], sports: "Fitness, then running and yoga" },
+    { ids: ["clr"], n: "Clearance sale", lt: "animated at the stores", when: "January (2026 ran 10 Jan to 15 Feb)", img: "cc/shoes.jpg", img2: "winter-off.jpg", c: "#D6453D",
       p: "In all 13 stores: the end-of-season sale, animated in store, not just discounted. The biggest influencer push of Q1.", camps: ["Clearance sale"], ms: [2], sports: "Every sport: clears the winter range" },
     { ids: ["na"], n: "New arrivals", lt: "SS27", when: "February; creators 24 Feb to 6 Mar", img: "u-kiprun.jpg", c: "#6B4FBB",
       p: "The new summer range runs alongside the sale: shoes first (new arrivals: shoes 1 in the planner), then swimwear.", camps: ["New arrivals"], ms: [3], sports: "Running, swimming, fitness" },
     { ids: ["wd"], n: "Women's Day", lt: "one weekend, all 13 stores", when: "Sat 6 and Sun 7 March (Women's Day is Mon 8 March)", video: "womens-day", c: "#C2185B", wide: true,
       p: "Women-only mornings on the weekend before Women's Day: pilates or yoga first, then a sport to try, then shopping with a Women's Day offer, and a women's club that keeps meeting.",
       camps: ["Women's Day"], ms: [4], sports: "Fitness, running, swimming" },
-    { ids: ["swim", "run", "trav"], n: "Summer", lt: "water, running and travel", when: "March to May", img: "water/water-women-pool.jpg", c: "#0096C7",
+    { ids: ["sum"], n: "Summer", lt: "water, running and travel", when: "March to May", img: "water/water-women-pool.jpg", c: "#0096C7",
       p: "Learn to swim before the pools fill up, the Kiprun Challenger (₹9,999) for the race season, and summer treks. Summer camp creators run from March to May.", camps: ["Summer"], ms: [4], sports: "Swimming, running, mountain" }
   ];
 
+  const MN = ["Jan", "Feb", "Mar"];
   function moments() {
     const el = $("#mom27"); if (!el) return;
-    const A = B.alloc(region);
+    const A = B.alloc(region), sts = region === "West" ? ["Pune", "Gujarat", "MP"] : [region], AS = Object.fromEntries(sts.map(st => [st, B.alloc(st)]));
+    const q = (X, m) => m.ids.reduce((t, id) => t + X.camp[id].reduce((a, b) => a + b, 0), 0);
     el.innerHTML = MOM.map(m => {
-      const q1 = m.ids.reduce((t, id) => t + A.camp[id].reduce((a, b) => a + b, 0), 0);
+      const q1 = q(A, m), pm = [0, 1, 2].map(i => m.ids.reduce((t, id) => t + A.camp[id][i], 0));
       const ls = isPune() && PP ? PP.lines.filter(x => m.ms.includes(x.m) && m.camps.includes(x.camp)) : [];
-      const media = m.video ? `<div class="pb27-film"><video muted loop playsinline preload="none" poster="assets/posters/${m.video}.jpg" data-src="assets/videos/${m.video}.mp4" aria-label="${esc(m.n)} reference film"></video></div>` : `<img class="${m.contain ? "contain" : ""}" src="assets/img/${m.img}" alt="" loading="lazy">`;
+      const film = m.video ? `<div class="pb27-film"><video muted loop playsinline preload="none" poster="assets/posters/${m.video}.jpg" data-src="assets/videos/${m.video}.mp4" aria-label="${esc(m.n)} film"></video></div>` : "";
+      const pics = m.wide && m.video ? "" : [m.img, m.img2].filter(Boolean).map(f => `<img class="${m.contain ? "contain" : ""}" src="assets/img/${f}" alt="" loading="lazy">`).join("");
       const stores = m.wide ? `<div class="mo-stores">${(region === "West" ? ["Pune", "Gujarat", "MP"] : [region]).map(st => `<div><h5>${st === "MP" ? "Madhya Pradesh" : st}</h5><ul>${WD[st].map(([s, t]) => `<li><b>${s}</b>${esc(t)}</li>`).join("")}</ul></div>`).join("")}</div>` : "";
-      return `<article class="mo27 ${m.wide ? "wide" : ""}" style="--c:${m.c}"><div class="mo-media">${media}</div>
+      const split = sts.length > 1 ? `<span><b>${sts.map(st => `${st} ${L(q(AS[st], m))}`).join(" · ")}</b>Pune = spend plan; Gujarat and MP = estimate (no campaign split in our files)</span>` : "";
+      const src = region === "Pune" ? "Pune spend plan" : region === "West" ? "West" : `${region}, estimate`;
+      return `<article class="mo27 ${m.wide ? "wide" : ""}" style="--c:${m.c}"><div class="mo-media ${(film && pics) || (m.img && m.img2) ? "two" : ""}">${film}${pics}</div>
         <div class="mo-body"><span class="mo-when">${esc(m.when)}</span><h3>${esc(m.n)}<span class="lt">: ${esc(m.lt)}</span></h3><p>${esc(m.p)}</p>
-          <div class="mo-nums"><span><b>${L(q1)}</b>Q1 budget, ${region} (playbook)</span><span><b>${esc(m.sports)}</b>sports it serves</span></div>
-          ${ls.length ? `<div class="mo-pune"><h4>Pune, from the spend plan</h4><ul>${ls.map(x => `<li><span>${esc(x.t.replace("Influencer campaign: ", "Influencers: ").replace("Partner event: ", "Partner event: "))}${x.q ? `<small>${esc(x.q)}${x.d ? ", " + esc(x.d) : ""}</small>` : ""}</span><b>${inr(x.v)}</b></li>`).join("")}</ul><p>Pune total <b>${inr(ls.reduce((a, x) => a + x.v, 0))}</b></p></div>` : ""}
+          <div class="mo-nums"><span><b>${L(q1)}</b>Q1 budget, ${src}</span><span><b>${pm.map((v, i) => v ? `${MN[i]} ${L(v)}` : "").filter(Boolean).join(" · ")}</b>by month</span>${split}<span><b>${esc(m.sports)}</b>sports it serves</span></div>
+          ${ls.length ? `<div class="mo-pune"><h4>Pune, from the spend plan</h4><ul>${ls.map(x => `<li><span>${esc(x.t.replace("Influencer campaign: ", "Influencers: "))}<small>${PP.months[x.m]}${x.q ? ", " + esc(x.q) : ""}${x.d ? ", " + esc(x.d) : ""}${x.n ? " (" + esc(x.n) + ")" : ""}</small></span><b>${inr(x.v)}</b></li>`).join("")}</ul><p>Pune total <b>${inr(ls.reduce((a, x) => a + x.v, 0))}</b></p></div>` : ""}
           ${stores}</div></article>`;
     }).join("");
     $$("video[data-src]", el).forEach(v => { v.muted = true; gate.observe(v); });
