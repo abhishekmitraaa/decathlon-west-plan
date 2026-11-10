@@ -553,6 +553,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-11-10: PowerPoint export re-tested on plan2027 (Pune) after the colour fix: 46 slides, 11.8 MB, no errors; slides checked visually.
 - 2026-11-10: local test server (port 8777) stopped at its time limit after testing finished; no site change.
 - 2026-11-10 (eleventh brief): PowerPoint export rebuilt (export.js 20261110h): the page is re-laid out in a hidden frame 1100 px wide (was the screen width, about 1440, so body text came out about 7 pt), captured at 2x (slide images 2200 px wide), every slide cut to at most one 16:9 page (1100 x 619 CSS px) at the gaps between whole cards and sections first (finer cuts only when one card is taller than a slide), placed full width and top-aligned on the 10 x 5.625 in slide (Google Slides 16:9), flat empty slices skipped; footer and download bar left out. Tested on november.html: 56 slides, 14.1 MB, legible.
+- 2026-11-10: new PowerPoint export tested on plan2027 (Pune): 70 slides, 15.5 MB, no errors, legible.
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 
