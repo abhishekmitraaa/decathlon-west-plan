@@ -9,7 +9,7 @@ window.BUDGET27 = {
   // channels follow the Pune spend plan (BFS PUNE, 10 Nov 2026): the lines Pune actually buys
   channels: [
     ["aop", "AOPs and free products"], ["ooh", "Hoardings"], ["ins", "In-store comms"], ["inf", "Influencers"], ["evt", "Events"],
-    ["cont", "Content: reels, media vendor"], ["mall", "In-mall"], ["boost", "Social boost and digital"], ["fly", "Flyers and coupon cards"]
+    ["cont", "Content: reels, media vendor"], ["mall", "In-mall"], ["boost", "Social boost and digital"], ["fly", "Flyers and vouchers"]
   ],
   campaigns: [
     { id: "fit", camp: "Movement for All", name: "Movement for All: New Year, New Moves", color: "#E0A100", ink: "#1C1E33", sport: { fitness: 1 },

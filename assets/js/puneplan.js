@@ -9,7 +9,7 @@ window.PUNE_PLAN = {
   // from January; the user removed it (10 Nov 2026), so March = the remaining lines, ₹27,90,000.
   totals: [2847282, 2962282, 3054000, 1989000, 2790000],
   channels: { ooh: ["Hoardings", "#3643BA"], aop: ["AOPs and free products", "#12A150"], ins: ["In-store comms", "#E0A100"], mall: ["In-mall", "#9AA2C8"],
-    inf: ["Influencers", "#C2185B"], evt: ["Events", "#E8590C"], cont: ["Content: media vendor reels", "#0096C7"], boost: ["Social boost", "#6B4FBB"], fly: ["Flyers and coupon cards", "#5D6D7E"] },
+    inf: ["Influencers", "#C2185B"], evt: ["Events", "#E8590C"], cont: ["Content: media vendor reels", "#0096C7"], boost: ["Social boost", "#6B4FBB"], fly: ["Flyers and vouchers", "#5D6D7E"] },
   lines: [
     // November 2026: Black Friday (27-30 Nov) and Winter & Travel. Lines from data_recent_marketing_spends_pune_plan___1.xlsx (BFS PUNE, 10 Nov 2026, second copy)
     { m: 0, ch: "ooh", camp: "Winter & Travel", t: "Hoardings live", v: 935000, q: "7 hoardings" },
@@ -19,7 +19,7 @@ window.PUNE_PLAN = {
     { m: 0, ch: "inf", camp: "Black Friday", t: "Instagram influencers", v: 400000, q: "40 influencers", d: "21 to 28 Nov" },
     { m: 0, ch: "inf", camp: "Winter & Travel", t: "Instagram influencers", v: 100000, q: "10 influencers", d: "15 to 21 Nov", n: "first half of the 20 Winter & Travel influencers (₹2,00,000)" },
     { m: 0, ch: "boost", camp: "Black Friday", t: "Social media boost", v: 30000, q: "5 posts", n: "plus a countdown of 4 posts + 4 stories, 23 to 28 Nov (₹40,000 in the Black Friday table, not in the total)" },
-    { m: 0, ch: "fly", camp: "Black Friday", t: "Coupon cards after billing: basket over ₹2,799 gets a product free", v: 70000, q: "35,000 cards", d: "handed out from 17 Nov" },
+    { m: 0, ch: "fly", camp: "Black Friday", t: "Vouchers after billing: assured product gift on bills above ₹3,000", v: 70000, q: "35,000 vouchers", d: "handed out from 17 Nov" },
     { m: 0, ch: "evt", camp: "Kiprun", t: "Kiprun event", v: 20000 },
     // December 2026: Winter & Travel, Christmas sale 19-31 Dec
     { m: 1, ch: "ooh", camp: "Winter & Travel", t: "Hoardings live", v: 935000, q: "7 hoardings" },

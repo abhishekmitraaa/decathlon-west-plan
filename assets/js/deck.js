@@ -160,7 +160,7 @@ window.buildNativeDeck = async function (pptx) {
   // 14. November budget, line by line (bar chart)
   { const s = base("November budget, Pune, line by line", `${inr(P.totals[0])}: every rupee is a line in the plan`, { band: BLUE });
     const ls = P.lines.filter(x => x.m === 0).slice().sort((a, b) => a.v - b.v);
-    s.addChart(pptx.ChartType.bar, [{ name: "November", labels: ls.map(x => `${x.t.replace("Coupon cards after billing: basket over ₹2,799 gets a product free", "Coupon cards")} (${x.camp === "Winter & Travel" ? "Winter" : x.camp})`), values: ls.map(x => +(x.v / 1e5).toFixed(2)) }],
+    s.addChart(pptx.ChartType.bar, [{ name: "November", labels: ls.map(x => `${x.t.replace("Vouchers after billing: assured product gift on bills above ₹3,000", "Vouchers after billing")} (${x.camp === "Winter & Travel" ? "Winter" : x.camp})`), values: ls.map(x => +(x.v / 1e5).toFixed(2)) }],
       { x: 0.45, y: 1.2, w: 9.1, h: 3.95, barDir: "bar", chartColors: [BLUE], catAxisLabelFontFace: F, catAxisLabelFontSize: 9, catAxisLabelColor: INK, valAxisHidden: true, valGridLine: { style: "none" },
         showValue: true, dataLabelFormatCode: '"₹"0.00" L"', dataLabelFontFace: F, dataLabelFontSize: 9, dataLabelColor: INK, dataLabelPosition: "outEnd", barGapWidthPct: 45 }); }
 

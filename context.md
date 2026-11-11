@@ -4,7 +4,7 @@ Single source of truth for this project. Read it before any work. Update it at t
 (see CLAUDE.md): add every new number, file, decision, preference and open question. Never delete
 history; mark superseded facts as superseded.
 
-Last updated: 2026-11-10 (twentieth brief)
+Last updated: 2026-11-11
 
 ---
 
@@ -96,6 +96,7 @@ Hero → People ("Who we sell to": Pune, Gujarat, MP state stories with films) �
 - **2027 Q1 moments: Women's Day shorter, next to New arrivals** (user, 10 Nov 2026): not a full-width card.
 - **Pune hotspots map in Google My Maps, with 5, 10 and 15 km catchment radii** (user, 10 Nov 2026).
 - **Store names on maps: always visible, very short** ("SGS", "Wakad", "Amanora", "Wagholi", "NIBM"), small font (user, 10 Nov 2026).
+- **Black Friday line renamed** (user, 11 Nov 2026): "Coupon cards after billing: basket over ₹2,799 gets a product free" is now **"Vouchers after billing: assured product gift on bills above ₹3,000"** (₹70,000, 35,000 vouchers, from 17 Nov). Superseded: the ₹2,799 threshold and "coupon cards".
 - **Never estimate a split that is not in the data** (from the fourth brief): Gujarat and MP Q1 money stays unsplit (month totals only) until their campaign plans arrive.
 - **Pune market hotspots, light touch** (user, 10 Nov 2026): store catchments, how many travel agencies, swimming pools, gyms, societies, how to tap them, and mark the AOPs (pools, gyms) already tied up from the partnerships file. "Not very in depth ... normal data" (the user has a lot more work coming).
 
@@ -577,6 +578,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-11-10 (eighteenth brief): Pune hotspots map: dashed 5, 10 and 15 km catchment rings around each store with switches (5 and 10 on by default); tabs "AOP map" and "Google My Maps" (embeds the user's My Map, mid 18_xYhuA0Ko2KhXAZF9IsmEGSownW8yk); buttons to download two KML layers for My Maps (assets/kml/pune-aops.kml, 111 placemarks in 5 type folders with colours and 2027 starts faded; assets/kml/pune-catchments.kml, 5 stores and 15 ring polygons) and to open the My Map; import steps on the page. Store points now match DATA.stores. punehot.js 20261110e, site.css 20261110r. Checked: rings toggle, tab switch, no console errors, no horizontal scroll at 1440 and 390.
 - 2026-11-10 (nineteenth brief, user: "add Decathlon store's name"): store names now always visible on the maps ("Decathlon Wakad", etc.: permanent labels on the Pune hotspots AOP map and the Nov page hoardings map; SGS Mall and NIBM labels to the left so they do not overlap); KML: stores with a blue label style added to pune-aops.kml too (so one import shows them), label style on pune-catchments.kml. punehot.js 20261110f, nd26.js 20261110n.
 - 2026-11-10 (twentieth brief): store labels shortened to SGS, Wakad, Amanora, Wagholi, NIBM in 10.5 px (.map-tip-short), always shown on the Pune hotspots map and the Nov hoardings map (the hoardings map now has extra right margin so Wagholi's label is not cut). KML store names shortened the same way. In Google My Maps names show only on hover unless the layer's labels are set to "name" (the user must do that in My Maps). punehot.js 20261110g, nd26.js 20261110p, site.css 20261110s.
+- 2026-11-11: Black Friday line renamed everywhere (Pune plan line, runway item and lane "In-store, mall and vouchers", Black Friday "what we do", channel "Flyers and vouchers" on the Nov and 2027 pages, PowerPoint bar label "Vouchers after billing"): vouchers after billing, assured product gift on bills above ₹3,000 (was coupon cards, basket over ₹2,799). Amount unchanged (₹70,000, 35,000 vouchers). puneplan.js, nd26.js, deck.js, budget27.js 20261111a.
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 

@@ -14,7 +14,7 @@
   const W0 = d("2026-11-02"), NW = 9;
   const weeks = [...Array(NW)].map((_, i) => ({ w: 45 + i, mon: new Date(W0.getTime() + i * 7 * DAY), sun: new Date(W0.getTime() + (i * 7 + 6) * DAY) }));
   const LANES = [
-    ["moments", "Season and moments"], ["sales", "Sales"], ["camp", "Campaigns and gifting"], ["inf", "Influencers"], ["ins", "In-store, mall and coupons"],
+    ["moments", "Season and moments"], ["sales", "Sales"], ["camp", "Campaigns and gifting"], ["inf", "Influencers"], ["ins", "In-store, mall and vouchers"],
     ["ooh", "Hoardings"], ["aop", "AOPs"], ["evt", "City events and our events"], ["soc", "Social and content"]
   ];
   // n: source. plan = Pune spend plan (BFS PUNE); rw = Q4 runway on the main site; web = public race listings (to confirm); ours = our suggestion
@@ -33,7 +33,7 @@
     { l: "inf", t: "Winter & Travel: 10 influencers (₹1 L)", s: "2026-11-15", e: "2026-11-21", k: "eco", n: "plan" },
     { l: "inf", t: "Winter & Travel: 10 influencers (₹1 L) + 7 on barter (₹50,000)", s: "2026-12-01", e: "2026-12-15", k: "eco", n: "plan" },
     { l: "inf", t: "Christmas: 35 influencers, ₹3.5 L", s: "2026-12-19", e: "2026-12-23", k: "evt", n: "plan" },
-    { l: "ins", t: "Coupon cards: basket over ₹2,799 gets a product free (35,000 cards)", s: "2026-11-17", e: "2026-11-30", k: "local", n: "plan" },
+    { l: "ins", t: "Vouchers after billing: assured product gift above ₹3,000 (35,000 vouchers)", s: "2026-11-17", e: "2026-11-30", k: "local", n: "plan" },
     { l: "ins", t: "Black Friday comms live, whole city", s: "2026-11-23", e: "2026-11-30", k: "nat", go: 1, n: "plan" },
     { l: "ins", t: "Christmas comms live, whole city", s: "2026-12-19", e: "2026-12-31", k: "nat", go: 1, n: "plan" },
     { l: "ins", t: "In-mall: NIBM, Amanora, SGS (₹1.70 L Nov, ₹1.65 L Dec)", s: "2026-11-02", e: "2026-12-31", k: "tbd", n: "plan" },
@@ -109,7 +109,7 @@
       inf: "Pune: none in the plan. Gujarat 13 (₹1.3 L), Indore 4 on barter, Bhopal 4, Gwalior 2 (gift cards)", west: "Gujarat influencers ₹1.3 L",
       brings: "No sale and no turnover goal: a brand moment. About 1.9 lakh views on the 10 creator reels by 5 Nov." },
     { id: "bf", sec: "blackfriday", n: "Black Friday", d: "27 to 30 Nov", c: ["Black Friday"], col: "#111", goal: [4, 5],
-      what: "A four-day sale. Coupon cards from 17 Nov, in-store and in-mall live on 23 Nov, a countdown on social, creators from 21 Nov.",
+      what: "A four-day sale. Vouchers after billing from 17 Nov (assured product gift above ₹3,000), in-store and in-mall live on 23 Nov, a countdown on social, creators from 21 Nov.",
       inf: "Pune 40 (₹4 L); Gujarat 67+ (₹7.4 L); MP 40 (₹2.02 L)", west: "Gujarat ₹7.4 L and MP ₹2.02 L of influencers" },
     { id: "winter", sec: "winter", n: "Winter, Trek & Travel", d: "1 to 15 Dec", c: ["Winter & Travel"], col: "#2E7D32",
       what: "Winter only: 1 to 15 December. Trek and travel reels, creators, the winter wall in store; the 7 Pune hoardings carry it (the sheet books them for Winter & Travel in Nov and Dec).",
