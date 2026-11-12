@@ -3469,3 +3469,16 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 .kol-chart .ax { font: 600 12px var(--body); fill: #5A6080; } .kol-chart .lb { font: 700 11px var(--body); fill: #3643BA; }
 .kol-key { display: flex; gap: 14px; margin: 4px 0 0; font-size: 12.5px; color: var(--ink); } .kol-key i { display: inline-block; width: 14px; height: 4px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
 @media (max-width: 700px) { .kol-status { margin-left: 0; flex-basis: 100%; } }
+
+/* Kolkata: weekly turnover chart */
+.kol-wk svg { min-width: 760px; } .kol-wk { overflow-x: auto; }
+.kol-wk .gl { stroke: #E7EAF2; stroke-width: 1; } .kol-wk .qb { fill: #F6F8FD; } .kol-wk .qb2 { fill: #fff; }
+.kol-wk .qt { font: 800 12px var(--body); fill: #9AA2C8; } .kol-wk .pk { font: 800 12px var(--body); }
+.kol-key .note { color: var(--text-3); font-size: 12px; }
+.kol-wk-kpi { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-bottom: 10px; }
+.kol-wk-kpi div { background: #fff; border: 1.5px solid var(--line); border-radius: var(--r-md); padding: 10px 14px; }
+.kol-wk-kpi div.t { background: #10135A; color: #fff; border-color: #10135A; } .kol-wk-kpi div.t span { color: #CFE3FA; }
+.kol-wk-kpi b { display: block; font-size: 22px; color: inherit; } .kol-wk-kpi span { font-size: 12.5px; color: var(--text-2); }
+.kol-wk-kpi div.up b { color: #0B7A3B; } .kol-wk-kpi div.dn b { color: #C62828; }
+.kol-t.wide { min-width: 3200px; } .kol-t.wide td, .kol-t.wide th { padding: 6px 4px; font-size: 11.5px; } .kol-t.wide tbody th { width: 90px; }
+@media (max-width: 1000px) { .kol-wk-kpi { grid-template-columns: 1fr 1fr; } }
