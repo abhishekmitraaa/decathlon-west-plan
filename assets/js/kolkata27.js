@@ -1,7 +1,7 @@
 /* Kolkata (East) 2027 calendar. Data: the user's "Turnover trend" sheet screenshot (12 Nov 2026, 512 x 319 px), read by eye:
    the campaign calendar, campaign days and the growth rows are clear; the Omni TO rows are blurry and marked "check".
    Editable on the live site (user, 12 Nov 2026): Edit -> change any cell -> Save with the edit PIN. Saved for everyone in Supabase
-   (project hybrid-flow, table public.west_plan_docs, id "kolkata2027", written only through public.save_west_plan_doc with the PIN).
+   (project Cosora, table public.west_plan_docs, id "kolkata2027", written only through public.save_west_plan_doc with the PIN).
    If the database cannot be reached, the page shows the data below. */
 window.KOL27_DEFAULT = {
   v: 1,
@@ -44,7 +44,7 @@ window.KOL27_DEFAULT = {
 };
 
 (() => {
-  const SB = { url: "https://snuradfzvodzdplufxdk.supabase.co", key: "sb_publishable_fB5SaaemtLXha1zvdt5D5A_um-DgihN", id: "kolkata2027" };
+  const SB = { url: "https://vxdhhgdfubqedfpwfyrb.supabase.co", key: "sb_publishable_5DJXCUF-gyul7S71vHAHQQ_oSYZHZmP", id: "kolkata2027" }; // Supabase project Cosora (hybrid-flow did not answer on 12 Nov)
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const clone = o => JSON.parse(JSON.stringify(o));

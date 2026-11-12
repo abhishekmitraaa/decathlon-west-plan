@@ -1,4 +1,4 @@
--- Editable pages for the West plan site (kolkata2027.html first). Apply once in the Supabase project hybrid-flow.
+-- Editable pages for the West plan site (kolkata2027.html first). Applied in the Supabase project Cosora (hybrid-flow did not answer, 12 Nov 2026).
 -- Anyone can read; writes only through save_west_plan_doc with the edit PIN (stored as a bcrypt hash, never readable by the site).
 create extension if not exists pgcrypto with schema extensions;
 
@@ -54,3 +54,7 @@ grant execute on function public.save_west_plan_doc(text, text, jsonb) to anon, 
 -- set or change the PIN (run with the service role / SQL editor, never from the site):
 -- insert into public.west_plan_editors (id, pin_hash) values (1, extensions.crypt('NEW-PIN', extensions.gen_salt('bf')))
 --   on conflict (id) do update set pin_hash = excluded.pin_hash;
+
+-- to remove everything this file adds:
+-- drop function if exists public.save_west_plan_doc(text, text, jsonb);
+-- drop table if exists public.west_plan_doc_history, public.west_plan_docs, public.west_plan_editors;
