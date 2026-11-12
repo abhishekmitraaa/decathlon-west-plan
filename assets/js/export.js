@@ -27,7 +27,7 @@
   const save = (blob, file) => { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = file; document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000); };
 
   // the blocks of the page, top to bottom, without the fixed bar, the skip link and this footer
-  const blocks = () => [...document.body.children].filter(el => !/^(SCRIPT|STYLE|LINK|TEMPLATE)$/.test(el.tagName) && !el.matches(".topbar, .skip, .tip, .hud, #expBar, [hidden]") && el.offsetHeight > 0);
+  const blocks = () => [...document.body.children].filter(el => !/^(SCRIPT|STYLE|LINK|TEMPLATE)$/.test(el.tagName) && !el.matches(".topbar, .skip, .tip, .hud, #expBar, .kol-bar, [hidden]") && el.offsetHeight > 0);
 
   // make sure every picture has loaded before capturing
   const settle = async () => {
@@ -198,7 +198,7 @@
       // html2canvas inside the frame (same file, same integrity)
       if (!fw.html2canvas) await new Promise((ok, no) => { const sc = fd.createElement("script"); sc.src = LIB.h2c[0]; sc.integrity = LIB.h2c[1]; sc.crossOrigin = "anonymous"; sc.onload = ok; sc.onerror = () => no(new Error("Could not load html2canvas")); fd.head.append(sc); });
       fd.querySelectorAll("video[poster]").forEach(v => { if (v.parentElement) v.parentElement.setAttribute("data-exp-poster", v.getAttribute("poster")); });
-      const list = [...fd.body.children].filter(el => !/^(SCRIPT|STYLE|LINK|TEMPLATE|IFRAME)$/.test(el.tagName) && !el.matches(".topbar, .skip, .tip, .hud, #expBar, .exp-bar, footer, [hidden]") && el.offsetHeight > 80);
+      const list = [...fd.body.children].filter(el => !/^(SCRIPT|STYLE|LINK|TEMPLATE|IFRAME)$/.test(el.tagName) && !el.matches(".topbar, .skip, .tip, .hud, #expBar, .exp-bar, .kol-bar, footer, [hidden]") && el.offsetHeight > 80);
       await load("ppt");
       const pptx = new window.PptxGenJS();
       pptx.layout = "LAYOUT_16x9"; // 10 x 5.625 in = the Google Slides 16:9 size

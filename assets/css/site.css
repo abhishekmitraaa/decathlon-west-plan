@@ -3428,3 +3428,44 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 .ph-kml span { flex-basis: 100%; color: var(--text-2); font-size: 12px; }
 @media (max-width: 860px) { .ph-mymap iframe { height: 320px; } }
 .leaflet-tooltip.map-tip-short { font-size: 10.5px; font-weight: 700; padding: 1px 6px; line-height: 1.4; }
+
+/* Kolkata 2027 (kolkata2027.html): editable calendar */
+.kol-bar { position: sticky; top: 60px; z-index: 40; background: #10135A; color: #fff; border-bottom: 1px solid rgba(255,255,255,.12); }
+.kol-bar-in { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding-top: 10px; padding-bottom: 10px; }
+.kol-btn { font: 700 14px/1 var(--body); border: 0; border-radius: 999px; padding: 9px 16px; cursor: pointer; background: #7AFFA6; color: #10135A; }
+.kol-btn.go { background: #7AFFA6; } .kol-btn.ghost { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.5); }
+.kol-btn:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.kol-pin { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; }
+.kol-pin input { font: inherit; padding: 7px 10px; border-radius: 8px; border: 0; width: 9em; }
+.kol-status { font-size: 13px; color: #CFE3FA; margin-left: auto; }
+.kol-sec { margin-bottom: 28px; } .kol-sec h2 { color: var(--ink); margin: 0 0 4px; }
+.kol-sub { margin: 0 0 10px; color: var(--text-2); font-size: 14px; max-width: 900px; }
+.kol-panel { padding: 8px 10px; }
+.kol-t { width: 100%; min-width: 1100px; border-collapse: collapse; font-size: 12.5px; table-layout: fixed; }
+.kol-t th, .kol-t td { border: 1px solid var(--line); padding: 7px 6px; vertical-align: middle; text-align: center; color: var(--ink); }
+.kol-t thead th { background: #10135A; color: #fff; font-weight: 800; font-size: 12px; }
+.kol-t thead th:first-child { background: #fff; border-color: transparent; }
+.kol-t tbody th { text-align: left; width: 210px; background: #EEF2FB; font-weight: 700; font-size: 12.5px; }
+.kol-t tbody th small { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 800; color: #8A5A00; background: #FFF1D6; padding: 1px 6px; border-radius: 99px; cursor: help; }
+.kol-t td.band { font-weight: 800; font-size: 12px; } .kol-t td.band.aw { background: #8B1A1A; color: #fff; } .kol-t td.band.sum { background: #FFE14D; } .kol-t td.band.mon { background: #4FD8E8; }
+.kol-t td.camp { background: #E7DFF7; font-size: 11.5px; line-height: 1.35; } .kol-t td.camp.kblank { background: #F4F5F8; }
+.kol-t td.local { background: #FFF4D6; font-size: 11.5px; } .kol-t td.local.kblank { background: #fff; }
+.kol-t td.text { font-size: 11.5px; text-align: left; }
+.kol-t td.money, .kol-t td.cr, .kol-t td.num, .kol-t td.pct { font-variant-numeric: tabular-nums; }
+.kol-t .neg { color: #C62828; font-weight: 700; }
+.kol-t td.tot { background: #DCE6FB; font-weight: 800; }
+.kol-t thead th.yr { background: #3643BA; }
+.kol-t tr.sum th, .kol-t tr.sum td { background: #10135A; color: #fff; font-weight: 800; }
+.kol-t.kpi tbody tr:nth-child(3) td, .kol-t.kpi tbody tr:nth-child(3) th { background: #DCE6FB; }
+.kol-editing .kol-t td[contenteditable], .kol-editing .kol-t th[contenteditable] { background: #FFFDF2; outline: 1px dashed #E0A100; outline-offset: -3px; cursor: text; }
+.kol-editing .kol-t td[contenteditable]:focus, .kol-editing .kol-t th[contenteditable]:focus { outline: 2px solid #3643BA; background: #fff; }
+.kol-notes { padding: 14px 16px; min-height: 70px; white-space: pre-wrap; font-size: 14px; color: var(--ink); }
+.kol-notes .kblank-note { color: var(--text-3); }
+.kol-pin[hidden], .kol-btn[hidden] { display: none; }
+.kol-t td.kblank { background: #fff; }
+.kol-editing .kol-notes { outline: 1px dashed #E0A100; background: #FFFDF2; }
+.kol-chart { background: #fff; border: 1.5px solid var(--line); border-radius: var(--r-md); padding: 10px 14px; margin-bottom: 10px; }
+.kol-chart svg { width: 100%; height: auto; display: block; }
+.kol-chart .ax { font: 600 12px var(--body); fill: #5A6080; } .kol-chart .lb { font: 700 11px var(--body); fill: #3643BA; }
+.kol-key { display: flex; gap: 14px; margin: 4px 0 0; font-size: 12.5px; color: var(--ink); } .kol-key i { display: inline-block; width: 14px; height: 4px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+@media (max-width: 700px) { .kol-status { margin-left: 0; flex-basis: 100%; } }

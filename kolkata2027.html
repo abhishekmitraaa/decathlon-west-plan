@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kolkata 2027 · West Plan</title>
+<meta name="description" content="Decathlon Kolkata (East), the 2027 marketing calendar: seasons, the country and city campaigns, the 2027 budget, how 2025 went and omni turnover by month. Editable.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233643BA'/%3E%3Cpath d='M9 24 15 8h8l-6 16z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css?v=20261112b">
+</head>
+<body class="nov-page y27-page kol-page">
+
+<header class="topbar solid" id="topbar">
+  <a class="wordmark" href="index.html" aria-label="Back to the West plan">DECATHLON <span>West</span></a>
+  <nav class="pg-tabs" aria-label="Pages">
+    <a href="index.html"><span class="l">West plan</span><span class="s">Plan</span></a>
+    <a href="november.html"><span class="l">Nov &amp; Dec 2026</span><span class="s">Nov-Dec</span></a>
+    <a href="plan2027.html"><span class="l">2027 plan</span><span class="s">2027</span></a>
+    <a href="water2027.html"><span class="l">Water 2027</span><span class="s">Water</span></a>
+    <a href="kolkata2027.html" aria-current="page"><span class="l">Kolkata 2027</span><span class="s">Kolkata</span></a>
+  </nav>
+  <nav class="nav" aria-label="Kolkata 2027 sections">
+    <a href="#k-cal">Calendar</a>
+    <a href="#k-budget">Budget</a>
+    <a href="#k-kpi">2025</a>
+    <a href="#k-to">Turnover</a>
+    <a href="#k-notes">Notes</a>
+  </nav>
+</header>
+
+<section class="sec sec-blue nov-hero y27-hero kol-hero" id="top">
+  <div class="wrap">
+    <span class="oct-when nov-when">2027 plan, East</span>
+    <h1 class="display">Kolkata<span class="lt"> 2027</span></h1>
+    <p class="sec-lede">The year month by month: the seasons, the country's commercial campaigns, Kolkata's own moments (Bengali New Year, Durga Puja), the budget, and what 2025 delivered. Every number and every line can be changed on this page.</p>
+  </div>
+</section>
+
+<div class="kol-bar" id="kolBar">
+  <div class="wrap kol-bar-in">
+    <button type="button" id="kolEdit" class="kol-btn">Edit</button>
+    <label id="kolPinWrap" class="kol-pin" hidden>Edit PIN <input type="password" id="kolPin" autocomplete="off" inputmode="text" size="10"></label>
+    <button type="button" id="kolSave" class="kol-btn go" hidden>Save for everyone</button>
+    <button type="button" id="kolCancel" class="kol-btn ghost" hidden>Cancel</button>
+    <button type="button" id="kolBackup" class="kol-btn ghost">Download a copy</button>
+    <span class="kol-status" id="kolStatus" role="status" aria-live="polite">Loading...</span>
+  </div>
+</div>
+
+<main class="sec sec-paper">
+  <div class="wrap" id="kolBody"></div>
+</main>
+
+<footer class="nov-foot"><div class="wrap">Source: the Kolkata turnover trend sheet (screenshot, 12 Nov 2026). The Omni TO months are approximate; fix them in edit mode. <a href="index.html">Back to the West plan</a></div></footer>
+
+<div class="exp-bar" id="expBar" data-html2canvas-ignore>
+  <div class="exp-in"><span class="exp-t">Download this page</span>
+    <button type="button" id="expPdf"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3v11.2l4-4 1.4 1.4L12 17l-5.4-5.4L8 10.2l4 4V3h0zM5 19h14v2H5z"/></svg>Download PDF</button>
+    <button type="button" id="expGif"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3v11.2l4-4 1.4 1.4L12 17l-5.4-5.4L8 10.2l4 4V3h0zM5 19h14v2H5z"/></svg>Download GIF</button>
+    <button type="button" id="expPpt"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3v11.2l4-4 1.4 1.4L12 17l-5.4-5.4L8 10.2l4 4V3h0zM5 19h14v2H5z"/></svg>Download PowerPoint (16:9)</button>
+    <span class="exp-s" id="expStatus" role="status" aria-live="polite">The complete page, as you see it.</span></div>
+</div>
+
+<script src="assets/js/kolkata27.js?v=20261112b"></script>
+<script src="assets/js/export.js?v=20261112a"></script>
+</body>
+</html>
