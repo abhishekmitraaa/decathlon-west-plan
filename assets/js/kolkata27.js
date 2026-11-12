@@ -8,7 +8,13 @@ window.KOL27_DEFAULT = {
   title: "Kolkata 2027",
   months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
   sections: [
-    { id: "cal", title: "The calendar", sub: "Seasons, the country's commercial campaigns and Kolkata's own moments. Campaign dates as in the sheet; set the 2027 dates in edit mode.",
+    { id: "weeks", title: "Omni turnover, week by week", sub: "₹ Cr a week, 2024, 2025 and 2026 (to week 46, which is still running). Read off the weekly chart shared on 12 Nov 2026, so each value is approximate to about ₹5 lakh; fix any week in edit mode.", check: true, total: true, weekly: true, cols: Array.from({ length: 53 }, (_, i) => "W" + (i + 1)),
+      rows: [
+        { id: "w26", label: "2026", kind: "cr", cells: ["3.50", "4.05", "2.75", "1.95", "1.50", "1.30", "1.20", "1.22", "1.15", "1.05", "1.15", "1.40", "1.30", "1.48", "1.52", "1.48", "1.23", "1.65", "1.68", "1.97", "1.83", "1.57", "1.38", "1.35", "1.28", "1.40", "1.35", "1.38", "1.12", "1.35", "1.25", "1.28", "1.32", "1.12", "1.18", "1.42", "1.55", "1.55", "1.83", "2.32", "2.38", "2.38", "1.75", "2.17", "2.27", "1.32", "", "", "", "", "", "", ""] },
+        { id: "w25", label: "2025", kind: "cr", cells: ["1.85", "2.05", "1.65", "1.60", "1.20", "1.05", "1.00", "1.00", "0.95", "1.10", "0.95", "1.15", "1.10", "1.20", "1.10", "1.00", "0.80", "1.00", "0.90", "0.90", "1.08", "1.30", "1.05", "0.83", "1.10", "0.95", "1.00", "1.10", "1.05", "0.90", "1.05", "1.10", "1.15", "1.00", "1.05", "1.30", "1.20", "1.45", "1.58", "1.10", "1.50", "1.57", "1.20", "1.30", "1.80", "2.63", "2.48", "3.42", "3.30", "3.60", "3.97", "4.95", "3.50"] },
+        { id: "w24", label: "2024", kind: "cr", cells: ["1.75", "1.85", "1.95", "1.55", "0.95", "1.00", "0.92", "0.82", "0.95", "1.05", "1.05", "1.20", "0.95", "0.97", "0.98", "0.77", "0.85", "1.10", "1.42", "1.38", "1.25", "1.00", "1.05", "0.97", "1.10", "1.02", "1.25", "1.00", "1.00", "1.05", "1.08", "1.00", "0.95", "0.85", "1.00", "1.02", "1.12", "1.32", "1.40", "1.70", "1.20", "1.40", "1.30", "1.30", "1.40", "1.55", "2.10", "3.15", "3.12", "3.60", "3.75", "2.95", "1.85"] }
+      ] },
+    { id: "cal", title: "The Calendar", sub: "Seasons, the country's commercial campaigns and Kolkata's own moments. Campaign dates as in the sheet; set the 2027 dates in edit mode.",
       rows: [
         { id: "season", label: "Season", kind: "band", cells: ["AW (W40-W8)", "AW (W40-W8)", "Summer (W9-19)", "Summer (W9-19)", "Summer (W9-19)", "Monsoon (W20-33)", "Monsoon (W20-33)", "Monsoon (W20-33)", "Monsoon (W20-33)", "AW (W40-W8)", "AW (W40-W8)", "AW (W40-W8)"] },
         { id: "country", label: "Country commercial campaigns", kind: "camp", cells: ["Republic Day Sale, 23-26 Jan (mandatory)", "", "Summer Festive Sale, 26-30 Mar (mandatory)", "", "Decathlon Sports Utsav, 23-24 May (mandatory)", "World Cup, Second Life bazaar, back to school (mandatory)", "Decathlon Anniversary, 24-26 Jul (mandatory)", "", "Festive Sale, 19-21 Sep", "Diwali, 10-12 Oct (mandatory)", "Black Friday Sale, 26-30 Nov (mandatory)", "Christmas Sale, 17-25 Dec (mandatory)"] },
@@ -24,12 +30,6 @@ window.KOL27_DEFAULT = {
         { id: "b_ins", label: "In-store and in-mall comms", kind: "money", cells: Array(12).fill("") },
         { id: "b_evt", label: "Events and AOPs", kind: "money", cells: Array(12).fill("") },
         { id: "b_oth", label: "Other", kind: "money", cells: Array(12).fill("") }
-      ] },
-    { id: "weeks", title: "Omni turnover, week by week", sub: "₹ Cr a week, 2024, 2025 and 2026 (to week 46, which is still running). Read off the weekly chart shared on 12 Nov 2026, so each value is approximate to about ₹5 lakh; fix any week in edit mode.", check: true, total: true, weekly: true, cols: Array.from({ length: 53 }, (_, i) => "W" + (i + 1)),
-      rows: [
-        { id: "w26", label: "2026", kind: "cr", cells: ["3.50", "4.05", "2.75", "1.95", "1.50", "1.30", "1.20", "1.22", "1.15", "1.05", "1.15", "1.40", "1.30", "1.48", "1.52", "1.48", "1.23", "1.65", "1.68", "1.97", "1.83", "1.57", "1.38", "1.35", "1.28", "1.40", "1.35", "1.38", "1.12", "1.35", "1.25", "1.28", "1.32", "1.12", "1.18", "1.42", "1.55", "1.55", "1.83", "2.32", "2.38", "2.38", "1.75", "2.17", "2.27", "1.32", "", "", "", "", "", "", ""] },
-        { id: "w25", label: "2025", kind: "cr", cells: ["1.85", "2.05", "1.65", "1.60", "1.20", "1.05", "1.00", "1.00", "0.95", "1.10", "0.95", "1.15", "1.10", "1.20", "1.10", "1.00", "0.80", "1.00", "0.90", "0.90", "1.08", "1.30", "1.05", "0.83", "1.10", "0.95", "1.00", "1.10", "1.05", "0.90", "1.05", "1.10", "1.15", "1.00", "1.05", "1.30", "1.20", "1.45", "1.58", "1.10", "1.50", "1.57", "1.20", "1.30", "1.80", "2.63", "2.48", "3.42", "3.30", "3.60", "3.97", "4.95", "3.50"] },
-        { id: "w24", label: "2024", kind: "cr", cells: ["1.75", "1.85", "1.95", "1.55", "0.95", "1.00", "0.92", "0.82", "0.95", "1.05", "1.05", "1.20", "0.95", "0.97", "0.98", "0.77", "0.85", "1.10", "1.42", "1.38", "1.25", "1.00", "1.05", "0.97", "1.10", "1.02", "1.25", "1.00", "1.00", "1.05", "1.08", "1.00", "0.95", "0.85", "1.00", "1.02", "1.12", "1.32", "1.40", "1.70", "1.20", "1.40", "1.30", "1.30", "1.40", "1.55", "2.10", "3.15", "3.12", "3.60", "3.75", "2.95", "1.85"] }
       ] },
     { id: "kpi", title: "How 2025 went", sub: "From the sheet. Growth on the year before; omni turnover in the campaign days.",
       rows: [
@@ -144,7 +144,7 @@ window.KOL27_DEFAULT = {
       if (!r.ok) throw new Error(r.status);
       const j = await r.json();
       if (j[0] && j[0].data && j[0].data.sections) { doc = j[0].data;
-        window.KOL27_DEFAULT.sections.forEach((d, k) => { if (!doc.sections.some(x => x.id === d.id)) doc.sections.splice(Math.min(k, doc.sections.length), 0, clone(d)); }); savedAt = j[0].updated_at; status(`Last saved ${new Date(savedAt).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}`); }
+        window.KOL27_DEFAULT.sections.forEach((d, k) => { if (!doc.sections.some(x => x.id === d.id)) doc.sections.splice(Math.min(k, doc.sections.length), 0, clone(d)); }); const ord = window.KOL27_DEFAULT.sections.map(x => x.id), at = id => { const i = ord.indexOf(id); return i < 0 ? 99 : i; }; doc.sections.sort((p, q) => at(p.id) - at(q.id)); savedAt = j[0].updated_at; status(`Last saved ${new Date(savedAt).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}`); }
       else status("Showing the data from the sheet. Nothing saved yet.");
     } catch (e) { status("Showing the data from the sheet (the saved version could not be loaded)."); }
     render();
