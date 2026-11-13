@@ -148,7 +148,7 @@ def ev_date(t):
     return re.split(r'[,;(:]', str(t or ''))[0].strip()
 def ev_text(mk):
     def f(e):
-        city = '' if mk == 'Pune' else e['c'].split('(')[0].split(',')[0].strip().upper() + '\n'
+        city = ('' if mk == 'Pune' else e['c'].split('(')[0].split(',')[0].strip().upper() + ' · ') + e['s'].upper() + '\n'
         when = (('≈ ' if e.get('approx') else '') + '2027: ' + ev_date(e['d27'])) if e['d27'] else 'Last: ' + (e.get('cd') or ev_date(e['d26']))
         return f"{city}{e.get('short') or e['n']}\n{when}"
     return f

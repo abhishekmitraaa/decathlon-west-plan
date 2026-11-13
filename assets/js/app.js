@@ -687,7 +687,7 @@
       rows[r] = e.b;
       const on = month >= e.a && month <= e.b;
       const when = e.d27 ? `${e.approx ? "≈ " : ""}${evDate(e.d27)}` : `Last: ${e.cd || evDate(e.d26)}`;
-      return `<span class="pl-chip ev ${e.d27 ? "set" : ""} ${on ? "" : "dim"}" style="grid-column:${e.a + 1} / ${e.b + 2};grid-row:${r + 1}" data-tip="${esc(evTip(e))}">${evReg === "Pune" ? "" : `<small>${esc(evCity(e.c))}</small>`}<b>${esc(e.short || e.n)}</b><em>${esc(when)}</em></span>`;
+      return `<span class="pl-chip ev ${e.d27 ? "set" : ""} ${on ? "" : "dim"}" style="grid-column:${e.a + 1} / ${e.b + 2};grid-row:${r + 1}" data-tip="${esc(evTip(e))}"><small>${evReg === "Pune" ? "" : esc(evCity(e.c)) + " · "}${esc(e.s)}</small><b>${esc(e.short || e.n)}</b><em>${esc(when)}</em></span>`;
     }).join("");
     return `<div class="pl-lane-name ev-name">Sports events<select id="evRegSel" aria-label="Choose market for sports events">${EV_REG.map(([k]) => `<option value="${k}" ${k === evReg ? "selected" : ""}>${k}</option>`).join("")}</select><span>Bold date: the 2027 date is out. "Last": the 2026 date, 2027 not announced yet.</span></div><div class="pl-lane ev-lane">${chips}</div>`;
   }

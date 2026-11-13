@@ -29,7 +29,24 @@ window.EVENTS27 = {
       d26: "Sat 12 Dec 2026", p: "Not published", w: "Trail and hydration kit", src: "Public listings" },
     { a: 11, b: 11, n: "Bajaj Pune Marathon and Yashada Pimpri Chinchwad Half Marathon", short: "Bajaj Pune Marathon", c: "Pune, Pimpri Chinchwad", s: "Running", d27: "", cd: "Sun 14 Dec 2025",
       d26: "Bajaj: 6th edition Sun 14 Dec 2025 (2026 around 13 Dec, to confirm); PCMC half: Sun 20 Dec 2026", p: "20,000+ in the 2019 half marathon",
-      w: "Three December race weekends in a row", src: "Earlier web check (Oct 2026); public listings" }
+      w: "Three December race weekends in a row", src: "Earlier web check (Oct 2026); public listings" },
+    // Racket sports, chess (web-checked 13 Nov 2026, user asked for more than running and cycling)
+    { a: 1, b: 1, n: "ITF W75 women's tennis (NECC Deccan)", short: "ITF women's tennis", c: "Pune (Deccan Gymkhana)", s: "Tennis", d27: "",
+      d26: "9-15 Feb 2026 (US$60,000, hard court)", p: "International women's draw", w: "Tennis rackets, balls, court shoes", src: "ITF, India Sports Hub (Feb 2026)" },
+    { a: 1, b: 2, n: "MahaOpen ATP Challenger 75", short: "ATP Challenger", c: "Pune (Balewadi, Shiv Chhatrapati Sports Complex)", s: "Tennis", d27: "",
+      d26: "23 Feb to 1 Mar 2026", p: "Players from 24 countries, led by Sumit Nagal", w: "Biggest tennis week in Pune: racket and shoe push, kids' tennis", src: "ATP Tour, Indian Tennis Daily (Feb 2026)" },
+    { a: 3, b: 3, n: "ITF J300 junior tennis", short: "ITF junior tennis", c: "Pune (Deccan Gymkhana)", s: "Tennis", d27: "",
+      d26: "20-25 Apr 2026", p: "International juniors", w: "Junior tennis families", src: "ITF / coretennis (2026)" },
+    { a: 4, b: 4, n: "Ultimate Pickleball League, Pune edition", short: "Pickleball League", c: "Pune", s: "Pickleball", d27: "",
+      d26: "9-10 May 2026 (MuscleBar Sports Club)", p: "12 teams, men and women", w: "Pickleball paddles, balls, court shoes", src: "Tribune / Lokmat (May 2026)" },
+    { a: 5, b: 5, n: "V.V. Natu Memorial All India Senior Ranking Badminton", short: "Senior badminton ranking", c: "Pune", s: "Badminton", d27: "",
+      d26: "7-14 Jun 2026 (Maharashtra Badminton Association)", p: "National ranking players", w: "Badminton rackets, shuttles, non-marking shoes", src: "BAI circular, KBA (2026)" },
+    { a: 5, b: 6, n: "Pune International Grandmaster Round Robin (chess)", short: "Chess GM Round Robin", c: "Pune (Mundhwa)", s: "Chess", d27: "",
+      d26: "30 Jun to 8 Jul 2026, Maharashtra's first international GM round robin", p: "FIDE-rated GMs and IMs", w: "Mind sport: indoor and kids' games corner", src: "ChessBase India, Punekar News (2026)" },
+    { a: 7, b: 7, n: "Pune Mayor's Trophy: Yonex Sunrise India Junior International Grand Prix", short: "Junior Badminton Grand Prix", c: "Pune (PDMBA, Shivajinagar)", s: "Badminton", d27: "",
+      d26: "25-30 Aug 2026", p: "International junior field (Badminton Asia calendar)", w: "Junior badminton: rackets and shoes for academies", src: "Badminton Asia, Punekar News (Aug 2026)" },
+    { a: 10, b: 11, n: "ITF J100 junior tennis", short: "ITF J100 tennis", c: "Pune", s: "Tennis", d27: "",
+      d26: "30 Nov to 5 Dec 2026 (ITF listing; year to confirm)", p: "International juniors", w: "Junior tennis", src: "ITF listing" }
   ],
   Gujarat: [
     { a: 0, b: 0, n: "International Kite Festival", short: "Kite Festival", c: "Ahmedabad, also Vadodara, Surat, Rajkot", s: "Kite flying", d27: "Around Uttarayan, 14 Jan", approx: true,
@@ -63,7 +80,24 @@ window.EVENTS27 = {
       w: "Team kits, school and academy orders", src: "newkerala.com (Oct 2026)" },
     { a: 10, b: 10, n: "Adani Ahmedabad Marathon", short: "Ahmedabad Marathon", c: "Ahmedabad (Sabarmati Riverfront)", s: "Running", d27: "Last Sunday of Nov (28 Nov?)", approx: true,
       d26: "Sun 29 Nov 2026 (10th edition); 9th on Sun 30 Nov 2025", p: "24,000+ runners (2025, a record)",
-      w: "Kiprun and recovery kit; finisher stories", src: "IANS, Tribune (Nov 2025)" }
+      w: "Kiprun and recovery kit; finisher stories", src: "IANS, Tribune (Nov 2025)" },
+    // Racket sports, swimming, fitness, kabaddi, triathlon (web-checked 13 Nov 2026)
+    { a: 0, b: 0, n: "WTT Youth Contender and WTT Feeder Vadodara", short: "WTT table tennis", c: "Vadodara", s: "Table tennis", d27: "",
+      d26: "Jan 2026", p: "334 players from 10 countries", w: "Table tennis is big in Gujarat: bats, tables, balls", src: "Lokmat Times, WION, The Bridge (Jan 2026)" },
+    { a: 1, b: 1, n: "IRONMAN 70.3 Amdavad (first in Gujarat)", short: "IRONMAN 70.3", c: "Ahmedabad", s: "Triathlon", d27: "Sun 14 Feb (one race calendar)", approx: true,
+      d26: "New race (no 2026 edition)", p: "New: open entry, international field", w: "Swim, bike, run kit; tri suits, goggles, road bikes", src: "tri247, endurance.biz (2026)" },
+    { a: 4, b: 4, n: "Ultimate Table Tennis (league)", short: "Ultimate Table Tennis", c: "Ahmedabad (EKA Arena)", s: "Table tennis", d27: "",
+      d26: "From 29 May 2025 (Season 6, Ahmedabad's first); 2026 not found", p: "8 franchise teams with world players", w: "Table tennis fans", src: "ultimatetabletennis.in, Sportskeeda (2025)" },
+    { a: 5, b: 5, n: "Gujarat Pickleball Open and IPA junior World Cup trials", short: "Pickleball Open", c: "Ahmedabad", s: "Pickleball", d27: "",
+      d26: "Open: 5-8 Jun 2025 (Shaishya Pulse Arena); junior trials from 12 Jun 2026", p: "Ahmedabad's 2023 nationals: 400+ players from 17 states", w: "Gujarat pickleball: paddles, balls, shoes", src: "eventfaqs (2025), News on AIR (May 2026), Lokmat" },
+    { a: 5, b: 5, n: "79th Senior National Aquatic Championships", short: "Swimming nationals", c: "Ahmedabad (Veer Savarkar Sports Complex)", s: "Swimming", d27: "",
+      d26: "16-21 Jun 2026", p: "India's top swimmers, all states", w: "Swim season peak: goggles, caps, swimwear", src: "SwimSwam, Deccan Chronicle (Jun 2026)" },
+    { a: 8, b: 8, n: "ITF J30 junior tennis", short: "ITF junior tennis", c: "Ahmedabad", s: "Tennis", d27: "",
+      d26: "7-12 Sep 2026", p: "International juniors", w: "Junior tennis", src: "ITF" },
+    { a: 9, b: 9, n: "Commonwealth Kabaddi Championship (first edition)", short: "Commonwealth Kabaddi", c: "Ahmedabad (Veer Savarkar Sports Complex)", s: "Kabaddi", d27: "",
+      d26: "23-31 Oct 2026", p: "400+ athletes; 13 men's and 10 women's teams", w: "Ahmedabad on the way to the 2030 Commonwealth Games", src: "Telangana Today, Free Press Journal (Oct 2026)" },
+    { a: 10, b: 10, n: "HYROX Gujarat (first in Gujarat)", short: "HYROX", c: "Gandhinagar (Ahmedabad area)", s: "Fitness racing", d27: "",
+      d26: "26-28 Nov 2026 (Helipad Exhibition Centre per one tracker)", p: "10,000+ athletes expected (state government)", w: "Fitness: training shoes, gloves, gym kit", src: "hyrox.co.in, newkerala.com (Oct 2026), RoxRadar" }
   ],
   MP: [
     { a: 0, b: 0, n: "The Bhopal Marathon", short: "Bhopal Marathon", c: "Bhopal", s: "Running", d27: "Sun 10 Jan (2nd edition)",
@@ -95,6 +129,19 @@ window.EVENTS27 = {
       d26: "Sun 4 Oct 2026 (2nd edition; 21.1K, 10K, 5K)", p: "No Gwalior count; 39,000 to 45,000 across all cities in 2025",
       w: "Gwalior's big run", src: "District.in, Patrika (Sep 2026), fatmarathoner.com" },
     { a: 11, b: 11, n: "Vijay Merchant Trophy (U-16 cricket)", short: "Vijay Merchant U-16", c: "Gwalior (Shankarpur)", s: "Cricket", d27: "",
-      d26: "6-30 Dec (year not stated in the report)", p: "6 state teams", w: "Junior cricket in Gwalior", src: "Free Press Journal" }
+      d26: "6-30 Dec (year not stated in the report)", p: "6 state teams", w: "Junior cricket in Gwalior", src: "Free Press Journal" },
+    // Racket sports, padel, pickleball (web-checked 13 Nov 2026)
+    { a: 1, b: 1, n: "GOS Open padel, Indore edition", short: "Padel Open", c: "Indore (Venus Sports Arena)", s: "Padel", d27: "",
+      d26: "1 Feb 2026 (article dated Jan 2026)", p: "Not published", w: "Padel: rackets and balls, a new sport in Indore", src: "The God of Sports (2026)" },
+    { a: 2, b: 2, n: "87th Senior National Table Tennis Championships", short: "TT Senior Nationals", c: "Indore", s: "Table tennis", d27: "",
+      d26: "14-21 Mar 2026", p: "India's top players; Manav Thakkar and Yashaswini Ghorpade won", w: "Table tennis: bats, tables, balls", src: "India Sports Hub, Lokmat Times (Mar 2026)" },
+    { a: 5, b: 5, n: "52nd Institutional Table Tennis Championships (AAI)", short: "Institutional TT", c: "Indore", s: "Table tennis", d27: "",
+      d26: "Jun 2026", p: "Institutional teams from across India", w: "Table tennis", src: "Telangana Today (Jun 2026)" },
+    { a: 9, b: 10, n: "World Tennis Masters ITF MT700", short: "ITF Masters tennis", c: "Indore (Indore Tennis Club)", s: "Tennis", d27: "",
+      d26: "From 30 Oct 2026", p: "About 250 players", w: "Adult tennis: rackets, shoes", src: "Free Press Journal (Oct 2026)" },
+    { a: 10, b: 10, n: "Indore Table Tennis League (2nd edition)", short: "Indore TT League", c: "Indore (Abhay Prashal)", s: "Table tennis", d27: "",
+      d26: "2-4 Nov 2026", p: "8 teams", w: "City table tennis", src: "Free Press Journal (2026)" },
+    { a: 11, b: 11, n: "National Ranking Pickleball Championship", short: "Pickleball nationals", c: "Indore", s: "Pickleball", d27: "",
+      d26: "7th RYP National Ranking, Dec 2025; a 19-21 Dec date was announced (year to confirm)", p: "400+ players expected", w: "Pickleball in MP: paddles, balls", src: "Newsdrum, Tribune (Dec 2025)" }
   ]
 };
