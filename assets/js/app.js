@@ -665,9 +665,44 @@
       html += `<div class="pl-lane-name">${lane.name}</div><div class="pl-lane">${chips}</div>`;
     });
     html += `<div class="pl-lane-name">Sport of the month</div><div class="pl-sport">${D.puneSportOfMonth.map((sp, i) => `<span class="${i === month ? "on" : ""}">${sp}</span>`).join("")}</div>`;
+    html += evLane();
     plannerEl.innerHTML = html;
+    const evSel = $("#evRegSel", plannerEl);
+    if (evSel) evSel.addEventListener("change", () => setEvReg(evSel.value));
     $$(".pl-month", plannerEl).forEach(b => b.addEventListener("click", () => selectMonth(+b.dataset.m)));
   }
+  /* Sports events 2027 (EVENTS27 in events27.js): a row inside the planner with a Pune / Gujarat / MP dropdown, and the same events in detail below */
+  const EV = window.EVENTS27 || {}, EV_REG = [["Pune", "Pune"], ["Gujarat", "Gujarat: Baroda, Surat, Ahmedabad, Rajkot"], ["MP", "MP: Bhopal, Indore, Gwalior"]];
+  let evReg = "Pune";
+  const evDate = t => String(t || "").split(/[,;(:]/)[0].trim();
+  const evCity = c => String(c).split(/[,(]/)[0].trim();
+  const evTip = e => `<b>${esc(e.n)}</b><br>${esc(e.c)} · ${esc(e.s)}<br>2027: ${e.d27 ? esc(e.d27) + (e.approx ? " (to confirm)" : "") : "date not announced yet"}<br>Last time: ${esc(e.d26)}<br>People: ${esc(e.p)}`;
+  function evLane() {
+    const list = (EV[evReg] || []).slice().sort((x, y) => x.a - y.a);
+    if (!list.length) return "";
+    const rows = [];
+    const chips = list.map(e => {
+      let r = rows.findIndex(end => end < e.a);
+      if (r < 0) { rows.push(-1); r = rows.length - 1; }
+      rows[r] = e.b;
+      const on = month >= e.a && month <= e.b;
+      const when = e.d27 ? `${e.approx ? "≈ " : ""}${evDate(e.d27)}` : `Last: ${e.cd || evDate(e.d26)}`;
+      return `<span class="pl-chip ev ${e.d27 ? "set" : ""} ${on ? "" : "dim"}" style="grid-column:${e.a + 1} / ${e.b + 2};grid-row:${r + 1}" data-tip="${esc(evTip(e))}">${evReg === "Pune" ? "" : `<small>${esc(evCity(e.c))}</small>`}<b>${esc(e.short || e.n)}</b><em>${esc(when)}</em></span>`;
+    }).join("");
+    return `<div class="pl-lane-name ev-name">Sports events<select id="evRegSel" aria-label="Choose market for sports events">${EV_REG.map(([k]) => `<option value="${k}" ${k === evReg ? "selected" : ""}>${k}</option>`).join("")}</select><span>Bold date: the 2027 date is out. "Last": the 2026 date, 2027 not announced yet.</span></div><div class="pl-lane ev-lane">${chips}</div>`;
+  }
+  function renderEvents() {
+    const el = $("#ev27"); if (!el) return;
+    const list = (EV[evReg] || []).slice().sort((x, y) => x.a - y.a), M = PL.months;
+    $("#ev27Reg").textContent = (EV_REG.find(r => r[0] === evReg) || [, evReg])[1];
+    el.innerHTML = `<div class="seg ev27-seg" role="group" aria-label="Choose market">${EV_REG.map(([k]) => `<button type="button" data-r="${k}" aria-pressed="${k === evReg}">${k}</button>`).join("")}</div>
+      <div class="sb-wrap"><table class="ev27-t"><thead><tr><th>Month</th><th>Event</th><th>City</th><th>Sport</th><th>2027 date</th><th>Last time (2026, or the latest found)</th><th>Participants</th><th>Why it matters to us</th></tr></thead><tbody>${list.map(e => `<tr>
+        <td class="m">${M[e.a]}${e.b > e.a ? "-" + M[e.b] : ""}</td><td><b>${esc(e.n)}</b></td><td>${esc(e.c)}</td><td>${esc(e.s)}</td>
+        <td>${e.d27 ? `<b>${esc(e.d27)}</b>${e.approx ? '<span class="ev-tbc">to confirm</span>' : ""}` : '<span class="ev-na">Not announced</span>'}</td><td>${esc(e.d26)}</td><td>${esc(e.p)}</td><td>${esc(e.w)}</td></tr>`).join("")}</tbody></table></div>
+      <p class="ev27-src">Web-checked 13 Nov 2026. Sources: ${[...new Set(list.map(e => e.src))].map(esc).join("; ")}. 2027 dates marked "to confirm" are race listings or the usual pattern, not yet from the organiser.</p>`;
+    $$(".ev27-seg button", el).forEach(b => b.addEventListener("click", () => setEvReg(b.dataset.r)));
+  }
+  function setEvReg(r) { evReg = r; buildPlanner(); renderEvents(); }
   const MONTHS_FULL = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const splitBanner = t => {
     const m = t.match(/^(.*?[a-z])([A-Z].*)$/);
@@ -733,6 +768,7 @@
     if (keepFocus) $(".md-nav button[data-d='1']")?.focus();
   }
   selectMonth(0);
+  renderEvents();
 
   // IP footfall bars
   (() => {

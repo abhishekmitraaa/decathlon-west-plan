@@ -4,7 +4,7 @@ Single source of truth for this project. Read it before any work. Update it at t
 (see CLAUDE.md): add every new number, file, decision, preference and open question. Never delete
 history; mark superseded facts as superseded.
 
-Last updated: 2026-11-12
+Last updated: 2026-11-13
 
 ---
 
@@ -261,6 +261,12 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - Army Marathon Bhopal: ~6,500 runners Jan 2025.
 - Indore Marathon: first Sunday of February; 12th edition 1 Feb 2026 (official site also lists 15 Feb; conflict); organiser claims 25K+ participants (likely cumulative).
 
+### Sports events 2027 by market (web-checked 13 Nov 2026; EVENTS27 in assets/js/events27.js)
+User ask (13 Nov 2026): at the bottom of the 2027 month-by-month calendar (index.html #planner), add the important sports events for Pune, Gujarat (Baroda, Surat, Ahmedabad, Rajkot) and MP (Bhopal, Indore, Gwalior), inside the calendar like the other rows, with a dropdown to switch market; where the 2027 date is not out, give the 2026 date, participants and sport; a bit of detail.
+- Pune: Bajaj Pune Grand Tour 26-31 Jan 2027 (2026: 19-23 Jan, 164-171 riders, 35 countries, ~2.5 M spectators); VISTA Duathlon 22 Feb 2026; Pune City Marathon 1 Mar 2026 (15,000+); Maharashtra Premier League 4-22 Jun 2025 MCA Gahunje (2026 dates not found); monsoon halves AFMC 2 Aug, K2S 8 Aug, Holystico 9 Aug 2026; Run for Unity 1 Nov 2026 (40,000+ expected); Pune International Marathon 6 Dec 2026 (40th; 2025 ~15,000 + 70 foreign); SRT Ultra 12 Dec 2026; Bajaj Pune Marathon 14 Dec 2025 + PCMC half 20 Dec 2026.
+- Gujarat: Kite Festival 10-14 Jan 2026 (Ahmedabad 12-14 Jan; 1,071 flyers, 135 from 50 countries); India v NZ ODIs Vadodara 11 Jan, Rajkot 14 Jan 2026; WPL Vadodara leg 19 Jan-5 Feb 2026 (11 matches, final 5 Feb); Vadodara Marathon 31 Jan 2027 (2026: 1 Feb, ~1.10 lakh); Surat International Marathon 8 Feb 2026; Rajkot Pickleball Grand Slam 13-15 Mar 2026; IPL 28 Mar-31 May 2026 (final Ahmedabad); Surat Cyclothon 7 Jun 2026 (2025 ~7,000 expected); Saurashtra Pro T20 7-20 Jun 2025 (2026 postponed); FIBA WC 2027 Asian qualifiers Ahmedabad early Jul 2026; Khel Mahakumbh 76,02,178 players; Adani Ahmedabad Marathon 29 Nov 2026 (2025: 24,000+).
+- MP: Bhopal Marathon 10 Jan 2027 (1st: 25 Jan 2026); Khelo MP Youth Games 10-31 Jan 2026 (~1.5 lakh athletes; 11 vs 28 sports conflict); Army Marathon Bhopal 15 Jan 2025 (~6,500); India v NZ ODI Indore 18 Jan 2026; Indore Marathon 14 Feb 2027 per listings (2026: 1 vs 15 Feb conflict); Bhopal Triathlon 8 Feb 2026; Free Press Mini-Marathon Indore 22 Feb 2026 (~4,000); Indore Colour Run 29 Mar 2026; MPL T20 3-26 Jun 2026 Indore (2025 Gwalior); Indore Triathlon 7 Jun 2026; Raja Bhoj National Sailing Championship to 16 Aug 2026 (~100 sailors, 12 states); IAF Marathon Gwalior 4 Oct 2026; Vijay Merchant U-16 Gwalior 6-30 Dec (year not stated).
+
 ### Strategies: 2026 recap → Q4 → 2027
 - Back to school: 2026 Motera school visits; Q4 14 Nov colouring books → reward at store (family walk-ins), Surat school sports-day kit desks Dec–Jan (8 schools); 2027 Pune school activations (teen sport Jan, girls' schools Feb, summer camps Apr–May, Christmas carnival Dec).
 - Yoga Day: 2026 Antyodaya Yog Kumbh at Decathlon Motera 21 June; Q4 sunrise yoga with Tapi Sunrise Run 20 Dec; 2027 Yoga Day 1–21 June (national goal 10,000).
@@ -400,6 +406,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - Store Q4 budgets add to 129.71 L but the state line plans add to 169.4 L (line items) / 160.4 L (stated totals). The gap is assumed to be state-level spend (e.g. digital paid to MarCom); confirm with the user.
 - Missing attachments (26 Oct): the Excel files arrived later the same day (Pune_persona.xlsx, India City Ranking); still missing: a video for the October section. Ask the user to resend. Kiprun launch videos (5) still to come.
 - Influencer shoot views (15 Pune reels) not available from embeds; need numbers from the user's Instagram Insights.
+- Indore Marathon 2027: race listings say Sun 14 Feb 2027, the Q1 calendar (data.js, sports27.js, budget27.js) still says ~7 Feb, first Sunday. Confirm with the organiser before changing. Most 2027 dates for the sports-events row are not announced yet (2026 dates shown).
 - External event dates for Pune International Marathon, Bajaj Pune Marathon, Khelo MP Youth Games and Indore Marathon 2026–27 are not confirmed; Indore 2026 date conflicts (1 vs 15 Feb).
 - Deck p9 hoarding photos are partly not from this cluster: the "Bhopal" photo shows UP32 number plates, Drishti IAS and a Lucknow blood bank sign, and the board reads "Visit Decathlon Vibhuti Khand & Lulu Mall" (Lucknow stores); the "Ahmedabad + Baroda" night board appears to be the same Lucknow creative. The Surat photo is the booked site still carrying another brand's ad. The "2026 update" text (PIN codes 2260xx, Hazratganj) is Lucknow's. Site captions describe the creative and site without claiming the photo location; ask the user for real Bhopal / Ahmedabad / Baroda photos.
 - AOP "20 total" vs per-store numbers adding to 90.
@@ -591,6 +598,7 @@ City: rank | population 2023 | market 2023 / 2025 / 2027 / 2030 (Cr) | DSI TO 20
 - 2026-11-12 (weekly): Kolkata page: new section "Omni turnover, week by week" (#k-weeks, nav "Weekly"): KPI strip (2026 W1-45 vs 2025 same weeks, Q4 so far, what 2025 did in W46-53), a 53-week line chart with quarter bands, peak labels and hover values, and the full week table (editable) in a dropdown. Saved versions of the page get new default sections added. kolkata27.js 20261112e, site.css 20261112c. Checked 1440 and 390: no console errors, no horizontal scroll.
 - 2026-11-12 (later): apply_migration on Cosora timed out a fourth time (the approval prompt never reaches the user). Sent the user a ready-to-run SQL file (setup + edit PIN) to paste into Cosora's SQL editor; the PIN was given to the user in chat only (not stored in the repo). supabase/ added to .vercelignore. Waiting for the user to run it; then verify with a read-only query.
 - 2026-11-12 (later): Kolkata page order changed (user, with a screenshot of the weekly chart): weekly turnover chart + week table first, then "The Calendar" (title capitalised) right below it, then Budget 2027, then How 2025 went, monthly TO, notes. Nav reordered to match; a saved copy is re-sorted to this order on load. kolkata27.js v=20261112f.
+- 2026-11-13: 2027 planner (index.html) gets a "Sports events" row at the bottom with a Pune / Gujarat / MP dropdown (9 / 12 / 13 events: chips with city, name and the 2027 date, or "Last:" date; hover for detail), plus a "Sports events 2027, in detail" dropdown table (month, event, city, sport, 2027 date, last time, participants, why it matters, sources). New assets/js/events27.js; app.js, site.css bumped to v=20261113a on all pages. Open: Indore Marathon 2027 listed 14 Feb, but data.js/sports27.js still say ~7 Feb "first Sunday" (not changed; to confirm).
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 

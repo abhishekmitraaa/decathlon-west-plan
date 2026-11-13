@@ -3482,3 +3482,30 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 .kol-wk-kpi div.up b { color: #0B7A3B; } .kol-wk-kpi div.dn b { color: #C62828; }
 .kol-t.wide { min-width: 3200px; } .kol-t.wide td, .kol-t.wide th { padding: 6px 4px; font-size: 11.5px; } .kol-t.wide tbody th { width: 90px; }
 @media (max-width: 1000px) { .kol-wk-kpi { grid-template-columns: 1fr 1fr; } }
+
+/* 2027 planner: sports events row (Pune / Gujarat / MP) and its detail dropdown (events27.js) */
+.pl-lane-name.ev-name { flex-direction: column; align-items: flex-start; gap: 6px; background: #F5F6FF; }
+.ev-name select { font: inherit; font-size: 12.5px; font-weight: 700; color: var(--blue); border: 1.5px solid var(--blue); border-radius: 6px; padding: 4px 6px; background: #fff; max-width: 100%; cursor: pointer; }
+.ev-name span { font-size: 10px; font-weight: 600; color: var(--text-3); line-height: 1.3; }
+.pl-lane.ev-lane { grid-auto-rows: auto; gap: 4px 0; background-color: #F5F6FF; }
+.pl-chip.ev { white-space: normal; flex-direction: column; align-items: flex-start; justify-content: center; line-height: 1.25; padding: 5px 7px; background: #fff; color: var(--ink); border: 1.5px solid #C9CEF3; font-weight: 600; cursor: default; }
+.pl-chip.ev b { font-size: 11px; font-weight: 800; color: var(--blue-deep); overflow-wrap: anywhere; }
+.pl-chip.ev small { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; color: #8A3B00; }
+.pl-chip.ev em { font-style: normal; font-size: 10px; color: var(--text-3); font-weight: 650; }
+.pl-chip.ev.set { border-color: var(--blue); }
+.pl-chip.ev.set em { color: var(--blue); font-weight: 800; }
+.pl-chip.ev.dim { opacity: .62; }
+.ev27-d { margin-top: 14px; }
+.ev27-in { padding: 0 18px 16px; }
+.ev27-in .sb-wrap { padding: 0; }
+.ev27-seg { margin-bottom: 12px; }
+.ev27-t { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 980px; }
+.ev27-t th { text-align: left; background: var(--ink); color: #fff; font-size: 11.5px; font-weight: 700; padding: 8px 10px; }
+.ev27-t td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--text-2); line-height: 1.35; }
+.ev27-t td b { color: var(--ink); }
+.ev27-t td.m { font-weight: 800; color: var(--blue); white-space: nowrap; }
+.ev27-t tr:nth-child(even) td { background: #FAFBFE; }
+.ev-tbc, .ev-na { display: inline-block; margin-top: 3px; font-size: 10.5px; font-weight: 700; border-radius: 4px; padding: 1px 6px; }
+.ev-tbc { background: #FFF1D6; color: #8A5A00; margin-left: 4px; }
+.ev-na { background: #ECEEF4; color: var(--text-3); }
+.ev27-src { font-size: 11.5px; color: var(--text-3); margin: 10px 0 0; line-height: 1.45; }
