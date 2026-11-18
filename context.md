@@ -618,6 +618,7 @@ User role and structure (user, 18 Nov 2026): Anandita is the Decathlon regional 
 - 2026-11-18: Mission 2027 workbook for the user (Mission 2027 one-pager in Digital / Marketing / People, KPIs 2027 with editable growth %, Stores 2027, 2026 baseline, Quarter plan, Definitions) from the six uploads; 202 formulas, 0 errors. Sent to the user, not committed (confidential IDM content). Open: budget 7.6 vs 7.46 Cr and the 0.6% share; 2026 close to replace the ×12/10 estimate; walk-in baseline missing.
 - 2026-11-18 (later): Mission 2027 updated with a Training section and a Training plan 2027 sheet (MP trainings in December first); People renumbered to 4, additional role to 5; 229 formulas, 0 errors. Sent to the user, not committed.
 - 2026-11-18 (later): IDM file updated with the two "least liked" points (liked left for later); Mission 2027 gets a Store scorecard sheet (two-way feedback), KPIs 4.4-4.5, mission row 4.5, vendor team and influencer shortlisting; 268 formulas, 0 errors. Both sent to the user, not committed.
+- 2026-11-18 (later): user asked where the mission and IDM files are; told them they are attached in chat and saved in the session scratchpad (mission_out), which can be cleared; offered a Google Drive copy. No file or site change.
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 
