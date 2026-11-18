@@ -621,6 +621,7 @@ User role and structure (user, 18 Nov 2026): Anandita is the Decathlon regional 
 - 2026-11-18 (later): IDM file updated with the two "least liked" points (liked left for later); Mission 2027 gets a Store scorecard sheet (two-way feedback), KPIs 4.4-4.5, mission row 4.5, vendor team and influencer shortlisting; 268 formulas, 0 errors. Both sent to the user, not committed.
 - 2026-11-18 (later): user asked where the mission and IDM files are; told them they are attached in chat and saved in the session scratchpad (mission_out), which can be cleared; offered a Google Drive copy. No file or site change.
 - 2026-11-18 (later): user: "It's okay, put it on the website and give me an Excel file" (supersedes keeping the mission and IDM off the site). New page mission2027.html: KPI tiles, the mission by section (digital, marketing, training, people, additional role), all 34 KPIs 2026 → 2027, stores table, training plan (kick-off, themes, store × quarter), store scorecard, quarter plan, and Excel downloads of the mission and the updated IDM (no phone numbers or emails in either; checked). Tab added on all pages; site.css v=20261118a. Checked at 1440 and 390: no console errors, no horizontal scroll, both downloads return 200.
+- 2026-11-18 (later): local test server timed out after the Mission 2027 checks finished; nothing new. Vercel deploy could not be confirmed from the session (vercel.app blocked, Vercel API 403 on list deployments, team abhishekmitraaas-projects).
 
 ## Appendix: exact data tables (generated from assets/js/data.js and content.js)
 
