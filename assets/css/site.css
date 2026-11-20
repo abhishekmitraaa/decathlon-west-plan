@@ -3590,3 +3590,48 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 @media (max-width: 1024px) { .mx-kick { grid-template-columns: repeat(3, minmax(0, 1fr)); } .mx-themes { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mx-q { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 760px) { .mx-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mx-cards, .mx-score, .mx-q { grid-template-columns: 1fr; } .mx-kick { grid-template-columns: 1fr 1fr; } .mx-tile b { font-size: 21px; } }
 @media (max-width: 460px) { .mx-kick, .mx-themes { grid-template-columns: 1fr; } }
+
+/* ---------- Omni and digital 2026 by market (omni26view.js) ---------- */
+.om-seg { margin: 4px 0 10px; flex-wrap: wrap; }
+.om-kpis div span { display: block; }
+.om-bars { margin: 6px 0 14px; display: flex; flex-direction: column; gap: 8px; }
+.om-bar { display: grid; grid-template-columns: 120px minmax(0, 1fr) 110px; align-items: center; gap: 10px; font-size: 13px; }
+.om-bar span { font-weight: 700; color: var(--ink); }
+.om-bar b { font-size: 12.5px; color: var(--text-2); }
+.om-track { display: flex; height: 22px; width: var(--w); border-radius: 6px; overflow: hidden; background: #E3E6EF; }
+.om-track i { display: block; height: 100%; }
+.om-track i.in, .om-key i.in { background: #C9CEE6; }
+.om-key { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 2px 0 0; font-size: 12px; color: var(--text-2); }
+.om-key span { display: inline-flex; align-items: center; gap: 6px; }
+.om-key i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.om-key i.dg { background: linear-gradient(90deg, var(--pune), var(--guj), var(--mp)); }
+.om-t { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 860px; }
+.om-t th { text-align: left; background: var(--ink); color: #fff; font-size: 12px; padding: 8px 10px; white-space: nowrap; }
+.om-t td { padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; color: var(--text-2); }
+.om-t td:first-child { color: var(--ink); font-weight: 750; }
+.om-t td i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 7px; }
+.om-t tr.sub td:first-child { padding-left: 28px; font-weight: 600; }
+.om-t tr.sub td { font-size: 12.5px; background: #FAFBFE; }
+.om-t tr.tot td { background: var(--ink); color: #fff; font-weight: 800; }
+.om-two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+.om-block { border: 1.5px solid var(--line); border-radius: var(--r-md); padding: 12px 14px; background: #fff; min-width: 0; }
+.om-cols { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 4px; align-items: end; height: 170px; }
+.om-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 3px; min-width: 0; }
+.om-col b { font-size: 10.5px; color: var(--ink); }
+.om-col span { font-size: 10.5px; color: var(--text-3); font-weight: 700; }
+.om-stack { width: 100%; max-width: 30px; height: var(--h); background: #C9CEE6; border-radius: 4px 4px 0 0; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
+.om-stack i { display: block; width: 100%; }
+.om-col.mtd .om-stack { opacity: .55; }
+.om-ch { display: grid; grid-template-columns: 130px minmax(0, 1fr) 76px; align-items: center; gap: 8px; font-size: 12.5px; margin: 4px 0; }
+.om-ch span { color: var(--text-2); font-weight: 600; }
+.om-ch div { height: 12px; }
+.om-ch i { display: block; height: 100%; width: var(--w); border-radius: 3px; background: #9AA2C8; }
+.om-ch b { text-align: right; color: var(--ink); font-size: 12.5px; }
+.om-split { display: flex; height: 20px; border-radius: 6px; overflow: hidden; gap: 2px; margin: 4px 0 8px; }
+.om-split i { display: block; height: 100%; }
+.om-ul { list-style: none; margin: 0; padding: 0; font-size: 12.5px; }
+.om-ul li { display: grid; grid-template-columns: 1fr auto 52px; gap: 8px; padding: 3px 0; border-bottom: 1px dashed var(--line); }
+.om-ul span { color: var(--text-2); } .om-ul b { color: var(--ink); } .om-ul small { text-align: right; color: var(--text-3); }
+.om-src { margin-top: 10px; }
+@media (max-width: 760px) { .om-two { grid-template-columns: 1fr; } .om-bar { grid-template-columns: 90px minmax(0, 1fr) 84px; } .om-ch { grid-template-columns: 104px minmax(0, 1fr) 66px; } .om-cols { height: 140px; } .om-col b { font-size: 9px; } }
+.mx-om { padding: 16px 18px; gap: 0; }

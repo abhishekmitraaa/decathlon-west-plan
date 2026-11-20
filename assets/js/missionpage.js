@@ -27,6 +27,10 @@
         <p class="mx-who2">With: ${esc(r.who)}</p></article>`).join("")}</div></section>`;
   });
 
+  // 2026 by market (omni26view.js fills it)
+  h += head("m-markets", "2026 by market: Pune, Gujarat, MP", "Omni and digital turnover, January to October 2026, from the same YTD files. Switch markets to see channels, months and stores.");
+  h += `<div class="panel mx-panel mx-om"><div data-omni26="All"></div></div>`;
+
   // KPI table
   h += head("m-numbers", "Every KPI: 2026 to 2027", "2026 = January to October actual; full year = × 12/10 (replace with the real close in January).");
   h += `<details class="panel pm-d mx-d" open><summary><b>All KPIs, with the 2026 baseline and the 2027 target</b><span>${M.kpis.reduce((a, k) => a + k.rows.length, 0)} KPIs</span><i class="nd-chev" aria-hidden="true"></i></summary>
