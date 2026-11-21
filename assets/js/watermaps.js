@@ -220,12 +220,21 @@ window.WATER_MAPS = {
     const homes = c.homes === "adajan" ? (A.city || []).filter(x => x[1] === "live").map(x => [x[0], x[2], x[3], x[4]]) : c.homes;
     const boards = (window.HOARDINGS || []).filter(h => h.city === BOARD_CITY[k] && h.lat).map(h => [h.loc, h.lat, h.lon, h.status, h.why]);
     const current = (window.HOARDINGS || []).filter(h => h.city === BOARD_CITY[k]).map((h, i) => ({ ...h, tag: String.fromCharCode(65 + i) }));
-    return { ...c, stores, hot, homes, boards, current };
+    const osmAll = (((window.OSM_POOLS || {}).cities || {})[k] || {}).pools || [];
+    const osm = osmAll.filter(o => !c.pools.some(x => KM([o[0], o[1]], [x[2], x[3]]) < 0.08)).map(o => o[2] === "club" ? [o[0], o[1], "pub", o[3], o[4]] : o);
+    return { ...c, stores, hot, homes, boards, current, osm };
   };
+  // pool types: our named pools, then OpenStreetMap's
+  const PT = {
+    partner: ["Our partner pool (AOP)", "#00C2FF", "our partner pools (AOPs)"],
+    pub: ["Public, club, hotel or school pool", "#2a78d6", "public, club, hotel or school pools"], soc: ["Society or residential pool", "#e87ba4", "society or residential pools"],
+    home: ["Private home pool", "#eda100", "private home pools"], oth: ["Pool, type not tagged", "#1baf7a", "pools with no type tagged"]
+  };
+  const OSMT = ["soc", "pub", "home", "oth"];
   // what each pick has around it, measured from the pins on the map
   const around = (c, p) => {
     const pt = [p[2], p[3]];
-    const pools = c.pools.filter(x => KM(pt, [x[2], x[3]]) <= 2.5).length;
+    const pools = c.pools.filter(x => KM(pt, [x[2], x[3]]) <= 2.5).length + (c.osm || []).filter(x => KM(pt, [x[0], x[1]]) <= 2.5).length;
     const homes = c.homes.filter(x => KM(pt, [x[1], x[2]]) <= 3).length;
     const hot = c.hot.filter(x => KM(pt, [x[1], x[2]]) <= 2.5).length, jam = c.hot.filter(x => x[4] === "jam" && KM(pt, [x[1], x[2]]) <= 1.5).length;
     const st = c.stores.map(s => [s[0], KM(pt, [s[1], s[2]])]).sort((a, b) => a[1] - b[1])[0];
@@ -248,9 +257,10 @@ window.WATER_MAPS = {
     const c = city(k);
     const picks = c.picks.map(p => ({ p, a: around(c, p) }));
     body.innerHTML = `<p class="wm-lede">${esc(c.lede)}</p>
+      ${c.osm.length ? (() => { const n = t => c.osm.filter(o => o[2] === t).length; return `<div class="wm-poolsum"><b>${c.osm.length + c.pools.length}</b><span>pools on the map of ${esc(c.name)}</span><ul>${[["partner", c.pools.filter(x => x[1] === "partner").length], ["soc", n("soc")], ["pub", n("pub") + c.pools.filter(x => x[1] !== "partner").length], ["home", n("home")], ["oth", n("oth")]].filter(x => x[1]).map(([t, v]) => `<li><i style="background:${PT[t][1]}"></i><b>${v}</b> ${PT[t][2]}</li>`).join("")}</ul><small>OpenStreetMap, where volunteers trace pools from satellite images: these are the pools we can see, not every pool in the city (rooftop and indoor pools are often missing).</small></div>`; })() : ""}
       <div class="wm-facts">${c.facts.map(([v, l, n]) => `<div><b>${esc(v)}</b><span>${esc(l)}</span>${n ? `<small>${esc(n)}</small>` : ""}</div>`).join("")}</div>
       <div class="wm-grid"><div class="wm-mapwrap"><div class="wm-map" id="wmMap" role="img" aria-label="Map of ${esc(c.name)}: stores, boards, pools, crowd hotspots, housing and suggested hoardings"></div>
-        <p class="wm-key"><span><i class="k-st"></i>Our stores</span><span><i class="k-pick"></i>Suggested board</span><span><i class="k-live"></i>Current hoarding (click for the photo)</span><span><i class="k-pool"></i>Partner pool</span><span><i class="k-mun"></i>Municipal or other pool, academy</span><span><i class="k-hot"></i>Crowd hotspot</span><span><i class="k-jam"></i>Busy junction (traffic data)</span><span><i class="k-home"></i>Housing belt</span></p></div>
+        <p class="wm-key"><span><i class="k-st"></i>Our stores</span><span><i class="k-pick"></i>Suggested board</span><span><i class="k-live"></i>Current hoarding (click for the photo)</span><span><i class="k-pool"></i>Partner pool (AOP)</span><span><i class="k-mun"></i>Public pool, club or academy we know (big pin)</span>${c.osm.length ? OSMT.filter(t => c.osm.some(o => o[2] === t)).map(t => `<span><i class="k-osm" style="background:${PT[t][1]}"></i>${PT[t][0]}</span>`).join("") : ""}<span><i class="k-hot"></i>Crowd hotspot</span><span><i class="k-jam"></i>Busy junction (traffic data)</span><span><i class="k-home"></i>Housing belt</span></p></div>
         <div class="wm-picks"><h4>Where we put the water boards, and why</h4>
           ${picks.map(({ p, a }) => `<article class="wm-pick" data-i="${esc(p[0])}"><div class="wm-ph"><b class="wm-n">${esc(p[0])}</b><div><b>${esc(p[1])}</b><small>${esc(p[4])} · ${p[5] === "keep" ? "keep the live or planned board" : "new site"}</small></div><span class="wm-tag ${p[5]}">${p[5] === "keep" ? "Keep site" : "New"}</span></div>
             <div class="wm-fmt-row"><span class="wm-f ${/3D/.test(p[7] || "") ? "td" : "dg"}">${esc(p[7] || "")}</span><span class="wm-mo">${esc(p[8] || "")}</span></div>
@@ -267,7 +277,12 @@ window.WATER_MAPS = {
         <div class="wm-cols"><div><h5>Pools and academies</h5><ul>${c.pools.map(x => `<li><i class="${x[1] === "partner" ? "k-pool" : "k-mun"}"></i><b>${esc(x[0])}</b><small>${esc(x[4])}</small></li>`).join("")}</ul></div>
           <div><h5>Crowd hotspots</h5><ul>${c.hot.map(x => `<li><i class="${x[4] === "jam" ? "k-jam" : "k-hot"}"></i><b>${esc(x[0])}</b><small>${esc(x[3] || "")}</small></li>`).join("")}</ul>
           <h5>Housing belts</h5><ul>${c.homes.map(x => `<li><i class="k-home"></i><b>${esc(x[0])}</b>${x[3] ? `<small>${esc(x[3])}</small>` : ""}</li>`).join("")}</ul></div></div>
-        <p class="wm-note">${esc(c.note)}</p></details>`;
+        <p class="wm-note">${esc(c.note)}</p></details>
+      ${c.osm.length ? `<details class="panel pm-d wm-near" open><summary><b>Pools near each store</b><span>Every pool on the map within 2.5 km and 5 km of the store, by type</span><i class="nd-chev" aria-hidden="true"></i></summary>
+        <div class="sb-wrap"><table class="wm-nt"><thead><tr><th>Store</th><th>Within 2.5 km</th><th>Within 5 km</th>${["partner", ...OSMT].map(t => `<th><i style="background:${PT[t][1]}"></i>${PT[t][0].replace(" (AOP)", "")}<small>within 5 km</small></th>`).join("")}</tr></thead><tbody>
+        ${c.stores.map(st => { const ll = [st[1], st[2]], all = [...c.pools.map(x => [x[2], x[3], x[1] === "partner" ? "partner" : "pub"]), ...c.osm]; const w = r => all.filter(x => KM(ll, [x[0], x[1]]) <= r);
+          return `<tr><th>${esc(st[0])}</th><td><b>${w(2.5).length}</b></td><td><b>${w(5).length}</b></td>${["partner", ...OSMT].map(t => `<td>${w(5).filter(x => x[2] === t).length || "-"}</td>`).join("")}</tr>`; }).join("")}</tbody></table></div>
+        <p class="wm-note">Pools from OpenStreetMap (fetched ${esc((window.OSM_POOLS || {}).fetched || "")}) plus the partner, municipal and club pools we name. Society = tagged private (60 m² or more) or named as a society; public, club, hotel or school = open to the public or to members; private home = private and under 60 m²; not tagged = the map does not say who uses it. © OpenStreetMap contributors.</p></details>` : ""}`;
     if (map) { map.remove(); map = null; }
     if (!window.L) { body.querySelector("#wmMap").innerHTML = '<p class="wm-nomap">The map needs an internet connection to load.</p>'; return; }
     map = L.map("wmMap", { scrollWheelZoom: false }).setView(c.center, c.zoom);
@@ -275,15 +290,17 @@ window.WATER_MAPS = {
     const dot = (ll, col, r, tip, extra = {}) => L.circleMarker(ll, { radius: r, color: "#fff", weight: 1.5, fillColor: col, fillOpacity: 0.92, ...extra }).bindTooltip(tip);
     const homes = L.layerGroup(c.homes.map(h => L.circle([h[1], h[2]], { radius: 1100, color: "#1BAA5E", weight: 1, fillColor: "#1BAA5E", fillOpacity: 0.12 }).bindTooltip(`<b>${esc(h[0])}</b>${h[3] ? "<br>" + esc(h[3]) : ""}`)));
     const hot = L.layerGroup(c.hot.map(h => dot([h[1], h[2]], h[4] === "jam" ? "#D92D20" : "#F28C28", h[4] === "jam" ? 7 : 6, `<b>${esc(h[0])}</b><br>${esc(h[3] || "")}${h[4] === "jam" ? "<br><i>Busy junction, traffic data</i>" : ""}`)));
-    const pools = L.layerGroup(c.pools.map(p => dot([p[2], p[3]], p[1] === "partner" ? "#0096C7" : "#7FB9D6", p[1] === "partner" ? 6 : 5, `<b>${esc(p[0])}</b><br>${esc(p[4])}`)));
+    const pools = L.layerGroup(c.pools.map(p => L.marker([p[2], p[3]], { icon: L.divIcon({ className: "wm-pool-ic " + (p[1] === "partner" ? "pt" : "nm"), html: p[1] === "partner" ? "P" : "", iconSize: p[1] === "partner" ? [22, 22] : [16, 16], iconAnchor: p[1] === "partner" ? [11, 11] : [8, 8] }), zIndexOffset: p[1] === "partner" ? 800 : 600 }).bindTooltip(`<b>${esc(p[0])}</b><br>${esc(p[4])}`)));
+    const cv = L.canvas({ padding: 0.3 });
+    const osmL = L.layerGroup(c.osm.map(o => L.circleMarker([o[0], o[1]], { renderer: cv, radius: o[2] === "soc" ? 6.5 : o[2] === "pub" ? 5.5 : 4.5, color: "#0B1F3A", weight: 1.4, fillColor: PT[o[2]][1], fillOpacity: 1 }).bindTooltip(`<b>${esc(o[4] || PT[o[2]][0])}</b><br>${PT[o[2]][0]}${o[3] ? `, about ${o[3]} m²` : ""}<br><small>OpenStreetMap</small>`)));
     const rings = L.layerGroup(c.stores.flatMap(s => [5, 10].map(r => L.circle([s[1], s[2]], { radius: r * 1000, color: "#3643BA", weight: 1, dashArray: "5 6", fill: false, interactive: false }))));
     const stores = L.layerGroup(c.stores.map(s => L.marker([s[1], s[2]], { icon: L.divIcon({ className: "wm-st-ic", html: "D", iconSize: [26, 26], iconAnchor: [13, 13] }), zIndexOffset: 900 }).bindTooltip(`<b>Decathlon ${esc(s[0])}</b>`, { permanent: true, direction: "top", offset: [0, -12], className: "wm-st-tip" })));
     const curM = {};
     const live = L.layerGroup(c.current.filter(h => h.lat).map(h => (curM[h.tag] = L.marker([h.lat, h.lon], { icon: L.divIcon({ className: "map-board wm-cur-ic", html: `<i>${h.tag}</i>`, iconSize: [20, 20], iconAnchor: [24, 24], popupAnchor: [-14, -24] }), zIndexOffset: 1100 })
       .bindPopup(`${h.img ? `<img src="assets/img/${esc(h.img)}" alt="" style="width:220px;border-radius:6px;display:block;margin-bottom:6px">` : ""}<b>${h.tag}. ${esc(h.loc)}</b><br>${esc(h.size)}, ${LK(h.cost || 0)} a month<br>${STATUS[h.status] || esc(h.status)}${h.dur ? ", " + esc(h.dur) : ""}${h.exact ? "" : "<br><small>Pin is approximate</small>"}`))));
     const pk = L.layerGroup(c.picks.map(p => L.marker([p[2], p[3]], { icon: L.divIcon({ className: "wm-pick-ic " + p[5], html: esc(p[0]), iconSize: [24, 24], iconAnchor: [12, 12] }), zIndexOffset: 1200 }).bindTooltip(`<b>${esc(p[0])}. ${esc(p[1])}</b><br>${esc(p[7] || "")}, ${esc(p[8] || "")}<br>${esc(p[6])}`)));
-    [homes, rings, hot, pools, live, stores, pk].forEach(g => g.addTo(map));
-    L.control.layers(null, { "Suggested boards": pk, "Current hoardings": live, "Pools and academies": pools, "Crowd hotspots and busy junctions": hot, "Housing belts": homes, "Store rings, 5 and 10 km": rings, "Stores": stores }, { collapsed: true }).addTo(map);
+    [homes, rings, hot, osmL, pools, live, stores, pk].forEach(g => g.addTo(map));
+    L.control.layers(null, { "Suggested boards": pk, "Current hoardings": live, "Our partner and known pools": pools, "Every pool on the map (OpenStreetMap)": osmL, "Crowd hotspots and busy junctions": hot, "Housing belts": homes, "Store rings, 5 and 10 km": rings, "Stores": stores }, { collapsed: true }).addTo(map);
     const all = [...c.stores.map(s => [s[1], s[2]]), ...c.picks.map(p => [p[2], p[3]]), ...c.pools.map(p => [p[2], p[3]])];
     map.fitBounds(L.latLngBounds(all), { padding: [24, 24], maxZoom: 13 });
     body.querySelectorAll(".wm-cc").forEach(el => el.addEventListener("click", () => {
