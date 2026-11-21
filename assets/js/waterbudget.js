@@ -67,6 +67,21 @@ window.WATERBUDGET_DEFAULT = {
     { store: "Dumas", st: "Gujarat", n: [100, 350, 400, 500, null] }, { store: "Adajan", st: "Gujarat", n: [100, 350, 400, 500, null] }, { store: "Rajkot", st: "Gujarat", n: [100, 200, 250, 300, null] },
     { store: "Bhopal", st: "MP", n: [100, 350, 400, 500, null] }, { store: "Indore", st: "MP", n: [100, 350, 400, 500, null] }, { store: "Gwalior", st: "MP", n: [100, 200, 250, 300, null] }
   ],
+  // WhatsApp pushes (user, 22 Nov 2026): the budget is to be agreed with the MarCom team, then filled in here. Push weeks from the water plan.
+  wapush: [
+    { st: "Pune", n: [1, 1, 1, 1, null], v: [null, null, null, null, null] },
+    { st: "Gujarat", n: [1, 1, 1, 1, null], v: [null, null, null, null, null] },
+    { st: "MP", n: [1, 1, 1, 1, null], v: [null, null, null, null, null] }
+  ],
+  waweeks: ["Feb, week 3", "Mar, week 2", "Apr, week 2", "May, week 1", ""],
+  // Local city pages (user, 22 Nov 2026): swimming content on our city Instagram pages with the AOP coaches: how to swim, which products to use,
+  // filmed at the partner pool or in the store. Pieces a month are our starting proposal; the budget is still to be set.
+  city: [
+    { city: "Pune", st: "Pune", n: [2, 4, 4, 4, 2], v: [null, null, null, null, null] }, { city: "Ahmedabad", st: "Gujarat", n: [2, 4, 4, 4, 2], v: [null, null, null, null, null] },
+    { city: "Baroda", st: "Gujarat", n: [1, 2, 2, 2, 1], v: [null, null, null, null, null] }, { city: "Surat", st: "Gujarat", n: [2, 4, 4, 4, 2], v: [null, null, null, null, null] },
+    { city: "Rajkot", st: "Gujarat", n: [1, 2, 2, 2, 1], v: [null, null, null, null, null] }, { city: "Indore", st: "MP", n: [1, 2, 2, 2, 1], v: [null, null, null, null, null] },
+    { city: "Bhopal", st: "MP", n: [1, 2, 2, 2, 1], v: [null, null, null, null, null] }, { city: "Gwalior", st: "MP", n: [1, 2, 2, 2, 1], v: [null, null, null, null, null] }
+  ],
   goals: [
     { name: "Wakad", st: "Pune", v: 50893673 }, { name: "Pune city and online", st: "Pune", v: 40714939 }, { name: "Amanora", st: "Pune", v: 24336155 },
     { name: "Wagholi", st: "Pune", v: 23306966 }, { name: "SGS Mall", st: "Pune", v: 22941668 }, { name: "NIBM", st: "Pune", v: 14272318 },
@@ -75,6 +90,14 @@ window.WATERBUDGET_DEFAULT = {
   ],
   notes: ""
 };
+
+window.WATERBUDGET_CITYPAGES = [
+  ["Learn to swim with our coach", "Short reels at the partner pool: an AOP coach teaches one skill a week (breathing, floating, kicking, the first length)."],
+  ["What to wear and pack", "The coach in our store: goggles that fit, caps, swimwear for beginners, kickboard and pull buoy, what a child needs for the first class."],
+  ["Coach at the store", "Invite the coaches to the store on weekends: a swim kit clinic, questions answered, sign-ups for the free classes in our AOPs."],
+  ["Parents and first swims", "Tips for a child's first class and for the summer camp; tag the partner pool so families can book."],
+  ["Women Who Swim", "Women coaches and swimmers: cover-up swimwear, women-only batches at our partner pools."]
+];
 
 window.WATERBUDGET_CAMPAIGNS = [
   { m: "Jan", t: "Build the ecosystem", c: ["Sign the pools (Pune 58 at ₹25,000) and onboard coaches", "30-Day Swim Challenge: swim streaks, Women Who Swim", "Water team in place 10 Jan; Pune training 19-20 Jan"], b: "Pools, academies and coaches are ready before the learners arrive. No ad money in January in the sheet." },
@@ -97,7 +120,7 @@ window.WATERBUDGET_CAMPAIGNS = [
   const N = v => (v == null || v === "" || isNaN(+v)) ? 0 : +v;
   const STS = [["Pune", "#3643BA"], ["Gujarat", "#00A99D"], ["MP", "#7B3FC4"]];
   const CH = [["hoard", "Hoardings (3D or digital)", "#10135A"], ["infl", "Influencers", "#E8590C"], ["meta", "Meta ads", "#3643BA"], ["boost", "Instagram boosts", "#C13584"],
-    ["events", "Events", "#1BAA5E"], ["aop", "Pool partnerships (AOPs)", "#0096C7"], ["flyers", "Checklist flyers", "#F2B705"], ["coach", "Coach kits", "#7B3FC4"]];
+    ["events", "Events", "#1BAA5E"], ["aop", "Pool partnerships (AOPs)", "#0096C7"], ["flyers", "Checklist flyers", "#F2B705"], ["coach", "Coach kits", "#7B3FC4"], ["wapush", "WhatsApp pushes (budget with MarCom)", "#25D366"], ["city", "Local city pages", "#F28C28"]];
   let doc = clone(window.WATERBUDGET_DEFAULT), editing = false;
 
   // money of one line, by month (5 months) and by state; one-off lines (AOP, flyers, coach kits) count in February (the sheet's deadline)
@@ -105,7 +128,7 @@ window.WATERBUDGET_CAMPAIGNS = [
     const z = () => [0, 0, 0, 0, 0];
     const by = Object.fromEntries(STS.map(([s]) => [s, z()]));
     const add = (st, i, v) => { if (by[st]) by[st][i] += v; };
-    if (k === "hoard" || k === "meta" || k === "boost" || k === "events") d[k].forEach(r => r.v.forEach((v, i) => add(r.st, i, N(v))));
+    if (k === "hoard" || k === "meta" || k === "boost" || k === "events" || k === "wapush" || k === "city") (d[k] || []).forEach(r => r.v.forEach((v, i) => add(r.st, i, N(v))));
     if (k === "infl") d.infl.forEach(r => r.n.forEach((v, i) => add(r.st, i, N(v) * N(d.rate[r.st]))));
     if (k === "aop") d.aop.forEach(r => add(r.st, 0, N(r.n) * N(r.r)));
     if (k === "flyers") d.flyers.forEach(r => add(r.st, 0, N(r.v)));
@@ -119,6 +142,7 @@ window.WATERBUDGET_CAMPAIGNS = [
     return { ch, st, mo, all: sum(mo) };
   };
 
+  const tbd = () => { const out = []; if (!sum((doc.wapush || []).flatMap(r => r.v.map(N)))) out.push("WhatsApp pushes"); if (!sum((doc.city || []).flatMap(r => r.v.map(N)))) out.push("local city pages"); return out.join(" and "); };
   const render = () => {
     const T = totals(), M = doc.months;
     const inflN = M.map((_, i) => sum(doc.infl.map(r => N(r.n[i]))));
@@ -134,20 +158,24 @@ window.WATERBUDGET_CAMPAIGNS = [
         <div><b>${sum(inflN)}</b><span>Influencer slots, ${L(T.ch.infl)}</span></div>
         <div><b>${(goal("Pune") + goal("Gujarat")) ? (sum(["Pune", "Gujarat"].map(mar2jun)) / (goal("Pune") + goal("Gujarat")) * 100).toFixed(1) + "%" : "-"}</b><span>Ad budget Mar-Jun as a share of the ₹${((goal("Pune") + goal("Gujarat")) / 1e7).toFixed(2)} Cr turnover goal (Pune + Gujarat)</span></div>
       </div>
+      ${tbd() ? `<p class="wb-tbd">Not in the total yet: ${tbd()}. Budget still to be set${/WhatsApp/.test(tbd()) ? " (WhatsApp: to be agreed with the MarCom team)" : ""}; add it in the plan sheet below.</p>` : ""}
       <h3 class="wb-h">Month by month: campaigns, influencers and money</h3>
       <div class="wb-months">${camp.map(c => { const i = M.indexOf(c.m); const inN = i >= 0 ? inflN[i] : 0; const money = i >= 0 ? T.mo[i] : 0;
         return `<article class="wb-mc"><header><b>${c.m}</b><span>${esc(c.t)}</span></header>
           <div class="wb-mn"><div><b>${money ? L(money) : "₹0"}</b><small>ad budget</small></div><div><b>${inN || 0}</b><small>influencers${inN ? ", " + L(STS.reduce((a, [s]) => a + inflV[s][i], 0)) : ""}</small></div>${i >= 0 ? `<div><b>${sum(doc.hoard.map(h => N(h.n[i])))}</b><small>hoardings</small></div>` : ""}</div>
           ${i >= 0 && inN ? `<p class="wb-inf">${STS.map(([s]) => { const n = sum(doc.infl.filter(r => r.st === s).map(r => N(r.n[i]))); return n ? `${s} ${n} × ${L(N(doc.rate[s]))}` : ""; }).filter(Boolean).join(" · ")}</p>` : ""}
-          <ul>${c.c.map(x => `<li>${esc(x)}</li>`).join("")}</ul><p class="wb-ben"><b>How it helps:</b> ${esc(c.b)}</p></article>`; }).join("")}</div>
+          <ul>${c.c.map(x => `<li>${esc(x)}</li>`).join("")}${i >= 0 && doc.waweeks && doc.waweeks[i] ? `<li class="wa">WhatsApp push, ${esc(doc.waweeks[i])}: all stores' communities${sum((doc.wapush || []).map(r => N(r.v[i]))) ? ", " + L(sum(doc.wapush.map(r => N(r.v[i])))) : " (budget with MarCom)"}</li>` : ""}${i >= 0 && doc.city ? (() => { const n = sum(doc.city.map(r => N(r.n[i]))); return n ? `<li class="cp">City pages: ${n} swimming posts with our AOP coaches</li>` : ""; })() : ""}</ul><p class="wb-ben"><b>How it helps:</b> ${esc(c.b)}</p></article>`; }).join("")}</div>
       <div class="wb-two">
-        <div class="panel wb-panel"><h4>Where the money goes</h4>${CH.map(([k, n, c]) => `<div class="wb-bar"><span>${n}</span><div><i style="--w:${T.ch[k] / maxCh * 100}%;background:${c}"></i></div><b>${L(T.ch[k])}</b><small>${T.all ? (T.ch[k] / T.all * 100).toFixed(1) : 0}%</small></div>`).join("")}</div>
+        <div class="panel wb-panel"><h4>Where the money goes</h4>${CH.map(([k, n, c]) => `<div class="wb-bar"><span>${n}</span><div><i style="--w:${T.ch[k] / maxCh * 100}%;background:${c}"></i></div><b>${!T.ch[k] && (k === "wapush" || k === "city") ? "to agree" : L(T.ch[k])}</b><small>${T.all ? (T.ch[k] / T.all * 100).toFixed(1) : 0}%</small></div>`).join("")}</div>
         <div class="panel wb-panel"><h4>By month and state</h4><div class="wb-cols">${M.map((m, i) => `<div class="wb-col"><b>${L(T.mo[i])}</b><div class="wb-stack" style="--h:${T.mo[i] / maxMo * 100}%">${STS.map(([s, c]) => { const v = CH.reduce((a, [k]) => a + lineMonths(k)[s][i], 0); return `<i style="flex:${v} 1 0;background:${c}" title="${s} ${m}: ${L(v)}"></i>`; }).join("")}</div><span>${m}</span></div>`).join("")}</div>
           <p class="wb-key">${STS.map(([s, c]) => `<span><i style="background:${c}"></i>${s} ${L(T.st[s])}</span>`).join("")}</p>
           <h4 class="wb-h4">Against the turnover goal, March to June</h4>
           ${["Pune", "Gujarat"].map(s => `<div class="wb-goal"><span>${s}</span><b>${Cr(goal(s))}</b><small>goal · ad budget ${L(mar2jun(s))} = ${goal(s) ? (mar2jun(s) / goal(s) * 100).toFixed(1) : 0}%</small></div>`).join("")}
           <div class="wb-goal"><span>MP</span><b>-</b><small>no water turnover goal in our files · ad budget ${L(mar2jun("MP"))}</small></div></div>
       </div>
+      <div class="panel wb-cp"><h4>Local city pages: swimming with our coaches</h4><p>Our city Instagram pages carry swimming content made with the coaches of our AOP pools. We invite them to the store or film them at the pool: they teach how to swim and show which products to use. Every post tags the partner pool and links to the free classes for our customers.</p>
+        <div class="wb-cp-grid">${(window.WATERBUDGET_CITYPAGES || []).map(([h, t]) => `<div><b>${esc(h)}</b><span>${esc(t)}</span></div>`).join("")}</div>
+        <small>${sum((doc.city || []).map(r => sum(r.n.map(N))))} posts planned February to June across ${(doc.city || []).length} city pages (our proposal; change it in the sheet). Budget to be set.</small></div>
       <details class="panel pm-d wb-sheet"${editing ? " open" : ""}><summary><b>The plan sheet, line by line</b><span>${editing ? "Editing: change any number, then save" : "Click Edit to change any number"}</span><i class="nd-chev" aria-hidden="true"></i></summary>
         <div class="wb-bar-edit">
           <button type="button" class="kol-btn" id="wbEdit" ${editing ? "hidden" : ""}>Edit</button>
@@ -188,6 +216,12 @@ window.WATERBUDGET_CAMPAIGNS = [
       t("WhatsApp community", "members to reach per store (a target, not money)", `<th>Store</th>${mh}`,
         doc.wa.map((r, j) => `<tr><th>${esc(r.store)}</th>${M.map((_, i) => cell(`wa.${j}.n.${i}`, r.n[i])).join("")}</tr>`).join(""),
         `<tr><th>All</th>${tot(doc.wa, r => r.n).map(v => `<td class="t">${v.toLocaleString("en-IN")}</td>`).join("")}</tr>`),
+      t("WhatsApp pushes", "pushes a month and ₹ by state · budget to be agreed with the MarCom team, then filled in here", `<th>State</th>${M.map(m => `<th>${m} #</th><th>${m} ₹</th>`).join("")}<th>Total</th>`,
+        (doc.wapush || []).map((r, j) => `<tr><th>${esc(r.st)}</th>${M.map((_, i) => cell(`wapush.${j}.n.${i}`, r.n[i]) + cell(`wapush.${j}.v.${i}`, r.v[i], 1)).join("")}<td class="t">${sum(r.v.map(N)) ? L(sum(r.v.map(N))) : "to agree"}</td></tr>`).join("") +
+        `<tr class="rate"><th>Push weeks</th><td colspan="${M.length * 2 + 1}">${(doc.waweeks || []).filter(Boolean).map(esc).join(" · ")}</td></tr>`, ""),
+      t("Local city pages: swimming content with our AOP coaches", "posts a month and ₹ by city · how to swim and which products to use, filmed at the partner pool or in our store", `<th>City</th>${M.map(m => `<th>${m} posts</th><th>${m} ₹</th>`).join("")}<th>Posts</th>`,
+        (doc.city || []).map((r, j) => `<tr><th>${esc(r.city)}</th>${M.map((_, i) => cell(`city.${j}.n.${i}`, r.n[i]) + cell(`city.${j}.v.${i}`, r.v[i], 1)).join("")}<td class="t">${sum(r.n.map(N))}</td></tr>`).join(""),
+        `<tr><th>All</th>${M.map((_, i) => `<td class="t">${sum((doc.city || []).map(r => N(r.n[i])))}</td><td class="t">${L(sum((doc.city || []).map(r => N(r.v[i]))))}</td>`).join("")}<td class="t">${sum((doc.city || []).map(r => sum(r.n.map(N))))}</td></tr>`),
       t("Turnover goals, March to June", "water plan, by store", `<th>Store</th><th>State</th><th>Goal ₹</th>`,
         doc.goals.map((r, j) => `<tr><th>${esc(r.name)}</th><td>${esc(r.st)}</td>${editing ? cell(`goals.${j}.v`, r.v, 1) : `<td>${Cr(N(r.v))}</td>`}</tr>`).join(""),
         `<tr><th>All</th><td></td><td class="t">${Cr(sum(doc.goals.map(r => N(r.v))))}</td></tr>`)
@@ -215,7 +249,7 @@ window.WATERBUDGET_CAMPAIGNS = [
       const r = await fetch(`${SB.url}/rest/v1/west_plan_docs?id=eq.${SB.id}&select=data,updated_at`, { headers: { apikey: SB.key } });
       if (!r.ok) throw new Error(r.status);
       const j = await r.json();
-      if (j[0] && j[0].data && j[0].data.hoard) { doc = j[0].data; render(); status("Last saved " + new Date(j[0].updated_at).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })); }
+      if (j[0] && j[0].data && j[0].data.hoard) { doc = j[0].data; ["wapush", "waweeks", "city"].forEach(k => { if (!doc[k]) doc[k] = clone(window.WATERBUDGET_DEFAULT[k]); }); render(); status("Last saved " + new Date(j[0].updated_at).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })); }
       else status("Showing the sheet (nothing saved yet).");
     } catch (e) { status("Showing the sheet (the saved version could not be loaded)."); }
   }
@@ -240,6 +274,8 @@ window.WATERBUDGET_CAMPAIGNS = [
     doc.flyers.forEach(r => rows.push(["Flyers (₹)", r.store, r.st, r.v, "", "", "", "", r.v]));
     doc.coach.forEach(r => rows.push(["Coach kits (₹)", r.st, r.st, N(r.n) * N(r.kit), "", "", "", "", N(r.n) * N(r.kit)]));
     doc.wa.forEach(r => rows.push(["WhatsApp members", r.store, r.st, ...r.n.map(v => v ?? ""), ""]));
+    (doc.wapush || []).forEach(r => { rows.push(["WhatsApp pushes (count)", r.st, r.st, ...r.n.map(v => v ?? ""), sum(r.n.map(N))]); rows.push(["WhatsApp pushes (₹, with MarCom)", r.st, r.st, ...r.v.map(v => v ?? ""), sum(r.v.map(N))]); });
+    (doc.city || []).forEach(r => { rows.push(["City page posts", r.city, r.st, ...r.n.map(v => v ?? ""), sum(r.n.map(N))]); rows.push(["City pages (₹)", r.city, r.st, ...r.v.map(v => v ?? ""), sum(r.v.map(N))]); });
     const text = rows.map(r => r.map(x => `"${String(x ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
     const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["﻿" + text], { type: "text/csv" })); a.download = "water-sports-plan-2027.csv"; a.click();
   }
