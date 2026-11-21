@@ -20,7 +20,10 @@
 
   let view = "h1", state = "all", week = 0;
 
+  const MKEY = ["jan", "feb", "mar", "apr", "may", "jun"];
+  const monthMode = () => view === "h1";
   function weeks(q) {
+    if (q === "h1") return MKEY.map((k, m) => ({ w: MON[m], key: k, month: true, mon: new Date(Date.UTC(2027, m, 1)), sun: new Date(Date.UTC(2027, m + 1, 0)) }));
     const Q = W.views[q], out = [];
     for (let w = Q.w0; w <= Q.w1; w++) { const m = monday(Q.year, w); out.push({ w, mon: m, sun: new Date(m.getTime() + 6 * DAY) }); }
     return out;
@@ -44,7 +47,9 @@
   const span = (it, ws) => {
     const w0 = ws[0].mon.getTime(), s = d(it.s).getTime(), e = d(it.e).getTime(), end = ws[ws.length - 1].sun.getTime();
     if (e < w0 || s > end) return null;
-    return [Math.max(0, Math.floor((s - w0) / (7 * DAY))), Math.min(ws.length - 1, Math.floor((e - w0) / (7 * DAY)))];
+    let a = ws.findIndex(x => x.sun.getTime() >= s), b = -1;
+    ws.forEach((x, i) => { if (x.mon.getTime() <= e) b = i; });
+    return a < 0 || b < 0 ? null : [a, Math.max(a, b)];
   };
   const weekOfToday = ws => ws.findIndex(x => TODAY >= x.mon && TODAY <= x.sun);
 
@@ -80,15 +85,19 @@
     const ws = weeks(view), ms = monthsOf(ws), n = ws.length, grid = $("#w27Grid"), now = weekOfToday(ws);
     grid.style.setProperty("--n", n);
     const maxW = Math.max(...ms.map(g => water(g.y, g.m) || 0)) || 1;
-    let h = `<div class="pl-corner w27-corner">Weeks start on Monday. Bar: water turnover in the same month of 2026${state === "all" ? ", West" : ", " + state}</div>`;
+    grid.classList.toggle("mm", monthMode());
+    let h = monthMode() ? `<div class="pl-corner w27-corner">One column per month. Click a month to see it week by week. Bar: water turnover in the same month of 2026${state === "all" ? ", West" : ", " + state}</div>`
+      : `<div class="pl-corner w27-corner">Weeks start on Monday. Bar: water turnover in the same month of 2026${state === "all" ? ", West" : ", " + state}</div>`;
     const ITEMS = allItems();
     h += ms.map(g => {
       const wv = water(g.y, g.m), a = aopSum(state, g.y, g.m);
+      if (monthMode()) return `<button type="button" class="w27-mon w27-mbtn" data-v="${MKEY[g.m]}" style="grid-column:${g.a + 2} / ${g.b + 3}" aria-label="Show ${FULLM[g.m]} week by week"><b>${FULLM[g.m]}</b>
+        <small>${wv != null ? `${L(wv)} water in 2026` : "water: no data yet"}</small><i class="pl-spend" style="--w:${(wv || 0) / maxW * 100}%"></i><em>Week by week ›</em></button>`;
       return `<div class="w27-mon" style="grid-column:${g.a + 2} / ${g.b + 3}"><b>${FULLM[g.m]} ${g.y}</b>
         <small>${wv != null ? `${L(wv)} water${g.m === 10 ? " (to 8 Nov)" : ""}` : "water: no data yet"}</small>
         <i class="pl-spend" style="--w:${(wv || 0) / maxW * 100}%"></i></div>`;
     }).join("");
-    h += ws.map((x, i) => `<button type="button" class="w27-wk ${i === now ? "now" : ""}" style="grid-column:${i + 2}" data-i="${i}" aria-pressed="${i === week}" aria-label="Week ${x.w}, ${fd(x.mon)} to ${fd(x.sun)}"><b>W${x.w}</b><small>${fd(x.mon)}</small>${i === now ? "<em>We are here</em>" : ""}</button>`).join("");
+    if (!monthMode()) h += ws.map((x, i) => `<button type="button" class="w27-wk ${i === now ? "now" : ""}" style="grid-column:${i + 2}" data-i="${i}" aria-pressed="${i === week}" aria-label="Week ${x.w}, ${fd(x.mon)} to ${fd(x.sun)}"><b>W${x.w}</b><small>${fd(x.mon)}</small>${i === now ? "<em>We are here</em>" : ""}</button>`).join("");
 
     W.lanes.forEach(lane => {
       if (lane.id === "aop") return; // all-sports AOP plan: not part of the water plan
@@ -134,6 +143,7 @@
 
     grid.innerHTML = h;
     $$(".w27-wk", grid).forEach(b => b.addEventListener("click", () => { week = +b.dataset.i; calendar(); weekPanel(); }));
+    $$(".w27-mbtn", grid).forEach(b => b.addEventListener("click", () => { view = b.dataset.v; week = 0; render(); }));
   }
 
   function legend() {
@@ -153,8 +163,8 @@
     const y = x.mon.getUTCFullYear(), m = x.mon.getUTCMonth(), i = aopIdx(y, m);
     const aops = i < 0 ? `<p class="w27-muted">${FULLM[m]} ${y} is outside the AOP plan (Nov 2026 to Oct 2027).</p>`
       : `<div class="y27-pills w27-aops">${storesOf(state).map(a => `<span style="--c:${SC[a.state]}"><b>${a.months[i]}</b>${a.store}</span>`).join("")}</div>`;
-    $("#w27Week").innerHTML = `<div class="y27-mhead"><h3 class="display-s">Week ${x.w}<span class="lt">: ${fd(x.mon)} to ${fd(x.sun)} ${x.sun.getUTCFullYear()}</span></h3>
-      <div class="y27-mnav"><button type="button" data-d="-1" aria-label="Previous week">‹</button><button type="button" data-d="1" aria-label="Next week">›</button></div></div>
+    $("#w27Week").innerHTML = `<div class="y27-mhead"><h3 class="display-s">${x.month ? FULLM[x.mon.getUTCMonth()] + " 2027" : "Week " + x.w}<span class="lt">: ${fd(x.mon)} to ${fd(x.sun)} ${x.sun.getUTCFullYear()}</span></h3>
+      <div class="y27-mnav"><button type="button" data-d="-1" aria-label="Previous">‹</button><button type="button" data-d="1" aria-label="Next">›</button></div></div>
       <div class="w27-wgrid">${live || `<p class="w27-muted">Nothing planned this week${state === "all" ? "" : " for " + state}.</p>`}</div>
 `;
     $$("#w27Week .y27-mnav button").forEach(b => b.addEventListener("click", () => {
@@ -246,7 +256,7 @@
 
   function render() {
     const Q = W.views[view];
-    $("#w27CalTitle").innerHTML = `${Q.long}<span class="lt">, week by week${state === "all" ? ", West" : ", " + state}</span>`;
+    $("#w27CalTitle").innerHTML = `${Q.long}<span class="lt">, ${view === "h1" ? "month by month" : "week by week"}${state === "all" ? ", West" : ", " + state}</span>`;
     $$("#w27St button").forEach(b => b.setAttribute("aria-pressed", b.dataset.s === state));
     window.W27_VIEW = { state, view };
     qbar(); calendar(); weekPanel(); ideas(); heat(); stores();

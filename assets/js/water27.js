@@ -45,12 +45,10 @@ window.WATER27 = {
     { l: "merch", t: "SS27 offer selection and store mass plans", s: "2026-09-21", e: "2026-10-11", k: "tech", done: 1, st: ["P", "G"], n: "pune" },
     { l: "merch", t: "Beginner kit and starter-wall brief", s: "2026-11-09", e: "2026-11-29", k: "tech", n: "gisp" },
     { l: "digital", t: "One registration form, consent and referral tracking", s: "2026-11-02", e: "2026-11-29", k: "nat", n: "gisp" },
-    { l: "infl", t: "Creators and community voices (₹45,000)", s: "2026-12-01", e: "2027-04-30", k: "evt", n: "gisp" },
     { l: "pools", t: "Map academies and pools; agree trial offer, referral ID, capacity, safety", s: "2026-11-02", e: "2026-11-29", k: "eco", n: "gisp" },
     { l: "pools", t: "Amanora: 7 pool tie-ups end in Dec, renew them", s: "2026-12-01", e: "2026-12-31", k: "local", st: ["P"], n: "part" },
     { l: "events", t: "Build the ecosystem", s: "2026-11-02", e: "2026-11-30", k: "evt", n: "gisp" },
     { l: "events", t: "Make Your Catchment Swim: beginner sessions, Aqua Zumba pilot per city, first stories", s: "2026-12-01", e: "2026-12-31", k: "evt", n: "gisp" },
-    { l: "review", t: "Swim Project starts: ₹8 L, phased, 90-day checkpoint", s: "2026-11-02", e: "2026-11-08", k: "tech", n: "gisp" },
     { l: "review", t: "Baseline: swimming sales before launch", s: "2026-11-09", e: "2026-11-29", k: "tech", n: "gisp" },
     { l: "review", t: "Weekly rhythm: Mon numbers, Wed partners, Fri weekend check, weekend sessions", s: "2026-12-01", e: "2027-04-30", k: "tbd", n: "gisp" },
 
@@ -93,7 +91,6 @@ window.WATER27 = {
     { l: "events", t: "Women Who Swim on Women's Day weekend", s: "2027-03-06", e: "2027-03-07", k: "prop", n: "ours" },
     { l: "events", t: "Learn swimming with Decathlon x coach: Townscript sign-ups, free goggle with a full set (new customers)", s: "2027-03-15", e: "2027-06-30", k: "evt", st: ["P", "G"], n: "pune" },
     { l: "qc", t: "Quick commerce: stock ahead of demand, in-range cover (RDP), digital LMs for the rest, express delivery message", s: "2027-03-01", e: "2027-06-30", k: "nat", st: ["P", "G"], n: "pune" },
-    { l: "review", t: "90-day checkpoint (Swim Project)", s: "2027-02-01", e: "2027-02-07", k: "tech", n: "gisp" },
     { l: "review", t: "Business plan March to June: Pune ₹17.65 Cr (+25%), Gujarat ₹9.00 Cr (+20%)", s: "2027-03-01", e: "2027-06-30", k: "launch", st: ["P", "G"], n: "pune" },
     { l: "review", t: "Biweekly catch-up", s: "2027-02-01", e: "2027-06-30", k: "tbd", st: ["G"], n: "guj" },
 
@@ -109,7 +106,6 @@ window.WATER27 = {
     { l: "events", t: "Summer Camp (event IP): learn-to-swim week with partner pools", s: "2027-04-19", e: "2027-05-02", k: "prop", n: "plan" },
     { l: "events", t: "Sports Utsav", s: "2027-05-01", e: "2027-05-31", k: "evt", n: "plan" },
     { l: "pools", t: "Wakad: Bluewater and Proswim tie-ups end in May, renew", s: "2027-05-01", e: "2027-05-31", k: "local", st: ["P"], n: "part" },
-    { l: "review", t: "Swim Project review: 3,000 sign-ups, 1,500 first swims, 600 repeat, 600 buyers, ₹15 L", s: "2027-05-03", e: "2027-05-09", k: "tech", n: "gisp" },
 
     /* ---------- Q3 2027 (mostly our proposal: the off-season) ---------- */
     { l: "moments", t: "Ashadhi Ekadashi 13 Jul", s: "2027-07-13", e: "2027-07-13", k: "hol" },

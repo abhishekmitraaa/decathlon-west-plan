@@ -105,7 +105,7 @@ window.WATERBUDGET_CAMPAIGNS = [
   { m: "Feb", t: "In store goes live", c: ["Mon 15 Feb: summer campaign, CAD and golden peg in every store", "WhatsApp community starts: 100 members a store", "Pool tie-ups and checklist flyers done by the Feb deadline", "Swim Together family weekends; Beach Day Surat; coaches seminar 26-28 Feb"], b: "Catch the early learners and start the community we sell to all summer." },
   { m: "Mar", t: "Outside goes live", c: ["Mon 15 Mar: hoardings, flyers, influencers", "Decathlon Swim League: academy vs academy", "Women Who Swim on Women's Day weekend (6-7 Mar)", "Mid-week events: Aqua Zumba with family and friends; learn to swim with coaches, 5 free classes for our customers"], b: "The season starts: new swimmers and families, priority 1 in the sheet (capture the learners)." },
   { m: "Apr", t: "School holidays", c: ["Summer Swim Movement and the 1,000 People milestone", "Summer Camp learn-to-swim week with partner pools (19 Apr - 2 May)", "Influencers, Meta and boosts at March's level", "Events twice a month; WhatsApp 400 a store"], b: "April was the West's second-biggest water month in 2026 (₹6.81 Cr). Influencers, Meta and boosts continue at March's level." },
-  { m: "May", t: "The peak", c: ["Influencers, Meta and boosts", "Sports Utsav", "Events twice a month; WhatsApp 500 a store", "Swim Project review: 3,000 sign-ups, 600 buyers"], b: "May was the biggest water month in 2026 (₹7.46 Cr)." },
+  { m: "May", t: "The peak", c: ["Influencers, Meta and boosts", "Sports Utsav", "Events twice a month; WhatsApp 500 a store"], b: "May was the biggest water month in 2026 (₹7.46 Cr)." },
   { m: "Jun", t: "Close and keep them", c: ["One event per store", "Influencers at March's level", "Pune down to 4 boards", "Monsoon and back to school; summer review in July"], b: "Priority 2 in the sheet: keep this year's swimmers coming back next year." }
 ];
 
@@ -147,6 +147,50 @@ window.WATERBUDGET_CAMPAIGNS = [
   // page view (water2027.js): state "all" | Pune | Gujarat | MP, and the month view (h1 = Jan to Jun, or one month)
   const VIEW = () => window.W27_VIEW || { state: "all", view: "h1" };
   const MI = { jan: -1, feb: 0, mar: 1, apr: 2, may: 3, jun: 4 };
+  // the Excel-like view: every line of spend, city by city and store by store, for the chosen month and state
+  const CITIES = { Pune: ["Pune"], Gujarat: ["Ahmedabad", "Baroda", "Surat", "Rajkot", "Gandhinagar", "Jamnagar", "Kachchh"], MP: ["Indore", "Bhopal", "Gwalior", "Jabalpur", "Chhindwara"] };
+  const STORES = { Pune: ["Amanora", "SGS", "Wagholi", "Wakad", "NIBM", "Kothrud / Baner"], Ahmedabad: ["Nexus", "Motera"], Baroda: ["Baroda"], Surat: ["Dumas", "Adajan"], Rajkot: ["Rajkot"], Indore: ["Indore"], Bhopal: ["Bhopal"], Gwalior: ["Gwalior"] };
+  const OOC = ["Gandhinagar", "Jamnagar", "Kachchh", "Jabalpur", "Chhindwara"];
+  const cityOf = n => String(n).replace(" (out of catchment)", "");
+  const storeTable = (state, mi, sOK, mOK, scope) => {
+    const COLS = [["hoard", "Hoardings"], ["infl", "Influencers"], ["meta", "Meta ads"], ["boost", "Insta boosts"], ["events", "Events"], ["aop", "Pools"], ["flyers", "Flyers"], ["coach", "Coach kits"]];
+    const mSum = arr => arr.reduce((t, v, i) => t + (mOK(i) ? N(v) : 0), 0);
+    const feb = mOK(0);
+    const cityRow = (st, c) => {
+      const h = doc.hoard.find(r => r.city === c), inf = doc.infl.find(r => r.city === c), me = doc.meta.find(r => cityOf(r.city) === c), bo = doc.boost.find(r => cityOf(r.city) === c);
+      const boards = h ? (mi == null ? `${Math.min(...h.n.map(N))}-${Math.max(...h.n.map(N))} boards` : `${N(h.n[mi])} boards`) : "";
+      return { hoard: h ? mSum(h.v) : 0, boards, infl: inf ? mSum(inf.n) * N(doc.rate[st]) : 0, inflN: inf ? mSum(inf.n) : 0, meta: me ? mSum(me.v) : 0, boost: bo ? mSum(bo.v) : 0, events: 0, aop: 0, flyers: 0, coach: 0 };
+    };
+    const storeRow = (st, name) => {
+      const ev = doc.events.find(r => r.store === name), ap = doc.aop.find(r => r.store === name), fl = doc.flyers.find(r => r.store === name);
+      const statePools = sum(doc.aop.filter(r => r.st === st).map(r => N(r.n))), co = doc.coach.find(r => r.st === st);
+      const coach = feb && ap && co && statePools ? N(co.n) * N(co.kit) * N(ap.n) / statePools : 0;
+      return { hoard: 0, infl: 0, meta: 0, boost: 0, events: ev ? mSum(ev.v) : 0, aop: feb && ap ? N(ap.n) * N(ap.r) : 0, pools: ap ? N(ap.n) : 0, flyers: feb && fl ? N(fl.v) : 0, coach };
+    };
+    const tot = r => COLS.reduce((t, [k]) => t + (r[k] || 0), 0);
+    const cell = (v, extra) => `<td>${v ? L(v) : '<span class="z">-</span>'}${extra ? `<small>${extra}</small>` : ""}</td>`;
+    let body = "", grand = Object.fromEntries(COLS.map(([k]) => [k, 0]));
+    STS.filter(([st]) => sOK(st)).forEach(([st, col]) => {
+      const sub = Object.fromEntries(COLS.map(([k]) => [k, 0]));
+      body += `<tr class="st"><th colspan="${COLS.length + 2}" style="--c:${col}">${st}</th></tr>`;
+      CITIES[st].forEach(c => {
+        const cr = cityRow(st, c), stores = STORES[c] || [];
+        const rows = stores.map(n => [n, storeRow(st, n)]);
+        const cityTot = tot(cr) + sum(rows.map(([, r]) => tot(r)));
+        if (!cityTot && !stores.length) return;
+        COLS.forEach(([k]) => { sub[k] += (cr[k] || 0) + sum(rows.map(([, r]) => r[k] || 0)); });
+        body += `<tr class="city"><th>${esc(c)}${OOC.includes(c) ? "<small>out of catchment</small>" : "<small>city-wide</small>"}</th>${cell(cr.hoard, cr.boards)}${cell(cr.infl, cr.inflN ? cr.inflN + " influencers" : "")}${cell(cr.meta)}${cell(cr.boost)}<td></td><td></td><td></td><td></td><td class="t">${L(tot(cr))}</td></tr>`;
+        rows.forEach(([n, r]) => { body += `<tr class="store"><th>${esc(n)}</th><td></td><td></td><td></td><td></td>${cell(r.events)}${cell(r.aop, feb && r.pools ? r.pools + " pools" : "")}${cell(r.flyers)}${cell(r.coach, feb && r.pools ? r.pools + " kits" : "")}<td class="t">${L(tot(r))}</td></tr>`; });
+      });
+      const wa = sum((doc.wapush || []).filter(r => r.st === st).map(r => mSum(r.v))), cp = sum((doc.city || []).filter(r => r.st === st).map(r => mSum(r.v)));
+      COLS.forEach(([k]) => { grand[k] += sub[k]; });
+      body += `<tr class="sub"><th>${st} total${wa || cp ? "" : "<small>+ WhatsApp pushes and city pages: budget to agree</small>"}</th>${COLS.map(([k]) => `<td>${sub[k] ? L(sub[k]) : "-"}</td>`).join("")}<td class="t">${L(tot(sub) + wa + cp)}</td></tr>`;
+    });
+    const waAll = sum((doc.wapush || []).filter(r => sOK(r.st)).map(r => mSum(r.v))), cpAll = sum((doc.city || []).filter(r => sOK(r.st)).map(r => mSum(r.v)));
+    return `<div class="panel wb-store"><div class="sb-wrap"><table class="wb-st"><thead><tr><th>${esc(scope)}</th>${COLS.map(([, n]) => `<th>${n}</th>`).join("")}<th>Total</th></tr></thead><tbody>${body}</tbody>
+      <tfoot><tr><th>All</th>${COLS.map(([k]) => `<td>${grand[k] ? L(grand[k]) : "-"}</td>`).join("")}<td>${L(tot(grand) + waAll + cpAll)}</td></tr></tfoot></table></div>
+      <p class="wb-note">City-wide lines (hoardings, influencers, Meta, boosts) sit on the city row; store lines (events, pool partnerships, checklist flyers, coach kits) on each store. Pools, flyers and coach kits are paid by the February deadline, so they show in February and in Jan to Jun. ${mi === -1 ? "January: the sheet has no spend; the pools and coaches are signed this month for the February deadline." : ""}</p></div>`;
+  };
   const render = () => {
     const { state, view } = VIEW(), mi = view === "h1" ? null : MI[view];
     const sOK = st => state === "all" || st === state, mOK = i => mi == null || i === mi;
@@ -176,6 +220,8 @@ window.WATERBUDGET_CAMPAIGNS = [
         <div><b>${gs.length ? (sum(gs.map(mar2jun)) / sum(gs.map(goal)) * 100).toFixed(1) + "%" : "-"}</b><span>${gs.length ? `Budget Mar-Jun against the ₹${(sum(gs.map(goal)) / 1e7).toFixed(2)} Cr turnover goal (${gs.join(" + ")})` : "No water turnover goal for MP in our files"}</span></div>
       </div>
       ${tbd() ? `<p class="wb-tbd">Not in the total yet: ${tbd()}. Budget still to be set${/WhatsApp/.test(tbd()) ? " (WhatsApp: to be agreed with the MarCom team)" : ""}; add it in the plan sheet below.</p>` : ""}
+      <h3 class="wb-h">Where we spend, store by store</h3>
+      ${storeTable(state, mi, sOK, mOK, scope)}
       <h3 class="wb-h">${view === "h1" ? "Month by month: campaigns, influencers and money" : "The month: campaigns, influencers and money"}</h3>
       <div class="wb-months ${view === "h1" ? "" : "one"}">${camp.map(c => { const i = M.indexOf(c.m); const inN = i >= 0 ? inflN[i] : 0; const money = i >= 0 ? T.mo[i] : 0;
         return `<article class="wb-mc"><header><b>${c.m}</b><span>${esc(c.t)}</span></header>

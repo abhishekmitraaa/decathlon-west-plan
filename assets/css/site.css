@@ -3796,3 +3796,25 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 .wm-none { margin: 4px 0 0; font-size: 14px; color: var(--text-2); background: #fff; border: 1.5px dashed var(--line); border-radius: 10px; padding: 12px 14px; }
 details.wm-cur { margin: 14px 0 0; }
 details.wm-cur .wm-cur-grid { padding: 0 18px 16px; }
+/* water calendar: Jan to Jun as one column per month (22 Nov 2026) */
+.w27-planner.mm { grid-template-columns: 170px repeat(6, minmax(0, 1fr)); min-width: 980px; }
+.w27-planner.mm .pl-chip { font-size: 11px; }
+.w27-mbtn { border: 0; border-left: 1px solid var(--line); border-bottom: 1.5px solid var(--line); cursor: pointer; text-align: left; font: inherit; }
+.w27-mbtn:hover { background: #E4E8FB; }
+.w27-mbtn em { font-style: normal; font-size: 10.5px; font-weight: 800; color: var(--blue); }
+/* water budget: store by store table */
+.wb-store { padding: 0; margin-bottom: 16px; overflow: hidden; }
+.wb-st { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 900px; }
+.wb-st th, .wb-st td { padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; vertical-align: top; }
+.wb-st thead th { background: var(--ink); color: #fff; font-size: 12px; position: sticky; top: 0; }
+.wb-st thead th:first-child, .wb-st tbody th, .wb-st tfoot th { text-align: left; position: sticky; left: 0; z-index: 1; }
+.wb-st thead th:first-child { z-index: 2; }
+.wb-st tbody th { background: #fff; color: var(--ink); font-weight: 700; } .wb-st tbody th small, .wb-st td small { display: block; font-weight: 500; color: var(--text-3); font-size: 10.5px; }
+.wb-st tr.st th { background: #EEF0FF; border-left: 5px solid var(--c); font-size: 13.5px; }
+.wb-st tr.city th, .wb-st tr.city td { background: #FAFBFE; }
+.wb-st tr.store th { padding-left: 26px; font-weight: 600; }
+.wb-st tr.sub th, .wb-st tr.sub td { background: #F2F4FD; font-weight: 800; color: var(--ink); }
+.wb-st td.t { font-weight: 800; color: var(--ink); background: #F5F6FF; }
+.wb-st tfoot th, .wb-st tfoot td { background: var(--ink); color: #fff; font-weight: 800; }
+.wb-st .z { color: #C3C8DA; }
+.wb-store .wb-note { padding: 8px 14px 12px; }
