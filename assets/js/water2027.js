@@ -1,4 +1,5 @@
-/* Water sports 2027 page: week-by-week planner (WATER27 in water27.js), AOP_PLAN (data.js), sport share 2026 (share26.js). */
+/* Water sports 2027 page, January to June: week-by-week planner (WATER27 in water27.js + the marketing lines generated from the water sheet by
+   waterbudget.js), in store, the marketing budget, the hoarding maps, and the sport share 2026 (share26.js). Views: West / Pune / Gujarat / MP and Jan to Jun or one month. */
 (() => {
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -7,7 +8,7 @@
   const FULLM = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const STATES = ["Pune", "Gujarat", "MP"], CODE = { Pune: "P", Gujarat: "G", MP: "M" }, NAME = { P: "Pune", G: "Gujarat", M: "MP" };
   const SC = { Pune: "var(--pune)", Gujarat: "var(--guj)", MP: "var(--mp)" };
-  const SRC = { pp: "Pune spend plan", pune: "Pune water plan", guj: "Gujarat water plan", gisp: "Great Indian Swim Project", india: "India swimming plan", part: "Pune partnerships sheet", plan: "2027 planner", ours: "our proposal" };
+  const SRC = { sheet: "water sports sheet, 21 Nov 2026", pp: "Pune spend plan", pune: "Pune water plan", guj: "Gujarat water plan", gisp: "Great Indian Swim Project", india: "India swimming plan", part: "Pune partnerships sheet", plan: "2027 planner", ours: "our proposal" };
   const TODAY = new Date(Date.UTC(2026, 10, 9));
 
   const d = s => { const [y, m, dd] = s.split("-").map(Number); return new Date(Date.UTC(y, m - 1, dd)); };
@@ -17,10 +18,10 @@
   const L = l => l >= 100 ? `₹${(l / 100).toFixed(2)} Cr` : `₹${l >= 10 ? l.toFixed(1) : l.toFixed(2)} L`; // lakh in
   const RL = r => L(r / 1e5); // rupees in
 
-  let view = "q1", state = "all", week = 0;
+  let view = "h1", state = "all", week = 0;
 
   function weeks(q) {
-    const Q = W.quarters[q], out = [];
+    const Q = W.views[q], out = [];
     for (let w = Q.w0; w <= Q.w1; w++) { const m = monday(Q.year, w); out.push({ w, mon: m, sun: new Date(m.getTime() + 6 * DAY) }); }
     return out;
   }
@@ -34,6 +35,7 @@
     return g;
   }
   const show = it => state === "all" || !it.st || it.st.includes(CODE[state]);
+  const allItems = () => W.items.concat(typeof window.waterGenItems === "function" ? window.waterGenItems() : []);
   const aopIdx = (y, m) => { const i = (y - 2026) * 12 + m - 10; return i >= 0 && i < 12 ? i : -1; };
   const storesOf = st => AOP.filter(a => st === "all" || a.state === st);
   const aopSum = (st, y, m) => { const i = aopIdx(y, m); return i < 0 ? null : storesOf(st).reduce((t, a) => t + (a.months[i] || 0), 0); };
@@ -50,27 +52,26 @@
   function hero() {
     const jo = SH.water.West.slice(0, 10).reduce((a, b) => a + b, 0);
     const goal = W.stores.reduce((t, s) => t + (s.goal || 0), 0);
-    const coaches = W.stores.reduce((t, s) => t + (s.coaches || 0), 0);
-    const pools = W.stores.filter(s => s.st === "Pune").reduce((t, s) => t + (s.pools || 0), 0);
+    const B = window.WATERBUDGET_DEFAULT, pools = B ? B.aop.reduce((t, r) => t + r.n, 0) : 0;
     $("#w27Kpis").innerHTML = [
       [RL(goal), "water turnover goal, March to June 2027 (Pune +25%, Gujarat +20%)"],
       [L(jo), "West water sports turnover, January to October 2026, all channels"],
       ["15 Feb, 15 Mar", "in store goes live, then outside the store"],
-      [`${coaches} coaches, ${pools} pools`, "affiliated coaches (Pune and Gujarat) and Pune pool tie-ups to sign"]
+      [typeof window.waterBudgetTotal === "function" ? RL(window.waterBudgetTotal()) : "-", "marketing budget, February to June (water sports sheet): hoardings, influencers, Meta, events, " + pools + " partner pools"]
     ].map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join("");
   }
 
   /* ---------- quarter switch and its numbers ---------- */
   function qbar() {
-    $("#w27Seg").innerHTML = Object.entries(W.quarters).map(([k, q]) => `<button type="button" data-q="${k}" aria-pressed="${k === view}">${q.label}</button>`).join("");
+    $("#w27Seg").innerHTML = Object.entries(W.views).map(([k, q]) => `<button type="button" data-q="${k}" aria-pressed="${k === view}">${q.label}</button>`).join("");
     $$("#w27Seg button").forEach(b => b.addEventListener("click", () => { view = b.dataset.q; week = defWeek(); render(); }));
     const ws = weeks(view), ms = monthsOf(ws);
     const tw = ms.reduce((t, g) => t + (g.m <= 9 ? water(g.y, g.m) : 0), 0);
     const miss = ms.filter(g => g.m > 9).map(g => g.m === 10 ? "Nov only partly in" : "Dec not in");
-    const ao = ms.map(g => aopSum(state, g.y, g.m)), aok = ao.filter(x => x != null);
     const go = W.items.filter(it => it.go && show(it) && span(it, ws)).length;
+    const B = window.WATERBUDGET_DEFAULT, MI = { feb: 0, mar: 1, apr: 2, may: 3, jun: 4 };
     $("#w27QNums").innerHTML = `<span><b>${L(tw)}</b>water turnover, same months 2026${miss.length ? ` (${miss.join(", ")} the data, so left out)` : ""}</span>
-      <span><b>${aok.length ? aok.reduce((a, b) => a + b, 0) : "-"}</b>AOPs planned${aok.length < ao.length ? " (AOP plan runs Nov 2026 to Oct 2027)" : ""}</span>
+      <span><b>${(() => { const sel = state === "all" ? B.infl : B.infl.filter(r => r.st === state); return view === "h1" ? sel.reduce((t, r) => t + r.n.reduce((a, v) => a + (v || 0), 0), 0) : view === "jan" ? 0 : sel.reduce((t, r) => t + (r.n[MI[view]] || 0), 0); })()}</b>influencers</span>
       <span><b>${go}</b>go-live date${go === 1 ? "" : "s"}</span>`;
   }
 
@@ -80,16 +81,18 @@
     grid.style.setProperty("--n", n);
     const maxW = Math.max(...ms.map(g => water(g.y, g.m) || 0)) || 1;
     let h = `<div class="pl-corner w27-corner">Weeks start on Monday. Bar: water turnover in the same month of 2026${state === "all" ? ", West" : ", " + state}</div>`;
+    const ITEMS = allItems();
     h += ms.map(g => {
       const wv = water(g.y, g.m), a = aopSum(state, g.y, g.m);
       return `<div class="w27-mon" style="grid-column:${g.a + 2} / ${g.b + 3}"><b>${FULLM[g.m]} ${g.y}</b>
-        <small>${wv != null ? `${L(wv)} water${g.m === 10 ? " (to 8 Nov)" : ""}` : "water: no data yet"}${a != null ? `, ${a} AOPs` : ""}</small>
+        <small>${wv != null ? `${L(wv)} water${g.m === 10 ? " (to 8 Nov)" : ""}` : "water: no data yet"}</small>
         <i class="pl-spend" style="--w:${(wv || 0) / maxW * 100}%"></i></div>`;
     }).join("");
     h += ws.map((x, i) => `<button type="button" class="w27-wk ${i === now ? "now" : ""}" style="grid-column:${i + 2}" data-i="${i}" aria-pressed="${i === week}" aria-label="Week ${x.w}, ${fd(x.mon)} to ${fd(x.sun)}"><b>W${x.w}</b><small>${fd(x.mon)}</small>${i === now ? "<em>We are here</em>" : ""}</button>`).join("");
 
     W.lanes.forEach(lane => {
-      if (lane.id === "aop") {
+      if (lane.id === "aop") return; // all-sports AOP plan: not part of the water plan
+      if (lane.id === "aop-old") {
         const cells = ms.map(g => {
           const i = aopIdx(g.y, g.m);
           if (i < 0) return `<span class="pl-chip tbd" style="grid-column:${g.a + 1} / ${g.b + 2}">Not in the AOP plan</span>`;
@@ -102,7 +105,7 @@
         h += `<div class="pl-lane-name">${lane.name}</div><div class="pl-lane">${cells}</div>`;
         return;
       }
-      const items = W.items.filter(it => it.l === lane.id && show(it)).map(it => ({ it, sp: span(it, ws) })).filter(x => x.sp);
+      const items = ITEMS.filter(it => it.l === lane.id && show(it)).map(it => ({ it, sp: span(it, ws) })).filter(x => x.sp);
       if (!items.length) return;
       items.sort((a, b) => a.sp[0] - b.sp[0] || (b.sp[1] - b.sp[0]) - (a.sp[1] - a.sp[0]));
       const rows = [];
@@ -143,7 +146,7 @@
     const ws = weeks(view), x = ws[week];
     const live = W.lanes.map(lane => {
       if (lane.id === "aop") return "";
-      const its = W.items.filter(it => it.l === lane.id && show(it) && d(it.s) <= x.sun && d(it.e) >= x.mon);
+      const its = allItems().filter(it => it.l === lane.id && show(it) && d(it.s) <= x.sun && d(it.e) >= x.mon);
       if (!its.length) return "";
       return `<div class="w27-wl"><h4>${lane.name}</h4><ul>${its.map(it => `<li class="${it.go ? "go" : ""}">${it.go ? "★ " : ""}${esc(it.t)}<small>${fd(d(it.s))}${it.e !== it.s ? " to " + fd(d(it.e)) : ""}${it.st ? ", " + it.st.map(c => NAME[c]).join(" and ") : ""}${it.n ? "; " + SRC[it.n] : ""}</small></li>`).join("")}</ul></div>`;
     }).join("");
@@ -153,7 +156,7 @@
     $("#w27Week").innerHTML = `<div class="y27-mhead"><h3 class="display-s">Week ${x.w}<span class="lt">: ${fd(x.mon)} to ${fd(x.sun)} ${x.sun.getUTCFullYear()}</span></h3>
       <div class="y27-mnav"><button type="button" data-d="-1" aria-label="Previous week">‹</button><button type="button" data-d="1" aria-label="Next week">›</button></div></div>
       <div class="w27-wgrid">${live || `<p class="w27-muted">Nothing planned this week${state === "all" ? "" : " for " + state}.</p>`}</div>
-      <h4 class="w27-h4">AOPs in ${FULLM[m]}, store by store${i < 0 ? "" : ` (${storesOf(state).reduce((t, a) => t + a.months[i], 0)})`}</h4>${aops}`;
+`;
     $$("#w27Week .y27-mnav button").forEach(b => b.addEventListener("click", () => {
       week = (week + +b.dataset.d + ws.length) % ws.length; calendar(); weekPanel();
       $(`#w27Week .y27-mnav button[data-d="${b.dataset.d}"]`)?.focus();
@@ -161,8 +164,8 @@
   }
 
   function ideas() {
-    $("#w27IdeasTitle").innerHTML = `What we can do<span class="lt">, ${W.quarters[view].label}</span>`;
-    $("#w27Ideas").innerHTML = W.ideas[view].map(([h, p, prop]) => `<article class="${prop ? "prop" : ""}"><h4>${esc(h)}</h4><p>${esc(p)}</p>${prop ? "<small>Our proposal</small>" : ""}</article>`).join("");
+    $("#w27IdeasTitle").innerHTML = `What we can do<span class="lt">, ${W.views[view].long}</span>`;
+    $("#w27Ideas").innerHTML = W.ideas[W.views[view].idea].map(([h, p, prop]) => `<article class="${prop ? "prop" : ""}"><h4>${esc(h)}</h4><p>${esc(p)}</p>${prop ? "<small>Our proposal</small>" : ""}</article>`).join("");
   }
 
   /* ---------- sport share heatmap ---------- */
@@ -171,10 +174,10 @@
     const mt = i => rows.reduce((t, r) => t + r[i], 0);
     const jo = r => r.slice(0, 10).reduce((a, b) => a + b, 0), all = rows.reduce((t, r) => t + jo(r), 0);
     const order = SH.sports.map((s, k) => k).sort((a, b) => (SH.sports[a] === "All other sports") - (SH.sports[b] === "All other sports") || jo(rows[b]) - jo(rows[a]));
-    const ms = monthsOf(weeks(view)).filter(g => g.y === 2027 || view === "q426").map(g => g.m);
+    const ms = monthsOf(weeks(view)).map(g => g.m);
     const top4 = order.slice(0, 4).map(k => SH.sports[k]), top4s = order.slice(0, 4).reduce((t, k) => t + jo(rows[k]), 0) / all * 100;
     const top12 = order.filter(k => SH.sports[k] !== "All other sports").reduce((t, k) => t + jo(rows[k]), 0) / all * 100;
-    $("#w27ShareLede").innerHTML = `${state === "all" ? "West" : state}, every channel (store and online), 2026: the pattern we plan 2027 on. We sold ${SH.nsports} sports; four of them, ${top4.slice(0, 3).join(", ").toLowerCase()} and ${top4[3].toLowerCase()}, made <b>${top4s.toFixed(0)}%</b> of January to October turnover, and the 12 below made ${top12.toFixed(0)}%. Each cell is the sport's share of that month's turnover; the darker, the bigger. Columns of the quarter you picked are outlined.`;
+    $("#w27ShareLede").innerHTML = `${state === "all" ? "West" : state}, every channel (store and online), 2026: the pattern we plan 2027 on. We sold ${SH.nsports} sports; four of them, ${top4.slice(0, 3).join(", ").toLowerCase()} and ${top4[3].toLowerCase()}, made <b>${top4s.toFixed(0)}%</b> of January to October turnover, and the 12 below made ${top12.toFixed(0)}%. Each cell is the sport's share of that month's turnover; the darker, the bigger. Columns of the months you picked are outlined.`;
     const cell = (v, t, mi) => {
       const s = v / t * 100, a = Math.min(1, s / 22);
       return `<td class="hc ${ms.includes(mi) ? "inq" : ""}" style="--a:${(0.06 + a * 0.84).toFixed(2)}" data-dark="${a > 0.5 ? 1 : 0}" title="${FULLM[mi]} 2026: ${L(v)}, ${s.toFixed(1)}% of turnover">${s.toFixed(1)}</td>`;
@@ -186,58 +189,40 @@
       </tbody></table><p class="w27-scale"><span>0%</span><i></i><span>22%+ of the month</span><span class="w27-muted">December: no data yet. November: 1 to 8 Nov only.</span></p>`;
   }
 
-  /* ---------- stores ---------- */
+  /* ---------- stores: in store (team, in store and mall) + the sheet's store lines + the turnover goal ---------- */
   function stores() {
-    const ws = weeks(view), ms = monthsOf(ws);
-    $("#w27StoresTitle").innerHTML = `Store by store<span class="lt">, ${W.quarters[view].label}</span>`;
-    const list = W.stores.filter(s => state === "all" || s.st === state);
-    const aopOf = s => { const a = AOP.find(x => x.store === s.aop); return ms.map(g => { const i = aopIdx(g.y, g.m); return a && i >= 0 ? a.months[i] : null; }); };
-    const outSum = s => s.out ? Object.values(s.out).reduce((a, b) => a + b, 0) : 0;
-    const head = `<tr><th>Store</th><th>Water team<small>full-time, part-time, interns</small></th><th>AOPs, all sports<small>${ms.map(g => MON[g.m]).join(" / ")}</small></th><th>Pools, coaches, academies</th><th>In store and mall</th><th>Outstore budget</th><th>Water turnover, Mar to Jun<small>2026 → 2027 goal</small></th></tr>`;
+    $("#w27StoresTitle").innerHTML = `In store, store by store<span class="lt">${state === "all" ? "" : ", " + state}</span>`;
+    const B = window.WATERBUDGET_DEFAULT, list = W.stores.filter(s => state === "all" || s.st === state);
+    const key = s => ({ "SGS Mall": "SGS", "Dumas Road": "Dumas", "Adajan (new)": "Adajan", "Pune city and online": "Kothrud / Baner" }[s.name] || s.name);
+    const row = (arr, s) => arr.find(r => r.store === key(s));
+    const head = `<tr><th>Store</th><th>Water team<small>full-time, part-time, interns</small></th><th>In store and mall</th><th>Pool partnerships<small>water sheet, by Feb</small></th><th>Events<small>Mar to Jun, water sheet</small></th><th>WhatsApp community<small>members by May</small></th><th>Water turnover, Mar to Jun<small>2026 → 2027 goal</small></th></tr>`;
     let body = "";
     STATES.filter(st => list.some(s => s.st === st)).forEach(st => {
       const ss = list.filter(s => s.st === st);
       body += `<tr class="grp"><td colspan="7" style="--c:${SC[st]}">${st}</td></tr>`;
       ss.forEach(s => {
-        const ao = aopOf(s), aok = ao.filter(x => x != null);
         const team = s.team ? `${s.team.join(" / ")}${s.hire ? `<small>${s.hire} still to hire</small>` : ""}` : `<span class="w27-muted">Not in the plan</span>`;
-        const pools = [s.pools ? `${s.pools} pools to sign` : "", s.coaches ? `${s.coaches} coaches` : "", s.academies ? `Academies: ${esc(s.academies)}` : "", s.partners ? `<small>Now: ${esc(s.partners)}</small>` : ""].filter(Boolean).join("<br>");
         const inst = s.inmall != null ? (s.inmall ? inr(s.inmall) : "-") : `<small>${esc(s.instore || "-")}</small>`;
-        const os = outSum(s), outCell = s.out ? `<b>${inr(os)}</b>${s.outStated && s.outStated !== os ? `<small>plan says ${inr(s.outStated)}</small>` : ""}${s.hoard ? `<small>${s.hoard} hoarding${s.hoard > 1 ? "s" : ""}</small>` : ""}` : `<span class="w27-muted">None in our files</span>`;
+        const ap = row(B.aop, s), ev = row(B.events, s), wa = row(B.wa, s), fl = row(B.flyers, s);
         const base = s.base || (s.goal ? s.goal / 1.25 : 0);
         const goal = s.goal ? `${RL(base)} → <b>${RL(s.goal)}</b>${s.base ? "" : "<small>2026 = goal / 1.25</small>"}` : `<span class="w27-muted">No goal in our files</span>`;
-        body += `<tr><td><b>${esc(s.name)}</b><small>${esc(s.city)}</small></td><td>${team}</td>
-          <td>${aok.length ? `<b>${aok.reduce((a, b) => a + b, 0)}</b><small>${ao.map(x => x == null ? "-" : x).join(" / ")}</small>` : `<span class="w27-muted">${s.aop ? "Outside the plan" : "-"}</span>`}</td>
-          <td>${pools || "-"}</td><td>${inst}</td><td>${outCell}</td><td>${goal}</td></tr>`;
+        body += `<tr><td><b>${esc(s.name)}</b><small>${esc(s.city)}</small></td><td>${team}</td><td>${inst}</td>
+          <td>${ap ? `<b>${ap.n} pools</b><small>${inr(ap.n * ap.r)}${fl ? `; flyers ${inr(fl.v)}` : ""}</small>` : "-"}</td>
+          <td>${ev ? `<b>${inr(ev.v.reduce((t, v) => t + (v || 0), 0))}</b>` : "-"}</td><td>${wa ? (wa.n[3] || "-") : "-"}</td><td>${goal}</td></tr>`;
       });
-      const g = ss.reduce((t, s) => t + (s.goal || 0), 0), b = ss.reduce((t, s) => t + (s.base || (s.goal ? s.goal / 1.25 : 0)), 0), o = ss.reduce((t, s) => t + outSum(s), 0);
-      const ao = ss.reduce((t, s) => t + aopOf(s).reduce((a, x) => a + (x || 0), 0), 0);
-      body += `<tr class="tot"><td><b>${st}</b></td><td></td><td><b>${ao}</b></td><td></td><td>${st === "Pune" ? inr(ss.reduce((t, s) => t + (s.inmall || 0), 0)) : ""}</td><td>${o ? `<b>${inr(o)}</b>` : "-"}</td><td>${g ? `${RL(b)} → <b>${RL(g)}</b>` : "-"}</td></tr>`;
+      const g = ss.reduce((t, s) => t + (s.goal || 0), 0), b0 = ss.reduce((t, s) => t + (s.base || (s.goal ? s.goal / 1.25 : 0)), 0);
+      const aps = B.aop.filter(r => r.st === st), evs = B.events.filter(r => r.st === st);
+      body += `<tr class="tot"><td><b>${st}</b></td><td></td><td>${st === "Pune" ? inr(ss.reduce((t, s) => t + (s.inmall || 0), 0)) : ""}</td><td><b>${aps.reduce((t, r) => t + r.n, 0)} pools</b></td><td><b>${inr(evs.reduce((t, r) => t + r.v.reduce((a, v) => a + (v || 0), 0), 0))}</b></td><td></td><td>${g ? `${RL(b0)} → <b>${RL(g)}</b>` : "-"}</td></tr>`;
     });
     $("#w27Stores").innerHTML = `<table class="y27-table w27-stores">${head}${body}</table>`;
-    $("#w27StoresNote").innerHTML = "Teams: Pune from the Pune plan's human structure; Gujarat and MP from the Gujarat plan's human planning (full-time includes the department manager; names are not shown). Pools and coaches in Gujarat are budgets: ₹1 L of pool tie-ups per store (₹50,000 in Rajkot) and coaches at ₹5,000 a kit. Academies: the Swim Project's targets per city. Wakad's outstore lines add to ₹10.90 L; the plan says ₹10.70 L.";
+    $("#w27StoresNote").innerHTML = "Teams and in store from the Pune and Gujarat water plans (full-time includes the department manager; names are not shown). Pools, events, flyers and WhatsApp targets from the water sports sheet (21 Nov 2026); Pune city and online is the sheet's Kothrud / Baner column. The full marketing budget is in the next section.";
   }
 
-  /* ---------- money ---------- */
+  /* ---------- in-store money that stays: Gujarat merchandising (the old outstore budgets are replaced by the water sheet) ---------- */
   function money() {
-    const P = W.stores.filter(s => s.st === "Pune"), G = W.stores.filter(s => s.st === "Gujarat" && s.out);
-    const lines = [["hoard", "Hoardings"], ["pools", "Pool tie-ups"], ["flyers", "Flyers"], ["infl", "Instagram influencers"], ["coach", "Coach kits"]];
-    const tbl = (ss, title, extra) => {
-      const used = lines.filter(([k]) => ss.some(s => s.out[k]));
-      const tot = s => used.reduce((t, [k]) => t + (s.out[k] || 0), 0);
-      return `<div class="panel w27-mcard"><h3 class="display-s">${title}</h3><div class="sb-wrap"><table class="y27-table w27-mt"><tr><th></th>${ss.map(s => `<th>${esc(s.name.replace(" and online", ""))}</th>`).join("")}<th>Total</th></tr>
-        ${used.map(([k, n]) => `<tr><td>${n}</td>${ss.map(s => `<td>${s.out[k] ? inr(s.out[k]) : "-"}</td>`).join("")}<td><b>${inr(ss.reduce((t, s) => t + (s.out[k] || 0), 0))}</b></td></tr>`).join("")}
-        <tr class="tot"><td><b>Outstore</b></td>${ss.map(s => `<td><b>${inr(tot(s))}</b></td>`).join("")}<td><b>${inr(ss.reduce((t, s) => t + tot(s), 0))}</b></td></tr>${extra || ""}</table></div></div>`;
-    };
-    const pIn = `<tr><td>In store and mall</td>${P.map(s => `<td>${s.inmall ? inr(s.inmall) : "-"}</td>`).join("")}<td><b>${inr(P.reduce((t, s) => t + s.inmall, 0))}</b></td></tr>
-      <tr><td>Trainings</td>${P.map(() => `<td>₹5,000</td>`).join("")}<td><b>₹30,000</b></td></tr>`;
-    const bar = (rows, max) => rows.map(([n, v]) => `<div class="y27-st w27-bar"><span>${esc(n)}</span><i style="--w:${v / max * 100}%;--c:var(--blue)"></i><b>${v ? inr(v) : "no budget"}</b></div>`).join("");
-    const mg = W.merchGuj, gp = W.gisp;
-    $("#w27Money").innerHTML = tbl(P, "Pune store plan", pIn)
-      + `<p class="w27-note">Our sums from the plan's lines: outstore ₹47.51 L (the plan says ₹47.31 L, because Wakad is written as ₹10.70 L), in store and mall ₹5.34 L, trainings ₹30,000: ₹53.15 L in all. Plus a ₹1,999 swim kit per teammate.</p>`
-      + tbl(G, "Gujarat store plan", `<tr><td>Hoardings</td><td colspan="${G.length + 1}">3D city hoarding, "Summer fun with water": no budget in the plan</td></tr>`)
-      + `<div class="w27-mrow"><div class="panel w27-mcard"><h3 class="display-s">Gujarat merchandising<span class="lt">, Motera and Dumas Road</span></h3>${bar(mg, mg[0][1])}<p class="w27-note">₹1,61,750 in all. The summary table writes the entrance display as ₹49,821; its lines add to ₹49,812, which is what the total uses.</p></div>
-        <div class="panel w27-mcard"><h3 class="display-s">Great Indian Swim Project<span class="lt">, ₹8 L, Nov 2026 to Apr 2027</span></h3>${bar(gp.activity, gp.activity[0][1])}<h4 class="w27-h4">The same ₹8 L by place</h4>${bar(gp.geo, gp.geo[1][1])}<p class="w27-note">Two views of one envelope, not added together. Targets: 3,000 sign-ups, 1,500 first swims, 600 repeat swimmers, 1,000 community members, 600 buyers, ₹15 L of sales traced to the programme (1.88x the spend; not ROI).</p></div></div>`;
+    const el = $("#w27Money"); if (!el) return;
+    const mg = W.merchGuj, inr2 = v => inr(v);
+    el.innerHTML = `<div class="panel w27-mcard"><h3 class="display-s">Gujarat merchandising<span class="lt">, Motera and Dumas Road</span></h3>${mg.map(([n, v]) => `<div class="y27-st w27-bar"><span>${esc(n)}</span><i style="--w:${v / mg[0][1] * 100}%;--c:var(--blue)"></i><b>${inr2(v)}</b></div>`).join("")}<p class="w27-note">₹1,61,750 in all (in-store, from the Gujarat water plan).</p></div>`;
   }
 
   /* ---------- range and the why ---------- */
@@ -260,16 +245,16 @@
   function defWeek() { const ws = weeks(view), t = weekOfToday(ws); return t >= 0 ? t : 0; }
 
   function render() {
-    const Q = W.quarters[view];
-    $("#w27CalTitle").innerHTML = `${Q.label}<span class="lt">, week by week${state === "all" ? "" : ", " + state}</span>`;
+    const Q = W.views[view];
+    $("#w27CalTitle").innerHTML = `${Q.long}<span class="lt">, week by week${state === "all" ? ", West" : ", " + state}</span>`;
     $$("#w27St button").forEach(b => b.setAttribute("aria-pressed", b.dataset.s === state));
-    if ((!location.hash || /^#(q426|q[1-4])$/.test(location.hash)) && location.hash !== "#" + view) history.replaceState(null, "", "#" + view);
+    window.W27_VIEW = { state, view };
     qbar(); calendar(); weekPanel(); ideas(); heat(); stores();
+    window.dispatchEvent(new CustomEvent("w27:view"));
   }
 
   $$("#w27St button").forEach(b => b.addEventListener("click", () => { state = b.dataset.s; render(); }));
-  const h = (location.hash.match(/^#(q426|q1|q2|q3|q4)$/) || [])[1];
-  if (h) view = h;
+  window.addEventListener("wb:change", () => { hero(); qbar(); calendar(); weekPanel(); });
   week = defWeek();
   hero(); legend(); money(); range(); render();
   // films: load and play only when on screen

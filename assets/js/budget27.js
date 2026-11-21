@@ -50,7 +50,7 @@ window.BUDGET27 = {
     { id: "sum", camp: "Summer", name: "Summer: water sports first", color: "#0096C7", ink: "#fff", sport: { swimming: 0.6, running: 0.2, mountain: 0.2 },
       when: "March (summer + summer camp influencers March to May); swimming in store from 15 Feb, outside from 15 Mar",
       hoard: "All 7 Pune boards on swimming in March: \"Summer fun with water\", a family in the pool, the starter-kit price and the nearest partner pool.",
-      pune: "Pune plan, March: 7 swimming hoardings ₹7,25,000; summer + summer camp influencers, 50 from March to May ₹5,00,000; 17 reels ₹1,00,000; in-store ₹5,50,000. Total ₹18,75,000. At least 10 swimming academies in every catchment by 20 Feb.",
+      pune: "Pune plan, March: 7 swimming hoardings ₹7,25,000; summer + summer camp influencers, 50 from March to May ₹5,00,000; 17 reels ₹1,00,000; in-store ₹5,50,000. Total ₹18,75,000. Water sports sheet (21 Nov 2026), Pune in March: 6 hoardings (3D or digital) ₹9 L, 17 influencers, Meta ₹50,000, boosts ₹30,000, events in 6 stores ₹1.2 L; 30 pool partnerships by February.",
       inf: "Water first: swim coaches, parents and beginner swimmers, then runners and summer-trek creators. Pune spend plan: 50 summer + summer camp influencers (₹5 L, March to May). Influencer sheet 2027: Summer 6 to 15 Mar, 35 (₹3.5 L); April summer 40 (₹4.5 L); May summer 40 (₹4.5 L).",
       social: "First-swim videos from partner pools, run club Saturdays, packing lists for summer treks.",
       boost: "Parents 28 to 45 near stores and partner pools; runners 8 km; travel interests 10 km." }

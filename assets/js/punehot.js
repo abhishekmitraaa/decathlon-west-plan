@@ -11,7 +11,7 @@ window.PUNE_HOT = {
     { k: "trav", n: "Travel agencies", v: "about 889", s: "Tour agencies listed in Pune (business directory, Aug 2025; an upper bound with duplicates).", src: "poidata.io directory" }
   ],
   tap: {
-    pool: "Learn to swim with Decathlon: coach and academy tie-ups, a kit wall with a QR at the pool, a free goggle with a full set (water plan). Target: at least 10 swimming academies in every catchment by 20 Feb 2027.",
+    pool: "Learn to swim with Decathlon: coach and academy tie-ups, a kit wall with a QR at the pool, a free goggle with a full set (water plan). Water sports sheet (21 Nov 2026): pool partnerships by February: Amanora 5, SGS 5, Wagholi 6, Wakad 6, NIBM 5, Kothrud / Baner 3 (₹25,000 each), a ₹2,500 kit for every partner-pool coach.",
     gym: "Movement for All in January: partner gym, Zumba and yoga sessions (₹1.5 L, 500 walk-ins in the Pune plan); member offers and AOP branding at the gym.",
     trav: "Affiliates for Winter & Travel and summer treks: an agency code, our packing list in every booking, a trek kit edit. The Q4 deck's target is 50 agencies for the city, about 10 a store.",
     soc: "Weekend society events (Workshop Mela in 10 apartments in the Q1 plan), society WhatsApp groups, and learn-to-swim in society pools: NIBM's Ganga Dhaam Society Pool is already a partner."

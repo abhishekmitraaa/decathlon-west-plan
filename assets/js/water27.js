@@ -18,13 +18,17 @@ window.WATER27 = {
     { id: "qc", name: "Quick commerce and online" },
     { id: "review", name: "Goals and reviews" }
   ],
-  quarters: {
-    q426: { label: "Q4 2026", long: "Q4 2026: get ready (weeks 39 to 53)", year: 2026, w0: 39, w1: 53 },
-    q1: { label: "Q1 2027", long: "Q1 2027: January to March", year: 2027, w0: 1, w1: 13 },
-    q2: { label: "Q2 2027", long: "Q2 2027: April to June", year: 2027, w0: 14, w1: 26 },
-    q3: { label: "Q3 2027", long: "Q3 2027: July to September", year: 2027, w0: 27, w1: 39 },
-    q4: { label: "Q4 2027", long: "Q4 2027: October to December", year: 2027, w0: 40, w1: 52 }
+  /* views: January to June 2027, or one month (ISO weeks whose Monday falls in the month). Quarters were dropped (user, 22 Nov 2026). */
+  views: {
+    h1: { label: "Jan to Jun", long: "January to June 2027", year: 2027, w0: 1, w1: 26, idea: "h1" },
+    jan: { label: "Jan", long: "January 2027", year: 2027, w0: 1, w1: 4, idea: "q1" },
+    feb: { label: "Feb", long: "February 2027", year: 2027, w0: 5, w1: 8, idea: "q1" },
+    mar: { label: "Mar", long: "March 2027", year: 2027, w0: 9, w1: 13, idea: "q1" },
+    apr: { label: "Apr", long: "April 2027", year: 2027, w0: 14, w1: 17, idea: "q2" },
+    may: { label: "May", long: "May 2027", year: 2027, w0: 18, w1: 22, idea: "q2" },
+    jun: { label: "Jun", long: "June 2027", year: 2027, w0: 23, w1: 26, idea: "q2" }
   },
+
   items: [
     /* ---------- Q4 2026: get ready ---------- */
     { l: "moments", t: "Winter and travel", s: "2026-10-01", e: "2026-12-31", k: "season", n: "plan" },
@@ -41,7 +45,6 @@ window.WATER27 = {
     { l: "merch", t: "SS27 offer selection and store mass plans", s: "2026-09-21", e: "2026-10-11", k: "tech", done: 1, st: ["P", "G"], n: "pune" },
     { l: "merch", t: "Beginner kit and starter-wall brief", s: "2026-11-09", e: "2026-11-29", k: "tech", n: "gisp" },
     { l: "digital", t: "One registration form, consent and referral tracking", s: "2026-11-02", e: "2026-11-29", k: "nat", n: "gisp" },
-    { l: "digital", t: "Local paid digital, geo-targeted (₹1 L, Dec to Apr)", s: "2026-12-01", e: "2027-04-30", k: "nat", n: "gisp" },
     { l: "infl", t: "Creators and community voices (₹45,000)", s: "2026-12-01", e: "2027-04-30", k: "evt", n: "gisp" },
     { l: "pools", t: "Map academies and pools; agree trial offer, referral ID, capacity, safety", s: "2026-11-02", e: "2026-11-29", k: "eco", n: "gisp" },
     { l: "pools", t: "Amanora: 7 pool tie-ups end in Dec, renew them", s: "2026-12-01", e: "2026-12-31", k: "local", st: ["P"], n: "part" },
@@ -61,7 +64,6 @@ window.WATER27 = {
     { l: "moments", t: "Holi 22 Mar", s: "2027-03-22", e: "2027-03-22", k: "hol" },
     { l: "golive", t: "Water team in place", s: "2027-01-10", e: "2027-01-10", k: "launch", go: 1, st: ["P", "G", "M"], n: "pune" },
     { l: "golive", t: "In-store live: summer campaign, CAD, golden peg", s: "2027-02-15", e: "2027-02-21", k: "launch", go: 1, st: ["P", "G"], n: "pune" },
-    { l: "golive", t: "Pune: at least 10 swimming academies in every catchment", s: "2027-02-15", e: "2027-02-20", k: "launch", go: 1, st: ["P"], n: "pp" },
     { l: "golive", t: "Gujarat coaches onboarded (latest)", s: "2027-02-15", e: "2027-02-15", k: "launch", go: 1, st: ["G"], n: "guj" },
     { l: "golive", t: "Outstore live: hoardings, pools, flyers", s: "2027-03-15", e: "2027-03-21", k: "launch", go: 1, st: ["P", "G"], n: "pune" },
     { l: "team", t: "Pune training 19-20 Jan", s: "2027-01-19", e: "2027-01-20", k: "nat", st: ["P"], n: "guj" },
@@ -80,24 +82,11 @@ window.WATER27 = {
     { l: "instore", t: "Window wall and store home page, stop rayons, CAB + TGs (₹1.10 L) + in-mall lollipops (₹4.24 L)", s: "2027-02-15", e: "2027-06-30", k: "nat", st: ["P"], n: "pune" },
     { l: "instore", t: "Window wall, stop rayons, CAB + TGs, TV; Nexus in-mall; lollipops at Motera, Dumas, Baroda", s: "2027-02-15", e: "2027-06-30", k: "nat", st: ["G"], n: "guj" },
     { l: "instore", t: "No in-store water plan in our files", s: "2027-02-15", e: "2027-06-30", k: "tbd", st: ["M"] },
-    { l: "ooh", t: "11 hoardings live: Wakad 3, Amanora 2, Wagholi 2, city 2, SGS 1, NIBM 1 (₹15.7 L; run length to confirm)", s: "2027-03-15", e: "2027-05-31", k: "sale", st: ["P"], n: "pune" },
-    { l: "ooh", t: "3D city hoarding: \"Summer fun with water\" (budget not set)", s: "2027-03-15", e: "2027-05-31", k: "sale", st: ["G"], n: "guj" },
-    { l: "ooh", t: "Flyers at pools, societies, schools (Pune ₹81,000; Nexus ₹30,000)", s: "2027-03-15", e: "2027-04-30", k: "local", st: ["P", "G"], n: "pune" },
-    { l: "ooh", t: "Test: \"The City Needs a Swim\" digital hoardings with a QR code", s: "2027-03-15", e: "2027-04-11", k: "prop", n: "gisp" },
-    { l: "digital", t: "WhatsApp push 1 (Feb, week 3)", s: "2027-02-15", e: "2027-02-21", k: "launch", st: ["P", "G"], n: "pune" },
-    { l: "digital", t: "WhatsApp push 2 (Mar, week 2)", s: "2027-03-08", e: "2027-03-14", k: "launch", st: ["P", "G"], n: "pune" },
     { l: "digital", t: "New arrival x Summer collection on the store home page", s: "2027-02-15", e: "2027-06-30", k: "nat", st: ["P", "G"], n: "pune" },
-    { l: "infl", t: "Instagram influencers, 3 months (₹12 L) + ad-boost reels (₹50,000)", s: "2027-03-15", e: "2027-06-13", k: "evt", st: ["P"], n: "pune" },
-    { l: "infl", t: "Summer + summer camp: 50 influencers, ₹5 L (all sports; 2026: summer reels at ₹0.33 a view)", s: "2027-03-01", e: "2027-05-31", k: "evt", st: ["P"], n: "pp" },
-    { l: "infl", t: "Instagram influencers, ₹20,000 per store (Nexus, Motera, Dumas, Baroda)", s: "2027-03-15", e: "2027-04-30", k: "evt", st: ["G"], n: "guj" },
     { l: "pools", t: "SGS: Nilu Phule pool tie-up ends 22 Jan, renew", s: "2027-01-04", e: "2027-01-22", k: "local", st: ["P"], n: "part" },
-    { l: "pools", t: "Sign 58 pools at ₹25,000: Wagholi 15, Amanora 10, Wakad 10, city 10, NIBM 8, SGS 5", s: "2027-01-04", e: "2027-03-14", k: "eco", st: ["P"], n: "pune" },
-    { l: "pools", t: "Affiliate 80 coaches with a ₹5,000 kit: Wakad 20, Amanora 20, others 10", s: "2027-01-04", e: "2027-03-14", k: "eco", st: ["P"], n: "pune" },
-    { l: "pools", t: "Coaches onboarded (₹2.25 L, 45 coaches at ₹5,000) and pool tie-ups (₹4.5 L)", s: "2027-01-04", e: "2027-02-15", k: "eco", st: ["G"], n: "guj" },
     { l: "pools", t: "Coaches seminar 26-28 Feb", s: "2027-02-26", e: "2027-02-28", k: "launch", st: ["G"], n: "guj" },
     { l: "pools", t: "Wagholi: Raj Swimming Pool from 1 Feb", s: "2027-02-01", e: "2027-02-07", k: "local", st: ["P"], n: "part" },
     { l: "pools", t: "NIBM: Varunah and Ganga Dhaam tie-ups end in March, renew before summer", s: "2027-02-01", e: "2027-03-31", k: "local", st: ["P"], n: "part" },
-    { l: "pools", t: "Academies: Pune 7, Gujarat 12, MP 9 (target 28)", s: "2026-11-02", e: "2027-01-31", k: "prop", n: "gisp" },
     { l: "events", t: "30-Day Swim Challenge: swim streaks, Women Who Swim, creator stories", s: "2027-01-01", e: "2027-01-31", k: "evt", n: "gisp" },
     { l: "events", t: "Swim Together: family weekends, societies, corporates, academy referrals", s: "2027-02-01", e: "2027-02-28", k: "evt", n: "gisp" },
     { l: "events", t: "Decathlon Swim League: academy vs academy, beginner categories, city finals", s: "2027-03-01", e: "2027-03-31", k: "evt", n: "gisp" },
@@ -116,8 +105,6 @@ window.WATER27 = {
     { l: "moments", t: "Yoga Day 21 Jun", s: "2027-06-21", e: "2027-06-21", k: "hol" },
     { l: "golive", t: "Peak: April and May are the two biggest water months", s: "2027-04-05", e: "2027-05-30", k: "launch", go: 1, n: "ours" },
     { l: "golive", t: "Wagholi: Kavya pool from 1 Apr", s: "2027-04-01", e: "2027-04-04", k: "launch", go: 1, st: ["P"], n: "part" },
-    { l: "digital", t: "WhatsApp push 3 (Apr, week 2)", s: "2027-04-08", e: "2027-04-14", k: "launch", st: ["P", "G"], n: "pune" },
-    { l: "digital", t: "WhatsApp push 4 (May, week 1)", s: "2027-05-01", e: "2027-05-07", k: "launch", st: ["P", "G"], n: "pune" },
     { l: "events", t: "Summer Swim Movement: school holidays, 1,000 People milestone, starter kits", s: "2027-04-01", e: "2027-04-30", k: "evt", n: "gisp" },
     { l: "events", t: "Summer Camp (event IP): learn-to-swim week with partner pools", s: "2027-04-19", e: "2027-05-02", k: "prop", n: "plan" },
     { l: "events", t: "Sports Utsav", s: "2027-05-01", e: "2027-05-31", k: "evt", n: "plan" },
@@ -155,6 +142,12 @@ window.WATER27 = {
 
   /* what we can do, per quarter (bottom of the calendar) */
   ideas: {
+    h1: [
+      ["Pools and coaches first", "January builds the network: pool partnerships per store by the February deadline, a ₹2,500 kit for every partner-pool coach, checklist flyers at the academies."],
+      ["In store on 15 Feb, outside from March", "In store goes live Mon 15 Feb; hoardings (3D or digital), influencers, Meta and boosts run February to June, biggest in March to May."],
+      ["Win April and May", "In 2026 April (₹6.81 Cr) and May (₹7.46 Cr) were the two biggest water months in the West."],
+      ["Keep them next year", "Priority 2 of the sheet: WhatsApp communities (500 a store by May) and the coaches keep this summer's swimmers coming back."]
+    ],
     q426: [
       ["Lock the pools before the peak", "Renew Amanora's 7 pool tie-ups that end in December and sign the 28 academies of the Swim Project (Pune 7, Gujarat 12, MP 9) before sessions are advertised."],
       ["One owner per city", "A named Swimming Champion owns the weekly numbers: registrations, attendance, sales. Not just the event calendar."],
@@ -162,10 +155,10 @@ window.WATER27 = {
       ["Adajan gets water from the start", "The new Surat store opens on 18 Dec and is not in the Gujarat water plan. Copy the Dumas Road set-up and staff it before 15 Feb.", 1]
     ],
     q1: [
-      ["Two go-live dates, not ten", "Everything in store goes live on Mon 15 Feb (campaign, CAD, golden peg, WhatsApp). Everything outside on Mon 15 Mar (hoardings, pools, flyers, influencers)."],
+      ["Two go-live dates, not ten", "Everything in store goes live on Mon 15 Feb (campaign, CAD, golden peg). Outside, the sheet starts in February (4 Pune boards, influencers, Meta) and goes big from March."],
       ["Sell the full set", "Free goggle with goggle + swimwear + cap + towel + bag (+ goggle case in Gujarat), for new customers. Push caps and goggle cases per goggle to lift ABQ."],
       ["Women Who Swim", "Women-only beginner sessions with women coaches; tie it to the Women's Day weekend (6-7 Mar) and the SS27 cover-up swimwear (Jisa, Rossa, Una).", 1],
-      ["Coaches are the channel", "125 coaches with a ₹5,000 kit (Pune 80, Gujarat 45): trained on the range, a referral code each, sales at the pool."],
+      ["Coaches are the channel", "Every coach at our partner pools gets a ₹2,500 kit and an affiliate link (8% on their sales): trained on the range, selling at the pool (water sheet)."],
       ["The Swim League in March", "Academy vs academy with beginner categories and city finals: content for the hoardings and influencers that start on 15 Mar."]
     ],
     q2: [
@@ -201,7 +194,7 @@ window.WATER27 = {
     { id: "dumas", name: "Dumas Road", city: "Surat", st: "Gujarat", aop: "Dumas", team: [2, 2, 0], hire: 1, coaches: 10, academies: "Surat 3", instore: "All + lollipops; family window and entrance display", out: { pools: 100000, infl: 20000, coach: 50000 }, outStated: 170000, base: 16140797, goal: 19368956 },
     { id: "baroda", name: "Baroda", city: "Vadodara", st: "Gujarat", aop: "Baroda", team: [2, 0, 0], hire: 4, coaches: 10, academies: "Vadodara 2", instore: "All + lollipops", out: { pools: 100000, infl: 20000, coach: 50000 }, outStated: 170000, base: 15291011, goal: 18349213 },
     { id: "rajkot", name: "Rajkot", city: "Rajkot", st: "Gujarat", aop: "Rajkot", team: [1, 1, 0], hire: 0, coaches: 5, academies: "Rajkot 2", instore: "Window wall, CAB + TGs", out: { pools: 50000, coach: 25000 }, outStated: 75000, base: 3855443, goal: 4626531 },
-    { id: "adajan", name: "Adajan (new)", city: "Surat", st: "Gujarat", aop: null, team: null, academies: "Surat 3 (shared)", instore: "Opens 18 Dec 2026: not in the water plan yet", out: null },
+    { id: "adajan", name: "Adajan (new)", city: "Surat", st: "Gujarat", aop: null, team: null, academies: "Surat 3 (shared)", instore: "Opens 27 Dec 2026: not in the water plan yet", out: null },
     { id: "indore", name: "Indore", city: "Indore", st: "MP", aop: "Indore", team: [2, 1, 0], hire: 2, academies: "Indore 4: 1,000 People Mission", instore: "No water plan in our files", out: null },
     { id: "bhopal", name: "Bhopal", city: "Bhopal", st: "MP", aop: "Bhopal", team: [0, 1, 0], hire: 3, academies: "Bhopal 3: Family Swim Days", instore: "No water plan in our files", out: null },
     { id: "gwalior", name: "Gwalior", city: "Gwalior", st: "MP", aop: "Gwalior", team: null, academies: "Gwalior 2: beginner discovery", instore: "Not in the human plan", out: null }

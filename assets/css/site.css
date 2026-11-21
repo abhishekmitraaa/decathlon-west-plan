@@ -3779,3 +3779,20 @@ details[open] > summary .nd-chev { transform: rotate(180deg); }
 .wb-cp small { font-size: 12px; color: var(--text-3); }
 @media (max-width: 1024px) { .wb-cp-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 520px) { .wb-cp-grid { grid-template-columns: 1fr; } }
+/* water page views (22 Nov 2026) */
+.wb-scope { margin: 0 0 10px; font-size: 13.5px; color: var(--text-2); background: #fff; border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+.wb-scope b { color: var(--ink); }
+.wb-months.one { grid-template-columns: minmax(0, 560px); }
+.wb-col.off { opacity: .35; }
+.wb-panel h4 small { font-weight: 600; color: var(--text-3); font-size: 12px; margin-left: 6px; }
+.wb-ht { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 4px; }
+.wb-ht th, .wb-ht td { padding: 5px 7px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+.wb-ht thead th { background: var(--ink); color: #fff; font-size: 11.5px; } .wb-ht thead th:first-child, .wb-ht tbody th { text-align: left; }
+.wb-ht tbody th { color: var(--ink); } .wb-ht tbody th small { display: block; font-weight: 500; color: var(--text-3); font-size: 10.5px; }
+.wb-ht .off { opacity: .35; } .wb-ht tr.tt td, .wb-ht tr.tt th { background: #F5F6FF; font-weight: 800; }
+.wb-ht tr.by td { text-align: left; white-space: normal; background: #FAFBFE; font-size: 11.5px; color: var(--text-2); padding: 4px 7px 8px; }
+.wb-ht tr.by span { display: inline-block; margin: 2px 10px 2px 0; } .wb-ht tr.by b { color: #10135A; margin-right: 4px; }
+.wb-note { margin: 6px 0 0; font-size: 11.5px; color: var(--text-3); }
+.wm-none { margin: 4px 0 0; font-size: 14px; color: var(--text-2); background: #fff; border: 1.5px dashed var(--line); border-radius: 10px; padding: 12px 14px; }
+details.wm-cur { margin: 14px 0 0; }
+details.wm-cur .wm-cur-grid { padding: 0 18px 16px; }

@@ -28,9 +28,9 @@ window.WATER_MAPS = {
       lede: "Five stores and seven live boards. Water is Pune's biggest summer sport: ₹19.76 Cr of water sports from 1 Jan to 8 Nov 2026 (+15.3%), 58% of the West outside MP. The water budget sheet funds 4 boards in February and June and 6 from March to May (₹6 L and ₹9 L a month).",
       facts: [
         ["48", "Municipal pools", "PMC runs 35 (11 shut, Mar 2026), PCMC 13 to 14"],
-        ["18", "Pools and academies tied up", "Our AOP partners; the plan signs 58 pools and 80 coaches"],
+        ["30", "Pool partnerships (sheet)", "By February: Amanora 5, SGS 5, Wagholi 6, Wakad 6, NIBM 5, Kothrud / Baner 3"],
         ["20,655", "Housing societies", "Registered, 2023; many more not registered"],
-        ["111", "Practice places (AOPs)", "Pools 18, racket 32, turfs 34, gyms and yoga 26"],
+        ["111", "Practice places tied up today", "All sports: pools 18, racket 32, turfs 34, gyms and yoga 26"],
         ["₹19.76 Cr", "Water sports 2026", "1 Jan to 8 Nov, +15.3%"],
         ["4 → 6", "Water boards (sheet)", "Feb and Jun 4, Mar-May 6; 7 box boards live today"]
       ],
@@ -88,8 +88,8 @@ window.WATER_MAPS = {
         ["8.4 M", "People", "Metro 9.6 M (Ahmedabad master)"],
         ["21", "AMC pools open", "May 2026; 15,000 swimmers a day in summer"],
         ["₹7.44 Cr", "Water sports 2026", "1 Jan to 8 Nov, +11.9%"],
-        ["75", "AOPs in the 2027 plan", "Nexus 37, Motera 38; Motera signed 10 in Nov 2026"],
-        ["5", "Academies in the Swim Project", "Plus 45 coaches for Gujarat"],
+        ["11", "Pool partnerships (sheet)", "Nexus 5, Motera 6, by February"],
+        ["₹2,500", "Kit for every partner-pool coach", "Plus an 8% affiliate link (sheet)"],
         ["2 → 3", "Water boards (sheet)", "₹3.5 L to ₹4.5 L a month"]
       ],
       hot: [
@@ -133,7 +133,7 @@ window.WATER_MAPS = {
         ["1.67 M", "People", "2011 census; about 2.4 M estimated for 2025"],
         ["4+", "Municipal pools named", "Sardar Baug, Lal Baug, Karelibaug, Waghodia Road"],
         ["2", "Swim classes listed", "Baroda Swim Front (Gotri), Sama Indoor Sports Complex"],
-        ["6 → 34", "AOPs: live → 2027 plan", ""],
+        ["6", "Pool partnerships (sheet)", "₹25,000 each, by February"],
         ["4", "Boards live", "Akota, Fatehgunj, Gotri, Subhanpura"],
         ["4", "Water boards (sheet)", "₹1.5 L a month for all 4"]
       ],
@@ -177,7 +177,7 @@ window.WATER_MAPS = {
         ["11", "SMC pools named", "Including Pal and Vir Savarkar in Adajan"],
         ["85", "Housing and society sites mapped", "Near Adajan: 31 societies, 54 housing"],
         ["77", "Sports places mapped", "37 clubs and academies, 25 turfs, pools and grounds"],
-        ["10 + 36", "AOPs", "10 at Adajan; Dumas 36 in the 2027 plan"],
+        ["11", "Pool partnerships (sheet)", "Dumas 6, Adajan 5, by February"],
         ["4", "Water boards (sheet)", "₹6 L a month"]
       ],
       hot: "adajan",
@@ -249,11 +249,6 @@ window.WATER_MAPS = {
     const picks = c.picks.map(p => ({ p, a: around(c, p) }));
     body.innerHTML = `<p class="wm-lede">${esc(c.lede)}</p>
       <div class="wm-facts">${c.facts.map(([v, l, n]) => `<div><b>${esc(v)}</b><span>${esc(l)}</span>${n ? `<small>${esc(n)}</small>` : ""}</div>`).join("")}</div>
-      <div class="wm-cur"><h4>Current hoardings in ${esc(c.name)}<span>${c.current.length ? `${c.current.length} board${c.current.length > 1 ? "s" : ""} · ${LK(c.current.reduce((a, h) => a + (h.cost || 0), 0))} a month` : "none booked yet"}</span></h4>
-        ${c.current.length ? `<div class="wm-cur-grid">${c.current.map(h => { const pk = h.lat ? c.picks.find(p => p[5] === "keep" && KM([h.lat, h.lon], [p[2], p[3]]) < 0.6) : null;
-          return `<article class="wm-cc" data-t="${h.tag}"><div class="wm-cc-img">${h.img ? `<img src="assets/img/${esc(h.img)}" alt="Hoarding: ${esc(h.loc)}" loading="lazy">` : `<span class="wm-cc-noimg">Site and photo to be confirmed</span>`}<b class="wm-cc-tag">${h.tag}</b><span class="wm-cc-st ${esc(h.status)}">${STATUS[h.status] || esc(h.status)}</span></div>
-            <div class="wm-cc-b"><b>${esc(h.loc)}</b><small>${esc(h.size)} · ${esc(h.dur || "")} · <strong>${LK(h.cost || 0)} a month</strong></small><p>${esc(h.why || "")}</p>
-            <span class="wm-cc-plan ${pk ? "keep" : "free"}">${pk ? `Water plan: keep it, board ${esc(pk[0])}` : h.lat ? "Water plan: not on the water shortlist (free for other campaigns)" : "Water plan: place it once the site is known"}</span>${h.lat && !h.exact ? '<em>Pin approximate</em>' : ""}</div></article>`; }).join("")}</div>` : ""}</div>
       <div class="wm-grid"><div class="wm-mapwrap"><div class="wm-map" id="wmMap" role="img" aria-label="Map of ${esc(c.name)}: stores, boards, pools, crowd hotspots, housing and suggested hoardings"></div>
         <p class="wm-key"><span><i class="k-st"></i>Our stores</span><span><i class="k-pick"></i>Suggested board</span><span><i class="k-live"></i>Current hoarding (click for the photo)</span><span><i class="k-pool"></i>Partner pool</span><span><i class="k-mun"></i>Municipal or other pool, academy</span><span><i class="k-hot"></i>Crowd hotspot</span><span><i class="k-jam"></i>Busy junction (traffic data)</span><span><i class="k-home"></i>Housing belt</span></p></div>
         <div class="wm-picks"><h4>Where we put the water boards, and why</h4>
@@ -263,6 +258,11 @@ window.WATER_MAPS = {
             <ul class="wm-chips"><li><b>${a.pools}</b> pools within 2.5 km</li><li><b>${a.homes}</b> housing belts within 3 km</li><li><b>${a.hot}</b> crowd spots within 2.5 km</li>${a.jam ? `<li class="jam"><b>${a.jam}</b> busy junction${a.jam > 1 ? "s" : ""} (traffic data) within 1.5 km</li>` : ""}${a.st ? `<li><b>${a.st[1].toFixed(1)} km</b> to ${esc(a.st[0])}</li>` : ""}</ul></article>`).join("")}
           ${c.also ? `<p class="wm-also">${esc(c.also)}</p>` : ""}
         </div></div>
+      <details class="panel pm-d wm-cur"><summary><b>Current hoardings in ${esc(c.name)}</b><span>${c.current.length ? `${c.current.length} board${c.current.length > 1 ? "s" : ""} · ${LK(c.current.reduce((a, h) => a + (h.cost || 0), 0))} a month` : "none booked yet"} · photos, size, cost and what the water plan does with each</span><i class="nd-chev" aria-hidden="true"></i></summary>
+        ${c.current.length ? `<div class="wm-cur-grid">${c.current.map(h => { const pk = h.lat ? c.picks.find(p => p[5] === "keep" && KM([h.lat, h.lon], [p[2], p[3]]) < 0.6) : null;
+          return `<article class="wm-cc" data-t="${h.tag}"><div class="wm-cc-img">${h.img ? `<img src="assets/img/${esc(h.img)}" alt="Hoarding: ${esc(h.loc)}" loading="lazy">` : `<span class="wm-cc-noimg">Site and photo to be confirmed</span>`}<b class="wm-cc-tag">${h.tag}</b><span class="wm-cc-st ${esc(h.status)}">${STATUS[h.status] || esc(h.status)}</span></div>
+            <div class="wm-cc-b"><b>${esc(h.loc)}</b><small>${esc(h.size)} · ${esc(h.dur || "")} · <strong>${LK(h.cost || 0)} a month</strong></small><p>${esc(h.why || "")}</p>
+            <span class="wm-cc-plan ${pk ? "keep" : "free"}">${pk ? `Water plan: keep it, board ${esc(pk[0])}` : h.lat ? "Water plan: not on the water shortlist (free for other campaigns)" : "Water plan: place it once the site is known"}</span>${h.lat && !h.exact ? '<em>Pin approximate</em>' : ""}</div></article>`; }).join("")}</div>` : ""}</details>
       <details class="panel pm-d wm-list"><summary><b>Every pool, academy, hotspot and busy junction on the map</b><span>${c.pools.length} pools and academies · ${c.hot.length} crowd hotspots · ${c.homes.length} housing belts</span><i class="nd-chev" aria-hidden="true"></i></summary>
         <div class="wm-cols"><div><h5>Pools and academies</h5><ul>${c.pools.map(x => `<li><i class="${x[1] === "partner" ? "k-pool" : "k-mun"}"></i><b>${esc(x[0])}</b><small>${esc(x[4])}</small></li>`).join("")}</ul></div>
           <div><h5>Crowd hotspots</h5><ul>${c.hot.map(x => `<li><i class="${x[4] === "jam" ? "k-jam" : "k-hot"}"></i><b>${esc(x[0])}</b><small>${esc(x[3] || "")}</small></li>`).join("")}</ul>
@@ -294,5 +294,16 @@ window.WATER_MAPS = {
     }));
   };
   box.querySelectorAll(".wm-seg button").forEach(b => b.addEventListener("click", () => show(b.dataset.k)));
-  show(KEYS[0]);
+  const ST_CITIES = { all: KEYS, Pune: ["Pune"], Gujarat: ["Ahmedabad", "Baroda", "Surat"], MP: [] };
+  const follow = () => {
+    const st = (window.W27_VIEW || {}).state || "all", ok = ST_CITIES[st] || KEYS;
+    box.querySelectorAll(".wm-seg button").forEach(b => { b.hidden = !ok.includes(b.dataset.k); });
+    const none = box.querySelector(".wm-none");
+    if (!ok.length) { body.hidden = true; if (!none) box.querySelector(".wm-seg").insertAdjacentHTML("afterend", '<p class="wm-none">No water hoardings for MP in the water sports sheet. MP\'s water money goes to influencers, Meta, boosts, events and pools (see the budget above).</p>'); return; }
+    body.hidden = false; if (none) none.remove();
+    const cur = box.querySelector('.wm-seg button[aria-pressed="true"]');
+    if (!cur || !ok.includes(cur.dataset.k)) show(ok[0]);
+  };
+  window.addEventListener("w27:view", follow);
+  show(KEYS[0]); follow();
 })();
