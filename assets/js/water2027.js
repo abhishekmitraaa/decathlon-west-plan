@@ -142,6 +142,8 @@
     }).join("")}</div>`;
 
     grid.innerHTML = h;
+    // frozen header (like Excel): the week row sticks under the month row
+    requestAnimationFrame(() => { const m = grid.querySelector(".w27-mon"); if (m) grid.style.setProperty("--mh", m.offsetHeight + "px"); });
     $$(".w27-wk", grid).forEach(b => b.addEventListener("click", () => { week = +b.dataset.i; calendar(); weekPanel(); const dd = document.getElementById("w27WeekDD"); if (dd) dd.open = true; }));
     $$(".w27-mbtn", grid).forEach(b => b.addEventListener("click", () => { view = b.dataset.v; week = 0; render(); }));
   }

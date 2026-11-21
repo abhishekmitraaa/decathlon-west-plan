@@ -122,8 +122,10 @@ window.WATERBUDGET_CAMPAIGNS = [
   const N = v => (v == null || v === "" || isNaN(+v)) ? 0 : +v;
   const STS = [["Pune", "#3643BA"], ["Gujarat", "#00A99D"], ["MP", "#7B3FC4"]];
   const CH = [["hoard", "Hoardings (3D or digital)", "#10135A"], ["infl", "Influencers", "#E8590C"], ["meta", "Meta ads (from the MarCom digital budget)", "#3643BA"], ["boost", "Instagram boosts", "#C13584"],
-    ["events", "Events", "#1BAA5E"], ["aop", "Pool partnerships (AOPs)", "#0096C7"], ["flyers", "Checklist flyers", "#F2B705"], ["coach", "Coach kits", "#7B3FC4"], ["wapush", "WhatsApp pushes (from the MarCom digital budget)", "#25D366"], ["city", "Local city pages", "#F28C28"]];
+    ["events", "Events", "#1BAA5E"], ["aop", "Pool partnerships (AOPs)", "#0096C7"], ["coach", "Coach kits", "#7B3FC4"], ["wapush", "WhatsApp pushes (from the MarCom digital budget)", "#25D366"], ["city", "Local city pages", "#F28C28"]];
   let doc = clone(window.WATERBUDGET_DEFAULT), editing = false;
+  const FUN = window.WATER_FUNNEL = { hoard: "Awareness", infl: "Awareness", boost: "Awareness", city: "Awareness", meta: "Acquisition", wapush: "Retention", events: "Participation", aop: "Participation", coach: "Conversion" };
+  const tag = k => FUN[k] ? `<em class="fn fn-${FUN[k].toLowerCase()}">${FUN[k]}</em>` : "";
 
   // money of one line, by month (5 months) and by state; one-off lines (AOP, flyers, coach kits) count in February (the sheet's deadline)
   const lineMonths = (k, d = doc) => {
@@ -154,7 +156,7 @@ window.WATERBUDGET_CAMPAIGNS = [
   const OOC = ["Gandhinagar", "Jamnagar", "Kachchh", "Jabalpur", "Chhindwara"];
   const cityOf = n => String(n).replace(" (out of catchment)", "");
   const storeTable = (state, mi, sOK, mOK, scope) => {
-    const COLS = [["hoard", "Hoardings"], ["infl", "Influencers"], ["meta", "Meta ads"], ["boost", "Insta boosts"], ["events", "Events"], ["aop", "Pools"], ["flyers", "Flyers"], ["coach", "Coach kits"]];
+    const COLS = [["hoard", "Hoardings"], ["infl", "Influencers"], ["meta", "Meta ads"], ["boost", "Insta boosts"], ["events", "Events"], ["aop", "Pools"], ["coach", "Coach kits"]];
     const mSum = arr => arr.reduce((t, v, i) => t + (mOK(i) ? N(v) : 0), 0);
     const feb = mOK(0);
     const cityRow = (st, c) => {
@@ -166,7 +168,7 @@ window.WATERBUDGET_CAMPAIGNS = [
       const ev = doc.events.find(r => r.store === name), ap = doc.aop.find(r => r.store === name), fl = doc.flyers.find(r => r.store === name);
       const statePools = sum(doc.aop.filter(r => r.st === st).map(r => N(r.n))), co = doc.coach.find(r => r.st === st);
       const coach = feb && ap && co && statePools ? N(co.n) * N(co.kit) * N(ap.n) / statePools : 0;
-      return { hoard: 0, infl: 0, meta: 0, boost: 0, events: ev ? mSum(ev.v) : 0, aop: feb && ap ? N(ap.n) * N(ap.r) : 0, pools: ap ? N(ap.n) : 0, flyers: feb && fl ? N(fl.v) : 0, coach };
+      return { hoard: 0, infl: 0, meta: 0, boost: 0, events: ev ? mSum(ev.v) : 0, aop: feb && ap ? N(ap.n) * N(ap.r) : 0, pools: ap ? N(ap.n) : 0, coach };
     };
     const tot = r => COLS.reduce((t, [k]) => t + (r[k] || 0), 0);
     const cell = (v, extra) => `<td>${v ? L(v) : '<span class="z">-</span>'}${extra ? `<small>${extra}</small>` : ""}</td>`;
@@ -181,16 +183,16 @@ window.WATERBUDGET_CAMPAIGNS = [
         if (!cityTot && !stores.length) return;
         COLS.forEach(([k]) => { sub[k] += (cr[k] || 0) + sum(rows.map(([, r]) => r[k] || 0)); });
         body += `<tr class="city"><th>${esc(c)}${OOC.includes(c) ? "<small>out of catchment</small>" : "<small>city-wide</small>"}</th>${cell(cr.hoard, cr.boards)}${cell(cr.infl, cr.inflN ? cr.inflN + " influencers" : "")}${cell(cr.meta)}${cell(cr.boost)}<td></td><td></td><td></td><td></td><td class="t">${L(tot(cr))}</td></tr>`;
-        rows.forEach(([n, r]) => { body += `<tr class="store"><th>${esc(n)}</th><td></td><td></td><td></td><td></td>${cell(r.events)}${cell(r.aop, feb && r.pools ? r.pools + " pools" : "")}${cell(r.flyers)}${cell(r.coach, feb && r.pools ? r.pools + " kits" : "")}<td class="t">${L(tot(r))}</td></tr>`; });
+        rows.forEach(([n, r]) => { body += `<tr class="store"><th>${esc(n)}</th><td></td><td></td><td></td><td></td>${cell(r.events)}${cell(r.aop, feb && r.pools ? r.pools + " pools" : "")}${cell(r.coach, feb && r.pools ? r.pools + " kits" : "")}<td class="t">${L(tot(r))}</td></tr>`; });
       });
       const wa = sum((doc.wapush || []).filter(r => r.st === st).map(r => mSum(r.v))), cp = sum((doc.city || []).filter(r => r.st === st).map(r => mSum(r.v)));
       COLS.forEach(([k]) => { grand[k] += sub[k]; });
       body += `<tr class="sub"><th>${st} total${wa || cp ? "" : "<small>+ WhatsApp pushes and city pages: budget to agree</small>"}</th>${COLS.map(([k]) => `<td>${sub[k] ? L(sub[k]) : "-"}</td>`).join("")}<td class="t">${L(tot(sub) + wa + cp)}</td></tr>`;
     });
     const waAll = sum((doc.wapush || []).filter(r => sOK(r.st)).map(r => mSum(r.v))), cpAll = sum((doc.city || []).filter(r => sOK(r.st)).map(r => mSum(r.v)));
-    return `<div class="panel wb-store"><div class="sb-wrap"><table class="wb-st"><thead><tr><th>${esc(scope)}</th>${COLS.map(([, n]) => `<th>${n}</th>`).join("")}<th>Total</th></tr></thead><tbody>${body}</tbody>
+    return `<div class="panel wb-store"><div class="sb-wrap frz"><table class="wb-st"><thead><tr><th>${esc(scope)}</th>${COLS.map(([k, n]) => `<th>${n}${tag(k)}</th>`).join("")}<th>Total</th></tr></thead><tbody>${body}</tbody>
       <tfoot><tr><th>All</th>${COLS.map(([k]) => `<td>${grand[k] ? L(grand[k]) : "-"}</td>`).join("")}<td>${L(tot(grand) + waAll + cpAll)}</td></tr></tfoot></table></div>
-      <p class="wb-note">City-wide lines (hoardings, influencers, Meta, boosts) sit on the city row; store lines (events, pool partnerships, checklist flyers, coach kits) on each store. Pools, flyers and coach kits are paid by the February deadline, so they show in February and in Jan to Jun. ${mi === -1 ? "January: the sheet has no spend; the pools and coaches are signed this month for the February deadline." : ""}</p></div>`;
+      <p class="wb-note">City-wide lines (hoardings, influencers, Meta, boosts) sit on the city row; store lines (events, pool partnerships, coach kits) on each store. Checklist flyers: no marketing budget (we cover them). Pools and coach kits are paid by the February deadline, so they show in February and in Jan to Jun. ${mi === -1 ? "January: the sheet has no spend; the pools and coaches are signed this month for the February deadline." : ""}</p></div>`;
   };
   const render = () => {
     const { state, view } = VIEW(), mi = view === "h1" ? null : MI[view];
@@ -216,7 +218,7 @@ window.WATERBUDGET_CAMPAIGNS = [
         <div class="tot"><b>${L(T.all)}</b><span>Marketing budget, ${esc(scope)}</span></div>
         ${state === "all" ? STS.map(([s, c]) => `<div style="--c:${c}"><b>${L(T.st[s] || 0)}</b><span>${s}, ${T.all ? Math.round((T.st[s] || 0) / T.all * 100) : 0}%</span></div>`).join("")
           : `<div style="--c:#10135A"><b>${L(T.ch.hoard)}</b><span>Hoardings: ${hoardRows.map(r => `${r.city} ${mi == null ? Math.max(...r.n.map(N)) : N(r.n[mi] )} boards`).join(", ") || "none in the sheet"}</span></div>
-             <div style="--c:#1BAA5E"><b>${L(T.ch.events)}</b><span>Events</span></div><div style="--c:#0096C7"><b>${L(T.ch.aop + T.ch.flyers + T.ch.coach)}</b><span>Pools, flyers and coach kits (February)</span></div>`}
+             <div style="--c:#1BAA5E"><b>${L(T.ch.events)}</b><span>Events</span></div><div style="--c:#0096C7"><b>${L(T.ch.aop + T.ch.coach)}</b><span>Pools and coach kits (February)</span></div>`}
         <div style="--c:#E8590C"><b>${sum(inflN.filter((_, i) => mOK(i)))}</b><span>Influencer slots, ${L(T.ch.infl)}</span></div>
         <div><b>${gs.length ? (sum(gs.map(mar2jun)) / sum(gs.map(goal)) * 100).toFixed(1) + "%" : "-"}</b><span>${gs.length ? `Budget Mar-Jun against the ₹${(sum(gs.map(goal)) / 1e7).toFixed(2)} Cr turnover goal (${gs.join(" + ")})` : "No water turnover goal for MP in our files"}</span></div>
       </div>
@@ -230,7 +232,7 @@ window.WATERBUDGET_CAMPAIGNS = [
           ${i >= 0 && inN ? `<p class="wb-inf">${SV.map(([s]) => { const n = sum(doc.infl.filter(r => r.st === s).map(r => N(r.n[i]))); return n ? `${s} ${n} × ${L(N(doc.rate[s]))}` : ""; }).filter(Boolean).join(" · ")}</p>` : ""}
           <ul>${c.c.map(x => `<li>${esc(x)}</li>`).join("")}${i >= 0 && doc.waweeks && doc.waweeks[i] ? `<li class="wa">WhatsApp push, ${esc(doc.waweeks[i])}${sum((doc.wapush || []).filter(r => sOK(r.st)).map(r => N(r.v[i]))) ? ", " + L(sum(doc.wapush.filter(r => sOK(r.st)).map(r => N(r.v[i])))) : " (budget with MarCom)"}</li>` : ""}${i >= 0 && doc.city ? (() => { const n = sum(doc.city.filter(r => sOK(r.st)).map(r => N(r.n[i]))); return n ? `<li class="cp">City pages: ${n} swimming posts with our AOP coaches</li>` : ""; })() : ""}</ul><p class="wb-ben"><b>How it helps:</b> ${esc(c.b)}</p></article>`; }).join("")}</div>
       <div class="wb-two">
-        <div class="panel wb-panel"><h4>Where the money goes <small>${esc(scope)}</small></h4>${CH.map(([k, n, c]) => `<div class="wb-bar"><span>${n}</span><div><i style="--w:${T.ch[k] / maxCh * 100}%;background:${c}"></i></div><b>${!T.ch[k] && (k === "wapush" || k === "city") ? "to agree" : L(T.ch[k])}</b><small>${T.all ? (T.ch[k] / T.all * 100).toFixed(1) : 0}%</small></div>`).join("")}
+        <div class="panel wb-panel"><h4>Where the money goes <small>${esc(scope)}</small></h4>${CH.map(([k, n, c]) => `<div class="wb-bar"><span>${n}${tag(k)}</span><div><i style="--w:${T.ch[k] / maxCh * 100}%;background:${c}"></i></div><b>${!T.ch[k] && (k === "wapush" || k === "city") ? "to agree" : L(T.ch[k])}</b><small>${T.all ? (T.ch[k] / T.all * 100).toFixed(1) : 0}%</small></div>`).join("")}
           <h4 class="wb-h4">The hoardings, city by city and store by store</h4>
           ${hoardRows.length ? `<div class="sb-wrap"><table class="wb-ht"><thead><tr><th>City</th>${M.map((m, i) => `<th class="${mOK(i) ? "" : "off"}">${m}</th>`).join("")}<th>₹</th></tr></thead><tbody>${hoardRows.map(r => `<tr><th>${esc(r.city)}<small>${r.st}</small></th>${M.map((_, i) => `<td class="${mOK(i) ? "" : "off"}">${N(r.n[i])}</td>`).join("")}<td><b>${L(sum(r.v.map((v, i) => mOK(i) ? N(v) : 0)))}</b></td></tr>
             <tr class="by"><td colspan="${M.length + 2}">${Object.entries(storesOf(r.city)).map(([st, l]) => `<span><b>${esc(st)}</b>${l.map(esc).join("; ")}</span>`).join("") || "Sites on the hoarding map below"}</td></tr>`).join("")}</tbody></table></div><p class="wb-note">Boards a month from the sheet; the store each board serves comes from the picks on the hoarding map below (3D cut-out or digital, never a plain box board).</p>` : `<p class="wb-note">No hoardings for ${esc(state)} in the sheet.</p>`}</div>
@@ -277,7 +279,7 @@ window.WATERBUDGET_CAMPAIGNS = [
       t("Events", "₹ by store · March mid-week, April and May twice a month, June one event · Aqua Zumba, learn to swim with coaches", `<th>Store</th>${mh}<th>Total</th>`,
         doc.events.map((r, j) => `<tr><th>${esc(r.store)}</th>${M.map((_, i) => cell(`events.${j}.v.${i}`, r.v[i], 1)).join("")}<td class="t">${L(sum(r.v.map(N)))}</td></tr>`).join(""),
         `<tr><th>All</th>${tot(doc.events, r => r.v).map(v => `<td class="t">${L(v)}</td>`).join("")}<td class="t">${L(sum(doc.events.map(r => sum(r.v.map(N)))))}</td></tr>`),
-      t("Pool partnerships (AOPs) and checklist flyers", "one-off, deadline February · flyers: new swimmers who bring the academy's gear checklist get a free product", `<th>Store</th><th>Pools</th><th>₹ per pool</th><th>Pools ₹</th><th>Flyers ₹</th>`,
+      t("Pool partnerships (AOPs) and checklist flyers", "one-off, deadline February · flyers: new swimmers who bring the academy's gear checklist get a free product", `<th>Store</th><th>Pools</th><th>₹ per pool</th><th>Pools ₹</th><th>Flyers ₹<small>no budget: not counted</small></th>`,
         doc.aop.map((r, j) => { const f = doc.flyers.find(x => x.store === r.store); const fj = doc.flyers.indexOf(f); return `<tr><th>${esc(r.store)}</th>${cell(`aop.${j}.n`, r.n)}${cell(`aop.${j}.r`, r.r, 1)}<td class="t">${L(N(r.n) * N(r.r))}</td>${f ? cell(`flyers.${fj}.v`, f.v, 1) : "<td>-</td>"}</tr>`; }).join(""),
         `<tr><th>All</th><td class="t">${sum(doc.aop.map(r => N(r.n)))}</td><td></td><td class="t">${L(sum(doc.aop.map(r => N(r.n) * N(r.r))))}</td><td class="t">${L(sum(doc.flyers.map(r => N(r.v))))}</td></tr>`),
       t("Coach affiliation", "₹2,500 kit per coach; affiliates earn 8% (₹8,000 on ₹1 L of sales, as in the sheet) · coaches: one per partner pool until you set the real number", `<th>State</th><th>Coaches</th><th>Kit ₹</th><th>Total</th>`,
@@ -365,8 +367,7 @@ window.WATERBUDGET_CAMPAIGNS = [
       ].filter(l => sum(l[1]));
       const stores = (STORES[c] || []).map(n => {
         const ev = doc.events.find(r => r.store === n), ap = doc.aop.find(r => r.store === n), fl = doc.flyers.find(r => r.store === n);
-        const parts = [["Events", ev ? ev.v.map(N) : z(), "", "events"], ["Pool partnerships", feb(ap ? N(ap.n) * N(ap.r) : 0), ap ? N(ap.n) + " pools" : "", "aop"], ["Checklist flyers", feb(fl ? N(fl.v) : 0), "", "flyers"],
-          ["Coach kits", feb(ap && co && statePools ? N(co.n) * N(co.kit) * N(ap.n) / statePools : 0), ap ? N(ap.n) + " kits" : "", "coach"]].filter(x => sum(x[1]));
+        const parts = [["Events", ev ? ev.v.map(N) : z(), "", "events"], ["Pool partnerships", feb(ap ? N(ap.n) * N(ap.r) : 0), ap ? N(ap.n) + " pools" : "", "aop"], ["Coach kits", feb(ap && co && statePools ? N(co.n) * N(co.kit) * N(ap.n) / statePools : 0), ap ? N(ap.n) + " kits" : "", "coach"]].filter(x => sum(x[1]));
         return { name: n, parts, v: z().map((_, i) => sum(parts.map(x => x[1][i]))) };
       });
       const v = z().map((_, i) => sum(lines.map(l => l[1][i])) + sum(stores.map(x => x.v[i])));
@@ -399,7 +400,7 @@ window.WATERBUDGET_CAMPAIGNS = [
           const c = doc.coach.find(r => r.st === st);
           if (c && N(c.n)) out.push({ l: "pools", t: `Coach kits: ${N(c.n)} coaches × ${L(N(c.kit))}, 8% affiliate link`, s: "2027-01-18", e: "2027-02-28", k: "eco", st: [CODE[st]], n: "sheet" });
           const fl = sum(doc.flyers.filter(r => r.st === st).map(r => N(r.v)));
-          if (fl) out.push({ l: "ooh", t: `Checklist flyers at the academies ${L(fl)}: a free product for new swimmers who bring it`, s: "2027-02-01", e: "2027-06-30", k: "local", st: [CODE[st]], n: "sheet" });
+          if (fl) out.push({ l: "ooh", t: `Checklist flyers at the academies (no marketing budget): a free product for new swimmers who bring it`, s: "2027-02-01", e: "2027-06-30", k: "local", st: [CODE[st]], n: "sheet" });
         }
       });
       if (doc.waweeks && doc.waweeks[i]) out.push({ l: "digital", t: `WhatsApp push (${doc.waweeks[i]}), budget with MarCom`, s: s0, e: s0.replace(/-01$/, "-07"), k: "launch", n: "sheet" });

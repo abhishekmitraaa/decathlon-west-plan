@@ -88,6 +88,8 @@ window.WATER27 = {
     { l: "events", t: "30-Day Swim Challenge: swim streaks, Women Who Swim, creator stories", s: "2027-01-01", e: "2027-01-31", k: "evt", n: "gisp" },
     { l: "events", t: "Swim Together: family weekends, societies, corporates, academy referrals", s: "2027-02-01", e: "2027-02-28", k: "evt", n: "gisp" },
     { l: "events", t: "Decathlon Swim League: academy vs academy, beginner categories, city finals", s: "2027-03-01", e: "2027-03-31", k: "evt", n: "gisp" },
+    { l: "pools", t: "Free coaching for every child: a February voucher for 5 free classes at our partner pools (proposal)", s: "2027-02-01", e: "2027-02-28", k: "prop", n: "ours" },
+    { l: "events", t: "Swim After Dark: night swims with a DJ and underwater lights at partner pools (proposal)", s: "2027-03-15", e: "2027-05-31", k: "prop", n: "ours" },
     { l: "events", t: "Women Who Swim on Women's Day weekend", s: "2027-03-06", e: "2027-03-07", k: "prop", n: "ours" },
     { l: "events", t: "Learn swimming with Decathlon x coach: Townscript sign-ups, free goggle with a full set (new customers)", s: "2027-03-15", e: "2027-06-30", k: "evt", st: ["P", "G"], n: "pune" },
     { l: "qc", t: "Quick commerce: stock ahead of demand, in-range cover (RDP), digital LMs for the rest, express delivery message", s: "2027-03-01", e: "2027-06-30", k: "nat", st: ["P", "G"], n: "pune" },
