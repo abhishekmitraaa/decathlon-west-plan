@@ -233,7 +233,7 @@ window.WATER_MAPS = {
   };
 
   const KEYS = Object.keys(W.cities);
-  const LK = n => "₹" + (n / 1e5).toLocaleString("en-IN", { maximumFractionDigits: 2 }) + " L";
+  const LK = n => n < 1e5 ? "₹" + +(n / 1e3).toFixed(1) + "K" : "₹" + (n / 1e5).toLocaleString("en-IN", { maximumFractionDigits: 2 }) + " L";
   const STATUS = { live: "Live", nov: "Booked: goes live in November", plan: "Planned, not booked" };
   box.innerHTML = `<div class="wm-formats"><h4>This summer: 3D cut-outs or digital screens, no plain box boards</h4><div class="wm-fmt">${(W.formats || []).map(([n, t, w], i) => `<article class="${i ? "dg" : "td"}"><b>${esc(n)}</b><p>${esc(t)}</p><small>Use it for: ${esc(w)}</small></article>`).join("")}</div></div>
     <div class="seg wm-seg" role="group" aria-label="Choose city">${KEYS.map((k, i) => `<button type="button" data-k="${k}" aria-pressed="${i === 0}">${esc(W.cities[k].name)}</button>`).join("")}</div>

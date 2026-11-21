@@ -116,7 +116,8 @@ window.WATERBUDGET_CAMPAIGNS = [
   const $ = (s, r = el) => r.querySelector(s), $$ = (s, r = el) => [...r.querySelectorAll(s)];
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const clone = o => JSON.parse(JSON.stringify(o));
-  const L = n => "₹" + (n / 1e5).toLocaleString("en-IN", { maximumFractionDigits: 2 }) + " L";
+  // money in rupees: under ₹1 L as K (₹20K, ₹2.5K), then L, then Cr
+  const L = n => { const a = Math.abs(n); if (a < 1000) return "₹" + Math.round(n).toLocaleString("en-IN"); if (a < 1e5) return "₹" + +(n / 1e3).toFixed(1) + "K"; if (a >= 1e7) return "₹" + (n / 1e7).toFixed(2) + " Cr"; return "₹" + (n / 1e5).toLocaleString("en-IN", { maximumFractionDigits: 2 }) + " L"; };
   const Cr = n => "₹" + (n / 1e7).toFixed(2) + " Cr";
   const N = v => (v == null || v === "" || isNaN(+v)) ? 0 : +v;
   const STS = [["Pune", "#3643BA"], ["Gujarat", "#00A99D"], ["MP", "#7B3FC4"]];
@@ -348,6 +349,8 @@ window.WATERBUDGET_CAMPAIGNS = [
     const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["﻿" + text], { type: "text/csv" })); a.download = "water-sports-plan-2027.csv"; a.click();
   }
   window.addEventListener("w27:view", () => { if (!editing) render(); });
+  // water money by state and month (Feb to Jun, rupees) and by line, for the overall-budget section
+  window.waterBudgetBy = () => { const out = {}; STS.forEach(([st]) => { out[st] = { mo: [0, 0, 0, 0, 0], ch: {} }; }); CH.forEach(([k, n]) => { const by = lineMonths(k); STS.forEach(([st]) => { out[st].ch[k] = { n, v: by[st].slice() }; by[st].forEach((v, i) => { out[st].mo[i] += v; }); }); }); return out; };
   window.waterBudgetTotal = () => CH.reduce((t, [k]) => t + STS.reduce((a, [st]) => a + sum(lineMonths(k)[st]), 0), 0);
   // calendar items for water2027.js, built from the current numbers so the calendar follows the sheet
   const MD = [["2027-02-01", "2027-02-28"], ["2027-03-01", "2027-03-31"], ["2027-04-01", "2027-04-30"], ["2027-05-01", "2027-05-31"], ["2027-06-01", "2027-06-30"]];

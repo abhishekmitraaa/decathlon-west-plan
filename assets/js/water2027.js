@@ -15,7 +15,7 @@
   const fd = x => `${x.getUTCDate()} ${MON[x.getUTCMonth()]}`;
   const monday = (y, w) => { const j4 = Date.UTC(y, 0, 4), dow = (new Date(j4).getUTCDay() + 6) % 7; return new Date(j4 - dow * DAY + (w - 1) * 7 * DAY); };
   const inr = v => "₹" + Math.round(v).toLocaleString("en-IN");
-  const L = l => l >= 100 ? `₹${(l / 100).toFixed(2)} Cr` : `₹${l >= 10 ? l.toFixed(1) : l.toFixed(2)} L`; // lakh in
+  const L = l => l >= 100 ? `₹${(l / 100).toFixed(2)} Cr` : l < 1 ? `₹${+(l * 100).toFixed(1)}K` : `₹${l >= 10 ? l.toFixed(1) : +l.toFixed(2)} L`; // lakh in
   const RL = r => L(r / 1e5); // rupees in
 
   let view = "h1", state = "all", week = 0;
