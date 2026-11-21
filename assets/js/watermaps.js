@@ -219,7 +219,9 @@ window.WATER_MAPS = {
     const hot = (c.hot === "adajan" ? (A.cityHot || []).map(h => [h[1], h[2], h[3], `Crowd score ${h[4]}; ${h[5]} km from Adajan`]) : c.hot).concat(c.jams || []);
     const homes = c.homes === "adajan" ? (A.city || []).filter(x => x[1] === "live").map(x => [x[0], x[2], x[3], x[4]]) : c.homes;
     const boards = (window.HOARDINGS || []).filter(h => h.city === BOARD_CITY[k] && h.lat).map(h => [h.loc, h.lat, h.lon, h.status, h.why]);
-    const current = (window.HOARDINGS || []).filter(h => h.city === BOARD_CITY[k]).map((h, i) => ({ ...h, tag: String.fromCharCode(65 + i) }));
+    // Surat: the boards shortlisted on 20 Nov 2026 (West plan, Surat map) join the current and planned boards
+    const sl = k === "Surat" ? (A.shortlist || []).map(x => ({ city: "Surat", loc: x.loc, size: `${x.w} x ${x.h} ft ${x.media.toLowerCase()}, ${x.lit.toLowerCase()}`, cost: x.special || 0, status: "short", dur: x.status, lat: x.lat, lon: x.lon, img: x.img, exact: x.pin !== "approx", why: x.special ? `Shortlisted on 20 Nov 2026 at the special rate; printing and mounting ₹${(x.print + x.mount).toLocaleString("en-IN")} one-off.${x.note ? " " + x.note + "." : ""}` : "In the vendor's deck, not in the shortlist sheet: no rate." })) : [];
+    const current = [...(window.HOARDINGS || []).filter(h => h.city === BOARD_CITY[k]), ...sl].map((h, i) => ({ ...h, tag: String.fromCharCode(65 + i) }));
     const osmAll = (((window.OSM_POOLS || {}).cities || {})[k] || {}).pools || [];
     const osm = osmAll.filter(o => !c.pools.some(x => KM([o[0], o[1]], [x[2], x[3]]) < 0.08)).map(o => o[2] === "club" ? [o[0], o[1], "pub", o[3], o[4]] : o);
     return { ...c, stores, hot, homes, boards, current, osm };
@@ -243,7 +245,7 @@ window.WATER_MAPS = {
 
   const KEYS = Object.keys(W.cities);
   const LK = n => n < 1e5 ? "₹" + +(n / 1e3).toFixed(1) + "K" : "₹" + (n / 1e5).toLocaleString("en-IN", { maximumFractionDigits: 2 }) + " L";
-  const STATUS = { live: "Live", nov: "Booked: goes live in November", plan: "Planned, not booked" };
+  const STATUS = { live: "Live", nov: "Booked: goes live in November", plan: "Planned, not booked", short: "Shortlisted 20 Nov: to finalise" };
   box.innerHTML = `<div class="wm-formats"><h4>This summer: 3D cut-outs or digital screens, no plain box boards</h4><div class="wm-fmt">${(W.formats || []).map(([n, t, w], i) => `<article class="${i ? "dg" : "td"}"><b>${esc(n)}</b><p>${esc(t)}</p><small>Use it for: ${esc(w)}</small></article>`).join("")}</div></div>
     <div class="seg wm-seg" role="group" aria-label="Choose city">${KEYS.map((k, i) => `<button type="button" data-k="${k}" aria-pressed="${i === 0}">${esc(W.cities[k].name)}</button>`).join("")}</div>
     <div class="wm-body"></div>
