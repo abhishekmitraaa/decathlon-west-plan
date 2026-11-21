@@ -351,6 +351,28 @@ window.WATERBUDGET_CAMPAIGNS = [
   window.addEventListener("w27:view", () => { if (!editing) render(); });
   // water money by state and month (Feb to Jun, rupees) and by line, for the overall-budget section
   window.waterBudgetBy = () => { const out = {}; STS.forEach(([st]) => { out[st] = { mo: [0, 0, 0, 0, 0], ch: {} }; }); CH.forEach(([k, n]) => { const by = lineMonths(k); STS.forEach(([st]) => { out[st].ch[k] = { n, v: by[st].slice() }; by[st].forEach((v, i) => { out[st].mo[i] += v; }); }); }); return out; };
+  // Excel-like rows for one state, Feb to Jun (rupees): each city (city-wide lines) and each store (store lines)
+  window.waterBudgetSheet = st => {
+    const z = () => [0, 0, 0, 0, 0], feb = v => [v, 0, 0, 0, 0];
+    const cityOf = n => String(n).replace(" (out of catchment)", "");
+    const statePools = sum(doc.aop.filter(r => r.st === st).map(r => N(r.n))), co = doc.coach.find(r => r.st === st);
+    return CITIES[st].map(c => {
+      const h = doc.hoard.find(r => r.city === c), inf = doc.infl.find(r => r.city === c), me = doc.meta.find(r => cityOf(r.city) === c), bo = doc.boost.find(r => cityOf(r.city) === c);
+      const lines = [
+        ["Hoardings (3D or digital)", h ? h.v.map(N) : z(), h ? h.n.map(N).map(n => n + " boards") : null],
+        ["Influencers", inf ? inf.n.map(n => N(n) * N(doc.rate[st])) : z(), inf ? inf.n.map(N).map(n => n + " influencers") : null],
+        ["Meta ads", me ? me.v.map(N) : z()], ["Instagram boosts", bo ? bo.v.map(N) : z()]
+      ].filter(l => sum(l[1]));
+      const stores = (STORES[c] || []).map(n => {
+        const ev = doc.events.find(r => r.store === n), ap = doc.aop.find(r => r.store === n), fl = doc.flyers.find(r => r.store === n);
+        const parts = [["Events", ev ? ev.v.map(N) : z()], ["Pool partnerships", feb(ap ? N(ap.n) * N(ap.r) : 0), ap ? N(ap.n) + " pools" : ""], ["Checklist flyers", feb(fl ? N(fl.v) : 0)],
+          ["Coach kits", feb(ap && co && statePools ? N(co.n) * N(co.kit) * N(ap.n) / statePools : 0)]].filter(x => sum(x[1]));
+        return { name: n, parts, v: z().map((_, i) => sum(parts.map(x => x[1][i]))) };
+      });
+      const v = z().map((_, i) => sum(lines.map(l => l[1][i])) + sum(stores.map(x => x.v[i])));
+      return { city: c, ooc: OOC.includes(c), lines, stores, v };
+    }).filter(c => sum(c.v) || c.stores.length);
+  };
   window.waterBudgetTotal = () => CH.reduce((t, [k]) => t + STS.reduce((a, [st]) => a + sum(lineMonths(k)[st]), 0), 0);
   // calendar items for water2027.js, built from the current numbers so the calendar follows the sheet
   const MD = [["2027-02-01", "2027-02-28"], ["2027-03-01", "2027-03-31"], ["2027-04-01", "2027-04-30"], ["2027-05-01", "2027-05-31"], ["2027-06-01", "2027-06-30"]];

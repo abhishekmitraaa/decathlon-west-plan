@@ -3881,3 +3881,29 @@ details.wm-cur .wm-cur-grid { padding: 0 18px 16px; }
 .wo-tbd { color: #8A5A00; }
 @media (max-width: 960px) { .wo-hero, .wo-grid { grid-template-columns: 1fr; } .wo-photo { height: 170px; } }
 @media (max-width: 560px) { .wo-months { grid-template-columns: 1fr 1fr; } .wo-big { font-size: 20px; } .wo-m { padding: 10px 11px; } .wo-m header span { display: none; } }
+/* overall budget: the Excel view under each state's row */
+.wo-gt tr.wo-ddr td { padding: 0 0 10px; text-align: left; border-bottom: 1px solid var(--line); }
+.wo-dd > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 4px 12px; flex-wrap: wrap; padding: 8px 10px; margin: 0 0 0 4px; border-radius: var(--r-sm); background: var(--mist); }
+.wo-dd > summary::-webkit-details-marker { display: none; }
+.wo-dd > summary b { color: var(--ink); font-size: 13.5px; }
+.wo-dd > summary span { color: var(--text-2); font-size: 12px; }
+.wo-dd > summary .nd-chev { width: 24px; height: 24px; }
+.wo-dd[open] > summary { border-radius: var(--r-sm) var(--r-sm) 0 0; }
+.wo-xl { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 760px; margin-left: 4px; }
+.wo-xl th, .wo-xl td { padding: 6px 8px; border: 1px solid #DDE3EC; text-align: right; vertical-align: top; font-weight: 600; }
+.wo-xl thead th { background: var(--ink); color: #fff; font-weight: 800; font-size: 12px; }
+.wo-xl thead th.on { background: #0B6E8E; }
+.wo-xl tbody th { text-align: left; color: var(--ink); font-weight: 600; min-width: 190px; }
+.wo-xl th small, .wo-xl td small { display: block; font-size: 11px; font-weight: 600; color: var(--text-2); }
+.wo-xl td.on { background: #E6F5FB; }
+.wo-xl td.t { background: var(--mist); font-weight: 800; color: var(--ink); }
+.wo-xl .z { color: #B7C0CC; }
+.wo-xl .neg { color: #B5121B; font-weight: 800; }
+.wo-xl tr.grp th { background: color-mix(in srgb, var(--c) 14%, #fff); border-left: 4px solid var(--c); font-weight: 800; font-size: 13px; }
+.wo-xl tr.grp th small { display: inline; margin-left: 6px; }
+.wo-xl tr.ln th { padding-left: 22px; }
+.wo-xl tr.city th, .wo-xl tr.city td { background: #F4F6FA; font-weight: 800; color: var(--ink); }
+.wo-xl tr.store th { padding-left: 22px; }
+.wo-xl tr.store th::before { content: "\25B8  "; color: var(--c); }
+.wo-xl tr.tot th, .wo-xl tr.tot td { font-weight: 800; color: var(--ink); border-top: 2px solid var(--ink); background: #fff; }
+.wo-xl tr.left th, .wo-xl tr.left td { background: #FFF8E6; font-weight: 800; }

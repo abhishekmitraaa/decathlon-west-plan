@@ -8,7 +8,7 @@
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const sum = a => a.reduce((x, y) => x + y, 0);
   // rupees: under ₹1 L as K, then L, then Cr
-  const R = n => { const a = Math.abs(n); if (a < 1000) return "₹" + Math.round(n).toLocaleString("en-IN"); if (a < 1e5) return "₹" + +(n / 1e3).toFixed(1) + "K"; if (a >= 1e7) return "₹" + (n / 1e7).toFixed(2) + " Cr"; return "₹" + +(n / 1e5).toFixed(2) + " L"; };
+  const R = n => { if (n < 0) return "-" + R(-n); const a = Math.abs(n); if (a < 1000) return "₹" + Math.round(n).toLocaleString("en-IN"); if (a < 1e5) return "₹" + +(n / 1e3).toFixed(1) + "K"; if (a >= 1e7) return "₹" + (n / 1e7).toFixed(2) + " Cr"; return "₹" + +(n / 1e5).toFixed(2) + " L"; };
   const pct = (a, b) => b ? Math.round(a / b * 100) + "%" : "-";
   const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"], FULL = ["January", "February", "March", "April", "May", "June"];
   const KEY = ["jan", "feb", "mar", "apr", "may", "jun"];
@@ -79,19 +79,46 @@
     </article>`;
   };
 
-  const glance = (D, mi) => {
+  // the Excel view under each state's row: the ad budget by line, then the water money city by city and store by store
+  const SPLIT = SP.split27 || [];
+  const sheet = (d, mi) => {
+    const rows = window.waterBudgetSheet ? window.waterBudgetSheet(d.st) : [];
+    const six = v5 => [0, ...v5];
+    const cls = i => mi === i ? ' class="on"' : "";
+    const cells = (v, sub, neg) => MON.map((_, i) => `<td${cls(i)}>${v[i] ? `<span class="${neg && v[i] < 0 ? "neg" : ""}">${R(v[i])}</span>` : '<span class="z">-</span>'}${sub && sub[i] && v[i] ? `<small>${esc(sub[i])}</small>` : ""}</td>`).join("") + `<td class="t">${sum(v) ? `<span class="${neg && sum(v) < 0 ? "neg" : ""}">${R(sum(v))}</span>` : "-"}</td>`;
+    const head = t => `<tr class="grp"><th colspan="8">${t}</th></tr>`;
+    const wTot = d.w, left = d.ad.map((a, i) => a - wTot[i]);
+    let b = head(`1. ${d.st}'s 2027 ad budget, by line <small>the sheet splits every month the same way</small>`);
+    b += SPLIT.map(([n, p]) => `<tr class="ln"><th>${esc(n)}<small>${p}%</small></th>${cells(d.ad.map(a => a * p / 100))}</tr>`).join("");
+    b += `<tr class="tot"><th>Ad budget</th>${cells(d.ad)}</tr>`;
+    b += head(`2. Water sports, city by city and store by store <small>no water spend in January; pools, flyers and coach kits are paid by the February deadline</small>`);
+    rows.forEach(c => {
+      b += `<tr class="city"><th>${esc(c.city)}<small>${c.ooc ? "out of catchment" : "city total"}</small></th>${cells(six(c.v))}</tr>`;
+      c.lines.forEach(([n, v, sub]) => { b += `<tr class="ln"><th>${esc(n)}<small>city-wide</small></th>${cells(six(v), sub ? ["", ...sub] : null)}</tr>`; });
+      c.stores.forEach(x => { b += `<tr class="store"><th>${esc(x.name)} store<small>${x.parts.map(p => p[2] || p[0].toLowerCase()).join(", ") || "nothing in the sheet"}</small></th>${cells(six(x.v))}</tr>`; });
+    });
+    b += `<tr class="tot"><th>Water total</th>${cells(wTot)}</tr>`;
+    b += `<tr class="left"><th>Ad budget left for everything else<small>ad budget minus water</small></th>${cells(left, null, true)}</tr>`;
+    return `<details class="wo-dd"${VIEW().state === d.st ? " open" : ""}><summary><b>${d.st}: where we invest, month by month</b><span>The Excel view: the ad budget by line, then the water money for every city and store</span><i class="nd-chev" aria-hidden="true"></i></summary>
+      <div class="sb-wrap"><table class="wo-xl" style="--c:${d.c}"><thead><tr><th>${d.st}</th>${MON.map((m, i) => `<th${cls(i)}>${m}</th>`).join("")}<th>Jan to Jun</th></tr></thead><tbody>${b}</tbody></table></div></details>`;
+  };
+
+  const glance = (D, mi, state) => {
     const row = (name, c, ad, w) => `<tr${c ? ` style="--c:${c}"` : ` class="all"`}><th>${name}</th>${MON.map((_, i) => `<td class="${mi === i ? "on" : ""}${w[i] > ad[i] ? " over" : ""}"><b>${R(ad[i])}</b><small>${w[i] ? `water ${R(w[i])} · ${pct(w[i], ad[i])}` : "water -"}</small></td>`).join("")}<td class="t"><b>${R(sum(ad))}</b><small>water ${R(sum(w))} · ${pct(sum(w), sum(ad))}</small></td></tr>`;
     const tAd = MON.map((_, i) => sum(D.map(d => d.ad[i]))), tW = MON.map((_, i) => sum(D.map(d => d.w[i])));
-    return `<div class="panel wo-glance"><h3>The West at a glance<small>2027 ad budget by month, and the water sports part of it</small></h3>
+    return `<div class="panel wo-glance"><h3>${state === "all" ? "The West" : esc(state)} at a glance<small>2027 ad budget by month, and the water sports part of it. Open the dropdown under a state for every line, city and store</small></h3>
       <div class="sb-wrap"><table class="wo-gt"><thead><tr><th></th>${MON.map((m, i) => `<th class="${mi === i ? "on" : ""}">${m}</th>`).join("")}<th>Jan to Jun</th></tr></thead>
-      <tbody>${D.map(d => row(d.st, d.c, d.ad, d.w)).join("")}${row("West", "", tAd, tW)}</tbody></table></div>
+      <tbody>${D.filter(d => state === "all" || d.st === state).map(d => row(d.st, d.c, d.ad, d.w) + `<tr class="wo-ddr"><td colspan="8">${sheet(d, mi)}</td></tr>`).join("")}${state === "all" ? row("West", "", tAd, tW) : ""}</tbody></table></div>
       <p class="wo-note">Ad budget = the 2027 plan on the West plan and 2027 plan pages (ultimate_data_sheet_1, every line: digital, hoardings, in-store, in-mall, events, influencers, free products, flyers). Water = the water sports sheet (WATER_SPORTS.xlsx) as edited in the budget below. Red: water is bigger than the whole month's ad budget.</p></div>`;
   };
 
   const render = () => {
     const { state, view } = VIEW(), mi = view === "h1" ? null : KEY.indexOf(view);
     const D = data(), show = D.filter(d => state === "all" || d.st === state);
-    box.innerHTML = (state === "all" ? glance(D, mi) : "") + show.map((d, j) => stateBlock(d, mi, state === "all" ? j + 1 : D.indexOf(d) + 1, 3)).join("");
+    const open = [...box.querySelectorAll(".wo-dd")].map(x => x.open);
+    box.innerHTML = glance(D, mi, state) + show.map((d, j) => stateBlock(d, mi, state === "all" ? j + 1 : D.indexOf(d) + 1, 3)).join("");
+    const dds = [...box.querySelectorAll(".wo-dd")];
+    if (open.length === dds.length) dds.forEach((x, i) => { x.open = open[i]; });
     box.querySelectorAll(".wo-m").forEach(b => b.addEventListener("click", () => {
       const v = mi != null && KEY[mi] === b.dataset.v ? "h1" : b.dataset.v;
       const btn = document.querySelector(`#w27Seg button[data-q="${v}"]`);
