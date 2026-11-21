@@ -7,7 +7,12 @@
    May 2026; PMC 35 and PCMC pools; VMC and SMC pools named in listings). Pool, hotspot and housing pins outside our own files are
    placed by area, so they are approximate (about 0.5-1 km). Hoarding picks are our proposals, sized to each plan's board count. */
 window.WATER_MAPS = {
+  formats: [
+    ["3D cut-out", "A swimmer, a splash or a pair of goggles breaking out of the frame. Stops people at junctions and gets photographed and shared. Best at the store's own junction and at the slow, jammed crossings where people wait 30 seconds or more. One creative for the whole run; production on top of the site rent.", "Store junctions and slow crossings"],
+    ["Digital screen (DOOH)", "Shared screens on the busiest corridors (SG Highway, Koregaon Park, Hinjewadi, Ring Road). Several creatives and times of day: learn-to-swim offers in the morning school run, family kit in the evening, a new message every month at no reprint cost; a QR code works on it. Paid by the slot or the day.", "Busy corridors and malls"]
+  ],
   criteria: [
+    ["Format first", "3D cut-outs or digital screens only this summer, no plain box boards: they are ignored at the traffic speed we pay for (user, 21 Nov 2026)."],
     ["Who passes", "Parents of school-age children, young professionals and women: swimming's buyers (men 65%, women 35%, juniors 24% of the category). Families first for learn-to-swim."],
     ["On the way to our store", "Inside the store's 10-15 minute drive and on traffic heading towards it, so the board ends in a walk-in, not just a view."],
     ["Pools around it", "At least two or three pools or academies within about 2.5 km, so \"learn to swim near you\" is true; ideally our partner pools, named on the board or the QR page."],
@@ -20,14 +25,14 @@ window.WATER_MAPS = {
   cities: {
     Pune: {
       name: "Pune", center: [18.54, 73.86], zoom: 11,
-      lede: "Five stores and seven live boards. Water is Pune's biggest summer sport: ₹19.76 Cr of water sports from 1 Jan to 8 Nov 2026 (+15.3%), 58% of the West outside MP. The water plan funds 11 boards: Wakad 3, Wagholi 2, Amanora 2, NIBM 1, SGS 1 and 2 out of catchment.",
+      lede: "Five stores and seven live boards. Water is Pune's biggest summer sport: ₹19.76 Cr of water sports from 1 Jan to 8 Nov 2026 (+15.3%), 58% of the West outside MP. The water budget sheet funds 4 boards in February and June and 6 from March to May (₹6 L and ₹9 L a month).",
       facts: [
         ["48", "Municipal pools", "PMC runs 35 (11 shut, Mar 2026), PCMC 13 to 14"],
         ["18", "Pools and academies tied up", "Our AOP partners; the plan signs 58 pools and 80 coaches"],
         ["20,655", "Housing societies", "Registered, 2023; many more not registered"],
         ["111", "Practice places (AOPs)", "Pools 18, racket 32, turfs 34, gyms and yoga 26"],
         ["₹19.76 Cr", "Water sports 2026", "1 Jan to 8 Nov, +15.3%"],
-        ["11", "Water boards in the plan", "7 live today (Winter & Travel)"]
+        ["4 → 6", "Water boards (sheet)", "Feb and Jun 4, Mar-May 6; 7 box boards live today"]
       ],
       hot: [
         ["Hinjewadi IT Park, Phase 1", 18.591, 73.738, "Pune's biggest IT hub: commuters twice a day"],
@@ -46,7 +51,7 @@ window.WATER_MAPS = {
       homes: [
         ["Wakad-Hinjewadi high-rises", 18.596, 73.755], ["Pimple Saudagar-Rahatani", 18.600, 73.796], ["Baner-Balewadi", 18.566, 73.780],
         ["Kharadi-Wagholi townships", 18.572, 73.962], ["Amanora Park Town-Magarpatta", 18.517, 73.932], ["Manjri-Hadapsar new towers", 18.507, 73.968],
-        ["Undri-Mohammadwadi-Handewadi", 18.460, 73.915], ["Kothrud", 18.505, 73.815]
+        ["Undri-Mohammadwadi-Handewadi", 18.460, 73.915], ["Kothrud", 18.505, 73.815], ["Kalyani Nagar-Koregaon Park", 18.545, 73.902], ["Viman Nagar", 18.567, 73.913], ["Deccan-Shivajinagar", 18.520, 73.843]
       ],
       pools: [
         ["AKV Swimming Pool", "partner", 18.5112, 73.9797, "Amanora AOP (ends 2026: renew)"], ["Infinity swimming pool", "partner", 18.5021, 73.9222, "Amanora AOP (renew)"],
@@ -59,23 +64,21 @@ window.WATER_MAPS = {
         ["Kothari International", "partner", 18.5497, 73.9425, "Wagholi AOP"], ["Raj Swimming Pool", "partner", 18.5819, 73.9821, "Wagholi AOP from Feb 2027"],
         ["Club 360", "partner", 18.5484, 73.9349, "Wagholi AOP from Dec 2027"], ["Kavya Swimming Pool", "partner", 18.5581, 73.9432, "Wagholi AOP from Apr 2027"],
         ["Balewadi sports complex pool", "venue", 18.5775, 73.7735, "Shiv Chhatrapati Sports Complex"],
+        ["Deccan Gymkhana club pool", "venue", 18.5160, 73.8380, "Club pool, Deccan"],
         ["PCMC pool, Pimple Gurav", "municipal", 18.5895, 73.8150, "PCMC list (2023)"], ["PCMC pool, Sangvi", "municipal", 18.5780, 73.8180, "PCMC list (2023)"],
         ["PCMC pool, Thergaon", "municipal", 18.6080, 73.7720, "PCMC list (2023)"], ["PCMC pool, Kasarwadi", "municipal", 18.6050, 73.8200, "PCMC list (2023)"],
         ["PCMC pool, Nehrunagar", "municipal", 18.6260, 73.8230, "PCMC list (2023)"], ["PCMC pool, Bhosari", "municipal", 18.6290, 73.8450, "PCMC list (2023)"]
       ],
+      jams: [["Kalyani Nagar junction", 18.548, 73.903, "High-income homes, cafes and offices", "jam"], ["Mundhwa Chowk", 18.533, 73.931, "Traffic Police top 5 hotspot (Nov 2025)", "jam"], ["ABC Farms Chowk", 18.54, 73.918, "Traffic Police top 5 hotspot", "jam"], ["Sancheti Bridge", 18.53, 73.85, "Traffic Police top 5 hotspot", "jam"], ["Navale Bridge", 18.458, 73.826, "Traffic Police top 5 hotspot", "jam"], ["Goodluck Chowk, Deccan", 18.5175, 73.8405, "Shivaji and Tilak Road: most congested (ATMS, Oct 2025)", "jam"], ["Katraj junction", 18.452, 73.858, "One of Pune's busiest junctions", "jam"]],
       picks: [
-        ["1", "Bhumkar Bridge, Wakad", 18.604, 73.752, "Wakad", "keep", "Where Hinjewadi traffic leaves the highway for Wakad. Proswim Academy 2 km away; IT parents pass it twice a day."],
-        ["2", "EuroKids, Wakad", 18.5995, 73.7625, "Wakad", "keep", "On the school run, 300 m from the store: parents of the kids who learn to swim in April and May."],
-        ["3", "Kalewadi Phata, Pimple Saudagar", 18.604, 73.787, "Wakad", "new", "Dense PCMC societies and the Thergaon, Pimple Gurav and Sangvi pools around it; 3 km to Wakad. No board covers this side today."],
-        ["4", "Kesnand Phata, Wagholi", 18.5814, 73.9865, "Wagholi", "keep", "First board on the way in from Nagar and the new townships; Raj Swimming Pool (from Feb 2027) next door."],
-        ["5", "EON IT Park junction, Kharadi", 18.552, 73.944, "Wagholi", "new", "Three partner pools within 1.5 km (Kothari, Kavya, Club 360) and the EON IT crowd. Could replace the Hyundai board on Nagar Road."],
-        ["6", "Amanora Road", 18.5185, 73.9375, "Amanora", "keep", "Seven partner pools in the Amanora catchment; office and mall traffic heading past the store."],
-        ["7", "Solapur Road at Manjri", 18.506, 73.965, "Amanora", "new", "AKV, Core Fitness and Fitlife pools within 1 km and the new Manjri towers: the densest pool cluster we have."],
-        ["8", "Sanvidhan Chowk, NIBM", 18.474, 73.899, "NIBM", "keep", "Main NIBM-Undri junction; Ganga Dhaam, Ileseum and Varunah pools within 4 km."],
-        ["9", "Swargate", 18.501, 73.862, "SGS Mall", "new", "Old-city traffic and the bus depot; the Nilu Phule pool partner is here. 2 km to SGS."],
-        ["10", "Baner Road", 18.56, 73.787, "Out of catchment", "keep", "Young, high-income belt with Bluewater Academy and the Balewadi pool; no store of its own, pulls to Wakad and online."],
-        ["11", "Kothrud, Karve Road", 18.507, 73.815, "Out of catchment", "new", "The family belt of our Kothrud persona study, with no store: drives online orders and SGS. We have no pool partner there yet: sign 2 or 3 Kothrud pools before this board goes up."]
+        ["1", "Koregaon Park and Kalyani Nagar, North Main Road", 18.546, 73.900, "Out of catchment (Amanora, Wagholi)", "new", "Pune's cafe and nightlife belt and its richest families. Digital screens are already sold here (Koregaon Park is a listed DOOH corridor). Shree Swimming Pool and club pools nearby; drives online, express delivery and Amanora.", "Digital screen", "Feb-Jun"],
+        ["2", "Viman Nagar, Phoenix Marketcity on Nagar Road", 18.562, 73.917, "Wagholi", "new", "Pune's busiest mall beside the airport road; Shree Swimming Pool (our Wagholi partner) is 200 m away; 7 km to Wagholi.", "Digital screen", "Feb-Jun"],
+        ["3", "Hinjewadi entry, Bhumkar Chowk", 18.604, 73.752, "Wakad", "keep", "Where Hinjewadi's IT traffic leaves the highway for Wakad, twice a day. Turn today's box board into a 3D cut-out (a swimmer coming out of the frame). Proswim Academy 2 km.", "3D cut-out", "Feb-Jun"],
+        ["4", "Mundhwa Chowk", 18.533, 73.931, "Amanora", "new", "One of the Traffic Police's top 5 congestion hotspots (Nov 2025): the junction of Kharadi, Koregaon Park and Magarpatta. Amanora's partner pools are 2 to 5 km away.", "3D cut-out", "Feb-Jun"],
+        ["5", "Goodluck Chowk, Deccan (FC Road)", 18.5175, 73.8405, "SGS Mall", "new", "Busiest junction on Pune's most congested roads, Shivaji and Tilak Road (ATMS report, Oct 2025); students and old-city families; Deccan Gymkhana has digital screens. 4 km to SGS.", "Digital screen", "Mar-May"],
+        ["6", "Baner Road at Balewadi High Street", 18.56, 73.787, "Kothrud / Baner (sheet)", "keep", "Young, high-income belt with Bluewater Academy and the Balewadi pool; no store of its own. Turn the live Baner board into a 3D cut-out for the peak.", "3D cut-out", "Mar-May"]
       ],
+      also: "Also weighed: Sancheti Bridge, ABC Farms Chowk, Navale Bridge (all Traffic Police top 5), Katraj junction, Kalewadi Phata, EON Kharadi, Hadapsar Gadital, Sanvidhan Chowk (NIBM, live board).",
       note: "Pune counts: our partnerships file and PUNE_HOT (PMC and PCMC pools: Punekar News, Free Press Journal, 2025-26; societies: co-operative department, 2023). PCMC pool pins by area (2023 list)."
     },
     Ahmedabad: {
@@ -87,7 +90,7 @@ window.WATER_MAPS = {
         ["₹7.44 Cr", "Water sports 2026", "1 Jan to 8 Nov, +11.9%"],
         ["75", "AOPs in the 2027 plan", "Nexus 37, Motera 38; Motera signed 10 in Nov 2026"],
         ["5", "Academies in the Swim Project", "Plus 45 coaches for Gujarat"],
-        ["3", "Water boards (our proposal)", "2 Ahmedabad boards today, site to be confirmed"]
+        ["2 → 3", "Water boards (sheet)", "₹3.5 L to ₹4.5 L a month"]
       ],
       hot: [
         ["SG Highway, Iscon to Thaltej", 23.030, 72.507, "The city's main west corridor: offices, malls, showrooms"],
@@ -114,11 +117,13 @@ window.WATER_MAPS = {
         ["Veer Savarkar Sports Complex, aquatics", "venue", 23.0120, 72.5640, "Senior Nationals, 16-21 Jun 2026; CWG 2030 venue"],
         ["Eklavya Swimming Pool, Thaltej", "academy", 23.0500, 72.5010, "Classes for beginners and women's batches"]
       ],
+      jams: [["Iskcon Cross Road, SG Highway", 23.0255, 72.507, "SG Highway: 130+ jams in a week (Jul 2024)", "jam"], ["Shivranjani Cross Road", 23.0255, 72.5295, "CRRI 2026 flyover list", "jam"], ["Shyamal Cross Road", 23.013, 72.528, "Third most congested of 25 junctions", "jam"], ["Memco", 23.051, 72.64, "Most congested of 25 junctions", "jam"], ["Victoria Garden, Ellisbridge", 23.022, 72.567, "Second most congested", "jam"], ["Helmet Circle", 23.044, 72.545, "Busy Memnagar crossing", "jam"]],
       picks: [
-        ["1", "Visat Circle, Chandkheda", 23.100, 72.583, "Motera", "new", "North junction 1.5 km from Motera: Chandkheda and Motera families and Gandhinagar traffic. The nearest civic pool (Vinu Mankad, Ranip) is about 3 km away."],
-        ["2", "Thaltej crossroads, Sindhu Bhavan Road", 23.046, 72.505, "Nexus", "new", "Young, high-income west with the Eklavya pool next to it; 3 km to Nexus."],
-        ["3", "Shivranjani, Satellite", 23.026, 72.530, "Nexus", "new", "Satellite and Jodhpur families and Prahlad Nagar offices, 2 km south of Nexus, on the way to the store. No pool on our list nearby: pair it with the Swim Project academies."]
+        ["1", "SG Highway at Iskcon Cross Road", 23.0255, 72.507, "Nexus", "new", "SG Highway is the city's most jammed road (130+ jams in one week, Ahmedabad Mirror, Jul 2024), with big digital screens along it; offices and malls; 4 km to Nexus.", "Digital screen", "Feb-Jun"],
+        ["2", "Shivranjani Cross Road, Satellite", 23.0255, 72.5295, "Nexus", "new", "On the CRRI 2026 list of junctions needing flyovers and among the city's busiest crossings; Satellite and Jodhpur families; 2 km south of Nexus.", "3D cut-out", "Feb-Jun"],
+        ["3", "Visat Circle, Chandkheda", 23.1, 72.583, "Motera", "new", "North junction 1.5 km from Motera on the Gandhinagar road; Chandkheda and Motera families; stadium traffic on match days.", "3D cut-out", "Mar-May"]
       ],
+      also: "Also weighed: Shyamal Cross Road and Memco (the two most congested junctions in a 25-junction study; Memco is far east of our stores), Victoria Garden at Ellisbridge (near the Veer Savarkar pool), Helmet Circle, Vastrapur.",
       note: "AMC pools: AMC via Lokmat Times and Punjab Kesari (May 2026); pool names from listings, placed by area. Hotspots and housing belts by area. Water sports: Tableau, 1 Jan to 8 Nov 2026."
     },
     Baroda: {
@@ -130,7 +135,7 @@ window.WATER_MAPS = {
         ["2", "Swim classes listed", "Baroda Swim Front (Gotri), Sama Indoor Sports Complex"],
         ["6 → 34", "AOPs: live → 2027 plan", ""],
         ["4", "Boards live", "Akota, Fatehgunj, Gotri, Subhanpura"],
-        ["3", "Water boards (our proposal)", "Switch 2 live boards to water, add Vasna-Bhayli"]
+        ["4", "Water boards (sheet)", "₹1.5 L a month for all 4"]
       ],
       hot: [
         ["Alkapuri and RC Dutt Road", 22.310, 73.168, "The city's main business and shopping street"],
@@ -154,11 +159,14 @@ window.WATER_MAPS = {
         ["Sama Indoor Sports Complex", "venue", 22.3430, 73.1880, "Swim classes for all ages"], ["Baroda Swim Front, Gotri", "academy", 22.3140, 73.1390, "One-to-one classes"],
         ["Alkapuri Club", "academy", 22.3090, 73.1690, "Club pool"]
       ],
+      jams: [["Genda Circle", 22.3105, 73.1645, "Long morning and evening queues", "jam"], ["Chakli Circle", 22.3135, 73.153, "Jams under the overbridge", "jam"], ["Yoga Circle", 22.299, 73.143, "180-second signal wait", "jam"], ["Golden Chowkdi", 22.333, 73.214, "Heavy 7-10 am and 4-9 pm", "jam"]],
       picks: [
-        ["1", "Gotri Bridge, towards Natubhai Circle", 22.312, 73.144, "Baroda", "keep", "Live board in the growing west, 1 km from Baroda Swim Front: switch it to water from 15 Mar."],
-        ["2", "Akota, DMart parking terrace", 22.2968, 73.1663, "Baroda", "keep", "Families on their weekly shop, 2 km from the store: switch to water and the family kit offer."],
-        ["3", "Vasna-Bhayli Road", 22.292, 73.133, "Baroda", "new", "New gated communities with club pools and young families; 4 km to the store. No board here today."]
+        ["1", "Genda Circle, Alkapuri", 22.3105, 73.1645, "Baroda", "new", "Long queues every morning and evening (DeshGujarat, Jun 2024); 0.5 km from our store; Sardar Baug pool 1 km.", "3D cut-out", "Feb-Jun"],
+        ["2", "Chakli Circle, Race Course road", 22.3135, 73.153, "Baroda", "new", "Jams under the overbridge raised at the VMC budget meeting; between Gotri, Subhanpura and Alkapuri families.", "Digital screen", "Feb-Jun"],
+        ["3", "Gotri Bridge, towards Natubhai Circle", 22.312, 73.144, "Baroda", "keep", "Live board in the growing west, 1 km from Baroda Swim Front: add a 3D cut-out for water from 15 Mar.", "3D cut-out", "Feb-Jun"],
+        ["4", "Akota, Old Padra Road", 22.2968, 73.1663, "Baroda", "keep", "Families on their weekly shop above the DMart car park, 2 km from the store; switch to water with a cut-out extension.", "3D cut-out", "Feb-Jun"]
       ],
+      also: "Also weighed: Yoga Circle (180-second signal), Golden Chowkdi (heavy 7-10 am and 4-9 pm traffic), Fatehgunj and Subhanpura (live boards, stay on running). Budget check: the sheet gives ₹1.5 L a month for 4 boards (₹37,500 each), tight for 3D or digital: 2 hero boards (Genda and Chakli) may do more than 4.",
       note: "Pools named in VMC and listing pages (not complete), placed by area. Fatehgunj and Subhanpura stay on running and students; Gotri and Akota go to water (our proposal)."
     },
     Surat: {
@@ -170,7 +178,7 @@ window.WATER_MAPS = {
         ["85", "Housing and society sites mapped", "Near Adajan: 31 societies, 54 housing"],
         ["77", "Sports places mapped", "37 clubs and academies, 25 turfs, pools and grounds"],
         ["10 + 36", "AOPs", "10 at Adajan; Dumas 36 in the 2027 plan"],
-        ["3", "Water boards (our proposal)", "Adajan 2, Vesu 1"]
+        ["4", "Water boards (sheet)", "₹6 L a month"]
       ],
       hot: "adajan",
       homes: "adajan",
@@ -183,11 +191,14 @@ window.WATER_MAPS = {
         ["SMC ladies pool, Athwa Gate", "municipal", 21.1850, 72.8150, "SMC (listing)"], ["SMC Swimming Pool (east)", "municipal", 21.22476, 72.88385, "OpenStreetMap"],
         ["SMC Swimming Pool (south)", "municipal", 21.15095, 72.80092, "OpenStreetMap"]
       ],
+      jams: [["SVNIT Circle", 21.1665, 72.785, "Busiest in Athwa zone (SMC, Jan 2026)", "jam"], ["Kargil Chowk, Piplod", 21.163, 72.795, "Busiest in Athwa zone (SMC, Jan 2026)", "jam"], ["Athwa Lines to Maan Darwaja, Ring Road", 21.18, 72.815, "Full jam, metro works (Oct 2026)", "jam"], ["Hirabag junction", 21.214, 72.861, "Peak-hour congestion (SMC ramp plan)", "jam"], ["Nilgiri Circle", 21.196, 72.877, "Schools and trucks", "jam"]],
       picks: [
-        ["1", "Pal Umra Bridge, towards SVNIT", 21.169, 72.788, "Adajan", "keep", "The planned year-long anchor between Adajan, Piplod and Vesu; Pal and Vir Savarkar pools within 3 km. Water creative from 15 Mar."],
-        ["2", "Madhuvan Circle, facing TGB", 21.1911, 72.7884, "Adajan", "new", "Best-scoring site in the Adajan plan (86): store junction with 8 IT, 8 sports and 7 housing sites within 500 m; SMC Pal pool 1 km."],
-        ["3", "VIP Road, Vesu-Althan", 21.152, 72.792, "Dumas", "new", "Premium Vesu homes with society pools and the SMC Althan pool; 64% of these homes already shop at Dumas, 6 km away."]
+        ["1", "SVNIT Circle, Piplod", 21.1665, 72.785, "Adajan and Dumas", "new", "Among the busiest junctions in Athwa zone (SMC flyover plan, Jan 2026): the traffic of the Pal-Umra and cable bridges; Piplod and Vesu families. Pal and Vir Savarkar pools within 3 km.", "3D cut-out", "Feb-Jun"],
+        ["2", "Madhuvan Circle, Adajan", 21.1911, 72.7884, "Adajan", "new", "Best-scoring site in the Adajan plan (86): the store's own junction, with 8 IT, 8 sports and 7 housing sites within 500 m; SMC Pal pool 1 km.", "3D cut-out", "Feb-Jun"],
+        ["3", "Athwa Lines to Majura Gate, Ring Road", 21.18, 72.815, "Dumas", "new", "The Ring Road jam from Athwa Lines to Maan Darwaja (Patrika, Oct 2026): textile-market commuters and the city centre; SMC ladies pool at Athwa Gate.", "Digital screen", "Feb-Jun"],
+        ["4", "VIP Road, Vesu-Althan", 21.152, 72.792, "Dumas", "new", "Premium Vesu homes with society pools and the SMC Althan pool; 64% of these homes already shop at Dumas, 6 km away.", "Digital screen", "Feb-Jun"]
       ],
+      also: "Also weighed: Kargil Chowk (busy, but 1 km from SVNIT Circle: same route), Hirabag and Varachha (far east), Nilgiri Circle, Pal-Umra Bridge (planned box board: replaced by SVNIT Circle).",
       note: "Surat data: Adajan catchment and opening-plan workbook (Oct 2026), hotspots, housing and sites already on this site. SMC pools from listings, placed by area; four from the workbook and OpenStreetMap."
     }
   }
@@ -205,7 +216,7 @@ window.WATER_MAPS = {
     const c = W.cities[k];
     const stores = (window.DATA?.stores || []).filter(s => STORE_CITY[k].includes(s.city)).map(s => [s.name === "Surat" ? "Dumas Road" : s.name, s.lat, s.lon]);
     if (k === "Surat" && A.store) stores.push(["Adajan (opens 27 Dec)", A.store[0], A.store[1]]);
-    const hot = c.hot === "adajan" ? (A.cityHot || []).map(h => [h[1], h[2], h[3], `Crowd score ${h[4]}; ${h[5]} km from Adajan`]) : c.hot;
+    const hot = (c.hot === "adajan" ? (A.cityHot || []).map(h => [h[1], h[2], h[3], `Crowd score ${h[4]}; ${h[5]} km from Adajan`]) : c.hot).concat(c.jams || []);
     const homes = c.homes === "adajan" ? (A.city || []).filter(x => x[1] === "live").map(x => [x[0], x[2], x[3], x[4]]) : c.homes;
     const boards = (window.HOARDINGS || []).filter(h => h.city === BOARD_CITY[k] && h.lat).map(h => [h.loc, h.lat, h.lon, h.status, h.why]);
     const current = (window.HOARDINGS || []).filter(h => h.city === BOARD_CITY[k]).map((h, i) => ({ ...h, tag: String.fromCharCode(65 + i) }));
@@ -216,17 +227,18 @@ window.WATER_MAPS = {
     const pt = [p[2], p[3]];
     const pools = c.pools.filter(x => KM(pt, [x[2], x[3]]) <= 2.5).length;
     const homes = c.homes.filter(x => KM(pt, [x[1], x[2]]) <= 3).length;
-    const hot = c.hot.filter(x => KM(pt, [x[1], x[2]]) <= 2.5).length;
+    const hot = c.hot.filter(x => KM(pt, [x[1], x[2]]) <= 2.5).length, jam = c.hot.filter(x => x[4] === "jam" && KM(pt, [x[1], x[2]]) <= 1.5).length;
     const st = c.stores.map(s => [s[0], KM(pt, [s[1], s[2]])]).sort((a, b) => a[1] - b[1])[0];
-    return { pools, homes, hot, st };
+    return { pools, homes, hot, jam, st };
   };
 
   const KEYS = Object.keys(W.cities);
   const LK = n => "₹" + (n / 1e5).toLocaleString("en-IN", { maximumFractionDigits: 2 }) + " L";
   const STATUS = { live: "Live", nov: "Booked: goes live in November", plan: "Planned, not booked" };
-  box.innerHTML = `<div class="seg wm-seg" role="group" aria-label="Choose city">${KEYS.map((k, i) => `<button type="button" data-k="${k}" aria-pressed="${i === 0}">${esc(W.cities[k].name)}</button>`).join("")}</div>
+  box.innerHTML = `<div class="wm-formats"><h4>This summer: 3D cut-outs or digital screens, no plain box boards</h4><div class="wm-fmt">${(W.formats || []).map(([n, t, w], i) => `<article class="${i ? "dg" : "td"}"><b>${esc(n)}</b><p>${esc(t)}</p><small>Use it for: ${esc(w)}</small></article>`).join("")}</div></div>
+    <div class="seg wm-seg" role="group" aria-label="Choose city">${KEYS.map((k, i) => `<button type="button" data-k="${k}" aria-pressed="${i === 0}">${esc(W.cities[k].name)}</button>`).join("")}</div>
     <div class="wm-body"></div>
-    <details class="panel pm-d wm-crit"><summary><b>What we check before we suggest a hoarding</b><span>8 tests, applied to every pick</span><i class="nd-chev" aria-hidden="true"></i></summary>
+    <details class="panel pm-d wm-crit"><summary><b>What we check before we suggest a hoarding</b><span>${W.criteria.length} tests, applied to every pick</span><i class="nd-chev" aria-hidden="true"></i></summary>
       <ol class="wm-crit-l">${W.criteria.map(([h, t]) => `<li><b>${esc(h)}</b><span>${esc(t)}</span></li>`).join("")}</ol></details>`;
   const body = box.querySelector(".wm-body");
   let map = null;
@@ -243,15 +255,17 @@ window.WATER_MAPS = {
             <div class="wm-cc-b"><b>${esc(h.loc)}</b><small>${esc(h.size)} · ${esc(h.dur || "")} · <strong>${LK(h.cost || 0)} a month</strong></small><p>${esc(h.why || "")}</p>
             <span class="wm-cc-plan ${pk ? "keep" : "free"}">${pk ? `Water plan: keep it, board ${esc(pk[0])}` : h.lat ? "Water plan: not on the water shortlist (free for other campaigns)" : "Water plan: place it once the site is known"}</span>${h.lat && !h.exact ? '<em>Pin approximate</em>' : ""}</div></article>`; }).join("")}</div>` : ""}</div>
       <div class="wm-grid"><div class="wm-mapwrap"><div class="wm-map" id="wmMap" role="img" aria-label="Map of ${esc(c.name)}: stores, boards, pools, crowd hotspots, housing and suggested hoardings"></div>
-        <p class="wm-key"><span><i class="k-st"></i>Our stores</span><span><i class="k-pick"></i>Suggested board</span><span><i class="k-live"></i>Current hoarding (click for the photo)</span><span><i class="k-pool"></i>Partner pool</span><span><i class="k-mun"></i>Municipal or other pool, academy</span><span><i class="k-hot"></i>Crowd hotspot</span><span><i class="k-home"></i>Housing belt</span></p></div>
+        <p class="wm-key"><span><i class="k-st"></i>Our stores</span><span><i class="k-pick"></i>Suggested board</span><span><i class="k-live"></i>Current hoarding (click for the photo)</span><span><i class="k-pool"></i>Partner pool</span><span><i class="k-mun"></i>Municipal or other pool, academy</span><span><i class="k-hot"></i>Crowd hotspot</span><span><i class="k-jam"></i>Busy junction (traffic data)</span><span><i class="k-home"></i>Housing belt</span></p></div>
         <div class="wm-picks"><h4>Where we put the water boards, and why</h4>
-          ${picks.map(({ p, a }) => `<article class="wm-pick" data-i="${esc(p[0])}"><div class="wm-ph"><b class="wm-n">${esc(p[0])}</b><div><b>${esc(p[1])}</b><small>${esc(p[4])} · ${p[5] === "keep" ? "keep the live or planned board" : "new site"}</small></div><span class="wm-tag ${p[5]}">${p[5] === "keep" ? "Keep" : "New"}</span></div>
+          ${picks.map(({ p, a }) => `<article class="wm-pick" data-i="${esc(p[0])}"><div class="wm-ph"><b class="wm-n">${esc(p[0])}</b><div><b>${esc(p[1])}</b><small>${esc(p[4])} · ${p[5] === "keep" ? "keep the live or planned board" : "new site"}</small></div><span class="wm-tag ${p[5]}">${p[5] === "keep" ? "Keep site" : "New"}</span></div>
+            <div class="wm-fmt-row"><span class="wm-f ${/3D/.test(p[7] || "") ? "td" : "dg"}">${esc(p[7] || "")}</span><span class="wm-mo">${esc(p[8] || "")}</span></div>
             <p>${esc(p[6])}</p>
-            <ul class="wm-chips"><li><b>${a.pools}</b> pools within 2.5 km</li><li><b>${a.homes}</b> housing belts within 3 km</li><li><b>${a.hot}</b> crowd spots within 2.5 km</li>${a.st ? `<li><b>${a.st[1].toFixed(1)} km</b> to ${esc(a.st[0])}</li>` : ""}</ul></article>`).join("")}
+            <ul class="wm-chips"><li><b>${a.pools}</b> pools within 2.5 km</li><li><b>${a.homes}</b> housing belts within 3 km</li><li><b>${a.hot}</b> crowd spots within 2.5 km</li>${a.jam ? `<li class="jam"><b>${a.jam}</b> busy junction${a.jam > 1 ? "s" : ""} (traffic data) within 1.5 km</li>` : ""}${a.st ? `<li><b>${a.st[1].toFixed(1)} km</b> to ${esc(a.st[0])}</li>` : ""}</ul></article>`).join("")}
+          ${c.also ? `<p class="wm-also">${esc(c.also)}</p>` : ""}
         </div></div>
-      <details class="panel pm-d wm-list"><summary><b>Every pool, academy and hotspot on the map</b><span>${c.pools.length} pools and academies · ${c.hot.length} crowd hotspots · ${c.homes.length} housing belts</span><i class="nd-chev" aria-hidden="true"></i></summary>
+      <details class="panel pm-d wm-list"><summary><b>Every pool, academy, hotspot and busy junction on the map</b><span>${c.pools.length} pools and academies · ${c.hot.length} crowd hotspots · ${c.homes.length} housing belts</span><i class="nd-chev" aria-hidden="true"></i></summary>
         <div class="wm-cols"><div><h5>Pools and academies</h5><ul>${c.pools.map(x => `<li><i class="${x[1] === "partner" ? "k-pool" : "k-mun"}"></i><b>${esc(x[0])}</b><small>${esc(x[4])}</small></li>`).join("")}</ul></div>
-          <div><h5>Crowd hotspots</h5><ul>${c.hot.map(x => `<li><i class="k-hot"></i><b>${esc(x[0])}</b><small>${esc(x[3] || "")}</small></li>`).join("")}</ul>
+          <div><h5>Crowd hotspots</h5><ul>${c.hot.map(x => `<li><i class="${x[4] === "jam" ? "k-jam" : "k-hot"}"></i><b>${esc(x[0])}</b><small>${esc(x[3] || "")}</small></li>`).join("")}</ul>
           <h5>Housing belts</h5><ul>${c.homes.map(x => `<li><i class="k-home"></i><b>${esc(x[0])}</b>${x[3] ? `<small>${esc(x[3])}</small>` : ""}</li>`).join("")}</ul></div></div>
         <p class="wm-note">${esc(c.note)}</p></details>`;
     if (map) { map.remove(); map = null; }
@@ -260,16 +274,16 @@ window.WATER_MAPS = {
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "&copy; OpenStreetMap contributors" }).addTo(map);
     const dot = (ll, col, r, tip, extra = {}) => L.circleMarker(ll, { radius: r, color: "#fff", weight: 1.5, fillColor: col, fillOpacity: 0.92, ...extra }).bindTooltip(tip);
     const homes = L.layerGroup(c.homes.map(h => L.circle([h[1], h[2]], { radius: 1100, color: "#1BAA5E", weight: 1, fillColor: "#1BAA5E", fillOpacity: 0.12 }).bindTooltip(`<b>${esc(h[0])}</b>${h[3] ? "<br>" + esc(h[3]) : ""}`)));
-    const hot = L.layerGroup(c.hot.map(h => dot([h[1], h[2]], "#F28C28", 6, `<b>${esc(h[0])}</b><br>${esc(h[3] || "")}`)));
+    const hot = L.layerGroup(c.hot.map(h => dot([h[1], h[2]], h[4] === "jam" ? "#D92D20" : "#F28C28", h[4] === "jam" ? 7 : 6, `<b>${esc(h[0])}</b><br>${esc(h[3] || "")}${h[4] === "jam" ? "<br><i>Busy junction, traffic data</i>" : ""}`)));
     const pools = L.layerGroup(c.pools.map(p => dot([p[2], p[3]], p[1] === "partner" ? "#0096C7" : "#7FB9D6", p[1] === "partner" ? 6 : 5, `<b>${esc(p[0])}</b><br>${esc(p[4])}`)));
     const rings = L.layerGroup(c.stores.flatMap(s => [5, 10].map(r => L.circle([s[1], s[2]], { radius: r * 1000, color: "#3643BA", weight: 1, dashArray: "5 6", fill: false, interactive: false }))));
     const stores = L.layerGroup(c.stores.map(s => L.marker([s[1], s[2]], { icon: L.divIcon({ className: "wm-st-ic", html: "D", iconSize: [26, 26], iconAnchor: [13, 13] }), zIndexOffset: 900 }).bindTooltip(`<b>Decathlon ${esc(s[0])}</b>`, { permanent: true, direction: "top", offset: [0, -12], className: "wm-st-tip" })));
     const curM = {};
     const live = L.layerGroup(c.current.filter(h => h.lat).map(h => (curM[h.tag] = L.marker([h.lat, h.lon], { icon: L.divIcon({ className: "map-board wm-cur-ic", html: `<i>${h.tag}</i>`, iconSize: [20, 20], iconAnchor: [24, 24], popupAnchor: [-14, -24] }), zIndexOffset: 1100 })
       .bindPopup(`${h.img ? `<img src="assets/img/${esc(h.img)}" alt="" style="width:220px;border-radius:6px;display:block;margin-bottom:6px">` : ""}<b>${h.tag}. ${esc(h.loc)}</b><br>${esc(h.size)}, ${LK(h.cost || 0)} a month<br>${STATUS[h.status] || esc(h.status)}${h.dur ? ", " + esc(h.dur) : ""}${h.exact ? "" : "<br><small>Pin is approximate</small>"}`))));
-    const pk = L.layerGroup(c.picks.map(p => L.marker([p[2], p[3]], { icon: L.divIcon({ className: "wm-pick-ic " + p[5], html: esc(p[0]), iconSize: [24, 24], iconAnchor: [12, 12] }), zIndexOffset: 1200 }).bindTooltip(`<b>${esc(p[0])}. ${esc(p[1])}</b><br>${esc(p[6])}`)));
+    const pk = L.layerGroup(c.picks.map(p => L.marker([p[2], p[3]], { icon: L.divIcon({ className: "wm-pick-ic " + p[5], html: esc(p[0]), iconSize: [24, 24], iconAnchor: [12, 12] }), zIndexOffset: 1200 }).bindTooltip(`<b>${esc(p[0])}. ${esc(p[1])}</b><br>${esc(p[7] || "")}, ${esc(p[8] || "")}<br>${esc(p[6])}`)));
     [homes, rings, hot, pools, live, stores, pk].forEach(g => g.addTo(map));
-    L.control.layers(null, { "Suggested boards": pk, "Current hoardings": live, "Pools and academies": pools, "Crowd hotspots": hot, "Housing belts": homes, "Store rings, 5 and 10 km": rings, "Stores": stores }, { collapsed: true }).addTo(map);
+    L.control.layers(null, { "Suggested boards": pk, "Current hoardings": live, "Pools and academies": pools, "Crowd hotspots and busy junctions": hot, "Housing belts": homes, "Store rings, 5 and 10 km": rings, "Stores": stores }, { collapsed: true }).addTo(map);
     const all = [...c.stores.map(s => [s[1], s[2]]), ...c.picks.map(p => [p[2], p[3]]), ...c.pools.map(p => [p[2], p[3]])];
     map.fitBounds(L.latLngBounds(all), { padding: [24, 24], maxZoom: 13 });
     body.querySelectorAll(".wm-cc").forEach(el => el.addEventListener("click", () => {
