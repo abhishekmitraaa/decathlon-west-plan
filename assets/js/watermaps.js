@@ -208,7 +208,8 @@ window.WATER_MAPS = {
     const hot = c.hot === "adajan" ? (A.cityHot || []).map(h => [h[1], h[2], h[3], `Crowd score ${h[4]}; ${h[5]} km from Adajan`]) : c.hot;
     const homes = c.homes === "adajan" ? (A.city || []).filter(x => x[1] === "live").map(x => [x[0], x[2], x[3], x[4]]) : c.homes;
     const boards = (window.HOARDINGS || []).filter(h => h.city === BOARD_CITY[k] && h.lat).map(h => [h.loc, h.lat, h.lon, h.status, h.why]);
-    return { ...c, stores, hot, homes, boards };
+    const current = (window.HOARDINGS || []).filter(h => h.city === BOARD_CITY[k]).map((h, i) => ({ ...h, tag: String.fromCharCode(65 + i) }));
+    return { ...c, stores, hot, homes, boards, current };
   };
   // what each pick has around it, measured from the pins on the map
   const around = (c, p) => {
@@ -221,6 +222,8 @@ window.WATER_MAPS = {
   };
 
   const KEYS = Object.keys(W.cities);
+  const LK = n => "₹" + (n / 1e5).toLocaleString("en-IN", { maximumFractionDigits: 2 }) + " L";
+  const STATUS = { live: "Live", nov: "Booked: goes live in November", plan: "Planned, not booked" };
   box.innerHTML = `<div class="seg wm-seg" role="group" aria-label="Choose city">${KEYS.map((k, i) => `<button type="button" data-k="${k}" aria-pressed="${i === 0}">${esc(W.cities[k].name)}</button>`).join("")}</div>
     <div class="wm-body"></div>
     <details class="panel pm-d wm-crit"><summary><b>What we check before we suggest a hoarding</b><span>8 tests, applied to every pick</span><i class="nd-chev" aria-hidden="true"></i></summary>
@@ -234,8 +237,13 @@ window.WATER_MAPS = {
     const picks = c.picks.map(p => ({ p, a: around(c, p) }));
     body.innerHTML = `<p class="wm-lede">${esc(c.lede)}</p>
       <div class="wm-facts">${c.facts.map(([v, l, n]) => `<div><b>${esc(v)}</b><span>${esc(l)}</span>${n ? `<small>${esc(n)}</small>` : ""}</div>`).join("")}</div>
+      <div class="wm-cur"><h4>Current hoardings in ${esc(c.name)}<span>${c.current.length ? `${c.current.length} board${c.current.length > 1 ? "s" : ""} · ${LK(c.current.reduce((a, h) => a + (h.cost || 0), 0))} a month` : "none booked yet"}</span></h4>
+        ${c.current.length ? `<div class="wm-cur-grid">${c.current.map(h => { const pk = h.lat ? c.picks.find(p => p[5] === "keep" && KM([h.lat, h.lon], [p[2], p[3]]) < 0.6) : null;
+          return `<article class="wm-cc" data-t="${h.tag}"><div class="wm-cc-img">${h.img ? `<img src="assets/img/${esc(h.img)}" alt="Hoarding: ${esc(h.loc)}" loading="lazy">` : `<span class="wm-cc-noimg">Site and photo to be confirmed</span>`}<b class="wm-cc-tag">${h.tag}</b><span class="wm-cc-st ${esc(h.status)}">${STATUS[h.status] || esc(h.status)}</span></div>
+            <div class="wm-cc-b"><b>${esc(h.loc)}</b><small>${esc(h.size)} · ${esc(h.dur || "")} · <strong>${LK(h.cost || 0)} a month</strong></small><p>${esc(h.why || "")}</p>
+            <span class="wm-cc-plan ${pk ? "keep" : "free"}">${pk ? `Water plan: keep it, board ${esc(pk[0])}` : h.lat ? "Water plan: not on the water shortlist (free for other campaigns)" : "Water plan: place it once the site is known"}</span>${h.lat && !h.exact ? '<em>Pin approximate</em>' : ""}</div></article>`; }).join("")}</div>` : ""}</div>
       <div class="wm-grid"><div class="wm-mapwrap"><div class="wm-map" id="wmMap" role="img" aria-label="Map of ${esc(c.name)}: stores, boards, pools, crowd hotspots, housing and suggested hoardings"></div>
-        <p class="wm-key"><span><i class="k-st"></i>Our stores</span><span><i class="k-pick"></i>Suggested board</span><span><i class="k-live"></i>Live or planned board</span><span><i class="k-pool"></i>Partner pool</span><span><i class="k-mun"></i>Municipal or other pool, academy</span><span><i class="k-hot"></i>Crowd hotspot</span><span><i class="k-home"></i>Housing belt</span></p></div>
+        <p class="wm-key"><span><i class="k-st"></i>Our stores</span><span><i class="k-pick"></i>Suggested board</span><span><i class="k-live"></i>Current hoarding (click for the photo)</span><span><i class="k-pool"></i>Partner pool</span><span><i class="k-mun"></i>Municipal or other pool, academy</span><span><i class="k-hot"></i>Crowd hotspot</span><span><i class="k-home"></i>Housing belt</span></p></div>
         <div class="wm-picks"><h4>Where we put the water boards, and why</h4>
           ${picks.map(({ p, a }) => `<article class="wm-pick" data-i="${esc(p[0])}"><div class="wm-ph"><b class="wm-n">${esc(p[0])}</b><div><b>${esc(p[1])}</b><small>${esc(p[4])} · ${p[5] === "keep" ? "keep the live or planned board" : "new site"}</small></div><span class="wm-tag ${p[5]}">${p[5] === "keep" ? "Keep" : "New"}</span></div>
             <p>${esc(p[6])}</p>
@@ -256,12 +264,17 @@ window.WATER_MAPS = {
     const pools = L.layerGroup(c.pools.map(p => dot([p[2], p[3]], p[1] === "partner" ? "#0096C7" : "#7FB9D6", p[1] === "partner" ? 6 : 5, `<b>${esc(p[0])}</b><br>${esc(p[4])}`)));
     const rings = L.layerGroup(c.stores.flatMap(s => [5, 10].map(r => L.circle([s[1], s[2]], { radius: r * 1000, color: "#3643BA", weight: 1, dashArray: "5 6", fill: false, interactive: false }))));
     const stores = L.layerGroup(c.stores.map(s => L.marker([s[1], s[2]], { icon: L.divIcon({ className: "wm-st-ic", html: "D", iconSize: [26, 26], iconAnchor: [13, 13] }), zIndexOffset: 900 }).bindTooltip(`<b>Decathlon ${esc(s[0])}</b>`, { permanent: true, direction: "top", offset: [0, -12], className: "wm-st-tip" })));
-    const live = L.layerGroup(c.boards.map(b => L.marker([b[1], b[2]], { icon: L.divIcon({ className: "wm-live-ic", html: "", iconSize: [14, 14], iconAnchor: [7, 7] }) }).bindTooltip(`<b>${esc(b[0])}</b><br>${b[3] === "plan" ? "Planned, not booked" : "Live board"}<br>${esc(b[4] || "")}`)));
+    const curM = {};
+    const live = L.layerGroup(c.current.filter(h => h.lat).map(h => (curM[h.tag] = L.marker([h.lat, h.lon], { icon: L.divIcon({ className: "map-board wm-cur-ic", html: `<i>${h.tag}</i>`, iconSize: [20, 20], iconAnchor: [24, 24], popupAnchor: [-14, -24] }), zIndexOffset: 1100 })
+      .bindPopup(`${h.img ? `<img src="assets/img/${esc(h.img)}" alt="" style="width:220px;border-radius:6px;display:block;margin-bottom:6px">` : ""}<b>${h.tag}. ${esc(h.loc)}</b><br>${esc(h.size)}, ${LK(h.cost || 0)} a month<br>${STATUS[h.status] || esc(h.status)}${h.dur ? ", " + esc(h.dur) : ""}${h.exact ? "" : "<br><small>Pin is approximate</small>"}`))));
     const pk = L.layerGroup(c.picks.map(p => L.marker([p[2], p[3]], { icon: L.divIcon({ className: "wm-pick-ic " + p[5], html: esc(p[0]), iconSize: [24, 24], iconAnchor: [12, 12] }), zIndexOffset: 1200 }).bindTooltip(`<b>${esc(p[0])}. ${esc(p[1])}</b><br>${esc(p[6])}`)));
     [homes, rings, hot, pools, live, stores, pk].forEach(g => g.addTo(map));
-    L.control.layers(null, { "Suggested boards": pk, "Live and planned boards": live, "Pools and academies": pools, "Crowd hotspots": hot, "Housing belts": homes, "Store rings, 5 and 10 km": rings, "Stores": stores }, { collapsed: true }).addTo(map);
+    L.control.layers(null, { "Suggested boards": pk, "Current hoardings": live, "Pools and academies": pools, "Crowd hotspots": hot, "Housing belts": homes, "Store rings, 5 and 10 km": rings, "Stores": stores }, { collapsed: true }).addTo(map);
     const all = [...c.stores.map(s => [s[1], s[2]]), ...c.picks.map(p => [p[2], p[3]]), ...c.pools.map(p => [p[2], p[3]])];
     map.fitBounds(L.latLngBounds(all), { padding: [24, 24], maxZoom: 13 });
+    body.querySelectorAll(".wm-cc").forEach(el => el.addEventListener("click", () => {
+      const m = curM[el.dataset.t]; if (!m) return; map.setView(m.getLatLng(), 14); m.openPopup(); body.querySelector("#wmMap").scrollIntoView({ behavior: "smooth", block: "center" });
+    }));
     body.querySelectorAll(".wm-pick").forEach(el => el.addEventListener("click", () => {
       const p = c.picks.find(x => x[0] === el.dataset.i); if (p) map.setView([p[2], p[3]], 14);
     }));
