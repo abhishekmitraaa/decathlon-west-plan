@@ -4012,3 +4012,24 @@ details.wm-cur .wm-cur-grid { padding: 0 18px 16px; }
 @media (max-width: 900px) { .wi-grid, .wo-ch-grid { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .wo-ch-two { grid-template-columns: 1fr; } .wo-ch-k b { font-size: 16px; } .wi-big b { font-size: 64px; } }
 .wo-key .ov { color: #B5121B; }
+/* store by store: what each store invests */
+.wo-ss { margin-top: 18px; }
+.wo-ss h3 { font-size: 17px; font-weight: 800; color: var(--ink); margin: 0 0 10px; }
+.wo-ss h3 small { display: block; font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-top: 2px; }
+.wo-st-t { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 820px; }
+.wo-st-t th, .wo-st-t td { padding: 7px 8px; border: 1px solid #DDE3EC; text-align: right; vertical-align: top; }
+.wo-st-t thead th { background: var(--ink); color: #fff; font-weight: 800; font-size: 12px; }
+.wo-st-t thead th.on { background: #0B6E8E; }
+.wo-st-t tbody th, .wo-st-t tfoot th { text-align: left; color: var(--ink); font-weight: 700; min-width: 170px; }
+.wo-st-t th small, .wo-st-t td small { display: block; font-size: 10.5px; font-weight: 600; color: var(--text-2); }
+.wo-st-t td b { color: var(--ink); font-weight: 800; }
+.wo-st-t td.on { background: #E6F5FB; }
+.wo-st-t td.t { background: var(--mist); }
+.wo-st-t .z { color: #B7C0CC; }
+.wo-st-t tr.st th { background: color-mix(in srgb, var(--c) 14%, #fff); border-left: 4px solid var(--c); font-weight: 800; font-size: 13px; }
+.wo-st-t tr.cw th, .wo-st-t tr.cw td { background: #F7F8FB; }
+.wo-st-t tr.cw th { font-weight: 600; }
+.wo-st-t tr.sub th, .wo-st-t tr.sub td { border-top: 2px solid var(--ink); background: #fff; }
+.wo-st-t tfoot th, .wo-st-t tfoot td { background: var(--ink); color: #fff; }
+.wo-st-t tfoot td b { color: #fff; }
+.wo-st-t thead th:first-child { text-align: left; }

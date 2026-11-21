@@ -106,6 +106,45 @@
     ["Retention", "Second and fourth swim", "500 repeat swimmers / community members", "WhatsApp pushes and community"],
     ["Conversion", "Swim category sales", "300 attributable product purchases", "Coach kits with the 8% affiliate link"]
   ];
+  // what each store invests, Jan to Jun: the 2027 AOP plan (all sports) + the water lines that sit on the store (events, pool partnerships, coach kits).
+  // City-wide lines (hoardings, influencers, Meta, boosts) are not split by store in the sheet: they get their own row per city.
+  const AOPNAME = { "SGS Mall": "SGS" };
+  const storeSum = (D, mi, state) => {
+    const z6 = () => [0, 0, 0, 0, 0, 0], six = v5 => [0, ...v5];
+    const cls = i => mi === i ? ' class="on"' : "";
+    const cell = (v, aop, w) => MON.map((_, i) => `<td${cls(i)}>${v[i] ? `<b>${R(v[i])}</b>${aop && w && aop[i] && w[i] ? `<small>AOPs ${R(aop[i])} · water ${R(w[i])}</small>` : aop && aop[i] && !w[i] ? "<small>AOPs</small>" : w && w[i] && !(aop && aop[i]) ? "<small>water</small>" : ""}` : '<span class="z">-</span>'}</td>`).join("") + `<td class="t"><b>${sum(v) ? R(sum(v)) : "-"}</b></td>`;
+    const grand = z6();
+    let body = "";
+    D.filter(d => state === "all" || d.st === state).forEach(d => {
+      const rows = window.waterBudgetSheet ? window.waterBudgetSheet(d.st) : [];
+      const aopBy = {};
+      (window.AOP_PLAN || []).filter(r => r.state === d.st).forEach(r => { aopBy[AOPNAME[r.store] || r.store] = MON.map((_, i) => r.months[i] * r.cost); });
+      const stTot = z6();
+      body += `<tr class="st"><th colspan="8" style="--c:${d.c}">${d.st}</th></tr>`;
+      const seen = new Set();
+      const stores = [];
+      rows.forEach(c => c.stores.forEach(x => { seen.add(x.name); stores.push({ name: x.name, city: c.city, w: six(x.v), aop: aopBy[x.name] || z6() }); }));
+      Object.keys(aopBy).filter(n => !seen.has(n)).forEach(n => stores.push({ name: n, city: "", w: z6(), aop: aopBy[n] }));
+      stores.sort((a, b) => sum(b.aop) + sum(b.w) - sum(a.aop) - sum(a.w));
+      stores.forEach(x => {
+        const v = MON.map((_, i) => x.aop[i] + x.w[i]);
+        v.forEach((y, i) => { stTot[i] += y; });
+        body += `<tr><th>${esc(x.name)}${x.city && x.city !== x.name ? `<small>${esc(x.city)}</small>` : ""}</th>${cell(v, x.aop, x.w)}</tr>`;
+      });
+      rows.forEach(c => {
+        const v = six(MON.slice(0, 5).map((_, i) => sum(c.lines.map(l => l[1][i]))));
+        if (!sum(v)) return;
+        v.forEach((y, i) => { stTot[i] += y; });
+        body += `<tr class="cw"><th>${esc(c.city)}, city-wide<small>${c.lines.map(l => l[0].replace(" (3D or digital)", "").toLowerCase()).join(", ")}${c.ooc ? " · out of catchment" : ""}</small></th>${cell(v)}</tr>`;
+      });
+      stTot.forEach((y, i) => { grand[i] += y; });
+      body += `<tr class="sub"><th>${d.st} total</th>${cell(stTot)}</tr>`;
+    });
+    return `<div class="wo-ss"><h3>Store by store: what each store invests<small>${state === "all" ? "West" : esc(state)}, January to June 2027. Every store's AOPs (2027 AOP plan, all sports) plus the water money on the store (events, pool partnerships, coach kits); the city-wide water lines on their own row</small></h3>
+      <div class="sb-wrap frz"><table class="wo-st-t"><thead><tr><th>Store</th>${MON.map((m, i) => `<th${cls(i)}>${m}</th>`).join("")}<th>Jan to Jun</th></tr></thead><tbody>${body}</tbody>
+      ${state === "all" ? `<tfoot><tr><th>West</th>${cell(grand)}</tr></tfoot>` : ""}</table></div>
+      <p class="wo-note">The rest of the ad budget (digital, in-store, in-mall, store events, influencers, free products, flyers) is set by state, not by store, in our files. Kothrud / Baner and Adajan have no AOPs in the 2027 AOP plan; SGS = SGS Mall. Pools and coach kits are paid by the February deadline. WhatsApp pushes and city pages: amount to agree with MarCom.</p></div>`;
+  };
   const funnel = (states, mi) => {
     const W = window.waterBudgetBy ? window.waterBudgetBy() : {}, F = FUN();
     const months = mi == null ? [0, 1, 2, 3, 4] : mi >= 1 ? [mi - 1] : [];
@@ -190,6 +229,7 @@
       <div class="sb-wrap wo-gwrap"><table class="wo-gt"><thead><tr><th></th>${MON.map((m, i) => `<th class="${mi === i ? "on" : ""}">${m}</th>`).join("")}<th>Jan to Jun</th></tr></thead>
       <tbody>${D.filter(d => state === "all" || d.st === state).map(d => row(d.st, d.c, d.ad, d.w) + `<tr class="wo-ddr"><td colspan="8">${sheet(d, mi)}</td></tr>`).join("")}${state === "all" ? row("West", "", tAd, tW) : ""}</tbody></table></div>
       <p class="wo-note">Ad budget = the 2027 plan on the West plan and 2027 plan pages (ultimate_data_sheet_1, every line: digital, hoardings, in-store, in-mall, events, influencers, free products, flyers). Water = the water sports sheet (WATER_SPORTS.xlsx) as edited in the budget below. Red: water is bigger than the whole month's ad budget.</p>
+      ${storeSum(D, mi, state)}
       ${funnel(state === "all" ? D.map(d => d.st) : [state], mi)}</div>`;
   };
 
