@@ -142,7 +142,7 @@
     }).join("")}</div>`;
 
     grid.innerHTML = h;
-    $$(".w27-wk", grid).forEach(b => b.addEventListener("click", () => { week = +b.dataset.i; calendar(); weekPanel(); }));
+    $$(".w27-wk", grid).forEach(b => b.addEventListener("click", () => { week = +b.dataset.i; calendar(); weekPanel(); const dd = document.getElementById("w27WeekDD"); if (dd) dd.open = true; }));
     $$(".w27-mbtn", grid).forEach(b => b.addEventListener("click", () => { view = b.dataset.v; week = 0; render(); }));
   }
 
@@ -174,7 +174,7 @@
   }
 
   function ideas() {
-    $("#w27IdeasTitle").innerHTML = `What we can do<span class="lt">, ${W.views[view].long}</span>`;
+    $("#w27IdeasTitle").textContent = `What we can do, ${W.views[view].long}`;
     $("#w27Ideas").innerHTML = W.ideas[W.views[view].idea].map(([h, p, prop]) => `<article class="${prop ? "prop" : ""}"><h4>${esc(h)}</h4><p>${esc(p)}</p>${prop ? "<small>Our proposal</small>" : ""}</article>`).join("");
   }
 

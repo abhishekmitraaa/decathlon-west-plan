@@ -52,9 +52,9 @@
     const wt = sum(paid.map(l => l.t)), at = sum(months.map(i => d.ad[i]));
     const max = Math.max(1, ...paid.map(l => l.t));
     return `<div class="panel fr-lines wo-lines"><h3>${d.st}'s water money, line by line<small>${label}</small></h3>
-      ${paid.length ? `<ul class="fr-ls">${paid.map(l => `<li><div><b>${esc(l.n.replace(" (budget with MarCom)", ""))}</b><i class="wo-lb" style="--w:${l.t / max * 100}%;--c:${d.c}"></i></div><span>${R(l.t)}<small>${pct(l.t, wt)} of water</small></span></li>`).join("")}</ul>`
+      ${paid.length ? `<ul class="fr-ls">${paid.map(l => `<li><div><b>${esc(l.n)}</b><i class="wo-lb" style="--w:${l.t / max * 100}%;--c:${d.c}"></i></div><span>${R(l.t)}<small>${pct(l.t, wt)} of water</small></span></li>`).join("")}</ul>`
         : `<p class="wo-none">No water spend in ${label}: the sheet starts in February. The pools and coaches are signed this month.</p>`}
-      ${tbd.length ? `<p class="wo-tbd">Not in the total yet: ${tbd.map(l => esc(l.n.replace(" (budget with MarCom)", ""))).join(" and ")}, budget to agree with MarCom.</p>` : ""}
+      ${tbd.length ? `<p class="wo-tbd">Not in the total yet: ${tbd.map(l => esc(l.n.replace(/ \(.*\)$/, ""))).join(" and ")}. Both come out of the MarCom digital budget: amount to agree with MarCom.</p>` : ""}
       <div class="fr-tot"><span>Water</span><b>${R(wt)}</b><small>${at ? `${pct(wt, at)} of ${d.st}'s ${label} ad budget (${R(at)})` : ""}</small></div>
     </div>`;
   };
@@ -83,24 +83,63 @@
   const SPLIT = SP.split27 || [];
   const sheet = (d, mi) => {
     const rows = window.waterBudgetSheet ? window.waterBudgetSheet(d.st) : [];
+    const W = window.waterBudgetBy ? window.waterBudgetBy()[d.st].ch : {};
     const six = v5 => [0, ...v5];
     const cls = i => mi === i ? ' class="on"' : "";
     const cells = (v, sub, neg) => MON.map((_, i) => `<td${cls(i)}>${v[i] ? `<span class="${neg && v[i] < 0 ? "neg" : ""}">${R(v[i])}</span>` : '<span class="z">-</span>'}${sub && sub[i] && v[i] ? `<small>${esc(sub[i])}</small>` : ""}</td>`).join("") + `<td class="t">${sum(v) ? `<span class="${neg && sum(v) < 0 ? "neg" : ""}">${R(sum(v))}</span>` : "-"}</td>`;
-    const head = t => `<tr class="grp"><th colspan="8">${t}</th></tr>`;
-    const wTot = d.w, left = d.ad.map((a, i) => a - wTot[i]);
-    let b = head(`1. ${d.st}'s 2027 ad budget, by line <small>the sheet splits every month the same way</small>`);
-    b += SPLIT.map(([n, p]) => `<tr class="ln"><th>${esc(n)}<small>${p}%</small></th>${cells(d.ad.map(a => a * p / 100))}</tr>`).join("");
-    b += `<tr class="tot"><th>Ad budget</th>${cells(d.ad)}</tr>`;
-    b += head(`2. Water sports, city by city and store by store <small>no water spend in January; pools, flyers and coach kits are paid by the February deadline</small>`);
-    rows.forEach(c => {
-      b += `<tr class="city"><th>${esc(c.city)}<small>${c.ooc ? "out of catchment" : "city total"}</small></th>${cells(six(c.v))}</tr>`;
-      c.lines.forEach(([n, v, sub]) => { b += `<tr class="ln"><th>${esc(n)}<small>city-wide</small></th>${cells(six(v), sub ? ["", ...sub] : null)}</tr>`; });
-      c.stores.forEach(x => { b += `<tr class="store"><th>${esc(x.name)} store<small>${x.parts.map(p => p[2] || p[0].toLowerCase()).join(", ") || "nothing in the sheet"}</small></th>${cells(six(x.v))}</tr>`; });
+    // water rows of one kind, city by city (city-wide lines) or store by store (store lines)
+    const pick = key => {
+      const out = [];
+      rows.forEach(c => {
+        c.lines.filter(l => l[3] === key).forEach(l => out.push({ name: c.city + (c.ooc ? " (out of catchment)" : ""), v: six(l[1]), sub: l[2] ? ["", ...l[2]] : null }));
+        c.stores.forEach(x => x.parts.filter(p => p[3] === key).forEach(p => out.push({ name: x.name + " store", v: six(p[1]), sub: p[2] ? MON.map((_, i) => i === 1 ? p[2] : "") : null })));
+      });
+      return out.filter(r => sum(r.v));
+    };
+    const pct = i => (SPLIT[i] || [])[1] || 0;
+    const share = p => d.ad.map(a => a * p / 100);
+    // AOPs: the 2027 AOP plan, store by store (AOPs a month × cost per AOP); paid from the "hoardings, OOH, HIPOP and AOP" 30%
+    const aopRows = (window.AOP_PLAN || []).filter(r => r.state === d.st).map(r => ({ name: r.store, v: MON.map((_, i) => r.months[i] * r.cost), sub: MON.map((_, i) => `${r.months[i]} AOPs × ${R(r.cost)}`) }));
+    const aop = MON.map((_, i) => sum(aopRows.map(r => r.v[i])));
+    const LINES = [
+      { n: "Digital paid (MarCom)", note: `${pct(0)}% of the ad budget`, b: share(pct(0)), water: [["Meta ads", "meta"], ["Instagram boosts", "boost"]], marcom: true },
+      { n: "Hoardings, OOH and HIPOP", note: `${pct(1)}% of the ad budget, minus the AOPs`, b: share(pct(1)).map((v, i) => v - aop[i]), water: [["3D or digital hoardings", "hoard"]] },
+      { n: "AOPs: partnerships with pools, gyms, academies", note: `the rest of the same ${pct(1)}%: the 2027 AOP plan`, b: aop, detail: aopRows, water: [["Pool partnerships", "aop"]] },
+      { n: "In-store communication", note: `${pct(2)}%`, b: share(pct(2)), water: [] },
+      { n: "In-mall", note: `${pct(3)}%`, b: share(pct(3)), water: [] },
+      { n: "Store events", note: `${pct(4)}%`, b: share(pct(4)), water: [["Events", "events"]] },
+      { n: "Influencers", note: `${pct(5)}%`, b: share(pct(5)), water: [["Influencers", "infl"]] },
+      { n: "Free products and IC", note: `${pct(6)}%`, b: share(pct(6)), water: [["Coach kits", "coach"]] },
+      { n: "Flyers", note: `${pct(7)}%`, b: share(pct(7)), water: [["Checklist flyers", "flyers"]] }
+    ];
+    let b = "", wAll = MON.map(() => 0);
+    LINES.forEach((L, li) => {
+      b += `<tr class="line"><th>${li + 1}. ${esc(L.n)}<small>${esc(L.note)}</small></th>${cells(L.b)}</tr>`;
+      if (L.detail) b += L.detail.map(r => `<tr class="det"><th>${esc(r.name)}<small>AOP plan</small></th>${cells(r.v, r.sub)}</tr>`).join("");
+      const lw = MON.map(() => 0);
+      L.water.forEach(([n, key]) => {
+        const rs = pick(key); if (!rs.length) return;
+        const t = MON.map((_, i) => sum(rs.map(r => r.v[i])));
+        t.forEach((v, i) => { lw[i] += v; });
+        b += `<tr class="wh"><th>Water: ${esc(n)}<small>${L.marcom ? "paid from this MarCom digital budget, no separate money" : "from this line"}</small></th>${cells(t)}</tr>`;
+        b += rs.map(r => `<tr class="wr"><th>${esc(r.name)}</th>${cells(r.v, r.sub)}</tr>`).join("");
+      });
+      if (L.marcom) {
+        const wa = W.wapush ? six(W.wapush.v) : MON.map(() => 0), cp = W.city ? six(W.city.v) : MON.map(() => 0);
+        [["WhatsApp pushes", wa], ["Local city pages", cp]].forEach(([n, v]) => {
+          if (sum(v)) { v.forEach((x, i) => { lw[i] += x; }); b += `<tr class="wh"><th>Water: ${n}<small>paid from this MarCom digital budget</small></th>${cells(v)}</tr>`; }
+          else b += `<tr class="wh tbd"><th>Water: ${n}<small>paid from this MarCom digital budget: amount to agree with MarCom</small></th>${MON.map((_, i) => `<td${cls(i)}><span class="z">-</span></td>`).join("")}<td class="t">to agree</td></tr>`;
+        });
+      }
+      if (sum(lw)) b += `<tr class="left"><th>Left on this line after water</th>${cells(L.b.map((v, i) => v - lw[i]), null, true)}</tr>`;
+      lw.forEach((v, i) => { wAll[i] += v; });
     });
-    b += `<tr class="tot"><th>Water total</th>${cells(wTot)}</tr>`;
-    b += `<tr class="left"><th>Ad budget left for everything else<small>ad budget minus water</small></th>${cells(left, null, true)}</tr>`;
-    return `<details class="wo-dd"${VIEW().state === d.st ? " open" : ""}><summary><b>${d.st}: where we invest, month by month</b><span>The Excel view: the ad budget by line, then the water money for every city and store</span><i class="nd-chev" aria-hidden="true"></i></summary>
-      <div class="sb-wrap"><table class="wo-xl" style="--c:${d.c}"><thead><tr><th>${d.st}</th>${MON.map((m, i) => `<th${cls(i)}>${m}</th>`).join("")}<th>Jan to Jun</th></tr></thead><tbody>${b}</tbody></table></div></details>`;
+    b += `<tr class="tot"><th>Ad budget</th>${cells(d.ad)}</tr>`;
+    b += `<tr class="tot w"><th>Water, all lines</th>${cells(wAll)}</tr>`;
+    b += `<tr class="left"><th>Ad budget left for everything else<small>ad budget minus water</small></th>${cells(d.ad.map((a, i) => a - wAll[i]), null, true)}</tr>`;
+    return `<details class="wo-dd"${VIEW().state === d.st ? " open" : ""}><summary><b>${d.st}: where we invest, month by month</b><span>The Excel view: every line of the ad budget, AOPs apart from hoardings, and what water takes from each line, city by city and store by store</span><i class="nd-chev" aria-hidden="true"></i></summary>
+      <div class="sb-wrap"><table class="wo-xl" style="--c:${d.c}"><thead><tr><th>${d.st}</th>${MON.map((m, i) => `<th${cls(i)}>${m}</th>`).join("")}<th>Jan to Jun</th></tr></thead><tbody>${b}</tbody></table></div>
+      <p class="wo-note">Lines from the 2027 ad budget sheet (ultimate_data_sheet_1 splits every month the same way). AOPs are the 2027 AOP plan (AOPs a month × cost per AOP, store by store), taken out of the hoardings, OOH, HIPOP and AOP line, so hoardings show on their own. Meta ads, Instagram boosts, WhatsApp pushes and city pages come out of the MarCom digital budget: no separate money. Water pools, flyers and coach kits are paid by the February deadline. Red: water is more than the line.</p></details>`;
   };
 
   const glance = (D, mi, state) => {

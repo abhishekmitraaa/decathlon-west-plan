@@ -3907,3 +3907,16 @@ details.wm-cur .wm-cur-grid { padding: 0 18px 16px; }
 .wo-xl tr.store th::before { content: "\25B8  "; color: var(--c); }
 .wo-xl tr.tot th, .wo-xl tr.tot td { font-weight: 800; color: var(--ink); border-top: 2px solid var(--ink); background: #fff; }
 .wo-xl tr.left th, .wo-xl tr.left td { background: #FFF8E6; font-weight: 800; }
+.wo-xl tr.line th, .wo-xl tr.line td { background: color-mix(in srgb, var(--c) 12%, #fff); font-weight: 800; color: var(--ink); border-top: 2px solid color-mix(in srgb, var(--c) 45%, #fff); }
+.wo-xl tr.line th { border-left: 4px solid var(--c); }
+.wo-xl tr.det th { padding-left: 22px; font-weight: 600; }
+.wo-xl tr.det td { color: var(--text-2); }
+.wo-xl tr.wh th, .wo-xl tr.wh td { background: #EAF6FB; color: #0B5D78; font-weight: 800; }
+.wo-xl tr.wh th { padding-left: 16px; }
+.wo-xl tr.wh.tbd th, .wo-xl tr.wh.tbd td { background: #FFF8E6; color: #8A5A00; }
+.wo-xl tr.wr th { padding-left: 30px; font-weight: 600; }
+.wo-xl tr.left th { padding-left: 16px; }
+.wo-xl tr.tot.w th, .wo-xl tr.tot.w td { border-top: 1px solid #DDE3EC; color: #0B5D78; }
+.w27-dd { margin-top: 12px; }
+.w27-dd > .w27-ddb { padding: 4px 18px 18px; }
+@media (max-width: 560px) { .w27-dd > .w27-ddb { padding: 4px 10px 12px; } }

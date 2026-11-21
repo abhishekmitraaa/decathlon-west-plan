@@ -121,8 +121,8 @@ window.WATERBUDGET_CAMPAIGNS = [
   const Cr = n => "₹" + (n / 1e7).toFixed(2) + " Cr";
   const N = v => (v == null || v === "" || isNaN(+v)) ? 0 : +v;
   const STS = [["Pune", "#3643BA"], ["Gujarat", "#00A99D"], ["MP", "#7B3FC4"]];
-  const CH = [["hoard", "Hoardings (3D or digital)", "#10135A"], ["infl", "Influencers", "#E8590C"], ["meta", "Meta ads", "#3643BA"], ["boost", "Instagram boosts", "#C13584"],
-    ["events", "Events", "#1BAA5E"], ["aop", "Pool partnerships (AOPs)", "#0096C7"], ["flyers", "Checklist flyers", "#F2B705"], ["coach", "Coach kits", "#7B3FC4"], ["wapush", "WhatsApp pushes (budget with MarCom)", "#25D366"], ["city", "Local city pages", "#F28C28"]];
+  const CH = [["hoard", "Hoardings (3D or digital)", "#10135A"], ["infl", "Influencers", "#E8590C"], ["meta", "Meta ads (from the MarCom digital budget)", "#3643BA"], ["boost", "Instagram boosts", "#C13584"],
+    ["events", "Events", "#1BAA5E"], ["aop", "Pool partnerships (AOPs)", "#0096C7"], ["flyers", "Checklist flyers", "#F2B705"], ["coach", "Coach kits", "#7B3FC4"], ["wapush", "WhatsApp pushes (from the MarCom digital budget)", "#25D366"], ["city", "Local city pages", "#F28C28"]];
   let doc = clone(window.WATERBUDGET_DEFAULT), editing = false;
 
   // money of one line, by month (5 months) and by state; one-off lines (AOP, flyers, coach kits) count in February (the sheet's deadline)
@@ -359,14 +359,14 @@ window.WATERBUDGET_CAMPAIGNS = [
     return CITIES[st].map(c => {
       const h = doc.hoard.find(r => r.city === c), inf = doc.infl.find(r => r.city === c), me = doc.meta.find(r => cityOf(r.city) === c), bo = doc.boost.find(r => cityOf(r.city) === c);
       const lines = [
-        ["Hoardings (3D or digital)", h ? h.v.map(N) : z(), h ? h.n.map(N).map(n => n + " boards") : null],
-        ["Influencers", inf ? inf.n.map(n => N(n) * N(doc.rate[st])) : z(), inf ? inf.n.map(N).map(n => n + " influencers") : null],
-        ["Meta ads", me ? me.v.map(N) : z()], ["Instagram boosts", bo ? bo.v.map(N) : z()]
+        ["Hoardings (3D or digital)", h ? h.v.map(N) : z(), h ? h.n.map(N).map(n => n + " boards") : null, "hoard"],
+        ["Influencers", inf ? inf.n.map(n => N(n) * N(doc.rate[st])) : z(), inf ? inf.n.map(N).map(n => n + " influencers") : null, "infl"],
+        ["Meta ads", me ? me.v.map(N) : z(), null, "meta"], ["Instagram boosts", bo ? bo.v.map(N) : z(), null, "boost"]
       ].filter(l => sum(l[1]));
       const stores = (STORES[c] || []).map(n => {
         const ev = doc.events.find(r => r.store === n), ap = doc.aop.find(r => r.store === n), fl = doc.flyers.find(r => r.store === n);
-        const parts = [["Events", ev ? ev.v.map(N) : z()], ["Pool partnerships", feb(ap ? N(ap.n) * N(ap.r) : 0), ap ? N(ap.n) + " pools" : ""], ["Checklist flyers", feb(fl ? N(fl.v) : 0)],
-          ["Coach kits", feb(ap && co && statePools ? N(co.n) * N(co.kit) * N(ap.n) / statePools : 0)]].filter(x => sum(x[1]));
+        const parts = [["Events", ev ? ev.v.map(N) : z(), "", "events"], ["Pool partnerships", feb(ap ? N(ap.n) * N(ap.r) : 0), ap ? N(ap.n) + " pools" : "", "aop"], ["Checklist flyers", feb(fl ? N(fl.v) : 0), "", "flyers"],
+          ["Coach kits", feb(ap && co && statePools ? N(co.n) * N(co.kit) * N(ap.n) / statePools : 0), ap ? N(ap.n) + " kits" : "", "coach"]].filter(x => sum(x[1]));
         return { name: n, parts, v: z().map((_, i) => sum(parts.map(x => x[1][i]))) };
       });
       const v = z().map((_, i) => sum(lines.map(l => l[1][i])) + sum(stores.map(x => x.v[i])));
