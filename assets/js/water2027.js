@@ -182,21 +182,22 @@
   function heat() {
     const key = shareKey(), rows = SH.st[key];
     const mt = i => rows.reduce((t, r) => t + r[i], 0);
-    const jo = r => r.slice(0, 10).reduce((a, b) => a + b, 0), all = rows.reduce((t, r) => t + jo(r), 0);
-    const order = SH.sports.map((s, k) => k).sort((a, b) => (SH.sports[a] === "All other sports") - (SH.sports[b] === "All other sports") || jo(rows[b]) - jo(rows[a]));
+    const jj = r => r.slice(0, 6).reduce((a, b) => a + b, 0), jo = r => r.slice(0, 10).reduce((a, b) => a + b, 0);
+    const allH = rows.reduce((t, r) => t + jj(r), 0), all = rows.reduce((t, r) => t + jo(r), 0);
+    const order = SH.sports.map((s, k) => k).sort((a, b) => (SH.sports[a] === "All other sports") - (SH.sports[b] === "All other sports") || jj(rows[b]) - jj(rows[a]));
     const ms = monthsOf(weeks(view)).map(g => g.m);
-    const top4 = order.slice(0, 4).map(k => SH.sports[k]), top4s = order.slice(0, 4).reduce((t, k) => t + jo(rows[k]), 0) / all * 100;
-    const top12 = order.filter(k => SH.sports[k] !== "All other sports").reduce((t, k) => t + jo(rows[k]), 0) / all * 100;
-    $("#w27ShareLede").innerHTML = `${state === "all" ? "West" : state}, every channel (store and online), 2026: the pattern we plan 2027 on. We sold ${SH.nsports} sports; four of them, ${top4.slice(0, 3).join(", ").toLowerCase()} and ${top4[3].toLowerCase()}, made <b>${top4s.toFixed(0)}%</b> of January to October turnover, and the 12 below made ${top12.toFixed(0)}%. Each cell is the sport's share of that month's turnover; the darker, the bigger. Columns of the months you picked are outlined.`;
+    const top4 = order.slice(0, 4).map(k => SH.sports[k]), top4s = order.slice(0, 4).reduce((t, k) => t + jj(rows[k]), 0) / allH * 100;
+    const sw = SH.sports.indexOf("Swimming"), swR = rows[sw], swRank = order.indexOf(sw) + 1;
+    $("#w27ShareLede").innerHTML = `${state === "all" ? "West" : state}, every channel (store and online), 2026: the pattern we plan 2027 on. From January to June, four of our ${SH.nsports} sports, ${top4.slice(0, 3).join(", ").toLowerCase()} and ${top4[3].toLowerCase()}, made <b>${top4s.toFixed(0)}%</b> of turnover. <b>Swimming made ${L(jj(swR))} from January to June 2026, ${(jj(swR) / allH * 100).toFixed(1)}% of turnover</b> (number ${swRank} of the sports), and ${L(jo(swR))} year to date, January to October, ${(jo(swR) / all * 100).toFixed(1)}%. Each cell is the sport's share of that month's turnover; the darker, the bigger. Columns of the months you picked are outlined.`;
     const cell = (v, t, mi) => {
       const s = v / t * 100, a = Math.min(1, s / 22);
-      return `<td class="hc ${ms.includes(mi) ? "inq" : ""}" style="--a:${(0.06 + a * 0.84).toFixed(2)}" data-dark="${a > 0.5 ? 1 : 0}" title="${FULLM[mi]} 2026: ${L(v)}, ${s.toFixed(1)}% of turnover">${s.toFixed(1)}</td>`;
+      return `<td class="hc ${ms.includes(mi) ? "inq" : ""}" style="--a:${(0.06 + a * 0.84).toFixed(2)}" data-dark="${a > 0.5 ? 1 : 0}" title="${FULLM[mi]} 2026: ${L(v)}, ${s.toFixed(1)}% of turnover">${s.toFixed(1)}%</td>`;
     };
-    $("#w27Heat").innerHTML = `<table class="w27-heat"><thead><tr><th>Sport</th>${MON.map((m, i) => `<th class="${ms.includes(i) ? "inq" : ""}">${m}${i === 10 ? "<small>to 8th</small>" : ""}</th>`).join("")}<th>Jan to Oct</th><th>Turnover</th></tr></thead><tbody>
+    $("#w27Heat").innerHTML = `<table class="w27-heat"><thead><tr><th>Sport</th>${MON.map((m, i) => `<th class="${ms.includes(i) ? "inq" : ""}">${m}${i === 10 ? "<small>to 8th</small>" : ""}</th>`).join("")}<th class="w27-hj">Jan to Jun<small>share</small></th><th class="w27-hj">Jan to Jun<small>turnover</small></th><th>YTD Jan to Oct<small>share</small></th><th>YTD Jan to Oct<small>turnover</small></th></tr></thead><tbody>
       ${order.map(k => { const r = rows[k], nm = SH.sports[k];
-        return `<tr class="${nm === "Swimming" ? "sw" : ""} ${nm === "All other sports" ? "oth" : ""}"><td><b>${esc(nm)}</b></td>${r.map((v, i) => cell(v, mt(i), i)).join("")}<td class="hc na">-</td><td class="w27-n"><b>${(jo(r) / all * 100).toFixed(1)}%</b></td><td class="w27-n">${L(jo(r))}</td></tr>`; }).join("")}
-      <tr class="tot"><td><b>All sports</b></td>${MON.slice(0, 11).map((m, i) => `<td class="w27-n">${L(mt(i))}</td>`).join("")}<td class="w27-n">-</td><td class="w27-n"><b>100%</b></td><td class="w27-n"><b>${L(all)}</b></td></tr>
-      </tbody></table><p class="w27-scale"><span>0%</span><i></i><span>22%+ of the month</span><span class="w27-muted">December: no data yet. November: 1 to 8 Nov only.</span></p>`;
+        return `<tr class="${nm === "Swimming" ? "sw" : ""} ${nm === "All other sports" ? "oth" : ""}"><td><b>${esc(nm)}</b></td>${r.map((v, i) => cell(v, mt(i), i)).join("")}<td class="hc na">-</td><td class="w27-n w27-hj"><b>${(jj(r) / allH * 100).toFixed(1)}%</b></td><td class="w27-n w27-hj">${L(jj(r))}</td><td class="w27-n"><b>${(jo(r) / all * 100).toFixed(1)}%</b></td><td class="w27-n">${L(jo(r))}</td></tr>`; }).join("")}
+      <tr class="tot"><td><b>All sports</b></td>${MON.slice(0, 11).map((m, i) => `<td class="w27-n">${L(mt(i))}</td>`).join("")}<td class="w27-n">-</td><td class="w27-n w27-hj"><b>100%</b></td><td class="w27-n w27-hj"><b>${L(allH)}</b></td><td class="w27-n"><b>100%</b></td><td class="w27-n"><b>${L(all)}</b></td></tr>
+      </tbody></table><p class="w27-scale"><span>0%</span><i></i><span>22%+ of the month</span><span class="w27-muted">Every cell is a % of that month's turnover. Jan to Jun = the months of the water plan; YTD = January to October 2026. December: no data yet. November: 1 to 8 Nov only.</span></p>`;
   }
 
   /* ---------- stores: in store (team, in store and mall) + the sheet's store lines + the turnover goal ---------- */

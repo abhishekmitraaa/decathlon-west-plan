@@ -3920,3 +3920,5 @@ details.wm-cur .wm-cur-grid { padding: 0 18px 16px; }
 .w27-dd { margin-top: 12px; }
 .w27-dd > .w27-ddb { padding: 4px 18px 18px; }
 @media (max-width: 560px) { .w27-dd > .w27-ddb { padding: 4px 10px 12px; } }
+.w27-heat .w27-hj { background: #E6F5FB; }
+.w27-heat th.w27-hj { color: var(--ink); }
