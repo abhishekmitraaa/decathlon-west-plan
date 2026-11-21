@@ -174,13 +174,13 @@
     };
     const pct = i => (SPLIT[i] || [])[1] || 0;
     const share = p => d.ad.map(a => a * p / 100);
-    // AOPs: the 2027 AOP plan, store by store (AOPs a month × cost per AOP); paid from the "hoardings, OOH, HIPOP and AOP" 30%
+    // AOPs: the 2027 AOP plan, store by store (AOPs a month × cost per AOP)
     const aopRows = (window.AOP_PLAN || []).filter(r => r.state === d.st).map(r => ({ name: r.store, v: MON.map((_, i) => r.months[i] * r.cost), sub: MON.map((_, i) => `${r.months[i]} AOPs × ${R(r.cost)}`) }));
     const aop = MON.map((_, i) => sum(aopRows.map(r => r.v[i])));
     const LINES = [
       { n: "Digital paid (MarCom)", f: "Acquisition", note: `${pct(0)}% of the ad budget`, b: share(pct(0)), water: [["Meta ads", "meta"], ["Instagram boosts", "boost"]], marcom: true },
-      { n: "Hoardings", f: "Awareness", note: `${pct(1)}% of the ad budget, minus the AOPs`, b: share(pct(1)).map((v, i) => v - aop[i]), water: [["3D or digital hoardings", "hoard"]] },
-      { n: "AOPs: partnerships with pools, gyms, academies", f: "Participation", note: `the rest of the same ${pct(1)}%: the 2027 AOP plan`, b: aop, detail: aopRows, water: [["Pool partnerships", "aop"]] },
+      { n: "Hoardings", f: "Awareness", note: "the hoarding budget: 3D cut-out or digital boards (water sports sheet)", own: "hoard", water: [] },
+      { n: "AOPs: partnerships with pools, gyms, academies", f: "Participation", note: "the 2027 AOP plan, store by store", b: aop, detail: aopRows, water: [["Pool partnerships", "aop"]] },
       { n: "In-store communication", f: "Conversion", note: `${pct(2)}%`, b: share(pct(2)), water: [] },
       { n: "In-mall", f: "Awareness", note: `${pct(3)}%`, b: share(pct(3)), water: [] },
       { n: "Store events", f: "Participation", note: `${pct(4)}%`, b: share(pct(4)), water: [["Events", "events"]] },
@@ -190,6 +190,13 @@
     ];
     let b = "", wAll = MON.map(() => 0);
     LINES.forEach((L, li) => {
+      if (L.own) { // one line, one budget: the hoardings, city by city (no second "water" hoardings row)
+        const rs = pick(L.own), t = MON.map((_, i) => sum(rs.map(r => r.v[i])));
+        t.forEach((v, i) => { wAll[i] += v; });
+        b += `<tr class="line"><th>${li + 1}. ${esc(L.n)}${ftag(L.f)}<small>${sum(t) ? esc(L.note) : `no hoardings for ${d.st} in the water sports sheet`}</small></th>${cells(t)}</tr>`;
+        b += rs.map(r => `<tr class="det"><th>${esc(r.name)}</th>${cells(r.v, r.sub)}</tr>`).join("");
+        return;
+      }
       b += `<tr class="line"><th>${li + 1}. ${esc(L.n)}${ftag(L.f)}<small>${esc(L.note)}</small></th>${cells(L.b)}</tr>`;
       if (L.detail) b += L.detail.map(r => `<tr class="det"><th>${esc(r.name)}<small>AOP plan</small></th>${cells(r.v, r.sub)}</tr>`).join("");
       const lw = MON.map(() => 0);
@@ -216,7 +223,7 @@
     b += `<tr class="left"><th>Ad budget left for everything else<small>ad budget minus water</small></th>${cells(d.ad.map((a, i) => a - wAll[i]), null, true)}</tr>`;
     return `<details class="wo-dd"${VIEW().state === d.st ? " open" : ""}><summary><b>${d.st}: where we invest, month by month</b><span>The Excel view: every line of the ad budget, AOPs apart from hoardings, and what water takes from each line, city by city and store by store</span><i class="nd-chev" aria-hidden="true"></i></summary>
       <div class="sb-wrap frz"><table class="wo-xl" style="--c:${d.c}"><thead><tr><th>${d.st}</th>${MON.map((m, i) => `<th${cls(i)}>${m}</th>`).join("")}<th>Jan to Jun</th></tr></thead><tbody>${b}</tbody></table></div>
-      <p class="wo-note">Lines from the 2027 ad budget sheet (ultimate_data_sheet_1 splits every month the same way). AOPs are the 2027 AOP plan (AOPs a month × cost per AOP, store by store), taken out of the sheet's "hoardings and AOP" line (30%), so hoardings show on their own. Meta ads, Instagram boosts, WhatsApp pushes and city pages come out of the MarCom digital budget: no separate money. Checklist flyers need no budget. Water pools and coach kits are paid by the February deadline. Tags: the funnel stage each line works on. Red: water is more than the line.</p></details>`;
+      <p class="wo-note">Lines from the 2027 ad budget sheet (ultimate_data_sheet_1 splits every month the same way). Hoardings = the hoarding budget from the water sports sheet (3D cut-out or digital), city by city. AOPs = the 2027 AOP plan (AOPs a month × cost per AOP, store by store). Meta ads, Instagram boosts, WhatsApp pushes and city pages come out of the MarCom digital budget: no separate money. Checklist flyers need no budget. Water pools and coach kits are paid by the February deadline. Tags: the funnel stage each line works on. Red: water is more than the line.</p></details>`;
   };
 
   const glance = (D, mi, state) => {
